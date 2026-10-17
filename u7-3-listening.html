@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.3 Listening · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f6fc;--card:#fff;--ink:#1f2a44;--muted:#6b7a90;--brand:#2b6cff;--brand2:#00b8a9;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#dfe7f1;--soft:#eef3ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#2b6cff 0%,#00b8a9 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#dbe4f0;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chip{font:inherit;font-weight:700;font-size:16px;background:#fff;border:2px solid #c9d6ff;color:var(--brand);border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 12px;padding-left:4px}
+.slot{display:inline-block;min-width:110px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:150px;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+textarea{font:inherit;width:100%;min-height:80px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,select:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#1f2a44;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px}
+.stat{border-radius:16px;padding:14px;color:#fff}
+.stat b{display:block;font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1}
+.stat span{font-size:14px;font-weight:600}
+.s1{background:#ff7a59}.s2{background:#7c5cff}
+.q{font-weight:700;margin:12px 0 0}
+.strategy{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:16px 18px;margin-bottom:18px}
+.strategy b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:20px;padding:16px 16px 12px;margin-bottom:18px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:10px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.ideas{list-style:none;padding:0;margin:0 0 14px}
+.ideas li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.ideas li b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--soft);color:var(--brand);display:grid;place-items:center}
+.parts{display:flex;gap:10px;flex-wrap:wrap}
+.parts label{flex:1;min-width:90px;font-weight:800}
+select{font:inherit;font-weight:800;width:100%;border:2px solid var(--line);border-radius:12px;padding:8px;margin-top:4px;background:#fff;color:var(--ink)}
+.tf{padding:10px 0;border-bottom:1px solid var(--line)}
+.tf p{margin:0 0 8px}
+.why{margin:8px 0 0!important;font-size:15px;color:#9a3412;background:#fff4e5;border-radius:10px;padding:6px 10px}
+.pills{display:flex;gap:8px}
+.pill{font:inherit;font-weight:800;flex:1;max-width:80px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 0;cursor:pointer;color:var(--ink)}
+.pill.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pill.on.ok{background:var(--ok)!important;color:#fff!important}
+.pill.on.bad{background:var(--bad)!important;color:#fff!important}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e3e9f2;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.3 Listening</small>
+  <h1>Who gets to learn online?</h1>
+  <p>Distinguishing the main idea in an interview</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 6 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1 -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>What can you remember about the podcast from the lesson? Tap a gap, then tap a word.</h2></div>
+  <div class="chips" id="bank1"></div>
+  <ol class="items" id="list1"></ol>
+  <button class="btn" onclick="check1()">Check</button>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<!-- EX 2 -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Look at the infographic and think about the questions. Write 2–3 sentences for each.</h2></div>
+  <div class="stats">
+    <div class="stat s1"><b>3.7 billion</b><span>people in the world have no internet access</span></div>
+    <div class="stat s2"><b>90%</b><span>of school-age children in rich countries have the internet at home</span></div>
+  </div>
+  <p class="q">1. What are the reasons why people in some countries don't have access to the internet?</p>
+  <textarea id="t2a" placeholder="I think one reason is..."></textarea>
+  <p class="q">2. How is life different for school-age children who don't have an internet connection at home?</p>
+  <textarea id="t2b" placeholder="Children without the internet can't..."></textarea>
+  <button class="btn" onclick="save2()">Save answers</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<div class="strategy">
+  <b>Strategy: finding the main idea</b>
+  <p style="margin:6px 0 0">In a long recording, speakers jump between lots of ideas, and it's easy to get lost. The main idea is the one they keep coming back to. Listen for words and phrases that are <b style="font-family:inherit;font-size:inherit">repeated</b> again and again.</p>
+</div>
+
+<div class="player">
+  <b>Track 7.02 · Interview about a UNICEF report</b>
+  <iframe src="https://drive.google.com/file/d/1lM23fbyzvwnYw6pasSSzmp0TcWY72Mea/preview" allow="autoplay"></iframe>
+  <a href="https://drive.google.com/file/d/1lM23fbyzvwnYw6pasSSzmp0TcWY72Mea/view" target="_blank" rel="noopener">Audio not playing? Open it here</a>
+</div>
+
+<!-- EX 3 -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Listen to the interview. Match the main ideas A–E to Parts 1–3. There are two ideas you don't need.</h2></div>
+  <ul class="ideas">
+    <li><b>A</b><span>UNICEF is working to give young people across the world equal access to good-quality online learning.</span></li>
+    <li><b>B</b><span>People in richer countries tend to value education more highly.</span></li>
+    <li><b>C</b><span>Lack of internet access significantly limits children's education and opportunities.</span></li>
+    <li><b>D</b><span>The 'digital divide' is related to an economic gap between richer and poorer countries.</span></li>
+    <li><b>E</b><span>UNICEF is setting up new schools all over the world.</span></li>
+  </ul>
+  <div class="parts">
+    <label>Part 1<select id="p0"></select></label>
+    <label>Part 2<select id="p1"></select></label>
+    <label>Part 3<select id="p2"></select></label>
+  </div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4 -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Listen to all three parts again. Are the sentences true (T), false (F) or not given (NG)?</h2></div>
+  <div id="list4"></div>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5 -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Complete the sentences with the correct form of the verbs. Tap a gap, tap a verb, then change its form if needed.</h2></div>
+  <div class="chips" id="bank5"></div>
+  <ol class="items" id="list5"></ol>
+  <button class="btn" onclick="check5()">Check</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- EX 6 -->
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Complete the sentences with your own ideas.</h2></div>
+  <p class="q">1. The pros and cons of online learning at my school would be...</p>
+  <textarea id="t6a"></textarea>
+  <p class="q">2. The most important way that technology helps me to learn is...</p>
+  <textarea id="t6b"></textarea>
+  <p class="q">3. If I didn't have access to the internet at home, I would / wouldn't...</p>
+  <textarea id="t6c"></textarea>
+  <button class="btn" onclick="save6()">Save answers</button>
+  <div class="fb" id="fb6"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 6 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.3 Listening',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* Answer keys for the listening tasks. Leave null = not auto-graded (answers go to the teacher). */
+const KEY3 = ['C', 'D', 'A'];
+const KEY4 = ['T', 'F', 'NG', 'T', 'NG', 'F', 'F', 'T'];
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false, ex6:false};
+const scores = {};   // first-attempt scores
+const notes = {};    // text sent to the teacher
+
+const nameFromLink = new URLSearchParams(location.search).get('s');
+if (nameFromLink) { document.getElementById('student').value = nameFromLink; document.getElementById('nameCard').style.display = 'none'; }
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys = Object.keys(done), n = keys.filter(k=>done[k]).length;
+  $('fill').style.width = (n/keys.length*100)+'%';
+  $('ptext').textContent = n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML = keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n < keys.length || sent;
+}
+function scoreMsg(id, s, max, first){
+  const saved = first ? 'Score saved: '+s+'/'+max+'.' : 'Your first score ('+scores[id].s+'/'+max+') is already saved.';
+  return s===max ? 'Perfect! '+s+'/'+max+' ' + (first?'':'(first score '+scores[id].s+'/'+max+' saved)') : saved+' Fix the red ones and check again.';
+}
+
+/* ---------- EX 1: word bank gaps ---------- */
+const E1 = {
+  bank: ['experiment','instructions','interested','learned','learning','share'],
+  items: [
+    ['Professor Sugata Mitra set up a(n)', 'in Delhi with a computer in the street.', 'experiment'],
+    ['Children tried to use the computer although there were no', '.', 'instructions'],
+    ['After six months, most children had', 'how to use the computer.', 'learned'],
+    ['The children were able to', 'their knowledge and help each other to learn.', 'share'],
+    ['Many people outside India were', 'in Professor Mitra\u2019s experiment.', 'interested'],
+    ['The School in the Cloud was set up to help schools and teachers provide online', '.', 'learning']
+  ]
+};
+let f1 = Array(E1.items.length).fill(null), m1 = Array(E1.items.length).fill(''), act1 = 0;
+function r1(){
+  $('bank1').innerHTML = E1.bank.map(w=>'<button class="chip '+(f1.includes(w)?'used':'')+'" onclick="chip1(\''+w+'\')">'+w+'</button>').join('');
+  $('list1').innerHTML = E1.items.map((it,i)=>'<li>'+it[0]+' <span class="slot '+(i===act1?'active ':'')+m1[i]+'" onclick="slot1('+i+')">'+(f1[i]||'&nbsp;')+'</span> '+it[1]+'</li>').join('');
+}
+function slot1(i){ if (f1[i]) { f1[i]=null; m1[i]=''; } act1=i; r1(); }
+function chip1(w){
+  if (f1.includes(w)) return;
+  if (act1 < 0) act1 = f1.findIndex(x=>!x);
+  if (act1 < 0) return;
+  f1[act1]=w; m1[act1]='';
+  act1 = f1.findIndex(x=>!x); r1();
+}
+function check1(){
+  if (f1.some(x=>!x)) return fb('fb1','Fill all the gaps first.','warn');
+  let s=0; E1.items.forEach((it,i)=>{ const ok=f1[i]===it[2]; m1[i]=ok?'ok':'bad'; if(ok)s++; });
+  act1=-1; r1();
+  const first=!scores.ex1; if(first) scores.ex1={s,max:E1.items.length};
+  fb('fb1', scoreMsg('ex1',s,E1.items.length,first), s===E1.items.length?'good':'warn');
+  markDone('ex1');
+}
+
+/* ---------- EX 2: open questions ---------- */
+function save2(){
+  const a=$('t2a').value.trim(), b=$('t2b').value.trim();
+  if (words(a)<4 || words(b)<4) return fb('fb2','Write at least one full sentence for each question.','warn');
+  notes.ex2 = '1) '+a+'\n2) '+b;
+  fb('fb2','Saved! Your teacher will read your answers.','good'); markDone('ex2');
+}
+
+/* ---------- EX 3: matching ---------- */
+['p0','p1','p2'].forEach(id=>{ $(id).onchange=()=>{ $(id).className=''; }; $(id).innerHTML='<option value="">–</option>'+['A','B','C','D','E'].map(l=>'<option>'+l+'</option>').join(''); });
+function check3(){
+  const ans=['p0','p1','p2'].map(id=>$(id).value);
+  if (ans.some(a=>!a)) return fb('fb3','Choose an idea for every part.','warn');
+  if (new Set(ans).size<3) return fb('fb3','Each idea can be used only once.','warn');
+  if (KEY3.every(k=>k)) {
+    let s=0; ans.forEach((a,i)=>{ const ok=a===KEY3[i]; $('p'+i).className=ok?'ok':'bad'; if(ok)s++; });
+    const first=!scores.ex3; if(first) scores.ex3={s,max:3};
+    fb('fb3', scoreMsg('ex3',s,3,first), s===3?'good':'warn');
+  } else {
+    notes.ex3='Part 1 '+ans[0]+', Part 2 '+ans[1]+', Part 3 '+ans[2];
+    fb('fb3','Saved! Your teacher will check this one.','good');
+  }
+  markDone('ex3');
+}
+
+/* ---------- EX 4: T / F / NG ---------- */
+const E4 = [
+  'About two-thirds of the world\u2019s school-age children have no access to the internet at home.',
+  'The digital divide does not affect students\u2019 educational opportunities.',
+  'The Covid-19 pandemic didn\u2019t affect children\u2019s learning if they had internet access.',
+  'Children from richer families have much better access to the internet than poor children.',
+  'Most governments are not willing to spend money on internet access in areas outside cities.',
+  'Some families may not allow children to use the internet if they don\u2019t understand how it works.',
+  'Giga has asked technical companies to identify schools without internet access.',
+  'Giga\u2019s work will improve education for millions of children worldwide.'
+];
+const WHY4 = ['', 'It limits young people\u2019s ability to connect with each other online and with the wider world.', '', '', '', 'Some families may not let children use it because of the cost.', 'Giga has already identified over 800,000 schools in 30 countries.', ''];
+let a4 = Array(E4.length).fill(null), m4 = Array(E4.length).fill(''), shown4 = false;
+function r4(){
+  $('list4').innerHTML = E4.map((t,i)=>'<div class="tf"><p><b>'+(i+1)+'.</b> '+t+'</p><div class="pills">'+
+    ['T','F','NG'].map(v=>'<button class="pill '+(a4[i]===v?'on '+m4[i]:'')+'" onclick="pick4('+i+',\''+v+'\')">'+v+'</button>').join('')+'</div>'+
+    (shown4 && m4[i]==='bad' && WHY4[i] ? '<p class="why">Hint: '+WHY4[i]+'</p>' : '')+'</div>').join('');
+}
+function pick4(i,v){ a4[i]=v; m4[i]=''; r4(); }
+function check4(){
+  if (a4.some(x=>!x)) return fb('fb4','Answer all 8 sentences first.','warn');
+  if (KEY4.every(k=>k)) {
+    let s=0; a4.forEach((a,i)=>{ const ok=a===KEY4[i]; m4[i]=ok?'ok':'bad'; if(ok)s++; }); shown4=!!scores.ex4; r4();
+    const first=!scores.ex4; if(first) scores.ex4={s,max:E4.length};
+    fb('fb4', scoreMsg('ex4',s,E4.length,first), s===E4.length?'good':'warn');
+  } else {
+    notes.ex4=a4.map((a,i)=>(i+1)+' '+a).join(', ');
+    fb('fb4','Saved! Your teacher will check this one.','good');
+  }
+  markDone('ex4');
+}
+
+/* ---------- EX 5: verb forms ---------- */
+const E5 = {
+  bank: ['aimed','benefit','depend','lead','prevent','result','specialise','succeed'],
+  items: [
+    ['In a group project, making progress', 'on everyone working together.', ['depends']],
+    ['This course is', 'at students with good English.', ['aimed']],
+    ['Hana has won a place at university to study history \u2013 she wants to', 'in the post-war period.', ['specialise','specialize']],
+    ['Dan has failed his driving test three times, so I hope he', 'in passing it next time.', ['succeeds']],
+    ['Don\u2019t let other people\u2019s negative comments', 'you from doing what you want.', ['prevent']],
+    ['Lucy hopes gaining a qualification in translation will', 'to a job with the UN.', ['lead']],
+    ['Young learners can often', 'from working on projects with older students.', ['benefit']],
+    ['The increase in online learning could', 'in a shorter school week.', ['result']]
+  ]
+};
+let last5 = null;
+$('bank5').innerHTML = E5.bank.map(w=>'<button class="chip" onclick="chip5(\''+w+'\')">'+w+'</button>').join('');
+$('list5').innerHTML = E5.items.map((it,i)=>'<li>'+it[0]+' <input class="gap" id="g5_'+i+'" autocomplete="off" autocapitalize="off" spellcheck="false"> '+it[1]+'</li>').join('');
+E5.items.forEach((it,i)=>{ const el=$('g5_'+i); el.addEventListener('focus',()=>{ last5=el; }); el.addEventListener('input',()=>{ el.classList.remove('ok','bad'); }); });
+function chip5(w){ if(!last5) last5=$('g5_'+E5.items.findIndex((_,i)=>!$('g5_'+i).value.trim())); if(!last5) return; last5.value=w; last5.classList.remove('ok','bad'); last5.focus(); }
+function check5(){
+  const vals=E5.items.map((_,i)=>$('g5_'+i).value);
+  if (vals.some(v=>!v.trim())) return fb('fb5','Fill all the gaps first.','warn');
+  let s=0; E5.items.forEach((it,i)=>{ const ok=it[2].includes(norm(vals[i])); const el=$('g5_'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const first=!scores.ex5; if(first) scores.ex5={s,max:E5.items.length};
+  fb('fb5', scoreMsg('ex5',s,E5.items.length,first), s===E5.items.length?'good':'warn');
+  markDone('ex5');
+}
+
+/* ---------- EX 6: own ideas ---------- */
+function save6(){
+  const a=$('t6a').value.trim(), b=$('t6b').value.trim(), c=$('t6c').value.trim();
+  if (words(a)<3 || words(b)<3 || words(c)<3) return fb('fb6','Complete all three sentences.','warn');
+  notes.ex6='1) '+a+'\n2) '+b+'\n3) '+c;
+  fb('fb6','Saved! Great ideas.','good'); markDone('ex6');
+}
+
+/* ---------- SEND ---------- */
+let sent = false;
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0, max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  let breakdown = parts.join(' · ');
+  if (notes.ex3) breakdown += '\nEx3 (to check): '+notes.ex3;
+  if (notes.ex4) breakdown += '\nEx4 (to check): '+notes.ex4;
+  breakdown += '\n\nEx2:\n'+notes.ex2+'\n\nEx6:\n'+notes.ex6;
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl, {
+    method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ key:CFG.key, homework:CFG.homework, student, score:s, max, breakdown, page:location.href.split('?')[0] })
+  }).then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! \uD83C\uDF89','good'); btn.textContent='Sent \u2713'; })
+    .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+r1(); r4(); progress();
+</script>
+</body>
+</html>
