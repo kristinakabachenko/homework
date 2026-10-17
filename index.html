@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fff8f0;--card:#ffffff;--ink:#2b2b3a;--accent:#ff7a59;--accent2:#6c5ce7;--ok:#2ecc71;--bad:#e74c3c;--line:#eadfd3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink)}
+  .wrap{max-width:640px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:28px;margin:0 0 4px}
+  .sub{opacity:.7;margin:0 0 24px}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px}
+  .tag{display:inline-block;background:var(--accent2);color:#fff;font-weight:700;font-size:12px;padding:4px 10px;border-radius:99px;margin-bottom:10px}
+  .q{font-size:18px;line-height:1.9;margin:10px 0}
+  .gap{font:inherit;font-size:17px;width:150px;border:none;border-bottom:2px dashed var(--accent2);background:transparent;padding:2px 4px;color:var(--accent2);font-weight:700;outline:none}
+  .gap.ok{border-bottom:2px solid var(--ok);color:var(--ok)}
+  .gap.bad{border-bottom:2px solid var(--bad);color:var(--bad)}
+  .name{font:inherit;font-size:17px;width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:6px}
+  button{font:inherit;font-weight:800;font-size:17px;background:var(--accent);color:#fff;border:none;border-radius:14px;padding:12px 22px;cursor:pointer;margin-top:8px}
+  button:disabled{opacity:.5;cursor:default}
+  .score{font-weight:800;font-size:18px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Homework Hub</h1>
+  <p class="sub">Test page. If you can see this on your phone, everything works!</p>
+
+  <div class="card" id="nameCard">
+    <b>Your name</b>
+    <input class="name" id="student" placeholder="Type your name">
+  </div>
+
+  <div class="card">
+    <span class="tag">Verb patterns</span>
+    <p><b>Complete the sentences with the correct form of the verb.</b></p>
+    <p class="q">1. I enjoy <input class="gap" data-a="reading"> books. (read)</p>
+    <p class="q">2. My mum didn't let me <input class="gap" data-a="go"> out. (go)</p>
+    <p class="q">3. We decided <input class="gap" data-a="to stay"> at home. (stay)</p>
+    <button id="btn" onclick="finish()">Check & send</button>
+    <div class="score" id="score"></div>
+  </div>
+</div>
+<script>
+/* ===== SETTINGS ===== */
+const HOMEWORK = 'TEST – Verb patterns';   // name that appears in Notion
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec';  // Google Apps Script web app URL
+const KEY = 'moody-hw-2026';                  // must match KEY in Code.gs
+/* ==================== */
+
+// student name from the link: ...index.html?s=Glib
+const fromLink = new URLSearchParams(location.search).get('s');
+if (fromLink) { document.getElementById('student').value = fromLink; document.getElementById('nameCard').style.display = 'none'; }
+
+function finish(){
+  const student = document.getElementById('student').value.trim();
+  if (!student) { alert('Please type your name first'); return; }
+
+  let s = 0; const f = document.querySelectorAll('.gap');
+  f.forEach(i => { const ok = i.value.trim().toLowerCase() === i.dataset.a; i.className = 'gap ' + (ok ? 'ok' : 'bad'); if (ok) s++; });
+
+  const btn = document.getElementById('btn'); btn.disabled = true;
+  const out = document.getElementById('score');
+  out.textContent = 'Score: ' + s + '/' + f.length + ' · sending...';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ key: KEY, homework: HOMEWORK, student, score: s, max: f.length,
+                           breakdown: 'Ex 1: ' + s + '/' + f.length, page: location.href.split('?')[0] })
+  }).then(() => { out.textContent = 'Score: ' + s + '/' + f.length + ' · sent to your teacher ✓'; })
+    .catch(() => { out.textContent = 'Score: ' + s + '/' + f.length + ' · not sent, check your internet'; btn.disabled = false; });
+}
+</script>
+</body>
+</html>
