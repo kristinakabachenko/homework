@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.4 Vocabulary · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3fb;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#6d4aff;--brand2:#ff5c8a;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e6e0f2;--soft:#f1edff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#6d4aff 0%,#ff5c8a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2dcef;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #d8ccff;color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:140px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.quote{display:block;background:#f3f1f8;border-left:4px solid var(--brand2);border-radius:10px;padding:8px 12px;font-style:italic;margin-bottom:6px}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.dlg{background:#faf9fd;border-radius:16px;padding:12px;margin-bottom:12px}
+.dlg h3{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.line{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.line.r{flex-direction:row-reverse}
+.who{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.bubble{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px;max-width:85%}
+.line.r .bubble{background:var(--soft);border-color:#d8ccff}
+.post{border:2px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post .top{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff5c8a,#ffb020)}
+.post .top b{display:block}.post .top small{color:var(--muted)}
+.post .body{padding:12px 14px;line-height:2}
+.post .acts{display:flex;justify-content:space-around;padding:8px;border-top:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+
+/* ---- LEARN (Quizlet-style) ---- */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#efeaf8;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;height:250px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
+.front{background:linear-gradient(135deg,#6d4aff,#ff5c8a);color:#fff}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:36px;line-height:1.1}
+.front small{opacity:.85;font-weight:700}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg)}
+.back .ua{font-family:'Baloo 2',sans-serif;font-size:26px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted);font-size:15px}
+.say{font:inherit;font-size:20px;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;margin-top:12px;background:rgba(255,255,255,.25);color:#fff}
+.say.dark{background:var(--soft);color:var(--brand)}
+.row2{display:flex;gap:10px}
+.row2 .btn{flex:1;margin:0}
+.btn.grey{background:#ece8f5}
+.btn.green{background:var(--ok);color:#fff}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.qbox{background:var(--soft);border-radius:16px;padding:16px;margin-bottom:12px;text-align:center}
+.qbox .ua{font-family:'Baloo 2',sans-serif;font-size:24px;color:var(--brand)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{font:inherit;font-weight:800;padding:12px 8px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink)}
+.spell{font:inherit;font-weight:800;font-size:20px;width:100%;text-align:center;border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.spell:focus{outline:none;border-color:var(--brand)}
+.hint{color:var(--bad);font-weight:800;text-align:center;margin:0 0 8px}
+.locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.locked:before{content:"\1F512  Learn the words first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.4 Vocabulary</small>
+  <h1>Welcome to uni!</h1>
+  <p>Talk about subjects in higher education</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex0">
+  <div class="head"><div class="num">0</div><h2>Learn the words first! Go through all three steps. Then the exercises will open.</h2></div>
+  <div class="stages"><span id="st1">1 Cards</span><span id="st2">2 Choose</span><span id="st3">3 Spell</span></div>
+  <div id="learn"></div>
+  <div class="fb" id="ex0_fb"></div>
+</section>
+
+<section class="card locked" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Match the words to the definitions.</h2></div>
+  <p class="tip">Tap a gap, then tap a word.</p>
+  <div class="chips" id="ex1_bank"></div>
+  <ol class="items" id="ex1_list"></ol>
+  <button class="btn" onclick="checkTap('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card locked" id="ex2">
+  <div class="head"><div class="num">2</div><h2>What subject do you think these students are studying? Match the subjects to the quotes.</h2></div>
+  <p class="tip">Tap a gap, then tap a subject.</p>
+  <div class="chips sticky" id="ex2_bank"></div>
+  <ol class="items" id="ex2_list"></ol>
+  <button class="btn" onclick="checkTap('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card locked" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Complete the sentences with words from Exercises 1 and 2.</h2></div>
+  <p class="tip">Tap a gap, tap a word. You can also type.</p>
+  <div class="chips sticky" id="ex3_bank"></div>
+  <div id="ex3_body"></div>
+  <button class="btn" onclick="checkType('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+
+<section class="card locked" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Complete the dialogues with words from Exercises 1 and 2.</h2></div>
+  <p class="tip">Careful: sometimes you need to change the form of the word.</p>
+  <div class="chips sticky" id="ex4_bank"></div>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="checkType('ex4')">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card locked" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Complete the blog post with words from this lesson.</h2></div>
+  <p class="tip">Careful: sometimes you need to change the form of the word.</p>
+  <div class="chips sticky" id="ex5_bank"></div>
+  <div id="ex5_body"></div>
+  <button class="btn" onclick="checkType('ex5')">Check</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card locked" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Complete the sentences using words from this lesson and your own ideas.</h2></div>
+  <div id="ex6_body"></div>
+  <button class="btn" onclick="saveOpen('ex6')">Save answers</button>
+  <div class="fb" id="ex6_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.4 Vocabulary',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const LESSON_WORDS = ['academic','campus','graduate','higher education','lecture','semester',
+  'economics','engineering','law','literature','philosophy','politics','psychology','sociology'];
+
+/* ---------- EXERCISE CONTENT ---------- */
+// Tap exercises: [text before gap, text after gap, answer]
+const EX1 = { bank: ['academic','campus','graduate','higher education','lecture','semester'], items: [
+  ['learning after school, usually at college or university', '', 'higher education'],
+  ['a period of time at university lasting 15–18 weeks', '', 'semester'],
+  ['relating to education and study', '', 'academic'],
+  ['a person who has completed a degree at university', '', 'graduate'],
+  ['the grounds and buildings of a university', '', 'campus'],
+  ['an educational talk to students at a university', '', 'lecture']
+]};
+const EX2 = { bank: ['economics','engineering','law','literature','philosophy','politics','psychology','sociology'], items: [
+  ['<span class="quote">‘I’ve always been interested in how our minds work, and why people behave in certain ways.’</span>', '', 'psychology'],
+  ['<span class="quote">‘I love reading novels, plays and poetry – both traditional and modern.’</span>', '', 'literature'],
+  ['<span class="quote">‘I’m interested in international trade and financial systems. I’d like to work in banking when I finish university.’</span>', '', 'economics'],
+  ['<span class="quote">‘I enjoy learning about how governments work and make decisions, and what causes them to succeed or fail.’</span>', '', 'politics'],
+  ['<span class="quote">‘I’m interested in the history of ideas. Why are we here? What does it mean to be human?’</span>', '', 'philosophy'],
+  ['<span class="quote">‘Law and order is very important. I hope to be able to help people who are the victims of crimes.’</span>', '', 'law'],
+  ['<span class="quote">‘Society needs to do more for people with social problems, like poverty and homelessness.’</span>', '', 'sociology'],
+  ['<span class="quote">‘I love designing and building things. In the future, I want to be involved in the car industry.’</span>', '', 'engineering']
+]};
+
+// Type exercises: HTML with [[n]] where gap n goes; answers[n] = accepted answers
+const EX3 = { bank: LESSON_WORDS, html: `<ol class="items">
+  <li>Kamila has two degrees – she’s a [[0]] of two different universities.</li>
+  <li>If you want a career in international finance, it’s useful to study [[1]] at university.</li>
+  <li>If you don’t want to fail your exams, you should study harder next [[2]].</li>
+  <li>A degree in [[3]] is useful for lots of jobs, as it helps you to understand how people think and act.</li>
+  <li>Since he graduated with a degree in [[4]], Ian has worked for a company building roads and bridges.</li>
+  <li>Over 30% of eighteen-year-olds in the UK enter [[5]] each year.</li>
+  <li>As a police officer, you need to know the rules of society, so studying [[6]] at university is good training.</li>
+</ol>`, answers: [['graduate'],['economics'],['semester'],['psychology'],['engineering'],['higher education'],['law']] };
+
+function L(who, color, text, right){ return '<div class="line'+(right?' r':'')+'"><div class="who" style="background:'+color+'">'+who+'</div><div class="bubble">'+text+'</div></div>'; }
+const EX4 = { bank: LESSON_WORDS, html:
+  '<div class="dlg"><h3>Dialogue 1</h3>'+
+  L('Tim','#3b82f6','What’s it like living on the university [[0]]?')+
+  L('Bea','#ff5c8a','Great. Everything is within walking distance.',1)+
+  L('Tim','#3b82f6','What’s that big white building?')+
+  L('Bea','#ff5c8a','That’s where I have my [[1]]. I have one now: ‘An introduction to the history of ideas’.',1)+
+  L('Tim','#3b82f6','So you’re studying [[2]]?')+
+  L('Bea','#ff5c8a','That’s right.',1)+'</div>'+
+  '<div class="dlg"><h3>Dialogue 2</h3>'+
+  L('Zak','#10b981','What are you reading this [[3]] year?')+
+  L('Mia','#f59e0b','At the moment, I’m reading <i>Julius Caesar</i> – it’s a play by Shakespeare.',1)+
+  L('Zak','#10b981','Oh, right – English [[4]]. What’s it about?')+
+  L('Mia','#f59e0b','Well, … basically, how a great leader rose and fell in Ancient Rome.',1)+
+  L('Zak','#10b981','Hmm. If you want to know how governments work, maybe you should study [[5]].')+'</div>',
+  answers: [['campus'],['lectures'],['philosophy'],['academic'],['literature'],['politics']] };
+
+const EX5 = { bank: LESSON_WORDS, html:
+  '<div class="post"><div class="top"><div class="ava"></div><div><b>Rachel</b><small>2 hr</small></div></div><div class="body">'+
+  'The 2020–2021 coronavirus pandemic happened during the second [[0]] of my first year at university. I had always wanted to be a journalist, and I was studying a course called PPE. '+
+  'This combines three subjects: [[1]], where we studied ideas about the meaning of human life, [[2]], to get an understanding of the way governments work and [[3]], to learn about the finance system and international trade. '+
+  'Life was difficult at first. We weren’t allowed to move around on the [[4]] – there was a message that told all students to stay in their rooms. The university didn’t let us attend our [[5]]; we had to watch them online. '+
+  'We couldn’t meet our teachers or other students face to face. I think studying online is OK for the more [[6]] subjects like mine. However, if you are doing a practical subject like [[7]], where you have to work with other people to design and make things, it’s much more difficult.'+
+  '</div><div class="acts"><span>👍 Like</span><span>💬 Comment</span><span>↗ Share</span></div></div>',
+  answers: [['semester'],['philosophy'],['politics'],['economics'],['campus'],['lectures'],['academic'],['engineering']] };
+
+// Open exercises: sentence starters (the student completes them)
+const EX6 = [
+  'The subjects I would enjoy studying are ... because ...',
+  'I’d like a career in ..., so it would be useful to study ...',
+  'It’s important to know about ... because ...'
+];
+/* -------------------------------------- */
+
+const done = {}; const scores = {}; const notes = {};
+['ex0','ex1','ex2','ex3','ex4','ex5','ex6'].forEach(k=>done[k]=false);
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const k=Object.keys(done), n=k.filter(x=>done[x]).length;
+  $('fill').style.width=(n/k.length*100)+'%'; $('ptext').textContent=n+' of '+k.length+' tasks done';
+  $('cl').innerHTML=k.map((x,i)=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<k.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+
+/* ---------- TAP engine (each word used once) ---------- */
+const TAP = {};
+function setupTap(id, ex){ TAP[id]={...ex, fill:Array(ex.items.length).fill(null), mark:Array(ex.items.length).fill(''), act:0}; renderTap(id); }
+function renderTap(id){
+  const t=TAP[id];
+  $(id+'_bank').innerHTML=t.bank.map(w=>'<button class="chip '+(t.fill.includes(w)?'used':'')+'" onclick="tapChip(\''+id+'\',\''+w+'\')">'+w+'</button>').join('');
+  $(id+'_list').innerHTML=t.items.map((it,i)=>'<li>'+it[0]+' <span class="slot '+(i===t.act?'active ':'')+t.mark[i]+'" onclick="tapSlot(\''+id+'\','+i+')">'+(t.fill[i]||'&nbsp;')+'</span> '+it[1]+'</li>').join('');
+}
+function tapSlot(id,i){ const t=TAP[id]; if(t.fill[i]){ t.fill[i]=null; t.mark[i]=''; } t.act=i; renderTap(id); }
+function tapChip(id,w){ const t=TAP[id]; if(t.fill.includes(w)) return; if(t.act<0) t.act=t.fill.findIndex(x=>!x); if(t.act<0) return;
+  t.fill[t.act]=w; t.mark[t.act]=''; t.act=t.fill.findIndex(x=>!x); renderTap(id); }
+function checkTap(id){ const t=TAP[id];
+  if(t.fill.some(x=>!x)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const ok=t.fill[i]===it[2]; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderTap(id); record(id,s,t.items.length); }
+
+/* ---------- TYPE engine (gaps you can type in, word bank helps) ---------- */
+const TYPE = {};
+function setupType(id, ex){
+  TYPE[id]={...ex, last:null};
+  $(id+'_body').innerHTML = ex.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>'<input class="gap" id="'+id+'_g'+n+'" autocomplete="off" autocapitalize="off" spellcheck="false">');
+  $(id+'_bank').innerHTML = ex.bank.map(w=>'<button class="chip" onmousedown="event.preventDefault()" onclick="typeChip(\''+id+'\',\''+w+'\')">'+w+'</button>').join('');
+  ex.answers.forEach((_,i)=>{ const el=$(id+'_g'+i); el.addEventListener('focus',()=>{ TYPE[id].last=el; }); el.addEventListener('input',()=>el.classList.remove('ok','bad')); });
+}
+function typeChip(id,w){ const t=TYPE[id]; let el=t.last;
+  if(!el){ const i=t.answers.findIndex((_,i)=>!$(id+'_g'+i).value.trim()); if(i<0) return; el=$(id+'_g'+i); }
+  el.value=w; el.classList.remove('ok','bad');
+  const next=t.answers.findIndex((_,i)=>!$(id+'_g'+i).value.trim());
+  if(next>=0){ t.last=$(id+'_g'+next); } else { t.last=el; }
+}
+function checkType(id){ const t=TYPE[id];
+  const vals=t.answers.map((_,i)=>$(id+'_g'+i).value);
+  if(vals.some(v=>!v.trim())) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((acc,i)=>{ const ok=acc.includes(norm(vals[i])); const el=$(id+'_g'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.answers.length); }
+
+/* ---------- OPEN engine (sentence starters) ---------- */
+const OPEN = {};
+function setupOpen(id, starters){ OPEN[id]=starters;
+  $(id+'_body').innerHTML=starters.map((st,i)=>'<p style="font-weight:700;margin:12px 0 0">'+(i+1)+'. '+st.replace(/\.\.\./g,'___')+'</p><textarea id="'+id+'_t'+i+'"></textarea>').join(''); }
+function saveOpen(id){ const st=OPEN[id];
+  const vals=st.map((_,i)=>$(id+'_t'+i).value.trim());
+  if(vals.some(v=>words(v)<4)) return fb(id+'_fb','Write a full sentence for each one.','warn');
+  notes[id]='EX '+id.slice(2)+'\n'+st.map((q,i)=>(i+1)+') '+q.replace(/\.\.\./g,'___')+'\n→ '+vals[i]).join('\n');
+  fb(id+'_fb','Saved! Your teacher will read your answers.','good'); markDone(id); }
+
+
+/* ---------- STEP 0: LEARN (cards -> choose -> spell) ---------- */
+const WORDS = [
+  {w:'academic', pos:'adjective', ua:'академічний, пов’язаний з навчанням', def:'connected with education and studying', ex:'She always gets great academic results.'},
+  {w:'campus', pos:'noun', ua:'кампус, територія університету', def:'the land and buildings of a university', ex:'There is a café and a gym on campus.'},
+  {w:'graduate', pos:'noun', ua:'випускник (університету)', def:'a person who has finished a university degree', ex:'He’s a graduate of Oxford University.'},
+  {w:'higher education', pos:'noun', ua:'вища освіта', def:'studying at a college or university after school', ex:'Many young people go into higher education.'},
+  {w:'lecture', pos:'noun', ua:'лекція', def:'a talk to a large group of students about a subject', ex:'I have a history lecture at 9 a.m.'},
+  {w:'semester', pos:'noun', ua:'семестр', def:'one of the two parts of a university year', ex:'Our exams are at the end of the semester.'},
+  {w:'economics', pos:'noun', ua:'економіка (наука)', def:'the study of money, trade and business', ex:'She studies economics because she wants to work in a bank.'},
+  {w:'engineering', pos:'noun', ua:'інженерія', def:'designing and building machines, roads and bridges', ex:'Engineering students design cars and robots.'},
+  {w:'law', pos:'noun', ua:'право, юриспруденція', def:'the system of rules of a country, as a subject of study', ex:'You need a degree in law to become a lawyer.'},
+  {w:'literature', pos:'noun', ua:'література', def:'novels, plays and poems as a subject of study', ex:'We read Shakespeare in our literature class.'},
+  {w:'philosophy', pos:'noun', ua:'філософія', def:'the study of big questions about life and what it means to be human', ex:'Philosophy asks: why are we here?'},
+  {w:'politics', pos:'noun', ua:'політика, політологія', def:'the study of governments and how they make decisions', ex:'He’s interested in politics and elections.'},
+  {w:'psychology', pos:'noun', ua:'психологія', def:'the study of the mind and why people behave as they do', ex:'Psychology helps us understand how people think.'},
+  {w:'sociology', pos:'noun', ua:'соціологія', def:'the study of society and social problems', ex:'In sociology we learn about poverty and homelessness.'}
+];
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function speak(t){ try{ const u=new SpeechSynthesisUtterance(t); u.lang='en-GB'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function stageUI(n){ [1,2,3].forEach(i=>{ $('st'+i).className = i<n?'ok':(i===n?'on':''); }); }
+
+const LR = { q1:[], known:0, q2:[], q3:[], first:{}, wrongNow:false };
+
+// Stage 1: flashcards
+function startCards(){ stageUI(1); LR.q1=shuffle(WORDS.map((_,i)=>i)); LR.known=0; renderCard(); }
+function renderCard(){
+  const i=LR.q1[0], c=WORDS[i];
+  $('learn').innerHTML =
+    '<div class="fc" id="fc" onclick="this.classList.toggle(\'flip\')"><div class="fc-in">'+
+      '<div class="face front"><small>'+c.pos+'</small><div class="w">'+c.w+'</div><small style="margin-top:8px">tap to flip</small>'+
+      '<button class="say" onclick="event.stopPropagation();speak(\''+c.w+'\')">🔊</button></div>'+
+      '<div class="face back"><div class="ua">'+c.ua+'</div><div class="def">'+c.def+'</div><div class="ex">“'+c.ex+'”</div></div>'+
+    '</div></div>'+
+    '<div class="row2"><button class="btn grey" onclick="cardAgain()">↺ Still learning</button><button class="btn green" onclick="cardKnow()">✓ I know it</button></div>'+
+    '<p class="meta">Known: '+LR.known+' / '+WORDS.length+'</p>';
+}
+function cardKnow(){ if(!$('fc').classList.contains('flip')){ $('fc').classList.add('flip'); return; } LR.q1.shift(); LR.known++; LR.q1.length ? renderCard() : startChoose(); }
+function cardAgain(){ if(!$('fc').classList.contains('flip')){ $('fc').classList.add('flip'); return; } LR.q1.push(LR.q1.shift()); renderCard(); }
+
+// Stage 2: choose the word
+function startChoose(){ stageUI(2); LR.q2=shuffle(WORDS.map((_,i)=>i)); renderChoose(); }
+function renderChoose(){
+  const i=LR.q2[0], c=WORDS[i], useUa=Math.random()<.5;
+  const opts=shuffle([i].concat(shuffle(WORDS.map((_,k)=>k).filter(k=>k!==i)).slice(0,3)));
+  $('learn').innerHTML='<div class="qbox">'+(useUa?'<div class="ua">'+c.ua+'</div>':'<div style="font-weight:700">'+c.def+'</div>')+'</div>'+
+    '<div class="opts">'+opts.map(k=>'<button class="opt" id="o'+k+'" onclick="pickChoose('+k+')">'+WORDS[k].w+'</button>').join('')+'</div>'+
+    '<p class="meta">Left: '+LR.q2.length+'</p>';
+}
+function pickChoose(k){
+  const i=LR.q2[0]; document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  $('o'+i).classList.add('ok');
+  if(k===i){ LR.q2.shift(); speak(WORDS[i].w); setTimeout(()=>{ LR.q2.length?renderChoose():startSpell(); },700); }
+  else { $('o'+k).classList.add('bad'); LR.q2.push(LR.q2.shift()); setTimeout(renderChoose,1500); }
+}
+
+// Stage 3: spell the word
+function startSpell(){ stageUI(3); LR.q3=shuffle(WORDS.map((_,i)=>i)); LR.first={}; renderSpell(); }
+function renderSpell(){
+  const i=LR.q3[0], c=WORDS[i]; LR.wrongNow=false;
+  $('learn').innerHTML='<div class="qbox"><div class="ua">'+c.ua+'</div><div style="margin-top:4px">'+c.def+'</div>'+
+    '<button class="say dark" onclick="speak(\''+c.w+'\')">🔊</button></div>'+
+    '<div class="hint" id="hint"></div>'+
+    '<input class="spell" id="sp" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type the word">'+
+    '<button class="btn" style="width:100%" onclick="checkSpell()">Check</button>'+
+    '<p class="meta">Left: '+LR.q3.length+' · First-try correct: '+Object.values(LR.first).filter(Boolean).length+'</p>';
+  const sp=$('sp'); sp.focus(); sp.addEventListener('keydown',e=>{ if(e.key==='Enter') checkSpell(); });
+}
+function checkSpell(){
+  const i=LR.q3[0], c=WORDS[i], v=norm($('sp').value); if(!v) return;
+  if(v===c.w){
+    if(!(i in LR.first)) LR.first[i]=true;
+    $('sp').classList.add('ok');
+    if(LR.wrongNow) LR.q3.push(LR.q3.shift()); else LR.q3.shift();   // a mistake means: spell it again later
+    setTimeout(()=>{ LR.q3.length ? renderSpell() : finishLearn(); },600);
+  } else {
+    LR.first[i]=false; LR.wrongNow=true;
+    $('sp').classList.add('bad');
+    $('hint').textContent='Correct spelling: '+c.w+' — type it to continue';
+    setTimeout(()=>{ $('sp').classList.remove('bad'); $('sp').value=''; $('sp').focus(); },900);
+  }
+}
+function finishLearn(){
+  stageUI(4);
+  const s=Object.values(LR.first).filter(Boolean).length;
+  $('learn').innerHTML='<div class="qbox"><div class="ua">🎓 Well done!</div><div>You learned all '+WORDS.length+' words. The exercises are open now.</div></div>'+
+    '<button class="btn grey" onclick="startCards()">Practise the cards again</button>';
+  if(!scores.ex0){ scores.ex0={s,max:WORDS.length}; }
+  fb('ex0_fb','Spelling score saved: '+scores.ex0.s+'/'+WORDS.length+' first try.','good');
+  ['ex1','ex2','ex3','ex4','ex5','ex6'].forEach(k=>$(k).classList.remove('locked'));
+  markDone('ex0');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push((k==='ex0'?'Words (spelling)':'Ex'+k.slice(2))+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupTap('ex1', EX1); setupTap('ex2', EX2);
+setupType('ex3', EX3); setupType('ex4', EX4); setupType('ex5', EX5);
+setupOpen('ex6', EX6);
+startCards();
+progress();
+</script>
+</body>
+</html>
