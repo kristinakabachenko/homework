@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First & Second Conditionals · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef7f9;--card:#fff;--ink:#16303a;--muted:#5f7680;--brand:#1597b8;--brand2:#7c5cff;--first:#14a37f;--second:#7c5cff;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#d7e8ee;--soft:#e6f5f9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#1597b8 0%,#7c5cff 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"?";position:absolute;right:18px;top:-20px;font-family:'Baloo 2',sans-serif;font-size:170px;line-height:1;opacity:.15}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#d3e6ec;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;min-width:36px;height:36px;padding:0 6px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:19px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 12px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#16303a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn.grey{background:#e3eef2}
+.btn.green{background:var(--ok);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.name:focus,.sent:focus,textarea:focus{outline:none;border-color:var(--brand)}
+
+/* rules stages */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#e3eef2;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;min-height:330px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;min-height:330px;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;padding:20px;display:flex;flex-direction:column;justify-content:center}
+.front{color:#fff;text-align:center;align-items:center}
+.front .t{font-family:'Baloo 2',sans-serif;font-size:30px;line-height:1.15}
+.front .q{font-size:17px;opacity:.95;margin-top:10px;font-weight:700}
+.front small{opacity:.85;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg);overflow:auto;justify-content:flex-start}
+.back h3{font-family:'Baloo 2',sans-serif;font-size:20px;margin:0 0 6px}
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 10px}
+.formula b{background:var(--soft);border-radius:10px;padding:4px 10px;font-size:15px}
+.ex{border-left:4px solid var(--brand);background:#f6fafb;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:16px}
+.ua{color:var(--muted);font-size:14px;margin-top:8px}
+.no{color:var(--bad);font-weight:800}.yes{color:var(--ok);font-weight:800}
+.row2{display:flex;gap:10px}.row2 .btn{flex:1;margin:0}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#d3e6ec}
+.dots i.y{background:var(--ok)}.dots i.c{background:var(--brand)}
+.qbox{background:var(--soft);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.qbox small{font-weight:800;color:var(--muted);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.qbox p{margin:4px 0 0;font-weight:700}
+.opts{display:grid;gap:8px}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{font:inherit;font-weight:700;padding:12px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink);text-align:left}
+.opts.three .opt{text-align:center}
+.explain{background:#fff8e6;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:15px}
+.tag1{background:#e0f5ee;color:var(--first);font-weight:800;border-radius:6px;padding:0 6px}
+.tag2{background:#ece6ff;color:var(--second);font-weight:800;border-radius:6px;padding:0 6px}
+
+/* exercises */
+.locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.locked:before{content:"\1F512  Learn the rules first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
+ol.items{margin:0;padding-left:24px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+input.gap{font:inherit;font-weight:800;width:200px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.cue{color:var(--muted);font-weight:700}
+.given{font-weight:800;color:var(--brand)}
+.model{font-size:14px;color:#9a3412;background:#fff4e5;border-radius:10px;padding:6px 10px;margin-top:6px}
+.dlg .line{margin:0 0 14px}
+.who{display:inline-block;font-weight:800;font-size:13px;color:#fff;border-radius:99px;padding:2px 10px;margin-bottom:4px}
+.bubble{background:#f6fafb;border:2px solid var(--line);border-radius:16px;padding:8px 12px}
+.prompt{background:var(--soft);border-radius:10px;padding:4px 10px;font-weight:700;display:inline-block;margin:4px 0}
+.sent{font:inherit;width:100%;border:2px solid var(--line);border-radius:12px;padding:9px 12px;margin-top:6px;font-weight:700}
+.qa{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--line)}
+.qa .ans{background:#f3f0ff;border-radius:10px;padding:6px 10px;font-weight:700}
+.qa .ans:before{content:"Answer: ";color:var(--muted);font-weight:600}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;min-width:44px;height:34px;padding:0 6px;border-radius:10px;background:#e3eef2;color:var(--muted);font-weight:800;display:grid;place-items:center;font-size:14px}
+.checklist i.y{background:var(--ok);color:#fff}
+@media (max-width:480px){.opts.three{grid-template-columns:1fr}.front .t{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Grammar · Conditionals</small>
+  <h1>What if...?</h1>
+  <p>First and second conditionals: real or imaginary?</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- STEP 0: RULES -->
+<section class="card" id="ex0">
+  <div class="head"><div class="num">0</div><h2>Learn the rules first! Go through all three steps. Then the exercises will open.</h2></div>
+  <div class="stages"><span id="st1">1 Rule cards</span><span id="st2">2 Real or imaginary?</span><span id="st3">3 Choose the form</span></div>
+  <div id="learn"></div>
+  <div class="fb" id="ex0_fb"></div>
+</section>
+
+<!-- EX 90 -->
+<section class="card locked" id="ex90">
+  <div class="head"><div class="num">90</div><h2>Put the verbs into the correct form.</h2></div>
+  <p class="tip">Is it a first or a second conditional? Look at the other half of the sentence.</p>
+  <div id="ex90_body"></div>
+  <button class="btn" onclick="checkGaps('ex90')">Check</button>
+  <div class="fb" id="ex90_fb"></div>
+</section>
+
+<!-- EX 91 -->
+<section class="card locked" id="ex91">
+  <div class="head"><div class="num">91</div><h2>Lisa and Trish are students. They're talking about what to do after university. Write sentences using the words given.</h2></div>
+  <p class="tip">Write the whole sentence. Short forms (I'd, you'll) and full forms (I would, you will) are both fine.</p>
+  <div class="dlg" id="ex91_body"></div>
+  <button class="btn" onclick="checkSent('ex91')">Check</button>
+  <div class="fb" id="ex91_fb"></div>
+</section>
+
+<!-- EX 92 -->
+<section class="card locked" id="ex92">
+  <div class="head"><div class="num">92</div><h2>Write questions using <i>if</i> for the following answers.</h2></div>
+  <p class="tip">There's no single correct answer here. Be creative! Your teacher will read your questions.</p>
+  <div id="ex92_body"></div>
+  <button class="btn" onclick="save92()">Save my questions</button>
+  <div class="fb" id="ex92_fb"></div>
+  <div id="ex92_models"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'First & Second Conditionals (90–92)',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const TASKS = ['ex0','ex90','ex91','ex92'];
+const LABEL = {ex0:'Rules', ex90:'90', ex91:'91', ex92:'92'};
+const done = {}; TASKS.forEach(k=>done[k]=false);
+const scores = {}; const notes = {};
+
+function $(id){ return document.getElementById(id); }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* Normalise answers: lower case, no punctuation, short forms -> full forms */
+const SHORT = [[/\bwon't\b/g,'will not'],[/\bcan't\b/g,'cannot'],[/n't\b/g,' not'],[/\b(i|you|he|she|we|they|that|it|there)'d\b/g,'$1 would'],
+  [/'ll\b/g,' will'],[/\bi'm\b/g,'i am'],[/'re\b/g,' are'],[/\b(it|that|he|she|there)'s\b/g,'$1 is']];
+function norm(v){
+  let s=String(v||'').toLowerCase().replace(/[‘’`]/g,"'").replace(/[^a-z' ]/g,' ');
+  SHORT.forEach(([r,t])=>{ s=s.replace(r,t); });
+  return s.replace(/\s+/g,' ').trim();
+}
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const n=TASKS.filter(k=>done[k]).length;
+  $('fill').style.width=(n/TASKS.length*100)+'%'; $('ptext').textContent=n+' of '+TASKS.length+' tasks done';
+  $('cl').innerHTML=TASKS.map(k=>'<i class="'+(done[k]?'y':'')+'">'+LABEL[k]+'</i>').join('');
+  $('sendBtn').disabled = n<TASKS.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb',msg,s===max?'good':'warn'); markDone(id);
+}
+
+/* =============== STEP 0: LEARN THE RULES =============== */
+const RULES = [
+  {c:'#14a37f', tag:'First conditional', t:'FORM', q:'How do we make it?',
+   back:'<h3>First conditional: form</h3><div class="formula"><b>If + present simple</b>,<b>will / won’t + verb</b></div>'+
+   '<div class="ex">If it <u>rains</u>, we<u>’ll stay</u> at home.</div>'+
+   '<div class="ex">We<u>’ll stay</u> at home if it <u>rains</u>.</div>'+
+   '<p style="margin:8px 0 0;font-size:15px">If-part first → use a comma. If-part second → no comma.</p>'},
+  {c:'#14a37f', tag:'First conditional', t:'USE', q:'When do we use it?',
+   back:'<h3>First conditional: use</h3><p style="margin:0">For <b>real, possible situations</b> in the future. It can really happen.</p>'+
+   '<div class="ex">If I <u>finish</u> early, I<u>’ll call</u> you. <span class="cue">(I may finish early.)</span></div>'+
+   '<div class="ex">If you <u>don’t revise</u>, you <u>won’t pass</u>. <span class="cue">(a real warning)</span></div>'+
+   '<div class="ua">🇺🇦 Реальна умова: це цілком може статися.</div>'},
+  {c:'#7c5cff', tag:'Second conditional', t:'FORM', q:'How do we make it?',
+   back:'<h3>Second conditional: form</h3><div class="formula"><b>If + past simple</b>,<b>would / wouldn’t + verb</b></div>'+
+   '<div class="ex">If I <u>had</u> more money, I<u>’d buy</u> a car.</div>'+
+   '<div class="ex">What <u>would</u> you <u>do</u> if you <u>lost</u> your phone?</div>'+
+   '<p style="margin:8px 0 0;font-size:15px">I’d = I would. Questions: <b>What would you do if...?</b></p>'},
+  {c:'#7c5cff', tag:'Second conditional', t:'USE', q:'When do we use it?',
+   back:'<h3>Second conditional: use</h3><p style="margin:0">For <b>imaginary or unlikely situations</b> in the present or future.</p>'+
+   '<div class="ex">If I <u>lived</u> in Spain, I<u>’d speak</u> Spanish. <span class="cue">(But I don’t live in Spain.)</span></div>'+
+   '<div class="ex">If I <u>won</u> the lottery, I<u>’d travel</u>. <span class="cue">(Very unlikely!)</span></div>'+
+   '<p style="margin:8px 0 0;font-size:15px">⚠️ Past simple here does <b>not</b> mean the past. It means “not real”.</p>'+
+   '<div class="ua">🇺🇦 Уявна умова: “якби”. Зараз це не так або майже неможливо.</div>'},
+  {c:'#1597b8', tag:'The big difference', t:'1st or 2nd?', q:'How do I choose?',
+   back:'<h3>Ask yourself: is it realistic?</h3>'+
+   '<div class="ex"><span class="tag1">1st</span> If I <u>win</u> the match tomorrow, I<u>’ll be</u> happy. <span class="cue">(We have a good team. It’s possible.)</span></div>'+
+   '<div class="ex"><span class="tag2">2nd</span> If I <u>won</u> the World Cup, I<u>’d be</u> famous. <span class="cue">(I’m imagining.)</span></div>'+
+   '<p style="margin:8px 0 0;font-size:15px">Same idea, different reality. <b>Possible → 1st. Imaginary → 2nd.</b></p>'},
+  {c:'#7c5cff', tag:'Second conditional', t:'was or were?', q:'If I was... or If I were...?',
+   back:'<h3>If I was / If I were</h3><p style="margin:0">With <b>I / he / she / it</b> both are correct. <b>Were</b> sounds more formal.</p>'+
+   '<div class="ex">If she <u>was / were</u> nicer, she<u>’d have</u> more friends.</div>'+
+   '<p style="margin:8px 0 4px">For advice we always say <b>If I were you</b>:</p>'+
+   '<div class="ex">If I <u>were</u> you, I<u>’d apologise</u>.</div>'},
+  {c:'#1597b8', tag:'Extra', t:'could & might', q:'Do I always need will / would?',
+   back:'<h3>Other modal verbs</h3>'+
+   '<div class="ex"><span class="tag1">1st</span> If you look at the website, you <u>can</u> see the hotel. / I <u>may</u> not get a good mark.</div>'+
+   '<div class="ex"><span class="tag2">2nd</span> If I had time, I <u>could</u> help you. / I <u>might</u> go.</div>'+
+   '<div class="ex"><span class="tag2">2nd</span> If I <u>could</u> fly, I’d visit Japan. <span class="cue">(could = was able to)</span></div>'},
+  {c:'#e5484d', tag:'Watch out!', t:'The #1 mistake', q:'What never goes in the if-part?',
+   back:'<h3>No will / would after if!</h3>'+
+   '<div class="ex"><span class="no">✗</span> If I <s>will see</s> him, I’ll tell him.<br><span class="yes">✓</span> If I <u>see</u> him, I’ll tell him.</div>'+
+   '<div class="ex"><span class="no">✗</span> If I <s>would have</s> a dog, I’d walk it.<br><span class="yes">✓</span> If I <u>had</u> a dog, I’d walk it.</div>'+
+   '<div class="ua">🇺🇦 В українській кажемо “якщо я побачу” (майбутнє), але в англійській після if — present simple.</div>'}
+];
+
+// Stage 2: real or imaginary? (pick the sentence that fits the situation)
+const SITU = [
+  {s:'You have a test tomorrow and you studied a lot.', o:['If I pass, I’ll celebrate with my friends.','If I passed, I’d celebrate with my friends.'], a:0, why:'Passing is a real possibility, so we use the first conditional.'},
+  {s:'You’re 13 and you’re dreaming about being the president.', o:['If I become president, I’ll change the school rules.','If I were president, I’d change the school rules.'], a:1, why:'This is imaginary right now, so we use the second conditional.'},
+  {s:'The sky is grey and your friend hasn’t got an umbrella.', o:['If it rains, you’ll get wet.','If it rained, you’d get wet.'], a:0, why:'Rain is very possible today: first conditional.'},
+  {s:'You haven’t got a dog. Your parents always say “never”.', o:['If I have a dog, I’ll walk it every day.','If I had a dog, I’d walk it every day.'], a:1, why:'You haven’t got a dog and it’s unlikely: second conditional.'},
+  {s:'Your mum might let you go to the cinema tonight.', o:['If she lets me go, I’ll text you.','If she let me go, I’d text you.'], a:0, why:'It might happen, so it’s a real possibility: first conditional.'},
+  {s:'You’re imagining an alien invasion.', o:['If aliens land in Kyiv, I’ll hide under my bed.','If aliens landed in Kyiv, I’d hide under my bed.'], a:1, why:'Aliens landing is imaginary: second conditional.'},
+  {s:'Your friend asks: “Should I tell the teacher?” You give advice.', o:['If I am you, I’ll tell her.','If I were you, I’d tell her.'], a:1, why:'You can’t be your friend, so advice uses “If I were you, I’d...”.'},
+  {s:'You may have some free time after lunch.', o:['If I have time, I’ll help you.','If I had time, I’d help you.'], a:0, why:'You may really have time: first conditional.'}
+];
+
+// Stage 3: choose the correct form
+const FORMS = [
+  {s:'If I ___ him, I’ll tell him the news.', o:['see','will see','saw'], a:0, why:'First conditional: if + present simple. Never will after if.'},
+  {s:'If I had a car, I ___ you home.', o:['’d drive','’ll drive','drive'], a:0, why:'If + past simple → would + verb.'},
+  {s:'If she ___ harder, she would pass all her exams.', o:['studied','studies','would study'], a:0, why:'Second conditional: if + past simple. No would after if.'},
+  {s:'We’ll be late if we ___ now.', o:['don’t leave','won’t leave','didn’t leave'], a:0, why:'The other half has will, so the if-part takes present simple.'},
+  {s:'If I ___ you, I’d say sorry.', o:['were','am','will be'], a:0, why:'Advice: If I were you, I’d...'},
+  {s:'What ___ you do if you lost your phone?', o:['would','will','do'], a:0, why:'“lost” is past simple, so the question uses would.'},
+  {s:'If it ___ sunny tomorrow, we’ll go to the beach.', o:['is','will be','was'], a:0, why:'Real future plan: if + present simple, will.'},
+  {s:'I ___ come to your party if I could, but I’m busy.', o:['would','will','can'], a:0, why:'“If I could” is imaginary, so we use would.'}
+];
+
+const LR = { i:0, flipped:{}, seen:{}, q2:[], q3:[], first:{} };
+function stageUI(n){ [1,2,3].forEach(i=>{ $('st'+i).className = i<n?'ok':(i===n?'on':''); }); }
+
+function startCards(){ stageUI(1); LR.i=0; renderRule(); }
+function renderRule(){
+  const r=RULES[LR.i];
+  $('learn').innerHTML =
+    '<div class="fc" id="fc" onclick="flipRule()"><div class="fc-in">'+
+      '<div class="face front" style="background:linear-gradient(135deg,'+r.c+',#16303a)"><small>'+r.tag+'</small><div class="t">'+r.t+'</div><div class="q">'+r.q+'</div><small style="margin-top:14px">tap to flip</small></div>'+
+      '<div class="face back">'+r.back+'</div>'+
+    '</div></div>'+
+    '<div class="row2"><button class="btn grey" onclick="prevRule()" '+(LR.i===0?'disabled':'')+'>← Back</button>'+
+    '<button class="btn green" id="gotIt" onclick="nextRule()">'+(LR.flipped[LR.i]?'Got it →':'Flip the card first')+'</button></div>'+
+    '<div class="dots">'+RULES.map((_,k)=>'<i class="'+(k===LR.i?'c':(LR.seen[k]?'y':''))+'"></i>').join('')+'</div>'+
+    '<p class="meta">Card '+(LR.i+1)+' of '+RULES.length+'</p>';
+  if(LR.flipped[LR.i]) $('fc').classList.add('flip');
+}
+function flipRule(){ $('fc').classList.toggle('flip'); LR.flipped[LR.i]=true; $('gotIt').textContent='Got it →'; }
+function nextRule(){
+  if(!LR.flipped[LR.i]){ flipRule(); return; }
+  LR.seen[LR.i]=true;
+  if(LR.i<RULES.length-1){ LR.i++; renderRule(); } else startSituations();
+}
+function prevRule(){ if(LR.i>0){ LR.i--; renderRule(); } }
+
+function startSituations(){ stageUI(2); LR.q2=shuffle(SITU.map((_,i)=>i)); renderSitu(); }
+function renderSitu(){
+  const it=SITU[LR.q2[0]];
+  $('learn').innerHTML='<div class="qbox"><small>Situation</small><p>'+it.s+'</p></div>'+
+    '<p style="margin:0 0 8px;font-weight:700">Which sentence fits?</p>'+
+    '<div class="opts">'+it.o.map((o,k)=>'<button class="opt" id="s'+k+'" onclick="pickSitu('+k+')">'+o+'</button>').join('')+'</div>'+
+    '<div id="sx"></div><p class="meta">Left: '+LR.q2.length+'</p>';
+}
+function pickSitu(k){
+  const idx=LR.q2[0], it=SITU[idx]; document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  $('s'+it.a).classList.add('ok');
+  const right=k===it.a; if(!('s'+idx in LR.first)) LR.first['s'+idx]=right;
+  if(!right) $('s'+k).classList.add('bad');
+  $('sx').innerHTML='<div class="explain">'+(right?'✅ ':'❌ ')+it.why+'</div>'+
+    '<button class="btn" style="margin-top:10px" onclick="nextSitu('+right+')">Next →</button>';
+}
+function nextSitu(right){ if(right) LR.q2.shift(); else LR.q2.push(LR.q2.shift()); LR.q2.length?renderSitu():startForms(); }
+
+function startForms(){ stageUI(3); LR.q3=shuffle(FORMS.map((_,i)=>i)); renderForm(); }
+function renderForm(){
+  const idx=LR.q3[0], it=FORMS[idx]; const order=shuffle([0,1,2]);
+  $('learn').innerHTML='<div class="qbox"><small>Choose the correct form</small><p>'+it.s.replace('___','<span style="border-bottom:2px dashed var(--brand);padding:0 18px"></span>')+'</p></div>'+
+    '<div class="opts three">'+order.map(k=>'<button class="opt" id="f'+k+'" onclick="pickForm('+k+')">'+it.o[k]+'</button>').join('')+'</div>'+
+    '<div id="fx"></div><p class="meta">Left: '+LR.q3.length+'</p>';
+}
+function pickForm(k){
+  const idx=LR.q3[0], it=FORMS[idx]; document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  $('f'+it.a).classList.add('ok');
+  const right=k===it.a; if(!('f'+idx in LR.first)) LR.first['f'+idx]=right;
+  if(!right) $('f'+k).classList.add('bad');
+  $('fx').innerHTML='<div class="explain">'+(right?'✅ ':'❌ ')+it.why+'</div>'+
+    '<button class="btn" style="margin-top:10px" onclick="nextForm('+right+')">Next →</button>';
+}
+function nextForm(right){ if(right) LR.q3.shift(); else LR.q3.push(LR.q3.shift()); LR.q3.length?renderForm():finishRules(); }
+
+function finishRules(){
+  stageUI(4);
+  const max=SITU.length+FORMS.length, s=Object.values(LR.first).filter(Boolean).length;
+  if(!scores.ex0) scores.ex0={s,max};
+  $('learn').innerHTML='<div class="qbox" style="text-align:center"><p style="font-family:\'Baloo 2\',sans-serif;font-size:24px;color:var(--brand)">🎉 Rules learned!</p>'+
+    '<p style="font-weight:600">Remember: <span class="tag1">possible</span> → if + present, will. <span class="tag2">imaginary</span> → if + past, would.</p></div>'+
+    '<button class="btn grey" onclick="startCards()">Look at the rule cards again</button>';
+  fb('ex0_fb','First-try score saved: '+scores.ex0.s+'/'+max+'. The exercises are open now!','good');
+  ['ex90','ex91','ex92'].forEach(k=>$(k).classList.remove('locked'));
+  markDone('ex0');
+}
+
+/* =============== EX 90: gaps =============== */
+const EX90 = {
+  html:`<ol class="items">
+  <li>If I had more money, <span class="given">would you marry</span> <span class="cue">(you / marry)</span> me? <span class="cue">← example</span></li>
+  <li>The teacher wouldn’t help you if [[0]] <span class="cue">(he / not / like)</span> you.</li>
+  <li>[[1]] <span class="cue">(you / see)</span> what the hotel looks like if you look at the website.</li>
+  <li>[[2]] <span class="cue">(your boyfriend / not / be)</span> amazed if he could see you now?</li>
+  <li>If [[3]] <span class="cue">(I / not / revise)</span> thoroughly, I may not get a good mark.</li>
+  <li>If you wanted to buy your dad a present, what [[4]] <span class="cue">(you / look for)</span>?</li>
+  <li>Sarah would have a lot more friends if [[5]] <span class="cue">(she / not / be)</span> so mean.</li>
+  <li>How [[6]] <span class="cue">(you / feel)</span> if you were in my situation?</li>
+  <li>Would you change your job if [[7]] <span class="cue">(you / can)</span>?</li>
+</ol>`,
+  answers:[['he didn’t like'],['you’ll see'],['wouldn’t your boyfriend be','would your boyfriend not be'],['I don’t revise'],
+    ['would you look for'],['she wasn’t','she weren’t'],['would you feel'],['you could']]
+};
+function setupGaps(id,ex){
+  $(id+'_body').innerHTML=ex.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>'<input class="gap" id="'+id+'_g'+n+'" autocomplete="off" autocapitalize="off" spellcheck="false">');
+  ex.answers.forEach((_,i)=>$(id+'_g'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function checkGaps(id){
+  const ex=EX90, vals=ex.answers.map((_,i)=>$(id+'_g'+i).value);
+  if(vals.some(v=>!v.trim())) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; ex.answers.forEach((acc,i)=>{ const ok=acc.map(norm).includes(norm(vals[i])); const el=$(id+'_g'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,ex.answers.length);
+}
+
+/* =============== EX 91: full sentences =============== */
+const EX91 = [
+  {who:'Trish', text:'Do you have any plans for next year?'},
+  {who:'Lisa', text:'Well, I don’t have much money. But I speak Portuguese and Spanish. So', p:'(1) I / travel / if I / afford it.', example:'I’d travel if I could afford it.'},
+  {who:'Trish', p:'(2) If you / find / a job using your languages / you / take it?', a:['If you could find a job using your languages, would you take it?','If you found a job using your languages, would you take it?']},
+  {who:'Lisa', p:'(3) If it / be / in South America / I / certainly / consider it carefully.', after:'I’ve always wanted to go there.', a:['If it was in South America, I’d certainly consider it carefully.','If it were in South America, I’d certainly consider it carefully.']},
+  {who:'Trish', text:'What about working as a tour guide, taking tourists round?', p:'(4) That / be / a great way to travel if you / speak the right languages.', a:['That’d be a great way to travel if you could speak the right languages.','That’d be a great way to travel if you spoke the right languages.']},
+  {who:'Lisa', text:'But', p:'(5) I / only / consider / a job like that if I / be / sure the travel company was a good one.', a:['I’d only consider a job like that if I was sure the travel company was a good one.','I’d only consider a job like that if I were sure the travel company was a good one.']},
+  {who:'Lisa', p:'(6) If the tourists / not / like / their hotels and so on, I / have a terrible time.', a:['If the tourists didn’t like their hotels and so on, I’d have a terrible time.']},
+  {who:'Trish', text:'Yes.', p:'(7) You / be / handling complaints every day if they / not / be / happy.', a:['You’d be handling complaints every day if they weren’t happy.','You could be handling complaints every day if they weren’t happy.']},
+  {who:'Lisa', text:'Exactly!', p:'(8) But if I / decide / to apply for a job like that, / you / help me with my application?', a:['But if I decide to apply for a job like that, will you help me with my application?','But if I decided to apply for a job like that, would you help me with my application?']},
+  {who:'Trish', text:'Of course. And, I’m sure', p:'(9) you / succeed, if you / do.', a:['You’ll succeed if you do.']},
+  {who:'Lisa', text:'Thanks very much.'}
+];
+const SENT_ITEMS = EX91.filter(x=>x.a);
+const tries91 = {};
+function setupSent(){
+  let n=0;
+  $('ex91_body').innerHTML=EX91.map(x=>{
+    const col = x.who==='Lisa' ? '#7c5cff' : '#1597b8';
+    let h='<div class="line"><span class="who" style="background:'+col+'">'+x.who+'</span><div class="bubble">';
+    if(x.text) h+='<div>'+x.text+'</div>';
+    if(x.p) h+='<div class="prompt">'+x.p+'</div>';
+    if(x.example) h+='<div class="given" style="margin-top:4px">'+x.example+' <span class="cue">← example</span></div>';
+    if(x.a){ h+='<input class="sent" id="ex91_s'+n+'" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Write the sentence"><div id="ex91_m'+n+'"></div>'; n++; }
+    if(x.after) h+='<div style="margin-top:6px">'+x.after+'</div>';
+    return h+'</div></div>';
+  }).join('');
+  SENT_ITEMS.forEach((_,i)=>$('ex91_s'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function sentOk(val,accepted){
+  const v=norm(val).replace(/^(but|and|so|yes|well|of course|i am sure)\s+/,'');
+  return accepted.some(a=>{ const t=norm(a), t2=t.replace(/^but /,''); return v===t||v===t2; });
+}
+function checkSent(id){
+  const vals=SENT_ITEMS.map((_,i)=>$('ex91_s'+i).value);
+  if(vals.some(v=>!v.trim())) return fb('ex91_fb','Write all the sentences first.','warn');
+  let s=0;
+  SENT_ITEMS.forEach((it,i)=>{
+    const ok=sentOk(vals[i],it.a), el=$('ex91_s'+i);
+    el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++;
+    tries91[i]=(tries91[i]||0)+(ok?0:1);
+    $('ex91_m'+i).innerHTML = (!ok && tries91[i]>=2) ? '<div class="model">Model answer: '+it.a.join(' <b>or</b> ')+'</div>' : '';
+  });
+  record('ex91',s,SENT_ITEMS.length);
+}
+
+/* =============== EX 92: open questions =============== */
+const EX92 = ['I’d share it with my friends.','I’d call the police.','We’d get out as fast as we could.','I’d ask my teacher’s advice about it.',
+  'He’d be extremely angry.','She’d probably fall over.','I’d be late for work.','We’d sail around the world.','They’d never make any money.',
+  'There’d be no more wars.','I’d stay at home all day.'];
+const MODELS92 = ['What would you do if you won a lottery prize?','What would you do if you saw someone break into a car?','What would you do if your house was on fire?',
+  'What would you do if you were having a problem with grammar?','How would your brother react if you crashed his car?','What would happen if your sister wore those shoes outside?',
+  'What would happen if you overslept?','What would you and your friends do if you didn’t have to earn money?','What would happen to car manufacturers if we all rode bikes?',
+  'What would happen if all the politicians retired?','What would you do if you felt ill when you woke up?'];
+function setup92(){
+  $('ex92_body').innerHTML='<div class="qa"><div><b>1.</b> <span class="given">What would you do if someone gave you a diamond necklace?</span> <span class="cue">← example</span></div><div class="ans">I’d probably give it to my mother.</div></div>'+
+    EX92.map((a,i)=>'<div class="qa"><label for="q92_'+i+'"><b>'+(i+2)+'.</b> Your question:</label>'+
+    '<input class="sent" id="q92_'+i+'" autocomplete="off" autocapitalize="sentences" placeholder="What would ... if ...?"><div class="ans">'+a+'</div></div>').join('');
+  EX92.forEach((_,i)=>$('q92_'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function save92(){
+  const vals=EX92.map((_,i)=>$('q92_'+i).value.trim());
+  let bad=0;
+  vals.forEach((v,i)=>{ const n=' '+norm(v)+' '; const good=words(v)>=5 && n.includes(' if ') && n.includes(' would ') && /\?\s*$/.test(v);
+    const el=$('q92_'+i); el.classList.remove('ok','bad'); if(!good){ el.classList.add('bad'); bad++; } });
+  if(bad) return fb('ex92_fb','Check the red ones: each question needs “would”, “if” and a question mark (?).','warn');
+  notes.ex92='EX 92 (questions with if)\n'+EX92.map((a,i)=>(i+2)+') '+vals[i]+'\n   → '+a).join('\n');
+  fb('ex92_fb','Saved! Your teacher will read your questions. Compare them with the example answers below.','good');
+  $('ex92_models').innerHTML='<div class="explain" style="margin-top:14px"><b>Example answers from the book</b> (yours can be different!)<ol start="2" style="margin:6px 0 0;padding-left:22px">'+
+    MODELS92.map(m=>'<li>'+m+'</li>').join('')+'</ol></div>';
+  markDone('ex92');
+}
+
+/* =============== SEND =============== */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push((k==='ex0'?'Rules (first try)':'Ex'+k.slice(2))+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+startCards(); setupGaps('ex90',EX90); setupSent(); setup92(); progress();
+</script>
+</body>
+</html>
