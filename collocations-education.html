@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collocations: education</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+/* ============ CONFIG lives in the <script> at the bottom ============ */
+:root{
+  --ink:#1a1a1a; --body:#4a4a4a; --muted:#8a8580;
+  --paper:#ffffff; --desk:#f7f4ee; --cream:#fbf9f0; --line:#e8e2d6;
+  --pink:#f6dce5; --pink-d:#693751; --pink-m:#c97b9c;
+  --blue:#d2e4f8; --blue-d:#274d71;
+  --ok:#2f8a57; --ok-bg:#e3f4ea; --bad:#b33a3a; --bad-bg:#fbe5e5;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+header{margin-bottom:18px}
+.pills{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px}
+.pill.unit{background:var(--blue);color:var(--blue-d)}
+.pill.voc{background:var(--pink);color:var(--pink-d)}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,6vw,40px);margin:0 0 4px;line-height:1.1}
+.sub{color:var(--body);margin:0}
+/* Roadmap */
+.road{display:flex;gap:6px;margin:22px 0 20px;flex-wrap:wrap}
+.step{flex:1 1 90px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;min-width:90px}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--body);font-size:12px;flex:none}
+.step.active{border-color:var(--pink-m);color:var(--ink)}
+.step.active b{background:var(--pink-d);color:#fff}
+.step.done{color:var(--ok)} .step.done b{background:var(--ok);color:#fff}
+.step.locked{opacity:.55}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+.card h2{font-size:20px;margin:0 0 4px}
+.card .hint{color:var(--body);margin:0 0 18px;font-size:15px}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:600}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.pink{background:var(--pink-d)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.right{justify-content:flex-end}
+input[type=text],textarea{font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;background:#fff}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--pink-m)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
+.feedback.ok{background:var(--ok-bg);color:var(--ok)}
+.feedback.bad{background:var(--bad-bg);color:var(--bad)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:4px 0 18px}
+.progress i{display:block;height:100%;background:var(--pink-d);width:0;transition:width .3s}
+
+/* Flashcards */
+.flip{perspective:1200px;height:250px;margin-bottom:16px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px}
+.front{background:var(--pink);color:var(--pink-d)}
+.front .big{font-family:"Fraunces",Georgia,serif;font-size:clamp(24px,5vw,34px);line-height:1.15}
+.front small{margin-top:14px;font-size:13px;opacity:.7}
+.back{background:var(--cream);border:1px solid var(--line);transform:rotateY(180deg);gap:8px}
+.back .mean{font-size:19px;font-weight:600}
+.back .ex{color:var(--body);font-style:italic}
+.back .ua{font-size:14px;color:var(--muted)}
+.speak{background:transparent;border:1.5px solid currentColor;border-radius:99px;padding:4px 12px;font-size:13px;color:inherit;margin-top:12px}
+
+/* Matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.match{grid-template-columns:1fr}}
+.col{display:flex;flex-direction:column;gap:8px}
+.tile{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;font-size:15px;transition:all .15s}
+.tile:hover{border-color:var(--pink-m)}
+.tile.sel{border-color:var(--pink-d);background:var(--pink)}
+.tile.done{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);cursor:default}
+.tile.wrong{animation:shake .35s;border-color:var(--bad);background:var(--bad-bg)}
+.col-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* Quiz */
+.q{font-size:19px;margin:0 0 14px}
+.q .gap{display:inline-block;min-width:70px;border-bottom:2px solid var(--ink);text-align:center}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:8px 18px;font-size:15px}
+.opt:hover{border-color:var(--pink-m)}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--blue);color:var(--blue-d);margin-bottom:10px}
+
+/* Locked gate */
+.gate{text-align:center;padding:36px 24px;border:2px dashed var(--line);background:transparent}
+.gate .lock{font-size:36px}
+.gate p{color:var(--muted);margin:6px 0 0}
+
+/* Task 1 advert */
+.advert{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:20px;line-height:2.1;font-size:16px}
+.choice{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden;vertical-align:middle;background:#fff}
+.choice button{border:0;background:transparent;padding:1px 10px;font-size:14px;line-height:1.6}
+.choice button+button{border-left:1.5px solid var(--line)}
+.choice button.on{background:var(--pink-d);color:#fff}
+.choice.ok{border-color:var(--ok)} .choice.ok button.on{background:var(--ok)}
+.choice.bad{border-color:var(--bad)} .choice.bad button.on{background:var(--bad)}
+sup{font-size:11px;color:var(--muted);margin-right:2px}
+
+/* Task 2 dialogue */
+.box{display:flex;flex-wrap:wrap;gap:6px;border:1.5px solid var(--ink);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+.box span{font-size:15px;padding:0 6px}
+.box span.used{text-decoration:line-through;color:var(--muted)}
+.dlg p{margin:0 0 12px;line-height:2}
+.dlg .who{font-weight:700;display:inline-block;width:26px}
+select{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:2px 6px;background:#fff;font-size:15px}
+select.ok{border-color:var(--ok);background:var(--ok-bg)}
+select.bad{border-color:var(--bad);background:var(--bad-bg)}
+
+/* Task 3 speech */
+.stage{background:#2b2235;color:#f4eee6;border-radius:var(--radius);padding:24px;position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;top:-60px;left:50%;width:300px;height:220px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(255,236,190,.25),transparent);pointer-events:none}
+.stage .mic{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f0c3d4;margin-bottom:8px}
+.speech{font-size:17px;line-height:2;position:relative}
+.w{cursor:pointer;border-radius:5px;padding:1px 2px;transition:background .15s}
+.w:hover{background:rgba(255,255,255,.12)}
+.w.miss{animation:shake .35s;background:rgba(255,255,255,.1)}
+.w.fixed{background:#3d7a56;color:#fff;font-weight:600}
+.w.failed{background:#8a3b3b;color:#fff;font-weight:600}
+.meter{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0 0;font-size:14px;color:#d8cfe0}
+.meter b{color:#fff}
+.pop{position:absolute;z-index:20;background:#fff;color:var(--ink);border-radius:14px;padding:12px;box-shadow:0 8px 30px rgba(0,0,0,.25);width:220px}
+.pop p{margin:0 0 8px;font-size:14px}
+.pop .opts{gap:6px}
+.pop .opt{padding:5px 12px;font-size:14px}
+
+/* Results */
+.score{font-family:"Fraunces",Georgia,serif;font-size:54px;line-height:1;margin:6px 0}
+table.sum{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+table.sum td{padding:8px 4px;border-bottom:1px solid var(--line)}
+table.sum td:last-child{text-align:right;font-weight:600}
+.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pills"><span class="pill unit">Unit 8</span><span class="pill voc">vocabulary</span></div>
+    <h1>Collocations: education</h1>
+    <p class="sub">Homework. Learn the words first: the main tasks unlock when you're ready.</p>
+  </header>
+
+  <!-- Name -->
+  <section class="card" id="nameCard">
+    <h2>Hi! What's your name?</h2>
+    <p class="hint">Your teacher will see your results.</p>
+    <div class="row">
+      <input type="text" id="studentName" placeholder="Your name" style="flex:1;min-width:180px">
+      <button class="btn" id="startBtn">Start</button>
+    </div>
+  </section>
+
+  <nav class="road hidden" id="road"></nav>
+
+  <!-- STEP 1: Flashcards -->
+  <section class="card hidden" id="s-cards">
+    <span class="tag">Step 1 · Learn</span>
+    <h2>Flashcards</h2>
+    <p class="hint">Tap the card to see the meaning. Mark <b>Got it</b> when you know it, <b>Again</b> if you need to see it later. Learn all 10 to move on.</p>
+    <div class="progress"><i id="cardsBar"></i></div>
+    <div class="flip" id="flip">
+      <div class="flip-in">
+        <div class="face front"><div class="big" id="cFront"></div><small>tap to flip</small></div>
+        <div class="face back">
+          <div class="mean" id="cMean"></div>
+          <div class="ex" id="cEx"></div>
+          <div class="ua" id="cUa"></div>
+          <button class="speak" id="cSpeak" type="button">Listen</button>
+        </div>
+      </div>
+    </div>
+    <div class="row right">
+      <button class="btn ghost" id="againBtn">Again</button>
+      <button class="btn pink" id="gotBtn">Got it</button>
+    </div>
+  </section>
+
+  <!-- STEP 2: Meaning -->
+  <section class="card hidden" id="s-meaning">
+    <span class="tag">Step 2 · Meaning</span>
+    <h2>Match the collocation with its meaning</h2>
+    <p class="hint">Tap a collocation, then tap its meaning.</p>
+    <div class="match">
+      <div class="col"><div class="col-label">Collocation</div><div class="col" id="mLeft"></div></div>
+      <div class="col"><div class="col-label">Meaning</div><div class="col" id="mRight"></div></div>
+    </div>
+    <div class="feedback ok hidden" id="mDone"></div>
+  </section>
+
+  <!-- STEP 3: Form -->
+  <section class="card hidden" id="s-form">
+    <span class="tag">Step 3 · Form</span>
+    <h2>Get the form right</h2>
+    <p class="hint">Verbs, prepositions, articles, spelling. Get at least 8 out of 10 to unlock the main tasks.</p>
+    <div class="progress"><i id="formBar"></i></div>
+    <div id="formQ"></div>
+  </section>
+
+  <!-- GATE -->
+  <section class="card gate" id="gate">
+    <div class="lock">🔒</div>
+    <b>Main tasks are locked</b>
+    <p>Finish Steps 1–3 to open them.</p>
+  </section>
+
+  <!-- MAIN -->
+  <div id="main" class="hidden">
+    <!-- Task 1 -->
+    <section class="card" id="t1">
+      <span class="tag">Task 1</span>
+      <h2>Choose the correct words to complete the advert</h2>
+      <p class="hint">Tap one word in each pair.</p>
+      <div class="advert" id="advert"></div>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t1Check">Check</button></div>
+      <div class="feedback hidden" id="t1Fb"></div>
+    </section>
+
+    <!-- Task 2 -->
+    <section class="card" id="t2">
+      <span class="tag">Task 2</span>
+      <h2>Complete the conversation using words from the box</h2>
+      <p class="hint">There are more words than gaps.</p>
+      <div class="box" id="t2Box"></div>
+      <div class="dlg" id="dlg"></div>
+      <div class="row right"><button class="btn" id="t2Check">Check</button></div>
+      <div class="feedback hidden" id="t2Fb"></div>
+    </section>
+
+    <!-- Task 3 -->
+    <section class="card" id="t3">
+      <span class="tag">Task 3</span>
+      <h2>Save the principal's speech</h2>
+      <p class="hint">The new principal is giving her first speech in 5 minutes, and her assistant mixed up <b>10 collocations</b>. Find each wrong word, tap it and choose the right one. Careful: tapping a word that is already correct costs you a "boo" from the audience!</p>
+      <div class="stage">
+        <div class="mic">On stage in 5 minutes</div>
+        <div class="speech" id="speech"></div>
+        <div class="meter">
+          <span>Fixed: <b id="fixedN">0</b> / 10</span>
+          <span>Boos: <b id="booN">0</b></span>
+        </div>
+      </div>
+      <div class="feedback hidden" id="t3Fb"></div>
+    </section>
+
+    <!-- Bonus + submit -->
+    <section class="card" id="bonus">
+      <span class="tag">Bonus</span>
+      <h2>Write a slogan for your dream school</h2>
+      <p class="hint">One or two sentences, at least 2 collocations from this lesson. Your teacher will read it.</p>
+      <textarea id="slogan" rows="3" placeholder="e.g. At our school we don't just strive for excellence, we..."></textarea>
+      <div class="row right" style="margin-top:14px"><button class="btn pink" id="submitBtn" disabled>Finish &amp; send to my teacher</button></div>
+      <p class="small" id="submitHint">Complete Tasks 1–3 first.</p>
+    </section>
+
+    <section class="card hidden" id="results">
+      <span class="tag">Done</span>
+      <h2>Your results</h2>
+      <div class="score" id="bigScore"></div>
+      <table class="sum" id="sumTable"></table>
+      <p class="small" id="sendStatus"></p>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const CONFIG = {
+  // Paste the web app URL of your "Homework → Notion" Apps Script here:
+  SCRIPT_URL: "",
+  HOMEWORK: "Unit 8 · Collocations: education",
+  STORAGE_KEY: "hw-colloc-education-v1"
+};
+
+/* ===================== DATA ===================== */
+const CARDS = [
+  {c:"develop a nurturing environment", m:"provide a context where someone is helped to grow", ex:"Good teachers develop a nurturing environment where mistakes are OK.", ua:"створювати сприятливе середовище"},
+  {c:"find your own path", m:"discover what interests you in life", ex:"It took me years to find my own path.", ua:"знайти свій шлях"},
+  {c:"strive for excellence", m:"never settle for second best", ex:"Our team always strives for excellence.", ua:"прагнути досконалості"},
+  {c:"foster good relationships", m:"help people get along in a positive way", ex:"Team-building days foster good relationships.", ua:"сприяти добрим стосункам"},
+  {c:"fulfil your potential", m:"become as good as you're able to be", ex:"She left school early and never fulfilled her potential.", ua:"розкрити свій потенціал"},
+  {c:"deliver a quality curriculum", m:"provide educational content of a high standard", ex:"The college delivers a quality curriculum in every subject.", ua:"пропонувати якісну навчальну програму"},
+  {c:"maintain rigorous standards", m:"meet challenging or difficult requirements", ex:"Top universities maintain rigorous standards.", ua:"дотримуватися суворих стандартів"},
+  {c:"take the initiative", m:"do things first, not waiting to be told", ex:"Nobody spoke, so I took the initiative.", ua:"проявити ініціативу"},
+  {c:"establish mutual respect", m:"make each person feel as worthy as the other", ex:"Teachers and students need to establish mutual respect.", ua:"встановити взаємоповагу"},
+  {c:"focus on individuality", m:"not treat people as if they are all the same", ex:"Montessori schools focus on individuality.", ua:"зосереджуватися на індивідуальності"}
+];
+
+const FORM = [
+  {q:"___ the initiative", a:"take", o:["make","take","do"], why:"We say <b>take</b> the initiative (= act first)."},
+  {q:"strive ___ excellence", a:"for", o:["to","at","for"], why:"<b>strive for</b> + noun; <b>strive to</b> + verb."},
+  {q:"focus ___ individuality", a:"on", o:["on","at","in"], why:"Always <b>focus on</b> something."},
+  {q:"___ good relationships is one of a teacher's goals.", a:"Fostering", o:["Foster","Fostering","Fostered"], why:"When the collocation is the <b>subject</b>, use the -ing form."},
+  {q:"___ rigorous standards", a:"maintain", o:["maintain","fulfil","find"], why:"You <b>maintain</b> (keep up) standards."},
+  {q:"take ___ initiative", a:"the", o:["an","the","— (no article)"], why:"<b>the</b> is part of the chunk: take <b>the</b> initiative."},
+  {q:"establish ___ mutual respect", a:"— (no article)", o:["a","the","— (no article)"], why:"<i>Respect</i> is uncountable: no article."},
+  {q:"Which spelling is British English?", a:"fulfil", o:["fullfil","fulfil","fulfill"], why:"BrE <b>fulfil</b>, AmE <b>fulfill</b>. Never <i>fullfil</i>."},
+  {q:"___ a nurturing environment", a:"develop", o:["develop","deliver","take"], why:"You <b>develop</b> (build up) an environment."},
+  {q:"I hope you ___ your potential at university.", a:"fulfil", o:["fulfil","maintain","foster"], why:"You <b>fulfil</b> your potential (become as good as you can be)."}
+];
+
+// Task 1: [text before, optionA, optionB, correct]
+const ADVERT = [
+  "Here at Millfield Cross Community College, we are always ", ["striving","focusing","striving"],
+  " for excellence. With hundreds of different subjects on offer, you can be sure you'll be able to ", ["foster","find","find"],
+  " your own path. We pride ourselves on the fact that we ", ["fulfil","maintain","maintain"],
+  " rigorous standards in education in order to ", ["deliver","fulfil","deliver"],
+  " a quality curriculum in all fields. Whether you study face-to-face at the college or take one of our online courses, we ensure that we ", ["develop","take","develop"],
+  " a nurturing environment while ", ["fostering","focusing","focusing"],
+  " on individuality, as we know that different people have different needs. So why not ", ["find","take","take"],
+  " the initiative today and see what we have on offer? It's the first step to ", ["fulfilling","delivering","fulfilling"],
+  " your true potential."
+];
+
+const BOX = ["complete","fair","individual","good","mutual","nurturing","quality","rigorous"];
+const DLG = [
+  {who:"A", parts:["How are you finding your new teaching job, Ava?"]},
+  {who:"B", parts:["I'm loving it! But school's different from when I was a student, I think. It used to be all about delivering a(n) ", {a:"quality"}, " curriculum. It was also more about maintaining ", {a:"rigorous"}, " standards of teaching and learning."]},
+  {who:"A", parts:["And how is it different nowadays?"]},
+  {who:"B", parts:["It's more about developing a(n) ", {a:"nurturing"}, " environment, providing support and establishing ", {a:"mutual"}, " respect between students and staff. The idea is that by fostering ", {a:"good"}, " relationships, students will achieve more."]}
+];
+
+// Task 3: strings + error objects {w: wrong, a: correct, o: options}
+const SPEECH = [
+  "Good morning, everyone! As your new principal, I promise that this school will always strive ", {w:"at",a:"for",o:["for","to","on"]},
+  " excellence. We will ", {w:"fulfil",a:"maintain",o:["maintain","take","find"]},
+  " rigorous standards in every classroom and ", {w:"hand out",a:"deliver",o:["deliver","focus","take"]},
+  " a quality curriculum. We will ", {w:"grow",a:"develop",o:["develop","fulfil","take"]},
+  " a nurturing environment and ", {w:"found",a:"foster",o:["foster","deliver","strive"]},
+  " good relationships between students and staff. Because we focus ", {w:"at",a:"on",o:["on","in","for"]},
+  " individuality, every one of you will ", {w:"deliver",a:"find",o:["find","maintain","foster"]},
+  " your own path and ", {w:"maintain",a:"fulfil",o:["fulfil","establish","develop"]},
+  " your true potential. And if there's a problem, don't wait for me: ", {w:"make",a:"take",o:["take","do","find"]},
+  " the initiative! Together, we will ", {w:"do",a:"establish",o:["establish","fulfil","take"]},
+  " mutual respect. Thank you!"
+];
+
+/* ===================== STATE ===================== */
+const S = {name:"", stage:0, t1:null, t2:null, t3:null, mErrors:0, formScore:0};
+function save(){ try{ localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({name:S.name, stage:S.stage, mErrors:S.mErrors, formScore:S.formScore})); }catch(e){} }
+function load(){ try{ const d=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)||"null"); if(d) Object.assign(S,d); }catch(e){} }
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ===================== ROADMAP ===================== */
+const STEPS = ["Learn","Meaning","Form","Main tasks"];
+function renderRoad(){
+  const r=$("road"); r.classList.remove("hidden");
+  r.innerHTML = STEPS.map((t,i)=>{
+    const cls = i<S.stage ? "done" : i===S.stage ? "active" : "locked";
+    return `<div class="step ${cls}"><b>${i<S.stage?"✓":i+1}</b>${t}</div>`;
+  }).join("");
+}
+function goStage(n){
+  S.stage = Math.max(S.stage, n); save(); renderRoad();
+  ["s-cards","s-meaning","s-form"].forEach((id,i)=>$(id).classList.toggle("hidden", i!==S.stage));
+  const open = S.stage>=3;
+  $("gate").classList.toggle("hidden", open);
+  $("main").classList.toggle("hidden", !open);
+  if(S.stage===0) initCards();
+  if(S.stage===1) initMatch();
+  if(S.stage===2) initForm();
+  if(open) initMain();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ===================== STEP 1: CARDS ===================== */
+let deck=[], learned=0;
+function initCards(){ deck=shuffle(CARDS.map((_,i)=>i)); learned=0; showCard(); }
+function showCard(){
+  $("cardsBar").style.width = (learned/CARDS.length*100)+"%";
+  if(!deck.length){ goStage(1); return; }
+  const c=CARDS[deck[0]];
+  $("flip").classList.remove("on");
+  setTimeout(()=>{ $("cFront").textContent=c.c; $("cMean").textContent=c.m; $("cEx").textContent="“"+c.ex+"”"; $("cUa").textContent=c.ua; }, 150);
+}
+$("flip").addEventListener("click", e=>{ if(e.target.id!=="cSpeak") $("flip").classList.toggle("on"); });
+$("cSpeak").addEventListener("click", e=>{
+  e.stopPropagation();
+  try{ const c=CARDS[deck[0]]; const u=new SpeechSynthesisUtterance(c.c+". "+c.ex); u.lang="en-GB"; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(err){}
+});
+$("gotBtn").onclick=()=>{ deck.shift(); learned++; showCard(); };
+$("againBtn").onclick=()=>{ const x=deck.shift(); const pos=Math.min(deck.length, 2+Math.floor(Math.random()*2)); deck.splice(pos,0,x); showCard(); };
+
+/* ===================== STEP 2: MATCH ===================== */
+let selL=null, matched=0;
+function initMatch(){
+  matched=0; selL=null; S.mErrors=0;
+  const L=$("mLeft"), R=$("mRight");
+  L.innerHTML = shuffle(CARDS.map((c,i)=>i)).map(i=>`<button class="tile" data-i="${i}" data-side="L">${esc(CARDS[i].c)}</button>`).join("");
+  R.innerHTML = shuffle(CARDS.map((c,i)=>i)).map(i=>`<button class="tile" data-i="${i}" data-side="R">${esc(CARDS[i].m)}</button>`).join("");
+  $("mDone").classList.add("hidden");
+}
+document.addEventListener("click", e=>{
+  const t=e.target.closest(".tile"); if(!t||t.classList.contains("done")) return;
+  if(t.dataset.side==="L"){
+    document.querySelectorAll('#mLeft .tile').forEach(x=>x.classList.remove("sel"));
+    t.classList.add("sel"); selL=t; return;
+  }
+  if(!selL) { t.classList.add("wrong"); setTimeout(()=>t.classList.remove("wrong"),400); return; }
+  if(selL.dataset.i===t.dataset.i){
+    selL.classList.remove("sel"); selL.classList.add("done"); t.classList.add("done");
+    selL=null; matched++;
+    if(matched===CARDS.length){
+      save();
+      const fb=$("mDone"); fb.classList.remove("hidden");
+      fb.innerHTML = `All matched${S.mErrors?` with ${S.mErrors} mistake${S.mErrors>1?"s":""}`:" with no mistakes"}! Moving on to Form…`;
+      setTimeout(()=>goStage(2),1400);
+    }
+  } else {
+    S.mErrors++;
+    [t,selL].forEach(x=>{x.classList.add("wrong"); setTimeout(()=>x.classList.remove("wrong"),400);});
+  }
+});
+
+/* ===================== STEP 3: FORM ===================== */
+let fOrder=[], fIdx=0, fScore=0;
+function initForm(){ fOrder=shuffle(FORM.map((_,i)=>i)); fIdx=0; fScore=0; showFormQ(); }
+function showFormQ(){
+  $("formBar").style.width=(fIdx/FORM.length*100)+"%";
+  const box=$("formQ");
+  if(fIdx>=FORM.length){
+    S.formScore=fScore; save();
+    const pass = fScore>=8;
+    box.innerHTML = `<div class="feedback ${pass?"ok":"bad"}"><b>${fScore} / ${FORM.length}</b>. ${pass?"Great job! The main tasks are now open.":"You need at least 8. Have another go: the questions will be shuffled."}</div>
+      <div class="row right" style="margin-top:14px"><button class="btn ${pass?"pink":""}" id="formNext">${pass?"Open the main tasks":"Try again"}</button></div>`;
+    $("formNext").onclick=()=> pass ? goStage(3) : initForm();
+    return;
+  }
+  const it=FORM[fOrder[fIdx]];
+  const qHtml = it.q.includes("___") ? esc(it.q).replace("___",'<span class="gap">?</span>') : esc(it.q);
+  box.innerHTML = `<p class="q">${qHtml}</p><div class="opts">${shuffle(it.o).map(o=>`<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div id="fFb"></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const right = b.dataset.o===it.a;
+    if(right) fScore++;
+    box.querySelectorAll(".opt").forEach(x=>{ x.disabled=true; if(x.dataset.o===it.a) x.classList.add("ok"); });
+    if(!right) b.classList.add("bad");
+    const gap=box.querySelector(".gap"); if(gap) gap.textContent=it.a.replace(" (no article)","").replace("—","–");
+    $("fFb").innerHTML = `<div class="feedback ${right?"ok":"bad"}">${right?"Correct! ":"Not quite. "}${it.why}</div>
+      <div class="row right" style="margin-top:12px"><button class="btn" id="fNext">Next</button></div>`;
+    $("fNext").onclick=()=>{ fIdx++; showFormQ(); };
+  });
+}
+
+/* ===================== MAIN TASKS ===================== */
+let mainReady=false;
+function initMain(){
+  if(mainReady) return; mainReady=true;
+  // Task 1
+  let n=0;
+  $("advert").innerHTML = ADVERT.map(p=>{
+    if(typeof p==="string") return esc(p);
+    n++;
+    return `<sup>${n}</sup><span class="choice" data-a="${esc(p[2])}"><button type="button">${esc(p[0])}</button><button type="button">${esc(p[1])}</button></span>`;
+  }).join("");
+  $("advert").querySelectorAll(".choice").forEach(ch=>{
+    ch.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      ch.classList.remove("ok","bad");
+      ch.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    });
+  });
+  $("t1Check").onclick=()=>{
+    const chs=[...$("advert").querySelectorAll(".choice")];
+    if(chs.some(c=>!c.querySelector(".on"))){ fb("t1Fb","bad","Choose a word in every pair first."); return; }
+    let sc=0; const det=[];
+    chs.forEach((c,i)=>{ const v=c.querySelector(".on").textContent; const ok=v===c.dataset.a; if(ok) sc++; c.classList.add(ok?"ok":"bad"); det.push(`${i+1}. ${v}${ok?" ✓":" ✗ ("+c.dataset.a+")"}`); });
+    if(S.t1===null) S.t1={score:sc,total:chs.length,det};
+    fb("t1Fb", sc===chs.length?"ok":"bad", `${sc} / ${chs.length}. ${sc===chs.length?"Perfect!":"Wrong ones are red: change them and check again (your first score is saved)."}`);
+    checkSubmit();
+  };
+
+  // Task 2
+  $("t2Box").innerHTML = BOX.map(w=>`<span data-w="${w}">${w}</span>`).join("");
+  let g=0;
+  $("dlg").innerHTML = DLG.map(l=>`<p><span class="who">${l.who}:</span>${l.parts.map(p=>{
+    if(typeof p==="string") return esc(p);
+    g++;
+    return `<sup>${g}</sup><select data-a="${p.a}"><option value="">…</option>${BOX.map(w=>`<option>${w}</option>`).join("")}</select>`;
+  }).join("")}</p>`).join("");
+  const sels=[...$("dlg").querySelectorAll("select")];
+  sels.forEach(s=>s.onchange=()=>{
+    s.classList.remove("ok","bad");
+    const used=sels.map(x=>x.value).filter(Boolean);
+    $("t2Box").querySelectorAll("span").forEach(sp=>sp.classList.toggle("used", used.includes(sp.dataset.w)));
+  });
+  $("t2Check").onclick=()=>{
+    if(sels.some(s=>!s.value)){ fb("t2Fb","bad","Fill every gap first."); return; }
+    let sc=0; const det=[];
+    sels.forEach((s,i)=>{ const ok=s.value===s.dataset.a; if(ok) sc++; s.classList.add(ok?"ok":"bad"); det.push(`${i+1}. ${s.value}${ok?" ✓":" ✗ ("+s.dataset.a+")"}`); });
+    if(S.t2===null) S.t2={score:sc,total:sels.length,det};
+    fb("t2Fb", sc===sels.length?"ok":"bad", `${sc} / ${sels.length}. ${sc===sels.length?"Perfect!":"Wrong ones are red: try again (your first score is saved)."}`);
+    checkSubmit();
+  };
+
+  // Task 3
+  let errIdx=0;
+  $("speech").innerHTML = SPEECH.map(p=>{
+    if(typeof p==="string") return p.split(/(\s+)/).map(tok=> /\S/.test(tok) ? `<span class="w">${esc(tok)}</span>` : tok).join("");
+    const i=errIdx++;
+    return `<span class="w" data-err="${i}">${esc(p.w)}</span>`;
+  }).join("");
+  const errs=SPEECH.filter(p=>typeof p!=="string");
+  const st={fixed:0, boos:0, firstTry:0, det:[]};
+  $("speech").addEventListener("click", e=>{
+    const w=e.target.closest(".w"); if(!w||w.classList.contains("fixed")||w.classList.contains("failed")) return;
+    closePop();
+    if(w.dataset.err===undefined){
+      st.boos++; $("booN").textContent=st.boos;
+      w.classList.add("miss"); setTimeout(()=>w.classList.remove("miss"),400);
+      return;
+    }
+    const er=errs[+w.dataset.err];
+    const pop=document.createElement("div"); pop.className="pop"; pop.id="pop";
+    pop.innerHTML=`<p>Replace <b>${esc(er.w)}</b> with:</p><div class="opts">${shuffle(er.o).map(o=>`<button class="opt" data-o="${o}">${o}</button>`).join("")}</div>`;
+    document.body.appendChild(pop);
+    const r=w.getBoundingClientRect();
+    pop.style.left=(window.scrollX+Math.max(8,Math.min(document.documentElement.clientWidth-228, r.left)))+"px";
+    pop.style.top=(window.scrollY+r.bottom+8)+"px";
+    pop.querySelectorAll(".opt").forEach(b=>b.onclick=ev=>{
+      ev.stopPropagation();
+      const ok=b.dataset.o===er.a;
+      w.textContent=er.a; w.classList.add(ok?"fixed":"failed");
+      if(ok) st.firstTry++;
+      st.fixed++; $("fixedN").textContent=st.fixed;
+      st.det.push(`${er.w} → ${b.dataset.o}${ok?" ✓":" ✗ ("+er.a+")"}`);
+      closePop();
+      if(st.fixed===errs.length){
+        S.t3={score:st.firstTry,total:errs.length,boos:st.boos,det:st.det};
+        const msg = st.firstTry===errs.length && st.boos===0 ? "Standing ovation! A perfect speech." : st.firstTry>=8 ? "Big applause! The speech was a success." : "The audience survived. Check the red words: that's what to revise.";
+        fb("t3Fb", st.firstTry>=8?"ok":"bad", `${st.firstTry} / ${errs.length} fixed correctly · ${st.boos} boo${st.boos===1?"":"s"}. ${msg}`);
+        checkSubmit();
+      }
+    });
+    e.stopPropagation();
+  });
+  document.addEventListener("click", e=>{ if(!e.target.closest("#pop") && !e.target.closest(".w")) closePop(); });
+
+  $("submitBtn").onclick=submit;
+}
+function closePop(){ const p=$("pop"); if(p) p.remove(); }
+function fb(id,cls,msg){ const f=$(id); f.className="feedback "+cls; f.innerHTML=msg; }
+function checkSubmit(){
+  const ready = S.t1 && S.t2 && S.t3;
+  $("submitBtn").disabled=!ready;
+  $("submitHint").textContent = ready ? "Ready when you are." : "Complete Tasks 1–3 first.";
+}
+
+/* ===================== SUBMIT ===================== */
+function submit(){
+  const score=S.t1.score+S.t2.score+S.t3.score, total=S.t1.total+S.t2.total+S.t3.total;
+  const pct=Math.round(score/total*100);
+  const slogan=$("slogan").value.trim();
+  $("results").classList.remove("hidden");
+  $("bigScore").textContent=pct+"%";
+  $("sumTable").innerHTML=`
+    <tr><td>Step 2 · Meaning (mistakes)</td><td>${S.mErrors}</td></tr>
+    <tr><td>Step 3 · Form</td><td>${S.formScore} / ${FORM.length}</td></tr>
+    <tr><td>Task 1 · Advert</td><td>${S.t1.score} / ${S.t1.total}</td></tr>
+    <tr><td>Task 2 · Conversation</td><td>${S.t2.score} / ${S.t2.total}</td></tr>
+    <tr><td>Task 3 · Principal's speech</td><td>${S.t3.score} / ${S.t3.total} · ${S.t3.boos} boos</td></tr>`;
+  $("submitBtn").disabled=true; $("submitBtn").textContent="Sent";
+  $("results").scrollIntoView({behavior:"smooth"});
+
+  const details = [
+    `Meaning: ${S.mErrors} mistakes`,
+    `Form: ${S.formScore}/${FORM.length}`,
+    `Task 1: ${S.t1.score}/${S.t1.total} — ${S.t1.det.join("; ")}`,
+    `Task 2: ${S.t2.score}/${S.t2.total} — ${S.t2.det.join("; ")}`,
+    `Task 3: ${S.t3.score}/${S.t3.total}, boos ${S.t3.boos} — ${S.t3.det.join("; ")}`,
+    `Slogan: ${slogan||"—"}`
+  ].join("\n");
+  const payload = {student:S.name, homework:CONFIG.HOMEWORK, score, total, percent:pct, details, answers:slogan, submittedAt:new Date().toISOString()};
+
+  if(!CONFIG.SCRIPT_URL){ $("sendStatus").textContent="(Teacher: no SCRIPT_URL set, so results were not sent.)"; return; }
+  $("sendStatus").textContent="Sending to your teacher…";
+  fetch(CONFIG.SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
+    .then(()=>{ $("sendStatus").textContent="✓ Sent to your teacher. Well done!"; })
+    .catch(()=>{ $("sendStatus").textContent="Couldn't send. Take a screenshot of this page and send it to your teacher."; });
+}
+
+/* ===================== START ===================== */
+load();
+const urlName=new URLSearchParams(location.search).get("student");
+$("studentName").value = S.name || urlName || "";
+$("startBtn").onclick=()=>{
+  const v=$("studentName").value.trim(); if(!v){ $("studentName").focus(); return; }
+  S.name=v; save(); $("nameCard").classList.add("hidden"); goStage(S.stage);
+};
+$("studentName").addEventListener("keydown",e=>{ if(e.key==="Enter") $("startBtn").click(); });
+if(S.name){ $("nameCard").classList.add("hidden"); goStage(S.stage); }
+</script>
+</body>
+</html>
