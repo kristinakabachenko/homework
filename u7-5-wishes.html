@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.5 Wishes in the present · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf4ec;--card:#fff;--ink:#16303a;--muted:#5f7680;--brand:#e86f12;--brand2:#7c5cff;--first:#14a37f;--second:#7c5cff;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#f1dfcf;--soft:#fdeedf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#f07d1b 0%,#e8508a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\2728";position:absolute;right:18px;top:-20px;font-family:'Baloo 2',sans-serif;font-size:170px;line-height:1;opacity:.15}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#f3e2d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;min-width:36px;height:36px;padding:0 6px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:19px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 12px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#16303a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn.grey{background:#e3eef2}
+.btn.green{background:var(--ok);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.name:focus,.sent:focus,textarea:focus{outline:none;border-color:var(--brand)}
+
+/* rules stages */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#e3eef2;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;min-height:330px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;min-height:330px;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;padding:20px;display:flex;flex-direction:column;justify-content:center}
+.front{color:#fff;text-align:center;align-items:center}
+.front .t{font-family:'Baloo 2',sans-serif;font-size:30px;line-height:1.15}
+.front .q{font-size:17px;opacity:.95;margin-top:10px;font-weight:700}
+.front small{opacity:.85;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg);overflow:auto;justify-content:flex-start}
+.back h3{font-family:'Baloo 2',sans-serif;font-size:20px;margin:0 0 6px}
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 10px}
+.formula b{background:var(--soft);border-radius:10px;padding:4px 10px;font-size:15px}
+.ex{border-left:4px solid var(--brand);background:#f6fafb;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:16px}
+.ua{color:var(--muted);font-size:14px;margin-top:8px}
+.no{color:var(--bad);font-weight:800}.yes{color:var(--ok);font-weight:800}
+.row2{display:flex;gap:10px}.row2 .btn{flex:1;margin:0}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#d3e6ec}
+.dots i.y{background:var(--ok)}.dots i.c{background:var(--brand)}
+.qbox{background:var(--soft);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.qbox small{font-weight:800;color:var(--muted);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.qbox p{margin:4px 0 0;font-weight:700}
+.opts{display:grid;gap:8px}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{font:inherit;font-weight:700;padding:12px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink);text-align:left}
+.opts.three .opt{text-align:center}
+.explain{background:#fff8e6;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:15px}
+.tag1{background:#e0f5ee;color:var(--first);font-weight:800;border-radius:6px;padding:0 6px}
+.tag2{background:#ece6ff;color:var(--second);font-weight:800;border-radius:6px;padding:0 6px}
+
+/* exercises */
+.locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.locked:before{content:"\1F512  Learn the rules first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
+ol.items{margin:0;padding-left:24px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+input.gap{font:inherit;font-weight:800;width:200px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.cue{color:var(--muted);font-weight:700}
+.given{font-weight:800;color:var(--brand)}
+.model{font-size:14px;color:#9a3412;background:#fff4e5;border-radius:10px;padding:6px 10px;margin-top:6px}
+.dlg .line{margin:0 0 14px}
+.who{display:inline-block;font-weight:800;font-size:13px;color:#fff;border-radius:99px;padding:2px 10px;margin-bottom:4px}
+.bubble{background:#f6fafb;border:2px solid var(--line);border-radius:16px;padding:8px 12px}
+.prompt{background:var(--soft);border-radius:10px;padding:4px 10px;font-weight:700;display:inline-block;margin:4px 0}
+.sent{font:inherit;width:100%;border:2px solid var(--line);border-radius:12px;padding:9px 12px;margin-top:6px;font-weight:700}
+.qa{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--line)}
+.qa .ans{background:#f3f0ff;border-radius:10px;padding:6px 10px;font-weight:700}
+.qa .ans:before{content:"Answer: ";color:var(--muted);font-weight:600}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;min-width:44px;height:34px;padding:0 6px;border-radius:10px;background:#e3eef2;color:var(--muted);font-weight:800;display:grid;place-items:center;font-size:14px}
+.checklist i.y{background:var(--ok);color:#fff}
+@media (max-width:480px){.opts.three{grid-template-columns:1fr}.front .t{font-size:26px}}
+
+.pills{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center;margin:0 4px;vertical-align:middle}
+.pill{white-space:nowrap;font:inherit;font-weight:800;font-size:15px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:3px 10px;cursor:pointer;color:var(--ink)}
+.pill.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pill.on.ok{background:var(--ok)!important;color:#fff!important}
+.pill.on.bad{background:var(--bad)!important;color:#fff!important}
+.slash{color:var(--muted);font-weight:700}
+.dlg{background:#fffaf5;border-radius:16px;padding:12px;margin-bottom:12px}
+.dh{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.gn{font-weight:800;color:var(--brand);margin-right:2px}
+textarea{font:inherit;width:100%;min-height:80px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+ol.items li{line-height:2.1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.5 Grammar</small>
+  <h1>If only...</h1>
+  <p>Wishes in the present: I wish / If only</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex0">
+  <div class="head"><div class="num">0</div><h2>Learn the rules first! Go through all three steps. Then the exercises will open.</h2></div>
+  <div class="stages"><span id="st1">1 Rule cards</span><span id="st2">2 Which wish?</span><span id="st3">3 Right or wrong?</span></div>
+  <div id="learn"></div>
+  <div class="fb" id="ex0_fb"></div>
+</section>
+
+<section class="card locked" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Choose the correct alternative.</h2></div>
+  <p class="tip">Tap the correct word.</p>
+  <ol class="items" id="ex1_list"></ol>
+  <button class="btn" onclick="check1()">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card locked" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Write sentences using the prompts.</h2></div>
+  <p class="tip">Write the whole sentence. Careful with <b>he / she → wishes</b>.</p>
+  <div id="ex2_body"></div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card locked" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Write at least two sentences beginning with <i>I wish</i> or <i>If only</i> based on these students' complaints.</h2></div>
+  <p class="tip">There are many possible answers. Your teacher will read them.</p>
+  <div id="ex3_body"></div>
+  <button class="btn" onclick="save3()">Save my sentences</button>
+  <div class="fb" id="ex3_fb"></div>
+  <div id="ex3_models"></div>
+</section>
+
+<section class="card locked" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Complete the dialogues with <i>would</i> or <i>could</i> and/or the correct form of the verbs in brackets.</h2></div>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card locked" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Write three sentences that are true for you.</h2></div>
+  <p class="tip">Think about: something you'd like to do / don't want to do, somewhere you'd like to be, something you'd like someone (not) to do.</p>
+  <div id="ex5_body"></div>
+  <button class="btn" onclick="save5()">Save my sentences</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.5 Wishes in the present',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const TASKS = ['ex0','ex1','ex2','ex3','ex4','ex5'];
+const done = {}; TASKS.forEach(k=>done[k]=false);
+const scores = {}; const notes = {};
+
+function $(id){ return document.getElementById(id); }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+
+const SHORT = [[/\bwon't\b/g,'will not'],[/\bcan't\b/g,'cannot'],[/n't\b/g,' not'],[/\b(i|you|he|she|we|they|that|it|there)'d\b/g,'$1 would'],
+  [/'ll\b/g,' will'],[/\bi'm\b/g,'i am'],[/'re\b/g,' are'],[/\b(it|that|he|she|there)'s\b/g,'$1 is']];
+function norm(v){
+  let s=String(v||'').toLowerCase().replace(/[‘’`]/g,"'").replace(/[^a-z' ]/g,' ');
+  SHORT.forEach(([r,t])=>{ s=s.replace(r,t); });
+  return s.replace(/\s+/g,' ').trim().replace(/\b(wish|wishes) that\b/g,'$1');
+}
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const n=TASKS.filter(k=>done[k]).length;
+  $('fill').style.width=(n/TASKS.length*100)+'%'; $('ptext').textContent=n+' of '+TASKS.length+' tasks done';
+  $('cl').innerHTML=TASKS.map(k=>'<i class="'+(done[k]?'y':'')+'">'+(k==='ex0'?'Rules':k.slice(2))+'</i>').join('');
+  $('sendBtn').disabled = n<TASKS.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb',msg,s===max?'good':'warn'); markDone(id);
+}
+
+/* =============== STEP 0: RULES =============== */
+const RULES = [
+  {c:'#f07d1b', tag:'I wish / If only', t:'MEANING', q:'What do we use it for?',
+   back:'<h3>I wish... / If only...</h3><p style="margin:0">We use them when we <b>want something to be different</b>, but it is unlikely or impossible.</p>'+
+   '<div class="ex">I wish I lived nearer my friends. <span class="cue">(But I live far away.)</span></div>'+
+   '<p style="margin:8px 0 0;font-size:15px"><b>If only</b> is stronger and more emotional than <b>I wish</b>.</p>'+
+   '<div class="ua">🇺🇦 “Шкода, що...” / “Якби ж...”</div>'},
+  {c:'#f07d1b', tag:'Rule 1', t:'+ past simple', q:'A situation I want to be different',
+   back:'<h3>I wish / If only + past simple</h3><p style="margin:0">To say we want a <b>present or future situation</b> to be different.</p>'+
+   '<div class="ex">I wish I <u>lived</u> nearer my friends.</div><div class="ex">If only we <u>didn’t have</u> an exam tomorrow.</div>'+
+   '<div class="ex">I wish I <u>wasn’t</u> so shy.</div>'+
+   '<p style="margin:8px 0 0;font-size:15px">⚠️ Past form, but present meaning! Just like the second conditional.</p>'},
+  {c:'#f07d1b', tag:'Rule 1', t:'was or were?', q:'I wish it was... or I wish it were...?',
+   back:'<h3>was / were</h3><p style="margin:0">Both are correct. <b>were / weren’t</b> is more formal.</p>'+
+   '<div class="ex">If only it <u>was</u> Friday. = If only it <u>were</u> Friday.</div>'+
+   '<div class="ex">I wish I <u>wasn’t</u> so shy. = I wish I <u>weren’t</u> so shy.</div>'},
+  {c:'#1597b8', tag:'Rule 2', t:'+ could', q:'Something I’d like to be able to do',
+   back:'<h3>I wish / If only + could + verb</h3><p style="margin:0">To talk about an <b>ability</b> we don’t have.</p>'+
+   '<div class="ex">I wish I <u>could swim</u>, but I can’t.</div><div class="ex">I wish I <u>could see</u> you tomorrow.</div>'+
+   '<p style="margin:8px 0 0;font-size:15px">can → <b>could</b>. No <i>to</i> after could!</p>'},
+  {c:'#7c5cff', tag:'Rule 3', t:'+ would', q:'Someone or something that annoys me',
+   back:'<h3>I wish / If only + would + verb</h3><p style="margin:0">When we want <b>somebody or something to behave differently</b> because they annoy us.</p>'+
+   '<div class="ex">I wish the bus <u>would come</u> on time. It’s always late.</div>'+
+   '<div class="ex">I wish you <u>wouldn’t shout</u>. It’s very rude.</div>'},
+  {c:'#e5484d', tag:'Watch out!', t:'Two traps', q:'When can’t we use would?',
+   back:'<h3>Trap 1: not about yourself</h3>'+
+   '<div class="ex"><span class="no">✗</span> I wish I <s>would live</s> nearer my friends.<br><span class="yes">✓</span> I wish I <u>lived</u> nearer my friends.</div>'+
+   '<h3 style="margin-top:10px">Trap 2: not with states</h3>'+
+   '<div class="ex"><span class="no">✗</span> I wish my parents <s>would have</s> a bigger car.<br><span class="yes">✓</span> I wish my parents <u>had</u> a bigger car.</div>'+
+   '<p style="margin:8px 0 0;font-size:15px">would = an <b>action</b> someone else could change.</p>'},
+  {c:'#16303a', tag:'Summary', t:'Flip the reality', q:'How do I choose the form?',
+   back:'<h3>Turn the reality upside down</h3>'+
+   '<div class="ex">I’m short. → I wish I <u>were</u> taller. <span class="cue">(situation → past simple)</span></div>'+
+   '<div class="ex">I can’t drive. → I wish I <u>could drive</u>. <span class="cue">(ability → could)</span></div>'+
+   '<div class="ex">He always shouts. → I wish he <u>wouldn’t shout</u>. <span class="cue">(annoying action → would)</span></div>'+
+   '<div class="ex">I have an exam. → If only I <u>didn’t have</u> an exam.</div>'}
+];
+
+const WHICH = [
+  {s:'I can’t play the guitar.', pre:'I wish I ___ the guitar.', o:['could play','would play','played'], a:0, why:'It’s about ability (can) → could.'},
+  {s:'My neighbour plays loud music every night. It’s so annoying!', pre:'I wish my neighbour ___ loud music at night.', o:['wouldn’t play','couldn’t play','won’t play'], a:0, why:'Someone else’s annoying behaviour → would / wouldn’t.'},
+  {s:'I live far from my friends.', pre:'I wish I ___ nearer my friends.', o:['lived','would live','live'], a:0, why:'A situation about me → past simple. Never “I wish I would”.'},
+  {s:'Today is Monday.', pre:'If only it ___ Friday!', o:['were','would be','is'], a:0, why:'A situation → past simple (was / were).'},
+  {s:'My sister keeps taking my clothes without asking.', pre:'I wish my sister ___ taking my clothes.', o:['would stop','stops','will stop'], a:0, why:'An annoying action by another person → would.'},
+  {s:'I’m really shy.', pre:'I wish I ___ so shy.', o:['wasn’t','wouldn’t be','am not'], a:0, why:'A state about me → past simple.'},
+  {s:'I’m busy tomorrow, so I can’t see you.', pre:'I wish I ___ you tomorrow.', o:['could see','would see','can see'], a:0, why:'can’t → I wish I could.'},
+  {s:'My parents have a really small car.', pre:'I wish my parents ___ a bigger car.', o:['had','would have','have'], a:0, why:'“have a car” is a state, so no would → past simple.'}
+];
+const RIGHT = [
+  {s:'I wish I would live nearer my friends.', ok:false, why:'We can’t say “I wish I would”. Correct: I wish I lived nearer my friends.'},
+  {s:'If only it was Friday, not Monday.', ok:true, why:'Past simple for a present situation. Correct!'},
+  {s:'I wish the bus would come on time.', ok:true, why:'The bus annoys us, so would is correct.'},
+  {s:'I wish my parents would have a bigger car.', ok:false, why:'“have a car” is a state. Correct: I wish my parents had a bigger car.'},
+  {s:'I wish I can swim.', ok:false, why:'After wish, can → could. Correct: I wish I could swim.'},
+  {s:'If only we didn’t have an exam tomorrow.', ok:true, why:'Past simple can talk about the future too. Correct!'},
+  {s:'I wish I were taller.', ok:true, why:'were is the formal form of was. Correct!'},
+  {s:'I wish you won’t shout.', ok:false, why:'After wish we don’t use will. Correct: I wish you wouldn’t shout.'}
+];
+
+const LR={i:0,flipped:{},seen:{},q2:[],q3:[],first:{}};
+function stageUI(n){ [1,2,3].forEach(i=>{ $('st'+i).className = i<n?'ok':(i===n?'on':''); }); }
+function startCards(){ stageUI(1); LR.i=0; renderRule(); }
+function renderRule(){
+  const r=RULES[LR.i];
+  $('learn').innerHTML='<div class="fc" id="fc" onclick="flipRule()"><div class="fc-in">'+
+    '<div class="face front" style="background:linear-gradient(135deg,'+r.c+',#16303a)"><small>'+r.tag+'</small><div class="t">'+r.t+'</div><div class="q">'+r.q+'</div><small style="margin-top:14px">tap to flip</small></div>'+
+    '<div class="face back">'+r.back+'</div></div></div>'+
+    '<div class="row2"><button class="btn grey" onclick="prevRule()" '+(LR.i===0?'disabled':'')+'>← Back</button>'+
+    '<button class="btn green" id="gotIt" onclick="nextRule()">'+(LR.flipped[LR.i]?'Got it →':'Flip the card first')+'</button></div>'+
+    '<div class="dots">'+RULES.map((_,k)=>'<i class="'+(k===LR.i?'c':(LR.seen[k]?'y':''))+'"></i>').join('')+'</div>'+
+    '<p class="meta">Card '+(LR.i+1)+' of '+RULES.length+'</p>';
+  if(LR.flipped[LR.i]) $('fc').classList.add('flip');
+}
+function flipRule(){ $('fc').classList.toggle('flip'); LR.flipped[LR.i]=true; $('gotIt').textContent='Got it →'; }
+function nextRule(){ if(!LR.flipped[LR.i]){ flipRule(); return; } LR.seen[LR.i]=true; if(LR.i<RULES.length-1){ LR.i++; renderRule(); } else startWhich(); }
+function prevRule(){ if(LR.i>0){ LR.i--; renderRule(); } }
+
+function startWhich(){ stageUI(2); LR.q2=shuffle(WHICH.map((_,i)=>i)); renderWhich(); }
+function renderWhich(){
+  const it=WHICH[LR.q2[0]], order=shuffle([0,1,2]);
+  $('learn').innerHTML='<div class="qbox"><small>Reality</small><p>'+it.s+'</p></div>'+
+    '<p style="margin:0 0 8px;font-weight:700">'+it.pre.replace('___','<span style="border-bottom:2px dashed var(--brand);padding:0 18px"></span>')+'</p>'+
+    '<div class="opts three">'+order.map(k=>'<button class="opt" id="w'+k+'" onclick="pickWhich('+k+')">'+it.o[k]+'</button>').join('')+'</div>'+
+    '<div id="wx"></div><p class="meta">Left: '+LR.q2.length+'</p>';
+}
+function pickWhich(k){
+  const idx=LR.q2[0], it=WHICH[idx]; document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  $('w'+it.a).classList.add('ok'); const right=k===it.a; if(!('w'+idx in LR.first)) LR.first['w'+idx]=right;
+  if(!right) $('w'+k).classList.add('bad');
+  $('wx').innerHTML='<div class="explain">'+(right?'✅ ':'❌ ')+it.why+'</div><button class="btn" style="margin-top:10px" onclick="nextWhich('+right+')">Next →</button>';
+}
+function nextWhich(right){ if(right) LR.q2.shift(); else LR.q2.push(LR.q2.shift()); LR.q2.length?renderWhich():startRight(); }
+
+function startRight(){ stageUI(3); LR.q3=shuffle(RIGHT.map((_,i)=>i)); renderRight(); }
+function renderRight(){
+  const it=RIGHT[LR.q3[0]];
+  $('learn').innerHTML='<div class="qbox"><small>Is this sentence correct?</small><p style="font-size:19px">'+it.s+'</p></div>'+
+    '<div class="row2"><button class="opt" id="r1" style="text-align:center" onclick="pickRight(true)">✓ Correct</button><button class="opt" id="r0" style="text-align:center" onclick="pickRight(false)">✗ Wrong</button></div>'+
+    '<div id="rx"></div><p class="meta">Left: '+LR.q3.length+'</p>';
+}
+function pickRight(v){
+  const idx=LR.q3[0], it=RIGHT[idx]; document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const right=v===it.ok; if(!('r'+idx in LR.first)) LR.first['r'+idx]=right;
+  $(it.ok?'r1':'r0').classList.add('ok'); if(!right) $(v?'r1':'r0').classList.add('bad');
+  $('rx').innerHTML='<div class="explain">'+(right?'✅ ':'❌ ')+it.why+'</div><button class="btn" style="margin-top:10px" onclick="nextRight('+right+')">Next →</button>';
+}
+function nextRight(right){ if(right) LR.q3.shift(); else LR.q3.push(LR.q3.shift()); LR.q3.length?renderRight():finishRules(); }
+
+function finishRules(){
+  stageUI(4);
+  const max=WHICH.length+RIGHT.length, s=Object.values(LR.first).filter(Boolean).length;
+  if(!scores.ex0) scores.ex0={s,max};
+  $('learn').innerHTML='<div class="qbox" style="text-align:center"><p style="font-family:\'Baloo 2\',sans-serif;font-size:24px;color:var(--brand)">🎉 Rules learned!</p>'+
+    '<p style="font-weight:600">situation → <b>past simple</b> · ability → <b>could</b> · annoying action → <b>would</b></p></div>'+
+    '<button class="btn grey" onclick="startCards()">Look at the rule cards again</button>';
+  fb('ex0_fb','First-try score saved: '+s+'/'+max+'. The exercises are open now!','good');
+  ['ex1','ex2','ex3','ex4','ex5'].forEach(k=>$(k).classList.remove('locked'));
+  markDone('ex0');
+}
+
+/* =============== EX 1: choose =============== */
+const EX1 = [
+  ['I wish I ',['could','would'],' concentrate on learning this.',0],
+  ['If only we ',['go','had gone'],' to a different school.',1],
+  ['If only my parents ',['would stop','stopped'],' trying to plan my life.',0],
+  ['We wish we ',['knew','would know'],' more English words.',0],
+  ['I wish my flatmate ',['won’t borrow','wouldn’t borrow'],' my clothes without asking.',1],
+  ['If only I ',['didn’t have to','don’t have to'],' hand in my coursework on Friday.',0],
+  ['I wish there ',['was','would be'],' a swimming pool on the university campus.',0],
+  ['If only I ',['took','could take'],' my exams next semester.',1]
+];
+const pick1=Array(EX1.length).fill(null), mark1=Array(EX1.length).fill('');
+function r1(){
+  $('ex1_list').innerHTML=EX1.map((it,i)=>'<li>'+it[0]+'<span class="pills">'+it[1].map((o,k)=>
+    '<button class="pill '+(pick1[i]===k?'on '+mark1[i]:'')+'" onclick="p1('+i+','+k+')">'+o+'</button>').join('<span class="slash">/</span>')+'</span>'+it[2]+'</li>').join('');
+}
+function p1(i,k){ pick1[i]=k; mark1[i]=''; r1(); }
+function check1(){
+  if(pick1.some(x=>x===null)) return fb('ex1_fb','Choose an answer in every sentence.','warn');
+  let s=0; EX1.forEach((it,i)=>{ const ok=pick1[i]===it[3]; mark1[i]=ok?'ok':'bad'; if(ok)s++; }); r1(); record('ex1',s,EX1.length);
+}
+
+/* =============== EX 2: sentences from prompts =============== */
+const EX2 = [
+  {c:'Anna finds it hard to study on her own.', p:'Anna / wish / have / someone to study with.', a:['Anna wishes she had someone to study with.']},
+  {c:'Nathalie says we’ve met before.', p:'I / wish / I / remember / meeting her.', a:['I wish I could remember meeting her.']},
+  {c:'They’ve been playing music all night.', p:'If only / someone / tell them / stop.', a:['If only someone would tell them to stop.']},
+  {c:'Tom’s friends are going to the beach this weekend.', p:'Tom / wish / not have to / work this weekend.', a:['Tom wishes he didn’t have to work this weekend.']},
+  {c:'Liam’s laptop is broken – again.', p:'Jake / wish / Liam / not keep asking / borrow / laptop.', a:['Jake wishes Liam wouldn’t keep asking to borrow his laptop.','Jake wishes Liam wouldn’t keep asking to borrow the laptop.','Jake wishes Liam wouldn’t keep asking to borrow his laptop.']},
+  {c:'I want to watch a lecture online, but I don’t have a password.', p:'If only / I / log in to / the university’s learning platform.', a:['If only I could log in to the university’s learning platform.','If only I could log into the university’s learning platform.']}
+];
+const tries2={};
+function setup2(){
+  $('ex2_body').innerHTML=EX2.map((it,i)=>'<div class="qa"><div><b>'+(i+1)+'.</b> '+it.c+'</div><div class="prompt">'+it.p+'</div>'+
+    '<input class="sent" id="ex2_s'+i+'" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Write the sentence"><div id="ex2_m'+i+'"></div></div>').join('');
+  EX2.forEach((_,i)=>$('ex2_s'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function check2(){
+  const vals=EX2.map((_,i)=>$('ex2_s'+i).value);
+  if(vals.some(v=>!v.trim())) return fb('ex2_fb','Write all the sentences first.','warn');
+  let s=0; EX2.forEach((it,i)=>{ const ok=it.a.map(norm).includes(norm(vals[i])), el=$('ex2_s'+i);
+    el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++;
+    tries2[i]=(tries2[i]||0)+(ok?0:1);
+    $('ex2_m'+i).innerHTML=(!ok&&tries2[i]>=2)?'<div class="model">Model answer: '+it.a[0]+'</div>':''; });
+  record('ex2',s,EX2.length);
+}
+
+/* =============== EX 3: complaints (open) =============== */
+const EX3 = [
+  'My housemate never does any food shopping. He’s always using my coffee, and he never replaces it.',
+  'I share a flat with three of the laziest girls in the world. I always end up doing the cleaning because they won’t. They can’t see how annoying it is.',
+  'My friend is always asking to borrow money from me. She never remembers to pay me back until I ask her to. Now I feel like I don’t want to spend time with her.',
+  'The bus we take to go to school is always late. The driver is unfriendly and never apologises. Unfortunately, there is only one bus a day.',
+  'I share a bedroom with my brother. He often plays computer games until very late at night, and it keeps me awake. I’ve asked him not to do it, but he never remembers.'
+];
+const MODELS3 = [
+  ['my housemate would do some food shopping.','my housemate wouldn’t use / would stop using my coffee.','he would replace my coffee when he uses it.'],
+  ['I didn’t share a flat with three of the laziest girls in the world.','I didn’t always end up doing the cleaning.','they could see how annoying it is.'],
+  ['my friend wouldn’t keep asking to borrow money from me.','my friend would remember to pay the money back.','I still wanted to spend time with her.'],
+  ['the bus wasn’t late every day.','the driver wasn’t so unfriendly / would apologise for being late.','there was more than one bus.'],
+  ['I didn’t share a room with my brother.','he wouldn’t play computer games and keep me awake.','he would remember not to do it.']
+];
+function setup3(){
+  $('ex3_body').innerHTML=EX3.map((c,i)=>'<div class="qa"><div class="bubble"><b>'+(i+1)+'.</b> '+c+'</div>'+
+    '<textarea id="ex3_t'+i+'" placeholder="I wish... If only..."></textarea></div>').join('');
+  EX3.forEach((_,i)=>$('ex3_t'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function save3(){
+  const vals=EX3.map((_,i)=>$('ex3_t'+i).value.trim()); let bad=0;
+  vals.forEach((v,i)=>{ const n=(norm(v).match(/\b(i wish|if only)\b/g)||[]).length; const el=$('ex3_t'+i); el.classList.remove('bad'); if(n<2){ el.classList.add('bad'); bad++; } });
+  if(bad) return fb('ex3_fb','Write at least two sentences with “I wish” or “If only” for each complaint.','warn');
+  notes.ex3='EX 3 (complaints)\n'+vals.map((v,i)=>(i+1)+') '+v.replace(/\n+/g,' ')).join('\n');
+  fb('ex3_fb','Saved! Compare your sentences with the suggested answers below.','good');
+  $('ex3_models').innerHTML='<div class="explain" style="margin-top:14px"><b>Suggested answers</b> (others are possible!)'+
+    MODELS3.map((m,i)=>'<p style="margin:8px 0 2px"><b>'+(i+1)+'. If only / I wish...</b></p><ul style="margin:0;padding-left:20px">'+m.map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')+'</div>';
+  markDone('ex3');
+}
+
+/* =============== EX 4: dialogues =============== */
+function L(who,col,txt){ return '<div class="line"><span class="who" style="background:'+col+'">'+who+'</span><div class="bubble">'+txt+'</div></div>'; }
+const EX4HTML =
+  '<div class="dlg"><h3 class="dh">Dialogue 1</h3>'+
+  L('Lee','#1597b8','So do you enjoy studying philosophy?')+
+  L('Raj','#f07d1b','Not really. The subject is OK, but I wish the lecturers [[0]] <span class="cue">(think)</span> about what it’s like for foreign students.')+
+  L('Lee','#1597b8','What do you mean?')+
+  L('Raj','#f07d1b','Well, I wish they [[1]] <span class="cue">(not speak)</span> so fast – it’s hard to make notes. They can’t work the technology – if only someone [[2]] <span class="cue">(show)</span> them how to share their slides. And the other students chat during lectures. I wish they [[3]] <span class="cue">(have)</span> a bit more respect. If only I [[4]] <span class="cue">(change)</span> to another course!')+
+  '</div><div class="dlg"><h3 class="dh">Dialogue 2</h3>'+
+  L('Abi','#7c5cff','Are you enjoying the party?')+
+  L('Priti','#14a37f','I’m a bit bored, to be honest. If only there [[5]] <span class="cue">(be)</span> more people here I knew.')+
+  L('Abi','#7c5cff','Well, … at least you know me! But I’m leaving in a minute.')+
+  L('Priti','#14a37f','That’s a shame. If only you [[6]] <span class="cue">(stay)</span> longer.')+
+  L('Abi','#7c5cff','I wish I [[7]] <span class="cue">(not / have to)</span> go so soon, but …')+
+  L('Priti','#14a37f','Oh, no! Ade’s playing the same song AGAIN! I wish he [[8]] <span class="cue">(not / keep)</span> doing that.')+
+  L('Abi','#7c5cff','Yeah, it’s really annoying. If only he [[9]] <span class="cue">(have)</span> better taste in music!')+'</div>';
+const KEY4 = [['would think'],['wouldn’t speak'],['would show'],['had'],['could change'],['were'],['could stay','would stay'],['didn’t have to','didn’t have to go'],['wouldn’t keep'],['had']];
+function setup4(){
+  $('ex4_body').innerHTML=EX4HTML.replace(/\[\[(\d+)\]\]/g,(m,n)=>'<sup class="gn">'+(+n+1)+'</sup><input class="gap" id="ex4_g'+n+'" autocomplete="off" autocapitalize="off" spellcheck="false">');
+  KEY4.forEach((_,i)=>$('ex4_g'+i).addEventListener('input',e=>e.target.classList.remove('ok','bad')));
+}
+function check4(){
+  const vals=KEY4.map((_,i)=>$('ex4_g'+i).value);
+  if(vals.some(v=>!v.trim())) return fb('ex4_fb','Fill all the gaps first.','warn');
+  let s=0; KEY4.forEach((acc,i)=>{ const ok=acc.map(norm).includes(norm(vals[i])), el=$('ex4_g'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record('ex4',s,KEY4.length);
+}
+
+/* =============== EX 5: about you (open) =============== */
+const EX5 = ['If only / I wish I (didn’t) ...','If only / I wish I could ...','If only / I wish ... would / wouldn’t ...'];
+function setup5(){
+  $('ex5_body').innerHTML=EX5.map((p,i)=>'<div class="qa"><label for="ex5_t'+i+'"><b>'+(i+1)+'.</b> <span class="prompt">'+p+'</span></label>'+
+    '<input class="sent" id="ex5_t'+i+'" autocomplete="off" autocapitalize="sentences"></div>').join('');
+  EX5.forEach((_,i)=>$('ex5_t'+i).addEventListener('input',e=>e.target.classList.remove('bad')));
+}
+function save5(){
+  const vals=EX5.map((_,i)=>$('ex5_t'+i).value.trim()); let bad=0;
+  vals.forEach((v,i)=>{ const n=norm(v); let good=words(v)>=4 && /\b(i wish|if only)\b/.test(n);
+    if(i===1) good=good&&/\bcould\b/.test(n); if(i===2) good=good&&/\bwould\b/.test(n);
+    const el=$('ex5_t'+i); el.classList.remove('bad'); if(!good){ el.classList.add('bad'); bad++; } });
+  if(bad) return fb('ex5_fb','Check the red ones: start with I wish / If only. Sentence 2 needs could, sentence 3 needs would / wouldn’t.','warn');
+  notes.ex5='EX 5 (true for me)\n'+vals.map((v,i)=>(i+1)+') '+v).join('\n');
+  fb('ex5_fb','Saved! Your teacher will read your sentences.','good'); markDone('ex5');
+}
+
+/* =============== SEND =============== */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push((k==='ex0'?'Rules (first try)':'Ex'+k.slice(2))+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+startCards(); r1(); setup2(); setup3(); setup4(); setup5(); progress();
+</script>
+</body>
+</html>
