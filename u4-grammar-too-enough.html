@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 Grammar · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fc;--card:#fff;--ink:#22263a;--muted:#6f7590;--brand:#3d6fd9;--brand2:#7b5cd6;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#dfe5f2;--soft:#eef3fd;
+--cold:#c6dcff;--coldink:#305bab;--right:#adf0c7;--rightink:#067429;--hot:#ffc6c6;--hotink:#bd0a0a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#3d6fd9 0%,#7b5cd6 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\2615";position:absolute;right:14px;top:-10px;font-size:130px;line-height:1;opacity:.2}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.goal{background:#eaf9ef;border:2px solid #9fe0b8;border-radius:18px;padding:14px 18px;margin:18px 0}
+.goal b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.goal p{margin:4px 0 0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#d9e1f0;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.name,.inp{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff;color:var(--ink)}
+textarea{font:inherit;width:100%;min-height:150px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus,.inp:focus{outline:none;border-color:var(--brand)}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:var(--ink);border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:10px}
+.btn.ghost{background:#fff;border:2px solid var(--line)}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.small{font-size:14px;color:var(--muted);margin:4px 0 0}
+
+/* EX1 rules */
+.scale{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 16px}
+.scale div{border-radius:14px;padding:12px 8px;text-align:center;font-weight:700;font-size:14px;line-height:1.3}
+.scale b{display:block;font-size:16px;margin-bottom:4px}
+.scale .c{background:var(--cold);color:var(--coldink)}
+.scale .r{background:var(--right);color:var(--rightink)}
+.scale .h{background:var(--hot);color:var(--hotink)}
+.rtabs{display:flex;gap:6px;margin-bottom:12px}
+.rtabs button{flex:1;font:inherit;font-weight:800;font-size:15px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 4px;cursor:pointer;color:var(--muted)}
+.rtabs button.on{border-color:var(--brand);color:var(--brand);background:var(--soft)}
+.rtabs button.y{border-color:var(--ok);color:var(--ok);background:var(--okbg)}
+.rule{background:var(--soft);border-radius:18px;padding:16px}
+.rule h3{font-family:'Baloo 2',sans-serif;font-size:22px;margin:0 0 6px;color:var(--brand)}
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 10px}
+.formula span{background:#fff;border:2px solid var(--line);border-radius:10px;padding:4px 10px;font-weight:800}
+.formula span.k{background:var(--brand);border-color:var(--brand);color:#fff}
+.formula i{font-style:normal;color:var(--muted);font-weight:800}
+.rule ul{margin:0 0 6px;padding-left:20px}
+.rule .ua{font-size:15px;color:var(--muted);margin:6px 0 0}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.check p{margin:0 0 8px;font-weight:800}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 6px;cursor:pointer;color:var(--ink)}
+.opt b{color:var(--brand);margin-right:6px}
+.opt.on{border-color:var(--brand);background:var(--soft)}
+
+/* EX2 sort */
+.sort{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.sort p{margin:0;flex:1;font-weight:700}
+.tog{display:flex;gap:6px}
+.tog button{font:inherit;font-weight:800;font-size:15px;border:2px solid var(--line);background:#fff;border-radius:99px;padding:6px 12px;cursor:pointer;color:var(--muted)}
+.tog button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* EX3 builder */
+.build{padding:12px 0;border-bottom:1px solid var(--line)}
+.build .tray{display:flex;flex-wrap:wrap;gap:6px;min-height:44px;padding:8px;border:2px dashed var(--line);border-radius:12px;margin-bottom:8px}
+.build .tray .hint{color:var(--muted);font-size:15px;align-self:center}
+.chip{font:inherit;font-weight:700;font-size:16px;background:#fff;border:2px solid #c9d6f3;color:var(--brand);border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.used{opacity:.25;cursor:default}
+.tray .chip{color:var(--ink)}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+
+/* EX4 transform */
+.tr{padding:12px 0;border-bottom:1px solid var(--line)}
+.tr .src{margin:0 0 6px;font-weight:700}
+.tr .src em{color:var(--muted);font-style:normal;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin-right:6px}
+.tr .line{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tr .line input{font:inherit;font-weight:800;color:var(--brand);width:130px;border:none;border-bottom:2px dashed var(--brand);padding:2px 6px;background:transparent;text-align:center}
+.tr .line input:focus{outline:none;background:#fff6dc}
+.tr .line input.ok{border-bottom-style:solid;border-radius:6px 6px 0 0}
+.tr .line input.bad{border-bottom-style:solid;border-radius:6px 6px 0 0}
+
+/* EX5 spot */
+.spot{padding:12px 0;border-bottom:1px solid var(--line)}
+.spot .ws{display:flex;flex-wrap:wrap;gap:4px}
+.w{font:inherit;font-size:17px;background:none;border:2px solid transparent;border-radius:8px;padding:2px 6px;cursor:pointer;color:var(--ink)}
+.w.on{border-color:var(--sun);background:#fff6dc}
+.spot .fix{font-size:15px;color:var(--ok);font-weight:800;margin-top:6px;display:none}
+.spot.showfix .fix{display:block}
+
+/* EX6 review */
+.brief{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:14px 16px;margin-bottom:14px}
+.brief p{margin:0 0 6px}
+.lbl{font-weight:800;font-size:15px;margin-top:12px;display:block}
+.stars{display:flex;gap:4px;margin-top:6px}
+.stars button{font-size:30px;background:none;border:none;cursor:pointer;color:#d0d6e4;padding:0 2px}
+.stars button.on{color:var(--sun)}
+.need{list-style:none;padding:0;margin:6px 0 10px}
+.need li{padding:5px 0 5px 30px;position:relative;font-size:15px}
+.need li:before{content:"\2713";position:absolute;left:4px;top:5px;width:20px;height:20px;border-radius:6px;background:var(--soft);color:var(--brand);font-weight:800;font-size:13px;display:grid;place-items:center}
+.need li.y:before{background:var(--ok);color:#fff}
+.review{margin-top:14px;border:2px solid var(--line);border-radius:18px;padding:14px 16px;background:#fff}
+.review .top{display:flex;gap:10px;align-items:center}
+.review .av{flex:none;width:40px;height:40px;border-radius:50%;background:var(--brand2);color:#fff;font-weight:800;display:grid;place-items:center}
+.review .who{font-weight:800;line-height:1.2}
+.review .who small{display:block;color:var(--muted);font-weight:600}
+.review .st{color:var(--sun);font-size:20px;margin:6px 0 2px;letter-spacing:2px}
+.review h4{margin:0 0 4px;font-size:17px}
+.review p{margin:0 0 8px;white-space:pre-wrap}
+.review .owner{background:var(--soft);border-radius:12px;padding:8px 12px;font-size:15px}
+.review .empty{color:var(--muted);text-align:center}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e3e9f2;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 4 · Eat · Grammar homework</small>
+  <h1>Too spicy? Not big enough?</h1>
+  <p>too · too much / too many · (not) enough</p>
+</header>
+
+<div class="goal">
+  <b>Your goal</b>
+  <p>Explain what the problem is with <b>too</b> and <b>not … enough</b>, and suggest a solution.</p>
+</div>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 6 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1: RULES -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Learn the rules. Read each rule, then answer its quick check. Open all 4 tabs.</h2></div>
+  <div class="scale">
+    <div class="c"><b>not hot enough</b>I'll warm it up.</div>
+    <div class="r"><b>just right</b>Perfect!</div>
+    <div class="h"><b>too hot</b>I can't drink it.</div>
+  </div>
+  <div class="rtabs" id="rtabs"></div>
+  <div class="rule" id="rule"></div>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<!-- EX 2: SORT -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Countable or not? Choose <b>too much</b> or <b>too many</b> for each word.</h2></div>
+  <div id="list2"></div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<!-- EX 3: BUILD -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Build the sentences. Tap the words in the right order.</h2></div>
+  <div id="list3"></div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4: TRANSFORM -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Say it another way. Complete the second sentence so it means the same as the first.</h2></div>
+  <div id="list4"></div>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5: SPOT -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Grammar detective 🔍 Each sentence has one mistake. Tap the wrong word.</h2></div>
+  <div id="list5"></div>
+  <button class="btn" onclick="check5()">Check</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- EX 6: REVIEW -->
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Write an honest review ⭐</h2></div>
+  <div class="brief">
+    <p>Think of a <b>real</b> café, restaurant or shop in your city where something wasn't perfect.</p>
+    <p style="margin:0">Write a short online review (50–90 words). Say what was good, what the problems were, and give the owner some advice.</p>
+  </div>
+
+  <label class="lbl">Place</label>
+  <input class="inp" id="rPlace" placeholder="e.g. a coffee shop near my office">
+  <label class="lbl">Your rating</label>
+  <div class="stars" id="stars"></div>
+  <label class="lbl">Title of your review</label>
+  <input class="inp" id="rTitle" placeholder="e.g. Great coffee, but not enough chairs!">
+  <label class="lbl">Your review</label>
+  <textarea id="rText" placeholder="I've been to this café a few times. The coffee is delicious, but..."></textarea>
+  <label class="lbl">Advice for the owner</label>
+  <input class="inp" id="rTip" placeholder="Why don't you...? / How about...?">
+  <p class="small" id="wc6">0 words · aim for 50–90</p>
+
+  <p class="small" style="margin-top:10px">Your review must use:</p>
+  <ul class="need" id="need6">
+    <li data-k="tooAdj">too + adjective (too noisy, too expensive…)</li>
+    <li data-k="enAdj">not + adjective + enough (not big enough…)</li>
+    <li data-k="muchMany">too much or too many + noun</li>
+    <li data-k="enNoun">(not) enough + noun (enough chairs…)</li>
+    <li data-k="sug">a suggestion: Why don't you…? / How about…?</li>
+  </ul>
+
+  <div class="review" id="preview"><div class="empty">Your review will appear here</div></div>
+  <button class="btn" onclick="save6()">Save my review</button>
+  <div class="fb" id="fb6"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 6 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 4 Grammar · too / not enough',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false, ex6:false};
+const scores = {};
+const notes = {};
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: rules ---------- */
+const RULES = [
+  { tab:'too + adj', title:'too + adjective',
+    formula:['<span class="k">too</span>','<i>+</i>','<span>adjective</span>'],
+    body:'<ul><li>It\'s <b>too hot</b>. I can\'t drink it.</li><li>The jeans are <b>too small</b> for me.</li><li>It\'s <b>too spicy</b> <b>to eat</b>. <span class="small">(too + adj + to do)</span></li></ul>',
+    ua:'too = більше, ніж треба. Це завжди проблема! А very — просто «дуже», не обов\'язково проблема.',
+    q:'"This coffee is very hot." / "This coffee is too hot." Which one means you CAN\'T drink it?',
+    o:['This coffee is very hot.','This coffee is too hot.'], a:1 },
+  { tab:'not … enough', title:'not + adjective + enough',
+    formula:['<span>not</span>','<i>+</i>','<span>adjective</span>','<i>+</i>','<span class="k">enough</span>'],
+    body:'<ul><li>The room <b>isn\'t big enough</b>.</li><li>I\'m <b>not old enough</b> <b>to drive</b>.</li><li>The waiter <b>wasn\'t friendly enough</b>.</li></ul>',
+    ua:'enough стоїть ПІСЛЯ прикметника: big enough, а не «enough big».',
+    q:'Choose the correct sentence.',
+    o:['The soup isn\'t enough hot.','The soup isn\'t hot enough.'], a:1 },
+  { tab:'much / many', title:'too much / too many + noun',
+    formula:['<span class="k">too much</span>','<i>+ uncountable</i>','&nbsp;','<span class="k">too many</span>','<i>+ countable</i>'],
+    body:'<ul><li>You eat <b>too much sugar</b>. <span class="small">(you can\'t count sugar)</span></li><li>You eat <b>too many snacks</b>. <span class="small">(one snack, two snacks…)</span></li><li>There were <b>too many people</b> and <b>too much noise</b>.</li></ul>',
+    ua:'Можна порахувати (snacks, people, cups)? → many. Не можна (sugar, time, noise, money)? → much.',
+    q:'There are too ___ people in this café.',
+    o:['much','many'], a:1 },
+  { tab:'enough + noun', title:'(not) enough + noun',
+    formula:['<span class="k">enough</span>','<i>+</i>','<span>noun</span>'],
+    body:'<ul><li>There <b>aren\'t enough chairs</b>.</li><li>I <b>don\'t have enough time</b> to cook.</li><li>Do we have <b>enough money</b>?</li></ul>',
+    ua:'З іменником навпаки: enough стоїть ПЕРЕД ним: enough time, а не «time enough».',
+    q:'We don\'t have ___ to finish the work.',
+    o:['enough time','time enough'], a:0 }
+];
+let rTab = 0, rAns = RULES.map(()=>null), rOk = RULES.map(()=>false), r1first = RULES.map(()=>null);
+function r1(){
+  $('rtabs').innerHTML = RULES.map((r,i)=>'<button class="'+(i===rTab?'on ':'')+(rOk[i]?'y':'')+'" onclick="tab1('+i+')">'+(rOk[i]?'✓ ':'')+r.tab+'</button>').join('');
+  const r = RULES[rTab];
+  $('rule').innerHTML = '<h3>'+r.title+'</h3><div class="formula">'+r.formula.join('')+'</div>'+r.body+'<p class="ua">🇺🇦 '+r.ua+'</p>'+
+    '<div class="check"><p>Quick check: '+r.q+'</p>'+r.o.map((o,j)=>'<button class="opt '+(rAns[rTab]===j?'on '+(j===r.a?'ok':'bad'):'')+'" onclick="ans1('+j+')"><b>'+'AB'[j]+'</b>'+o+'</button>').join('')+'</div>';
+}
+function tab1(i){ rTab=i; r1(); }
+function ans1(j){
+  const r=RULES[rTab]; rAns[rTab]=j;
+  if (r1first[rTab]===null) r1first[rTab] = (j===r.a);
+  if (j===r.a){ rOk[rTab]=true; fb('fb1','Correct! '+(rOk.every(Boolean)?'All 4 rules done 🎉':'Now open the next tab.'),'good'); }
+  else fb('fb1','Not quite. Read the rule again and try once more.','warn');
+  r1();
+  if (rOk.every(Boolean) && !done.ex1){
+    const s=r1first.filter(Boolean).length; scores.ex1={s,max:4}; markDone('ex1');
+    if (rTab<3) {}
+  } else if (j===r.a && rTab<3) setTimeout(()=>{ rTab=rOk.findIndex(x=>!x); if(rTab<0) rTab=3; r1(); },900);
+}
+
+/* ---------- EX 2: much / many ---------- */
+const E2 = [['sugar','much'],['snacks','many'],['noise','much'],['people','many'],['homework','much'],['cups of coffee','many'],['money','much'],['chairs','many']];
+let a2 = E2.map(()=>null), m2 = E2.map(()=>'');
+function r2(){
+  $('list2').innerHTML = E2.map((x,i)=>'<div class="sort"><p class="'+m2[i]+'" style="border-radius:8px;padding:2px 6px">too … '+x[0]+'</p><div class="tog">'+
+    ['much','many'].map(v=>'<button class="'+(a2[i]===v?'on':'')+'" onclick="p2('+i+',\''+v+'\')">too '+v+'</button>').join('')+'</div></div>').join('');
+}
+function p2(i,v){ a2[i]=v; m2[i]=''; r2(); }
+function check2(){
+  if (a2.some(x=>!x)) return fb('fb2','Choose for every word first.','warn');
+  let s=0; a2.forEach((x,i)=>{ const ok=x===E2[i][1]; m2[i]=ok?'ok':'bad'; if(ok)s++; }); r2();
+  const [m,c]=score('ex2',s,E2.length); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: build sentences ---------- */
+const E3 = [
+  'This jacket isn\'t big enough.',
+  'The coffee is too hot to drink.',
+  'There aren\'t enough chairs for everyone.',
+  'You eat too much sugar.',
+  'There were too many people in the restaurant.'
+];
+const T3 = E3.map(s=>s.replace(/[.]/,'').split(' '));
+let bank3 = T3.map(t=>shuffle(t.map((w,i)=>({w,i})))), pick3 = T3.map(()=>[]), m3 = T3.map(()=>'');
+function r3(){
+  $('list3').innerHTML = T3.map((t,k)=>'<div class="build"><div class="tray '+m3[k]+'">'+
+    (pick3[k].length ? pick3[k].map((p,j)=>'<button class="chip" onclick="undo3('+k+','+j+')">'+esc(p.w)+'</button>').join('') : '<span class="hint">'+(k+1)+'. Tap the words below</span>')+
+    '</div><div class="bank">'+bank3[k].map((b,j)=>'<button class="chip '+(pick3[k].some(p=>p.i===b.i)?'used':'')+'" onclick="tap3('+k+','+j+')">'+esc(b.w)+'</button>').join('')+'</div></div>').join('');
+}
+function tap3(k,j){ const b=bank3[k][j]; if (pick3[k].some(p=>p.i===b.i)) return; pick3[k].push(b); m3[k]=''; r3(); }
+function undo3(k,j){ pick3[k].splice(j,1); m3[k]=''; r3(); }
+function check3(){
+  if (pick3.some((p,k)=>p.length<T3[k].length)) return fb('fb3','Use all the words in every sentence.','warn');
+  let s=0; pick3.forEach((p,k)=>{ const ok=norm(p.map(x=>x.w).join(' '))===norm(E3[k]); m3[k]=ok?'ok':'bad'; if(ok)s++; }); r3();
+  const [m,c]=score('ex3',s,E3.length); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: transformation ---------- */
+const E4 = [
+  ['The soup is too cold.', 'The soup isn\'t', 'enough.', ['hot','warm']],
+  ['The room isn\'t big enough for six people.', 'The room is too', 'for six people.', ['small']],
+  ['She\'s too young to drive.', 'She isn\'t', 'enough to drive.', ['old']],
+  ['There are too many people here.', 'There isn\'t enough', 'here.', ['space','room']],
+  ['I\'m too busy to cook tonight.', 'I don\'t have enough', 'to cook tonight.', ['time']],
+  ['This jacket isn\'t cheap enough for me.', 'This jacket is too', 'for me.', ['expensive']]
+];
+$('list4').innerHTML = E4.map((x,i)=>'<div class="tr"><p class="src"><em>'+(i+1)+'</em>'+esc(x[0])+'</p><div class="line">'+esc(x[1])+' <input id="i4_'+i+'" autocomplete="off" autocapitalize="off"> '+esc(x[2])+'</div></div>').join('');
+function check4(){
+  const v=E4.map((_,i)=>norm($('i4_'+i).value));
+  if (v.some(x=>!x)) return fb('fb4','Fill in every gap first.','warn');
+  let s=0; v.forEach((x,i)=>{ const el=$('i4_'+i), ok=E4[i][3].includes(x); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex4',s,E4.length); fb('fb4',m,c); markDone('ex4');
+}
+
+/* ---------- EX 5: spot the mistake ---------- */
+const E5 = [
+  ['The waiter wasn\'t enough friendly.', [3,4], 'The waiter wasn\'t friendly enough.'],
+  ['There is too many noise in this café.', [3], 'There is too much noise in this café.'],
+  ['I\'m too tired that I can\'t cook.', [1], 'I\'m so tired that I can\'t cook.'],
+  ['We don\'t have time enough for lunch.', [3,4], 'We don\'t have enough time for lunch.'],
+  ['This tea is very hot to drink.', [3], 'This tea is too hot to drink.'],
+  ['There aren\'t enough of chairs.', [3], 'There aren\'t enough chairs.']
+];
+let a5 = E5.map(()=>null), m5 = E5.map(()=>''), show5 = false;
+function r5(){
+  $('list5').innerHTML = E5.map((x,i)=>'<div class="spot '+(show5&&m5[i]?'showfix':'')+'"><div class="ws"><b style="margin-right:4px">'+(i+1)+'.</b>'+
+    x[0].split(' ').map((w,j)=>'<button class="w '+(a5[i]===j?'on '+m5[i]:'')+'" onclick="p5('+i+','+j+')">'+esc(w)+'</button>').join('')+
+    '</div><div class="fix">✓ '+esc(x[2])+'</div></div>').join('');
+}
+function p5(i,j){ a5[i]=j; m5[i]=''; r5(); }
+function check5(){
+  if (a5.some(x=>x===null)) return fb('fb5','Tap one word in every sentence.','warn');
+  let s=0; a5.forEach((x,i)=>{ const ok=E5[i][1].includes(x); m5[i]=ok?'ok':'bad'; if(ok)s++; }); show5=true; r5();
+  const [m,c]=score('ex5',s,E5.length); fb('fb5',m,c); markDone('ex5');
+}
+
+/* ---------- EX 6: review ---------- */
+let stars = 0;
+function rs(){ $('stars').innerHTML=[1,2,3,4,5].map(n=>'<button class="'+(n<=stars?'on':'')+'" onclick="setS('+n+')">★</button>').join(''); }
+function setS(n){ stars=n; rs(); live6(); }
+const CH6 = {
+  tooAdj: t=>/\btoo (?!much|many)[a-z]+/.test(t),
+  enAdj: t=>/(n't|not) (\w+ )?[a-z]+ enough/.test(t) || /(isn't|wasn't|aren't|weren't|not) [a-z]+ enough/.test(t),
+  muchMany: t=>/too (much|many) \w+/.test(t),
+  enNoun: t=>/enough (?!to\b|for\b)[a-z]+/.test(t),
+  sug: t=>/why don'?t you|how about|you could|you should/.test(t)
+};
+function live6(){
+  const raw=[$('rTitle').value,$('rText').value,$('rTip').value].join(' '), t=norm(raw);
+  $('wc6').textContent=words($('rText').value+' '+$('rTip').value)+' words · aim for 50–90';
+  document.querySelectorAll('#need6 li').forEach(li=>li.classList.toggle('y', CH6[li.dataset.k](t)));
+  const nm=($('student').value.trim()||'You'), place=esc($('rPlace').value.trim()), title=esc($('rTitle').value.trim()), text=esc($('rText').value.trim()), tip=esc($('rTip').value.trim());
+  if (!place && !title && !text && !tip && !stars){ $('preview').innerHTML='<div class="empty">Your review will appear here</div>'; return; }
+  $('preview').innerHTML='<div class="top"><div class="av">'+esc(nm[0].toUpperCase())+'</div><div class="who">'+esc(nm)+'<small>'+(place||'…')+'</small></div></div>'+
+    '<div class="st">'+'★'.repeat(stars)+'<span style="color:#d0d6e4">'+'★'.repeat(5-stars)+'</span></div>'+
+    (title?'<h4>'+title+'</h4>':'')+(text?'<p>'+text+'</p>':'')+(tip?'<div class="owner"><b>Advice for the owner:</b> '+tip+'</div>':'');
+}
+['rPlace','rTitle','rText','rTip','student'].forEach(id=>$(id).addEventListener('input',live6));
+function save6(){
+  if (!$('rPlace').value.trim() || !$('rTitle').value.trim() || !$('rTip').value.trim() || !stars) return fb('fb6','Fill in the place, rating, title and advice.','warn');
+  if (words($('rText').value+' '+$('rTip').value)<40) return fb('fb6','Write a bit more (at least 40 words).','warn');
+  const miss=[...document.querySelectorAll('#need6 li')].filter(li=>!li.classList.contains('y')).map(li=>li.textContent.split(' (')[0]);
+  notes.ex6='EX 6 (review)\nPlace: '+$('rPlace').value.trim()+' · '+stars+'★\nTitle: '+$('rTitle').value.trim()+'\n'+$('rText').value.trim()+'\nAdvice: '+$('rTip').value.trim()+(miss.length?'\nNot used: '+miss.join(', '):'');
+  fb('fb6', miss.length ? 'Saved! Still missing: '+miss.join(', ')+'. You can add them and save again.' : 'Saved! Brilliant review 😍 Your teacher will read it.', miss.length?'warn':'good');
+  markDone('ex6');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+r1(); r2(); r3(); r5(); rs(); progress();
+</script>
+</body>
+</html>
