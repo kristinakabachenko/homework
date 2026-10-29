@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.6 Reading · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f7f5;--card:#fff;--ink:#1f2a44;--muted:#6b7a90;--brand:#0f8b7d;--brand2:#3b5bdb;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#dce8e4;--soft:#e9f5f2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#0f8b7d 0%,#3b5bdb 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F4D6";position:absolute;right:14px;top:-14px;font-size:140px;line-height:1;opacity:.16}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#d6e3df;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips .lbl{width:100%;font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.chip{font:inherit;font-weight:700;font-size:16px;background:#fff;border:2px solid #b9ddd6;color:var(--brand);border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.sel{background:var(--sun);border-color:var(--sun);color:var(--ink)}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 12px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+textarea{font:inherit;width:100%;min-height:120px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,select:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#1f2a44;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.q{font-weight:700;margin:12px 0 0}
+select{font:inherit;font-weight:800;border:2px solid var(--line);border-radius:12px;padding:6px 8px;background:#fff;color:var(--ink);max-width:100%}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.row p{margin:0;flex:1}
+.ideas{list-style:none;padding:0;margin:0 0 14px}
+.ideas li{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.ideas li b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--soft);color:var(--brand);display:grid;place-items:center}
+.player{background:linear-gradient(135deg,#1f2a44,#24456b);color:#fff;border-radius:20px;padding:16px;margin-bottom:18px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.player p{margin:4px 0 10px;font-size:15px;opacity:.85}
+.player audio{width:100%}
+.text{background:#fbfcfb;border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 12px}
+.text h3{font-family:'Baloo 2',sans-serif;font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.text h3 small{font-family:Nunito,sans-serif;font-size:14px;color:var(--muted);font-weight:700}
+.text p{margin:0}
+.text select{margin-left:auto}
+.strategy{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:16px 18px;margin-bottom:18px}
+.strategy b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.mcq{padding:10px 0;border-bottom:1px solid var(--line)}
+.mcq p{margin:0 0 8px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 6px;cursor:pointer;color:var(--ink)}
+.opt b{color:var(--brand);margin-right:6px}
+.opt.on{border-color:var(--brand);background:var(--soft)}
+.made{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;padding:10px;border:2px dashed var(--line);border-radius:14px;margin-bottom:6px}
+.made .chip{color:var(--ink)}
+.made .hint{color:var(--muted);font-size:15px;align-self:center}
+.msg{background:#eef1f6;border-radius:18px 18px 18px 4px;padding:12px 14px;margin:4px 0 12px;font-style:italic}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e3e9f2;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.6 Reading</small>
+  <h1>Does education change your life?</h1>
+  <p>Inferring information from texts</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 6 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1 -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>What can you remember about the blog posts in the Student's Book? Match the people to their experiences.</h2></div>
+  <div id="list1"></div>
+  <button class="btn" onclick="save1()">Save answers</button>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<div class="player">
+  <b>Track 7.03 · Three life stories</b>
+  <p>Listen while you read the texts in Task 2.</p>
+  <audio controls preload="none" src="u7-6-audio.mp3"></audio>
+</div>
+
+<!-- EX 2 -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Read the three texts quickly. Match one statement to each text. There are two statements you don't need.</h2></div>
+  <ul class="ideas">
+    <li><b>A</b><span>'Education can change your life.'</span></li>
+    <li><b>B</b><span>'Working hard will always make you successful.'</span></li>
+    <li><b>C</b><span>'Money isn't the most important thing in life.'</span></li>
+    <li><b>D</b><span>'Don't let others stop you doing what you love.'</span></li>
+    <li><b>E</b><span>'Everyone should be able to go to university.'</span></li>
+  </ul>
+  <div class="text">
+    <h3>Jamie <small>26</small><select id="p0"></select></h3>
+    <p>I always wanted to be a chef, but the teachers at my school thought it was a bad idea. My parents expected me to go to university – it didn't matter which subject I studied, so long as it was well respected. So I decided to do economics. I hated it and was getting bad grades. So, one of my lecturers suggested taking a year off. I decided to go to France and work in a restaurant. I learned so much in a two-year stay! Now I'm back home, I got a bank loan and I recently opened my own place. I work crazy hours, I'm not rich, but I don't care. I wish people wouldn't tell kids they can't do something. You can do anything if you really want to.</p>
+  </div>
+  <div class="text">
+    <h3>Anoushka <small>24</small><select id="p1"></select></h3>
+    <p>When I was growing up, my parents didn't have a lot of money, and life was sometimes difficult. They encouraged me to study hard at school so that one day I would be able to get a well-paid job. I had friends, but I didn't go out much. I was ambitious and self-confident, and I spent most of my time studying. At eighteen, I won a place at university to study law and moved away from my home town. Now I have a great job, but I work fifteen hours a day. I haven't tried to keep in touch with my old classmates, but I follow them on social media. Sometimes when I see them having fun, I wish I was more easy-going. I have a nice lifestyle, but I often feel lonely. Sometimes I wonder what I worked so hard for.</p>
+  </div>
+  <div class="text">
+    <h3>Leon <small>25</small><select id="p2"></select></h3>
+    <p>At school, I wasn't interested – and didn't sit any exams. After I left, I took any work I was offered – it was often boring and badly paid! But one job was gardening for an old guy, who was really well educated. Sometimes he'd chat to me and we talked about life and the world. Soon he began lending me books – and I remember thinking, there are all these ideas I didn't know about! It made me want to go back to school, then higher education. I gained a qualification as a social worker. Now I work with kids like me – it's a great job. I tell them how important education is – because for me, it was life-changing.</p>
+  </div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<div class="strategy">
+  <b>Strategy: inferring information</b>
+  <p style="margin:6px 0 0">Sometimes a writer doesn't say something directly. Use the <b style="font-family:inherit;font-size:inherit">clues</b> in the text and your own knowledge to work out what is most likely true.</p>
+</div>
+
+<!-- EX 3 -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Read the texts again. Choose the most likely answer: A or B.</h2></div>
+  <div id="list3"></div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4 -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Make six compound adjectives from the texts. Tap a word from A, then a word from B.</h2></div>
+  <div class="chips" id="bankA"></div>
+  <div class="chips" id="bankB"></div>
+  <div class="made" id="made4"></div>
+  <p style="margin:0;font-size:14px;color:var(--muted)">Made a mistake? Tap the word to remove it.</p>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5 -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Complete the sentences with the compound adjectives from Task 4. Tap a gap, then tap a word.</h2></div>
+  <div class="chips" id="bank5"></div>
+  <ol class="items" id="list5"></ol>
+  <button class="btn" onclick="check5()">Check</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- EX 6 -->
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Mediation. A friend has sent you this message. Write a short reply with three pieces of advice. Use ideas from the texts.</h2></div>
+  <div class="msg">You know I want to be an actor. My parents want me to study an academic subject at university, like literature or a foreign language. If I agree, they will pay for my studies, but not if I choose acting. What should I do?</div>
+  <textarea id="t6" placeholder="Hi! I understand how you feel. First, I think you should..."></textarea>
+  <p style="margin:4px 0 0;font-size:14px;color:var(--muted)" id="wc6">0 words · aim for 50–80</p>
+  <button class="btn" onclick="save6()">Save answer</button>
+  <div class="fb" id="fb6"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 6 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.6 Reading',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* Answer keys */
+const KEY2 = ['D', 'C', 'A'];                 // Jamie, Anoushka, Leon
+const KEY3 = ['A', 'B', 'B', 'A', 'B', 'A'];  // inferring
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false, ex6:false};
+const scores = {};   // first-attempt scores
+const notes = {};    // text sent to the teacher
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: who did what (teacher checks) ---------- */
+const E1 = [
+  'studied in Italy and learned that she/he could do more than they realised.',
+  'spent a semester in Slovenia improving her/his English, and learned that making mistakes is OK.',
+  'went to Russia for a year and found that people from different cultures have similar values.'
+];
+$('list1').innerHTML = E1.map((t,i)=>'<div class="row"><p><b>'+(i+1)+'.</b> … '+t+'</p><select id="s1_'+i+'"><option value="">–</option><option>Dominika</option><option>Mihail</option><option>Tom</option></select></div>').join('');
+function save1(){
+  const v=E1.map((_,i)=>$('s1_'+i).value);
+  if (v.some(x=>!x)) return fb('fb1','Choose a person for every sentence.','warn');
+  if (new Set(v).size<3) return fb('fb1','Each person can be used only once.','warn');
+  notes.ex1='EX 1 (blog posts)\n'+v.map((x,i)=>(i+1)+') '+x).join('\n');
+  fb('fb1','Saved! Your teacher will check this one.','good'); markDone('ex1');
+}
+
+/* ---------- EX 2: statement per text ---------- */
+['p0','p1','p2'].forEach(id=>{ $(id).innerHTML='<option value="">–</option>'+['A','B','C','D','E'].map(l=>'<option>'+l+'</option>').join(''); $(id).onchange=()=>{ $(id).classList.remove('ok','bad'); }; });
+function check2(){
+  const a=['p0','p1','p2'].map(id=>$(id).value);
+  if (a.some(x=>!x)) return fb('fb2','Choose a statement for every text.','warn');
+  if (new Set(a).size<3) return fb('fb2','Each statement can be used only once.','warn');
+  let s=0; a.forEach((x,i)=>{ const ok=x===KEY2[i]; $('p'+i).classList.remove('ok','bad'); $('p'+i).classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex2',s,3); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: A or B ---------- */
+const E3 = [
+  ['Jamie’s lecturer suggested taking a year off because …', 'she realised he was doing the wrong course.', 'she was worried he would fail the course.'],
+  ['Jamie doesn’t mind not making much money because …', 'he borrowed money from the bank.', 'he loves what he does.'],
+  ['Anoushka worked hard at school because her parents …', 'needed her to make money for the family.', 'wanted her to have a better life than they had.'],
+  ['Anoushka often feels lonely because …', 'she doesn’t have much time to socialise.', 'all her friends are in her home town.'],
+  ['After school, Leon did low-paid jobs because …', 'he didn’t enjoy academic work.', 'he had no qualifications and needed cash.'],
+  ['Leon enjoys being a social worker because …', 'he can help young people improve their lives.', 'it’s a well respected job.']
+];
+let a3 = Array(E3.length).fill(null), m3 = Array(E3.length).fill('');
+function r3(){
+  $('list3').innerHTML = E3.map((q,i)=>'<div class="mcq"><p>'+(i+1)+'. '+q[0]+'</p>'+
+    ['A','B'].map((L,j)=>'<button class="opt '+(a3[i]===L?'on '+m3[i]:'')+'" onclick="pick3('+i+',\''+L+'\')"><b>'+L+'</b>'+q[j+1]+'</button>').join('')+'</div>').join('');
+}
+function pick3(i,L){ a3[i]=L; m3[i]=''; r3(); }
+function check3(){
+  if (a3.some(x=>!x)) return fb('fb3','Answer all 6 questions first.','warn');
+  let s=0; a3.forEach((x,i)=>{ const ok=x===KEY3[i]; m3[i]=ok?'ok':'bad'; if(ok)s++; }); r3();
+  const [m,c]=score('ex3',s,E3.length); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: compound adjectives ---------- */
+const A4 = ['easy-','life-','self-','two-','well-','well-'];
+const B4 = ['changing','confident','educated','going','respected','year'];
+const KEY4 = ['easy-going','life-changing','self-confident','two-year','well-educated','well-respected'];
+let selA = null, made4 = [], usedA = [], usedB = [], m4 = [];
+function r4(){
+  $('bankA').innerHTML = '<span class="lbl">A</span>'+A4.map((w,i)=>'<button class="chip '+(usedA.includes(i)?'used':'')+(selA===i?' sel':'')+'" onclick="tapA('+i+')">'+w+'</button>').join('');
+  $('bankB').innerHTML = '<span class="lbl">B</span>'+B4.map((w,i)=>'<button class="chip '+(usedB.includes(i)?'used':'')+'" onclick="tapB('+i+')">'+w+'</button>').join('');
+  $('made4').innerHTML = made4.length ? made4.map((w,i)=>'<button class="chip '+(m4[i]||'')+'" onclick="undo4('+i+')">'+w.word+'</button>').join('') : '<span class="hint">Your words will appear here</span>';
+}
+function tapA(i){ if(usedA.includes(i)) return; selA = selA===i ? null : i; r4(); }
+function tapB(i){
+  if (usedB.includes(i)) return;
+  if (selA===null) return fb('fb4','Tap a word from A first.','warn');
+  made4.push({a:selA,b:i,word:A4[selA]+B4[i]}); usedA.push(selA); usedB.push(i); selA=null; m4=[]; fb('fb4',''); r4();
+}
+function undo4(i){ const w=made4[i]; usedA=usedA.filter(x=>x!==w.a); usedB=usedB.filter(x=>x!==w.b); made4.splice(i,1); m4=[]; r4(); }
+function check4(){
+  if (made4.length<6) return fb('fb4','Make all six adjectives first.','warn');
+  let s=0; m4 = made4.map(w=>{ const ok=KEY4.includes(w.word); if(ok)s++; return ok?'ok':'bad'; }); r4();
+  const [m,c]=score('ex4',s,6); fb('fb4',m,c); markDone('ex4');
+}
+
+/* ---------- EX 5: gaps ---------- */
+const E5 = {
+  bank: ['easy-going','life-changing','self-confident','two-year','well-educated','well-respected'],
+  items: [
+    ['Kamal spent a year doing charity work – it was a', 'experience for him.', 'life-changing'],
+    ['Zahra is', 'and has qualifications from several universities.', 'well-educated'],
+    ['Everyone looks up to my Aunt Jo – she’s a', 'writer.', 'well-respected'],
+    ['I wish I could be like Ashok – he’s', 'and never gets stressed.', 'easy-going'],
+    ['If you are', 'and believe in yourself, you can achieve anything.', 'self-confident'],
+    ['Most courses take three academic years, but some offer', 'degrees.', 'two-year']
+  ]
+};
+let f5 = Array(E5.items.length).fill(null), m5 = Array(E5.items.length).fill(''), act5 = 0;
+function r5(){
+  $('bank5').innerHTML = E5.bank.map(w=>'<button class="chip '+(f5.includes(w)?'used':'')+'" onclick="chip5(\''+w+'\')">'+w+'</button>').join('');
+  $('list5').innerHTML = E5.items.map((it,i)=>'<li>'+it[0]+' <span class="slot '+(i===act5?'active ':'')+m5[i]+'" onclick="slot5('+i+')">'+(f5[i]||'&nbsp;')+'</span> '+it[1]+'</li>').join('');
+}
+function slot5(i){ if (f5[i]) { f5[i]=null; m5[i]=''; } act5=i; r5(); }
+function chip5(w){
+  if (f5.includes(w)) return;
+  if (act5<0) act5=f5.findIndex(x=>!x);
+  if (act5<0) return;
+  f5[act5]=w; m5[act5]=''; act5=f5.findIndex(x=>!x); r5();
+}
+function check5(){
+  if (f5.some(x=>!x)) return fb('fb5','Fill all the gaps first.','warn');
+  let s=0; E5.items.forEach((it,i)=>{ const ok=f5[i]===it[2]; m5[i]=ok?'ok':'bad'; if(ok)s++; });
+  act5=-1; r5();
+  const [m,c]=score('ex5',s,E5.items.length); fb('fb5',m,c); markDone('ex5');
+}
+
+/* ---------- EX 6: mediation ---------- */
+$('t6').addEventListener('input',()=>{ $('wc6').textContent=words($('t6').value)+' words · aim for 50–80'; });
+function save6(){
+  const t=$('t6').value.trim();
+  if (words(t)<35) return fb('fb6','Write a bit more: give your friend three pieces of advice (at least 35 words).','warn');
+  notes.ex6='EX 6 (reply to a friend)\n'+t;
+  fb('fb6','Saved! Your teacher will read your reply.','good'); markDone('ex6');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+r3(); r4(); r5(); progress();
+</script>
+</body>
+</html>
