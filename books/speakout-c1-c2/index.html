@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speakout C1–C2 · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../hub.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+window.BOOK = {
+  title: 'Speakout C1–C2',
+  kicker: 'Homework collection',
+  subtitle: 'Choose a unit, then tap a card to see what\'s inside.',
+  theme: {
+    bg: '#ECE7DC', surface: '#F7F4EE', ink: '#2B1714', muted: '#6B5752', line: '#DDD4C6',
+    primary: '#5A1D22', secondary: '#BFB065', tertiary: '#A9BFD4',
+    skills: {
+      'Vocabulary': '#5A1D22', 'Grammar': '#57502A', 'Reading': '#A9BFD4', 'Listening': '#7F98B3',
+      'Writing': '#BFB065', 'Speaking': '#8A4A4F'
+    }
+  },
+  units: [
+    { id: '8', name: 'Education', topics: ['Education collocations', 'Compound nouns'] }
+  ]
+};
+
+/* To add a homework: copy one { … } block, paste it at the end, change the details. */
+window.HOMEWORK = [
+  {
+    unit: '8', skill: 'Vocabulary',
+    title: 'Collocations: education', topic: 'Talking about schools & learning',
+    desc: 'Key education collocations — flashcards first, then meaning, form and use in real texts.',
+    tasks: [
+      'Flashcards: learn the collocations',
+      'Match collocations to meanings',
+      'Get the form right',
+      'Complete the school advert',
+      'Complete the conversation',
+      'Save the principal\'s speech',
+      'Bonus: a slogan for your dream school'
+    ],
+    note: 'Main tasks unlock after the learning steps.',
+    file: 'collocations-education.html'
+  },
+  {
+    unit: '8', skill: 'Vocabulary',
+    title: 'Compound nouns: education', topic: 'Courses, exams & student life',
+    desc: 'Compound nouns about education and the verbs that go with them, ending with a short proposal.',
+    tasks: [
+      'Flashcards: learn the compound nouns',
+      'Complete the compound nouns',
+      'Complete the forum posts',
+      'Which verb goes with each noun?',
+      'Your turn: a proposal for the student council'
+    ],
+    file: 'compound-nouns-education.html',
+    isNew: true
+  }
+];
+</script>
+<script src="../hub.js"></script>
+</body>
+</html>

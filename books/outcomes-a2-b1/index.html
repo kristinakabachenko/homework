@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outcomes A2/B1 · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../hub.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+window.BOOK = {
+  title: 'Outcomes A2/B1',
+  kicker: 'Homework collection',
+  subtitle: 'Choose a unit, then tap a card to see what\'s inside.',
+  theme: {
+    bg: '#EDE6D4', surface: '#F7F2E7', ink: '#3B2E14', muted: '#6E6248', line: '#DCD2BB',
+    primary: '#8C2E3E', secondary: '#867B18', tertiary: '#C9BE78',
+    skills: {
+      'Vocabulary': '#867B18', 'Grammar': '#8C2E3E', 'Reading': '#C9BE78', 'Listening': '#5E5513',
+      'Writing': '#B9707B', 'Speaking': '#6B5A2E'
+    }
+  },
+  units: [
+    { id: '4', name: 'Food', topics: ['Describing dishes', 'too / not enough', 'Food around the world'] }
+  ]
+};
+
+/* To add a homework: copy one { … } block, paste it at the end, change the details. */
+window.HOMEWORK = [
+  {
+    unit: '4', skill: 'Vocabulary',
+    title: 'What\'s it made of?', topic: 'Describing dishes',
+    desc: 'Words to describe food and how it\'s cooked — then plan your own café menu.',
+    tasks: [
+      'Learn the words: flip, then test yourself',
+      'Ukrainian food: fill the gaps',
+      'Only one is correct: A or B',
+      'Match the sentence halves',
+      'Your café for one morning ☕'
+    ],
+    file: 'u4-vocabulary-dishes.html'
+  },
+  {
+    unit: '4', skill: 'Grammar',
+    title: 'Too spicy? Not big enough?', topic: 'too / (not) enough',
+    desc: 'too, too much / too many and (not) enough — rules, quick checks, then an honest review.',
+    tasks: [
+      'Learn the 4 rules with quick checks',
+      'Countable or not? Choose',
+      'Build the sentences',
+      'Say it another way',
+      'Grammar detective: find the mistake',
+      'Write an honest review ⭐'
+    ],
+    file: 'u4-grammar-too-enough.html'
+  },
+  {
+    unit: '4', skill: 'Reading',
+    title: 'Sandwiches around the world', topic: 'Pete\'s Eats food blog',
+    desc: 'A food blog about famous sandwiches: skim, scan, useful phrases, then reply to a friend.',
+    tasks: [
+      'Read quickly: which country?',
+      'Which entry says this?',
+      'Find the words in the text',
+      'Phrases that go together',
+      'Talking about the blog',
+      'Reply to your friend\'s message'
+    ],
+    file: 'u4-reading-sandwiches.html'
+  }
+];
+</script>
+<script src="../hub.js"></script>
+</body>
+</html>

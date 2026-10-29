@@ -1,61 +1,60 @@
 /* Homework Library — shared engine.
-   A book page only defines window.BOOK and window.HOMEWORK, then loads this file.
-   Each homework object:
-   {
-     unit:  'Unit 7',             // groups cards into sections
-     code:  '7.3',                // small label on the card (optional)
+   A book page defines window.BOOK (title, theme, units) and window.HOMEWORK, then loads this file.
+
+   Unit:      { id: '7', name: 'Education', topics: ['Online learning', 'Wishes'] }
+   Homework:  {
+     unit:  '7',                 // must match a unit id
+     code:  '7.3',               // small label (optional)
+     skill: 'Listening',         // Vocabulary | Grammar | Reading | Listening | Speaking | Writing | Global skills | Test | Revision
      title: 'Who gets to learn online?',
      topic: 'Online learning',
-     skill: 'Listening',          // Vocabulary | Grammar | Reading | Listening | Speaking | Writing | Global skills | Review
-     desc:  'One-line description for the front of the card',
-     tasks: ['Task 1 …', 'Task 2 …'],   // shown on the back
-     note:  'Optional extra line on the back',
-     file:  'u7-3-listening.html',      // file name in the repo root
-     isNew: true                        // optional ribbon
+     desc:  'One line for the front of the card',
+     tasks: ['…', '…'],          // back of the card
+     note:  'Optional extra line',
+     file:  'u7-3-listening.html',
+     isNew: true                 // optional
    }
 */
 (function(){
-  const B = window.BOOK || {}, H = window.HOMEWORK || [];
+  const B = window.BOOK || {}, H = window.HOMEWORK || [], U = B.units || [];
+  const T = B.theme || {};
   const ROOT = B.root || '../../';
-  const SKILL_COLOR = {
-    'vocabulary':'var(--vocabulary)','grammar':'var(--grammar)','reading':'var(--reading)',
-    'listening':'var(--listening)','global skills':'var(--global)','speaking':'var(--speaking)',
-    'writing':'var(--writing)','review':'var(--review)'
-  };
-  const col = s => SKILL_COLOR[(s||'').toLowerCase()] || 'var(--accent)';
+  const OUTLINE = ['test','revision'];
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  document.title = (B.title || 'Homework') + ' · Homework';
-  if (B.color) document.documentElement.style.setProperty('--accent', B.color);
+  // readable text colour on any background
+  function onColor(hex){
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex||''); if(!m) return '#fff';
+    const n = parseInt(m[1],16), ch = [n>>16, n>>8&255, n&255].map(v => { v/=255; return v<=.03928 ? v/12.92 : ((v+.055)/1.055)**2.4; });
+    const L = .2126*ch[0] + .7152*ch[1] + .0722*ch[2];
+    return L > .38 ? (T.ink || '#2b1f16') : '#fff';
+  }
+  const skillColor = s => (T.skills && (T.skills[s] || T.skills[(s||'').toLowerCase()])) || T.primary || '#5a1d22';
+
+  // apply theme
+  const root = document.documentElement.style;
+  [['bg','--bg'],['surface','--surface'],['ink','--ink'],['muted','--muted'],['line','--line'],
+   ['primary','--primary'],['secondary','--secondary'],['tertiary','--tertiary']]
+    .forEach(([k,v]) => T[k] && root.setProperty(v, T[k]));
+  root.setProperty('--on-primary', onColor(T.primary));
 
   const app = document.getElementById('app');
-  const skills = [...new Set(H.map(h => h.skill).filter(Boolean))];
-  let active = 'All', query = '';
 
-  app.innerHTML = `
-    <a class="back-link" href="../">← All books</a>
-    <header class="hero">
-      <div class="cover">${esc(B.short || B.title)}</div>
-      <div><h1>${esc(B.title)}</h1><p>${esc(B.subtitle || 'Homework collection')}</p></div>
-    </header>
-    <div class="toolbar" role="toolbar" aria-label="Filter by skill">
-      ${['All', ...skills].map(s => `<button class="chip" data-skill="${esc(s)}" aria-pressed="${s==='All'}">${
-        s==='All' ? '' : `<span class="dot" style="background:${col(s)}"></span>`}${esc(s)}</button>`).join('')}
-      <input class="search" type="search" placeholder="Search topic or title…" aria-label="Search">
-    </div>
-    <p class="count" aria-live="polite"></p>
-    <main id="list"></main>`;
-
-  const list = app.querySelector('#list'), count = app.querySelector('.count');
+  function tag(h){
+    const s = h.skill || '';
+    return OUTLINE.includes(s.toLowerCase()) ? `<span class="tag outline">${esc(s)}</span>` : `<span class="tag">${esc(s)}</span>`;
+  }
 
   function card(h){
+    const c = skillColor(h.skill);
     const tasks = (h.tasks||[]).map(t => `<li>${esc(t)}</li>`).join('');
     return `
-    <div class="fc" tabindex="0" role="button" aria-label="${esc(h.title)}. Tap for details" style="--c:${col(h.skill)}">
+    <div class="fc" tabindex="0" role="button" aria-label="${esc(h.title)} — tap for details" style="--c:${c};--on-c:${onColor(c)}">
       <div class="fc-inner">
         <div class="face front">
+          <div class="band"></div>
           <div class="body">
-            <div class="meta"><span class="unit">${esc(h.code || h.unit || '')}${h.isNew ? '<span class="new">NEW</span>' : ''}</span><span class="skill">${esc(h.skill||'')}</span></div>
+            <div class="meta"><span class="code">${esc(h.code||'')}${h.isNew?'<span class="new">NEW</span>':''}</span>${tag(h)}</div>
             <h3>${esc(h.title)}</h3>
             ${h.topic ? `<p class="topic">${esc(h.topic)}</p>` : ''}
             <p class="desc">${esc(h.desc||'')}</p>
@@ -77,30 +76,73 @@
     </div>`;
   }
 
-  function render(){
-    const q = query.trim().toLowerCase();
-    const shown = H.filter(h => (active==='All' || h.skill===active) &&
-      (!q || [h.title,h.topic,h.desc,h.unit,h.code,h.skill].join(' ').toLowerCase().includes(q)));
-    count.textContent = `${shown.length} homework${shown.length===1?'':'s'}`;
-    if (!shown.length){ list.innerHTML = '<p class="empty">Nothing here yet.</p>'; return; }
-    const units = [];
-    shown.forEach(h => { const u = h.unit || 'Other'; let g = units.find(x => x.u===u); if(!g) units.push(g={u,items:[]}); g.items.push(h); });
-    list.innerHTML = units.map(g => `
-      <h2 class="unit-title">${esc(g.u)} ${B.units && B.units[g.u] ? `<small>${esc(B.units[g.u])}</small>` : ''}</h2>
-      <div class="grid">${g.items.map(card).join('')}</div>`).join('');
+  /* ---------- home: list of units ---------- */
+  function home(){
+    document.title = (B.title || 'Homework') + ' · Homework';
+    app.innerHTML = `
+      <nav class="crumbs"><a href="../">All books</a></nav>
+      <header class="masthead">
+        <p class="kicker">${esc(B.kicker || 'Homework collection')}</p>
+        <h1>${esc(B.title)}</h1>
+        ${B.subtitle ? `<p>${esc(B.subtitle)}</p>` : ''}
+      </header>
+      <p class="section-label">Units</p>
+      <div class="units">${U.map(u => {
+        const hw = H.filter(h => String(h.unit)===String(u.id));
+        const skills = [...new Set(hw.map(h => h.skill))];
+        return `<a class="unit-card" href="#unit-${encodeURIComponent(u.id)}">
+          <div class="unit-num"><small>Unit</small>${esc(u.id)}</div>
+          <h2>${esc(u.name)}</h2>
+          <ul class="topics">${(u.topics||[]).map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+          <div class="unit-foot"><span>${hw.length} homework${hw.length===1?'':'s'} →</span>
+            <span class="dots">${skills.map(s => `<i title="${esc(s)}" style="background:${skillColor(s)}"></i>`).join('')}</span></div>
+        </a>`; }).join('') || '<p class="empty">No units yet.</p>'}</div>`;
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- unit page: homework cards ---------- */
+  let active = 'All';
+  function unitPage(id){
+    const u = U.find(x => String(x.id)===String(id));
+    if (!u) return home();
+    const hw = H.filter(h => String(h.unit)===String(u.id));
+    const skills = [...new Set(hw.map(h => h.skill))];
+    document.title = `Unit ${u.id} · ${B.title}`;
+    app.innerHTML = `
+      <nav class="crumbs"><a href="../">All books</a><span>/</span><a href="#">${esc(B.title)}</a></nav>
+      <header class="unit-head">
+        <div class="unit-num"><small>Unit</small>${esc(u.id)}</div>
+        <div><h1>${esc(u.name)}</h1><ul class="topics">${(u.topics||[]).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+      </header>
+      ${skills.length > 1 ? `<div class="toolbar" aria-label="Filter">${['All',...skills].map(s =>
+        `<button class="chip" data-skill="${esc(s)}" aria-pressed="${s===active}">${s==='All'?'':`<span class="dot" style="background:${skillColor(s)}"></span>`}${esc(s)}</button>`).join('')}</div>` : ''}
+      <div class="grid" id="grid"></div>`;
+    const draw = () => {
+      const shown = hw.filter(h => active==='All' || h.skill===active);
+      app.querySelector('#grid').innerHTML = shown.map(card).join('') || '<p class="empty">Nothing here yet.</p>';
+    };
+    draw();
+    app.onclickChip = draw;
+    window.scrollTo(0,0);
+  }
+
+  function route(){
+    const m = /^#unit-(.+)$/.exec(location.hash);
+    active = 'All';
+    m ? unitPage(decodeURIComponent(m[1])) : home();
   }
 
   app.addEventListener('click', e => {
     const chip = e.target.closest('.chip');
     if (chip){ active = chip.dataset.skill;
-      app.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c===chip)); render(); return; }
-    if (e.target.closest('.open')) return;               // let the link work
+      app.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c===chip)); app.onclickChip && app.onclickChip(); return; }
+    if (e.target.closest('.open')) return;
     const fc = e.target.closest('.fc'); if (fc) fc.classList.toggle('flipped');
   });
   app.addEventListener('keydown', e => {
-    const fc = e.target.closest && e.target.closest('.fc');
-    if (fc && e.target===fc && (e.key==='Enter' || e.key===' ')){ e.preventDefault(); fc.classList.toggle('flipped'); }
+    if (e.target.classList && e.target.classList.contains('fc') && (e.key==='Enter' || e.key===' ')){
+      e.preventDefault(); e.target.classList.toggle('flipped'); }
   });
-  app.querySelector('.search').addEventListener('input', e => { query = e.target.value; render(); });
-  render();
+  window.addEventListener('hashchange', route);
+  route();
 })();

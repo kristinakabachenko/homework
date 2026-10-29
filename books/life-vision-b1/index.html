@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Life Vision B1+ · Homework</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../hub.css">
 </head>
 <body>
@@ -13,16 +13,25 @@
 <script>
 window.BOOK = {
   title: 'Life Vision B1+',
-  short: 'LV B1+',
-  subtitle: 'Homework collection · tap a card to see what\'s inside',
-  color: '#ff7a59',
-  units: { 'Unit 7': 'Education' }
+  kicker: 'Homework collection',
+  subtitle: 'Choose a unit, then tap a card to see what\'s inside.',
+  theme: {
+    bg: '#EEE9C1', surface: '#F7F4DC', ink: '#3A230A', muted: '#6E5A42', line: '#D9D19E',
+    primary: '#3A230A', secondary: '#A4530C', tertiary: '#8DA28C',
+    skills: {
+      'Vocabulary': '#A4530C', 'Grammar': '#3A230A', 'Reading': '#8DA28C', 'Listening': '#5E7A63',
+      'Global skills': '#C98A3E', 'Speaking': '#7E9A97', 'Writing': '#7A3E10'
+    }
+  },
+  units: [
+    { id: '7', name: 'Education', topics: ['University life', 'Online learning', 'Wishes', 'Study habits'] }
+  ]
 };
 
 /* To add a homework: copy one { … } block, paste it at the end, change the details. */
 window.HOMEWORK = [
   {
-    unit: 'Unit 7', code: '7.3', skill: 'Listening',
+    unit: '7', code: '7.3', skill: 'Listening',
     title: 'Who gets to learn online?', topic: 'Online learning',
     desc: 'A podcast interview about online education: main ideas, details and your opinion.',
     tasks: [
@@ -37,7 +46,7 @@ window.HOMEWORK = [
     file: 'u7-3-listening.html'
   },
   {
-    unit: 'Unit 7', code: '7.4', skill: 'Vocabulary',
+    unit: '7', code: '7.4', skill: 'Vocabulary',
     title: 'Welcome to uni!', topic: 'University life & subjects',
     desc: 'Words for university life and school subjects — learn them first, then use them.',
     tasks: [
@@ -52,7 +61,7 @@ window.HOMEWORK = [
     file: 'u7-4-vocabulary.html'
   },
   {
-    unit: 'Unit 7', code: '7.5', skill: 'Grammar',
+    unit: '7', code: '7.5', skill: 'Grammar',
     title: 'If only…', topic: 'Wishes in the present',
     desc: 'I wish / If only + Past Simple: talking about things you\'d like to be different now.',
     tasks: [
@@ -66,7 +75,7 @@ window.HOMEWORK = [
     file: 'u7-5-wishes.html'
   },
   {
-    unit: 'Unit 7', code: '7.6', skill: 'Reading',
+    unit: '7', code: '7.6', skill: 'Reading',
     title: 'Does education change your life?', topic: 'Personal stories',
     desc: 'Three short texts about how education changed people\'s lives, plus compound adjectives.',
     tasks: [
@@ -80,7 +89,7 @@ window.HOMEWORK = [
     file: 'u7-6-reading.html'
   },
   {
-    unit: 'Unit 7', code: '7.7', skill: 'Global skills',
+    unit: '7', code: '7.7', skill: 'Global skills',
     title: 'Good study habits', topic: 'Learning to learn',
     desc: 'Real students\' study problems and five tips that could help them — and you.',
     tasks: [
