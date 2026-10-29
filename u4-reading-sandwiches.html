@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 Reading · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf6ef;--card:#fff;--ink:#2a2233;--muted:#7a6f80;--brand:#d9622b;--brand2:#b8325a;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#eee1d3;--soft:#fdf0e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#d9622b 0%,#b8325a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F96A";position:absolute;right:14px;top:-10px;font-size:130px;line-height:1;opacity:.2}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#eadccd;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.goal{background:#eaf9ef;border:2px solid #9fe0b8;border-radius:18px;padding:14px 18px;margin:18px 0}
+.goal b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.goal p{margin:4px 0 0}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+textarea{font:inherit;width:100%;min-height:140px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,select:focus,.name:focus{outline:none;border-color:var(--brand)}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#2a2233;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:10px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+select{font:inherit;font-weight:800;border:2px solid var(--line);border-radius:12px;padding:6px 8px;background:#fff;color:var(--ink);max-width:100%}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.row p{margin:0;flex:1}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+/* blog */
+.blog{background:#fffdf9;border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px}
+.blog h2{font-family:'Baloo 2',sans-serif;font-size:30px;margin:0 0 6px;color:var(--brand2)}
+.blog .intro{margin:0 0 14px}
+.entry{border-top:2px dashed var(--line);padding:14px 0 4px}
+.entry h3{font-family:'Baloo 2',sans-serif;font-size:21px;margin:0 0 6px;display:flex;gap:10px;align-items:center}
+.entry h3 .let{flex:none;width:34px;height:34px;border-radius:10px;background:var(--brand2);color:#fff;display:grid;place-items:center;font-size:19px}
+.entry p{margin:0 0 8px}
+.strategy{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:16px 18px;margin-bottom:18px}
+.strategy b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.strategy p{margin:6px 0 0}
+/* checkboxes A-D */
+.abcd{display:flex;gap:6px;flex:none}
+.tick{font:inherit;font-weight:800;width:40px;height:40px;border-radius:12px;border:2px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.tick.on{background:var(--brand);border-color:var(--brand);color:#fff}
+/* word chips */
+.wq{padding:12px 0;border-bottom:1px solid var(--line)}
+.wq p{margin:0 0 8px;font-weight:800}
+.chip{font:inherit;font-weight:700;font-size:16px;background:#fff;border:2px solid #f0cdb6;color:var(--brand);border-radius:99px;padding:6px 14px;cursor:pointer;margin:0 6px 6px 0}
+.chip.on{background:var(--sun);border-color:var(--sun);color:var(--ink)}
+.mcq{padding:10px 0;border-bottom:1px solid var(--line)}
+.mcq p{margin:0 0 8px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 6px;cursor:pointer;color:var(--ink)}
+.opt b{color:var(--brand);margin-right:6px}
+.opt.on{border-color:var(--brand);background:var(--soft)}
+.msg{background:#eef1f6;border-radius:18px 18px 18px 4px;padding:12px 14px;margin:4px 0 12px;font-style:italic}
+.need{list-style:none;padding:0;margin:0 0 6px}
+.need li{padding:6px 0 6px 30px;position:relative;border-bottom:1px solid var(--line)}
+.need li:before{content:"\2713";position:absolute;left:4px;top:5px;width:20px;height:20px;border-radius:6px;background:var(--soft);color:var(--brand);font-weight:800;font-size:13px;display:grid;place-items:center}
+.need li.y:before{background:var(--ok);color:#fff}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#efe6dc;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.small{font-size:14px;color:var(--muted);margin:4px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 4 · Eat · Reading homework</small>
+  <h1>Sandwiches around the world</h1>
+  <p>Same idea, different words</p>
+</header>
+
+<div class="goal">
+  <b>Your goal</b>
+  <p>Find the same idea in the text, even when it uses <b>different words</b>. Read fast for details, and don't worry about every new word.</p>
+</div>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 6 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- BLOG -->
+<article class="blog">
+  <h2>Pete's Eats Blog</h2>
+  <p class="intro">I travel a lot, and I'm always looking for a new <b>recipe</b> to try at home. But I've just realised that I've never written about the most popular lunch in the world: the humble sandwich! So here are my four favourite sandwich places.</p>
+
+  <div class="entry">
+    <h3><span class="let">A</span>L'As du Fallafel, Paris</h3>
+    <p>Want a meal that is cheap but tasty? Go here first. Get ready to wait in a long queue at lunchtime, because everyone in Paris seems to know this place. The <b>falafel</b> sandwich is the best I've ever had: crispy chickpea balls with grilled aubergine, cabbage, hummus, tahini and hot sauce. You can take it away, or try to find a seat in the tiny room at the back.</p>
+  </div>
+
+  <div class="entry">
+    <h3><span class="let">B</span>Banhmibistro, Ho Chi Minh City</h3>
+    <p>A banh mi (say "bun mee") is a Vietnamese sandwich in a French baguette, and Banhmibistro does some of the best. They bake all the bread on <b>the premises</b> every morning. Then you choose your filling from a <b>variety</b> of local Vietnamese <b>ingredients</b>: coriander, fish sauce, pickled carrots, radishes and hot peppers. My favourite is the Bistro Special, with barbecue pork, ham and pâté.</p>
+  </div>
+
+  <div class="entry">
+    <h3><span class="let">C</span>O'Briens Sandwich Bar, Dublin</h3>
+    <p>These people really know how to make a sandwich! They cut thick slices of fresh bread and fill them with lots of tasty things. Try the turkey and brie with cranberry: it's excellent. Good news for students: there's a student <b>discount</b>, and the normal prices are <b>reasonable</b> too. The company is growing fast and now has sandwich bars in several countries. I just hope the quality stays the same!</p>
+  </div>
+
+  <div class="entry">
+    <h3><span class="let">D</span>The Black Camel, Vienna</h3>
+    <p>This famous family restaurant has been open since 1618! The food in the restaurant is expensive, but the <b>trendy</b> deli next to it sells freshly made sandwiches at fair prices. A popular <b>filling</b> is herring salad; others are blood sausage, mushroom salad, and ham with lentils. Tourists can pay a little more for a packed lunch in a gift box with the restaurant's <b>logo</b> on it: a black camel in a headdress.</p>
+  </div>
+</article>
+
+<!-- EX 1 -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Read the blog quickly (2 minutes!). Which country is each entry about? One country is extra.</h2></div>
+  <div id="list1"></div>
+  <button class="btn" onclick="check1()">Check</button>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<div class="strategy">
+  <b>Tip: same idea, different words</b>
+  <p>The task says <i>"not expensive"</i>, but the text says <i>"cheap"</i> or <i>"reasonable prices"</i>. Before you look, think: <b>what other words could the text use?</b></p>
+</div>
+
+<!-- EX 2 -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>In which entry (or entries) does Pete say this? Tap all the right letters.</h2></div>
+  <div id="list2"></div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<div class="strategy">
+  <b>Learner tip</b>
+  <p>You don't need to know every word. <i>Radishes, brie, lentils</i>: from the text you can see they are things to eat. That's enough to do the task!</p>
+</div>
+
+<!-- EX 3 -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Find the <b>bold</b> words in the blog. Match them with their meanings.</h2></div>
+  <div id="list3"></div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4 -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Which words go with each phrase? Tap <b>all</b> the words that sound natural.</h2></div>
+  <div id="list4"></div>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5 -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Talking about the blog. Choose the correct option.</h2></div>
+  <div id="list5"></div>
+  <button class="btn" onclick="check5()">Check</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- EX 6 -->
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Your friend is visiting one of these four cities and sends you a message. Reply and suggest one of Pete's places.</h2></div>
+  <div class="msg">I'm going to Paris / Ho Chi Minh City / Dublin / Vienna next week! I want somewhere nice but not expensive for lunch. Any ideas? 🙏</div>
+  <p style="margin:0 0 4px;font-weight:800">Try to use:</p>
+  <ul class="need" id="need6">
+    <li data-k="ever">a question with <b>Have you ever…?</b></li>
+    <li data-k="sug">a suggestion: <b>How about…? / Why don't you…?</b></li>
+    <li data-k="blog">one phrase from the blog: <b>reasonable prices, a variety of, freshly made, extremely popular…</b></li>
+    <li data-k="too">one <b>too / not … enough</b>: why another place is not a good idea</li>
+  </ul>
+  <textarea id="t6" placeholder="Hi! Have you ever tried a banh mi? Why don't you go to..."></textarea>
+  <p class="small" id="wc6">0 words · aim for 50–80</p>
+  <button class="btn" onclick="save6()">Save answer</button>
+  <div class="fb" id="fb6"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 6 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 4 Reading · Sandwiches around the world',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false, ex6:false};
+const scores = {};
+const notes = {};
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: entry -> country ---------- */
+const C1 = ['Austria','France','Ireland','Vietnam','Spain'];
+const KEY1 = ['France','Vietnam','Ireland','Austria'];
+$('list1').innerHTML = ['A','B','C','D'].map((L,i)=>'<div class="row"><p><b>Entry '+L+'</b></p><select id="s1_'+i+'"><option value="">–</option>'+C1.map(c=>'<option>'+c+'</option>').join('')+'</select></div>').join('');
+function check1(){
+  const v=KEY1.map((_,i)=>$('s1_'+i).value);
+  if (v.some(x=>!x)) return fb('fb1','Choose a country for every entry.','warn');
+  if (new Set(v).size<4) return fb('fb1','Each country can be used only once.','warn');
+  let s=0; v.forEach((x,i)=>{ const el=$('s1_'+i), ok=x===KEY1[i]; el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex1',s,4); fb('fb1',m,c); markDone('ex1');
+}
+
+/* ---------- EX 2: which entries (multi) ---------- */
+const E2 = [
+  ['the sandwiches are not expensive', 'ACD'],
+  ['the bread is made in the shop', 'B'],
+  ['the place gets very busy', 'A'],
+  ['the restaurant is very old', 'D'],
+  ['the ingredients come from the area', 'B'],
+  ['you can eat there or take your food with you', 'A']
+];
+let a2 = E2.map(()=>new Set()), m2 = E2.map(()=>'');
+function r2(){
+  $('list2').innerHTML = E2.map((q,i)=>'<div class="row"><p><b>'+(i+1)+'.</b> '+q[0]+'</p><div class="abcd">'+
+    ['A','B','C','D'].map(L=>'<button class="tick '+(a2[i].has(L)?'on ':'')+(a2[i].has(L)?m2[i]:'')+'" onclick="t2('+i+',\''+L+'\')">'+L+'</button>').join('')+'</div></div>').join('');
+}
+function t2(i,L){ a2[i].has(L)?a2[i].delete(L):a2[i].add(L); m2[i]=''; r2(); }
+function check2(){
+  if (a2.some(s=>!s.size)) return fb('fb2','Choose at least one letter for every sentence.','warn');
+  let s=0; a2.forEach((set,i)=>{ const ok=[...set].sort().join('')===E2[i][1]; m2[i]=ok?'ok':'bad'; if(ok)s++; }); r2();
+  const [m,c]=score('ex2',s,E2.length); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: word -> meaning ---------- */
+const E3 = [
+  ['recipe','instructions for making a dish'],
+  ['falafel','chickpea balls'],
+  ['the premises','the building of a shop or restaurant'],
+  ['variety','a number of different things'],
+  ['ingredient','one food you use with others to make a dish'],
+  ['discount','a special low price'],
+  ['reasonable (prices)','not very expensive'],
+  ['trendy','fashionable and modern'],
+  ['filling','what you put inside a sandwich'],
+  ['logo','a special design that a company uses']
+];
+const D3 = E3.map(x=>x[1]).slice().sort();
+$('list3').innerHTML = E3.map((x,i)=>'<div class="row"><p><b>'+x[0]+'</b></p><select id="s3_'+i+'" style="width:60%"><option value="">–</option>'+D3.map(d=>'<option>'+d+'</option>').join('')+'</select></div>').join('');
+function check3(){
+  const v=E3.map((_,i)=>$('s3_'+i).value);
+  if (v.some(x=>!x)) return fb('fb3','Choose a meaning for every word.','warn');
+  let s=0; v.forEach((x,i)=>{ const el=$('s3_'+i), ok=x===E3[i][1]; el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex3',s,E3.length); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: collocations (multi) ---------- */
+const E4 = [
+  ['freshly made', ['coffee','orange juice','newspaper','ice cream'], ['coffee','orange juice','ice cream']],
+  ['extremely popular', ['football team','restaurant','person','Mexican'], ['football team','restaurant','person']],
+  ['a variety of', ['food','ingredients','dishes','colours'], ['food','ingredients','dishes','colours']],
+  ['fresh', ['fruit','fish','water','table','vegetables','bread'], ['fruit','fish','water','vegetables','bread']],
+  ['… food', ['fast','spicy','health','fruit','junk','frozen'], ['fast','spicy','health','junk','frozen']],
+  ['… price', ['reasonable','discount','full','half'], ['reasonable','discount','full','half']]
+];
+let a4 = E4.map(()=>new Set()), m4 = E4.map(()=>({}));
+function r4(){
+  $('list4').innerHTML = E4.map((q,i)=>'<div class="wq"><p>'+(i+1)+'. '+q[0]+'</p>'+
+    q[1].map(w=>'<button class="chip '+(a4[i].has(w)?'on ':'')+(m4[i][w]||'')+'" onclick="t4('+i+',\''+w+'\')">'+w+'</button>').join('')+'</div>').join('');
+}
+function t4(i,w){ a4[i].has(w)?a4[i].delete(w):a4[i].add(w); m4[i]={}; r4(); }
+function check4(){
+  if (a4.some(s=>!s.size)) return fb('fb4','Tap at least one word for every phrase.','warn');
+  let s=0;
+  E4.forEach((q,i)=>{
+    const good=q[2]; let all=true; m4[i]={};
+    q[1].forEach(w=>{ const should=good.includes(w), chose=a4[i].has(w);
+      if (should && chose) m4[i][w]='ok'; else if (should!==chose) { m4[i][w]='bad'; all=false; } });
+    if (all) s++;
+  });
+  r4();
+  const [m,c]=score('ex4',s,E4.length); fb('fb4',m,c); markDone('ex4');
+}
+
+/* ---------- EX 5: recycling (PP, too/enough, suggestions) ---------- */
+const E5 = [
+  ['A: ___ a banh mi? B: Yes, I tried one in Kyiv last summer.', ['Have you ever had','Did you ever have'], 0],
+  ['Pete ___ to Vienna two years ago and loved The Black Camel.', ['has been','went'], 1],
+  ['The food in the Black Camel restaurant is ___ for a student.', ['too expensive','not expensive enough'], 0],
+  ['There isn\'t ___ to sit down at L\'As du Fallafel, so many people take their food away.', ['enough space','too much space'], 0],
+  ['A: I\'m starving! B: ___ get a falafel? It\'s cheap and really tasty.', ['Why don\'t we','How about'], 0],
+  ['A: How about O\'Briens? B: To be honest, I don\'t really feel like ___ today.', ['a sandwich','to have a sandwich'], 0]
+];
+let a5 = Array(E5.length).fill(null), m5 = Array(E5.length).fill('');
+function r5(){
+  $('list5').innerHTML = E5.map((q,i)=>'<div class="mcq"><p>'+(i+1)+'. '+q[0]+'</p>'+
+    q[1].map((o,j)=>'<button class="opt '+(a5[i]===j?'on '+m5[i]:'')+'" onclick="p5('+i+','+j+')"><b>'+'AB'[j]+'</b>'+o+'</button>').join('')+'</div>').join('');
+}
+function p5(i,j){ a5[i]=j; m5[i]=''; r5(); }
+function check5(){
+  if (a5.some(x=>x===null)) return fb('fb5','Answer all 6 questions first.','warn');
+  let s=0; a5.forEach((x,i)=>{ const ok=x===E5[i][2]; m5[i]=ok?'ok':'bad'; if(ok)s++; }); r5();
+  const [m,c]=score('ex5',s,E5.length); fb('fb5',m,c); markDone('ex5');
+}
+
+/* ---------- EX 6: writing (teacher checks) ---------- */
+const CHECK6 = {
+  ever: t=>/have you ever/.test(t),
+  sug: t=>/how about|why don'?t (you|we)|you could|you should/.test(t),
+  blog: t=>/reasonable|variety of|freshly (made|baked)|extremely popular|discount|ingredients|filling|trendy|on the premises/.test(t),
+  too: t=>/\btoo\b|\benough\b/.test(t)
+};
+function live6(){
+  const t=norm($('t6').value);
+  $('wc6').textContent=words(t)+' words · aim for 50–80';
+  document.querySelectorAll('#need6 li').forEach(li=>li.classList.toggle('y', CHECK6[li.dataset.k](t)));
+}
+$('t6').addEventListener('input', live6);
+function save6(){
+  const t=$('t6').value.trim();
+  if (words(t)<35) return fb('fb6','Write a bit more (at least 35 words).','warn');
+  const miss=[...document.querySelectorAll('#need6 li')].filter(li=>!li.classList.contains('y')).length;
+  notes.ex6='EX 6 (reply to a friend)\n'+t;
+  fb('fb6', miss ? 'Saved! Tip: '+miss+' item(s) from the list are still missing. You can add them and save again.' : 'Saved! Great, you used everything from the list. Your teacher will read it.', miss?'warn':'good');
+  markDone('ex6');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+r2(); r4(); r5(); progress();
+</script>
+</body>
+</html>
