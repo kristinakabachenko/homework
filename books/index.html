@@ -24,8 +24,7 @@ const BOOKS = [
   { title: 'Outcomes A2/B1',  note: 'Unit 4 · Food',      href: 'outcomes-a2-b1/', colors: ['#8C2E3E','#867B18','#C9BE78','#EDE6D4'] }
 ];
 document.getElementById('shelf').innerHTML = BOOKS.map(b => `
-  <a class="book" href="${b.href}">
-    <div class="swatch">${b.colors.map(c => `<i style="background:${c}"></i>`).join('')}</div>
+  <a class="book" href="${b.href}" style="background:${b.colors[0]};border-color:${b.colors[0]}">
     <div class="txt"><b>${b.title}</b><span>${b.note}</span></div>
   </a>`).join('');
 </script>
