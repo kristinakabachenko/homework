@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound nouns: education</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --body:#4a4a4a; --muted:#8a8580;
+  --paper:#ffffff; --desk:#f7f4ee; --cream:#fbf9f0; --line:#e8e2d6;
+  --pink:#f6dce5; --pink-d:#693751; --pink-m:#c97b9c;
+  --blue:#d2e4f8; --blue-d:#274d71;
+  --peach:#f5ddd1;
+  --ok:#2f8a57; --ok-bg:#e3f4ea; --bad:#b33a3a; --bad-bg:#fbe5e5;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+header{margin-bottom:18px}
+.pills{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px}
+.pill.unit{background:var(--blue);color:var(--blue-d)}
+.pill.voc{background:var(--pink);color:var(--pink-d)}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,6vw,40px);margin:0 0 4px;line-height:1.1}
+.sub{color:var(--body);margin:0}
+.road{display:flex;gap:6px;margin:22px 0 20px;flex-wrap:wrap}
+.step{flex:1 1 0;min-width:0;white-space:nowrap;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 6px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:5px;overflow:hidden}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--body);font-size:12px;flex:none}
+.step.active{border-color:var(--pink-m);color:var(--ink)}
+.step.active b{background:var(--pink-d);color:#fff}
+.step.done{color:var(--ok)} .step.done b{background:var(--ok);color:#fff}
+.step.locked{opacity:.55}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+@media (max-width:480px){.card{padding:18px 16px}}
+.card h2{font-size:20px;margin:0 0 4px}
+.card .hint{color:var(--body);margin:0 0 18px;font-size:15px}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:600}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.pink{background:var(--pink-d)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.right{justify-content:flex-end}
+input[type=text],textarea{font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;background:#fff;color:var(--ink)}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--pink-m)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
+.feedback.ok{background:var(--ok-bg);color:var(--ok)}
+.feedback.bad{background:var(--bad-bg);color:var(--bad)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:4px 0 18px}
+.progress i{display:block;height:100%;background:var(--pink-d);width:0;transition:width .3s}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--blue);color:var(--blue-d);margin-bottom:10px}
+.tag.free{background:var(--pink);color:var(--pink-d)}
+sup{font-size:11px;color:var(--muted);margin-right:2px}
+
+/* Flashcards */
+.count{font-size:13px;color:var(--muted);margin:-10px 0 10px;text-align:right}
+.flip{perspective:1200px;height:270px;margin-bottom:16px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px}
+.front{background:var(--pink);color:var(--pink-d)}
+.front .big{font-family:"Fraunces",Georgia,serif;font-size:clamp(26px,6vw,36px);line-height:1.15}
+.front .parts{margin-top:10px;font-size:14px;opacity:.8}
+.front small{margin-top:14px;font-size:13px;opacity:.7}
+.back{background:var(--cream);border:1px solid var(--line);transform:rotateY(180deg);gap:6px}
+.back .mean{font-size:18px;font-weight:600}
+.back .ex{color:var(--body);font-style:italic}
+.back .go{font-size:14px;background:var(--blue);color:var(--blue-d);border-radius:99px;padding:2px 12px;font-weight:600}
+.back .ua{font-size:14px;color:var(--muted)}
+.speak{background:transparent;border:1.5px solid currentColor;border-radius:99px;padding:4px 12px;font-size:13px;color:inherit;margin-top:8px}
+
+/* Gate */
+.gate{text-align:center;padding:36px 24px;border:2px dashed var(--line);background:transparent}
+.gate .lock{font-size:36px}
+.gate p{color:var(--muted);margin:6px 0 0}
+
+/* Task 1: inline choices */
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:12px 0;border-bottom:1px solid var(--line);line-height:2}
+.list li:last-child{border-bottom:0}
+.list .n{font-weight:700;color:var(--muted);margin-right:6px}
+.choice{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden;vertical-align:middle;background:#fff;flex-wrap:wrap}
+.choice button{border:0;background:transparent;padding:1px 10px;font-size:14px;line-height:1.7;color:var(--ink)}
+.choice button+button{border-left:1.5px solid var(--line)}
+.choice button.on{background:var(--pink-d);color:#fff}
+.choice.ok{border-color:var(--ok)} .choice.ok button.on{background:var(--ok)}
+.choice.bad{border-color:var(--bad)} .choice.bad button.on{background:var(--bad)}
+
+/* Task 2: forum */
+.box{display:flex;flex-wrap:wrap;gap:4px 6px;border:1.5px solid var(--ink);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+.box span{font-size:14px;padding:0 6px}
+.box span.used{text-decoration:line-through;color:var(--muted)}
+.thread{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px}
+.thread-title{font-weight:700;margin:0 0 10px;font-size:15px}
+.post{display:flex;gap:10px;margin-bottom:12px}
+.post:last-child{margin-bottom:0}
+.ava{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px}
+.bubble{background:#fff;border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 12px;line-height:2;font-size:15px;flex:1;min-width:0}
+.bubble .who{font-weight:700;font-size:13px;display:block;line-height:1.4;margin-bottom:2px}
+select{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:1px 4px;background:#fff;font-size:14px;max-width:100%;color:var(--ink)}
+select.ok{border-color:var(--ok);background:var(--ok-bg)}
+select.bad{border-color:var(--bad);background:var(--bad-bg)}
+
+/* Task 3: typing */
+.gapin{display:inline-block;width:auto;min-width:120px;max-width:170px;padding:2px 8px!important;border-radius:8px!important;font-size:15px!important;vertical-align:baseline}
+.gapin.ok{border-color:var(--ok)!important;background:var(--ok-bg)!important;color:var(--ok)}
+.gapin.bad{border-color:var(--bad)!important;background:var(--bad-bg)!important;color:var(--bad)}
+.cn{font-weight:600;background:var(--peach);border-radius:6px;padding:0 4px}
+.key{font-size:13px;color:var(--ok);margin-left:6px}
+
+/* Task 4: writing */
+.brief{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:15px}
+.brief p{margin:0 0 8px}.brief p:last-child{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.chip{font-size:13px;border:1.5px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);background:#fff}
+.chip.on{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:600}
+.chip.idiom.on{border-color:var(--pink-d);background:var(--pink);color:var(--pink-d)}
+.meterline{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--body);margin-top:10px}
+.meterline b{color:var(--ink)}
+.lbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:14px}
+
+/* Results */
+.score{font-family:"Fraunces",Georgia,serif;font-size:54px;line-height:1;margin:6px 0}
+table.sum{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+table.sum td{padding:8px 4px;border-bottom:1px solid var(--line)}
+table.sum td:last-child{text-align:right;font-weight:600}
+.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pills"><span class="pill unit">Unit 8</span><span class="pill voc">vocabulary</span></div>
+    <h1>Compound nouns: education</h1>
+    <p class="sub">Homework. Learn the words first: the tasks unlock when you're ready.</p>
+  </header>
+
+  <!-- Name -->
+  <section class="card" id="nameCard">
+    <h2>Hi! What's your name?</h2>
+    <p class="hint">Your teacher will see your results.</p>
+    <div class="row">
+      <input type="text" id="studentName" placeholder="Your name" style="flex:1;min-width:180px">
+      <button class="btn" id="startBtn">Start</button>
+    </div>
+  </section>
+
+  <nav class="road hidden" id="road"></nav>
+
+  <!-- STEP 1: Flashcards -->
+  <section class="card hidden" id="s-cards">
+    <span class="tag">Step 1 · Learn</span>
+    <h2>Flashcards</h2>
+    <p class="hint">Tap the card to see the meaning and the verb it goes with. Mark <b>Got it</b> when you know it, <b>Again</b> if you want to see it later. Learn all 10 to open the tasks.</p>
+    <div class="progress"><i id="cardsBar"></i></div>
+    <div class="count" id="cardsCount"></div>
+    <div class="flip" id="flip">
+      <div class="flip-in">
+        <div class="face front"><div class="big" id="cFront"></div><div class="parts" id="cParts"></div><small>tap to flip</small></div>
+        <div class="face back">
+          <div class="mean" id="cMean"></div>
+          <div class="ex" id="cEx"></div>
+          <div class="go" id="cGo"></div>
+          <div class="ua" id="cUa"></div>
+          <button class="speak" id="cSpeak" type="button">Listen</button>
+        </div>
+      </div>
+    </div>
+    <div class="row right">
+      <button class="btn ghost" id="againBtn">Again</button>
+      <button class="btn pink" id="gotBtn">Got it</button>
+    </div>
+  </section>
+
+  <!-- GATE -->
+  <section class="card gate" id="gate">
+    <div class="lock">🔒</div>
+    <b>The tasks are locked</b>
+    <p>Learn all the flashcards to open them.</p>
+  </section>
+
+  <!-- MAIN -->
+  <div id="main" class="hidden">
+    <div class="row right" style="margin:-6px 0 12px"><button class="btn ghost" id="reviewBtn" style="padding:6px 14px;font-size:14px">Review the flashcards</button></div>
+
+    <!-- Task 1 -->
+    <section class="card" id="t1">
+      <span class="tag">Task 1</span>
+      <h2>Complete the compound nouns</h2>
+      <p class="hint">Tap the missing word in each sentence. Careful: some of them look very similar!</p>
+      <ol class="list" id="t1List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t1Check">Check</button></div>
+      <div class="feedback hidden" id="t1Fb"></div>
+    </section>
+
+    <!-- Task 2 -->
+    <section class="card" id="t2">
+      <span class="tag">Task 2</span>
+      <h2>Complete the forum posts with compound nouns from the box</h2>
+      <p class="hint">There is one compound noun you don't need.</p>
+      <div class="box" id="t2Box"></div>
+      <div class="thread">
+        <p class="thread-title">💬 Where should I study next year? Help!</p>
+        <div id="forum"></div>
+      </div>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t2Check">Check</button></div>
+      <div class="feedback hidden" id="t2Fb"></div>
+    </section>
+
+    <!-- Task 3 -->
+    <section class="card" id="t3">
+      <span class="tag">Task 3</span>
+      <h2>Which verb goes with each compound noun?</h2>
+      <p class="hint">Type the verb in the correct form. The first letters are given. Don't look back at the cards!</p>
+      <ol class="list" id="t3List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t3Check">Check</button></div>
+      <div class="feedback hidden" id="t3Fb"></div>
+    </section>
+
+    <!-- Task 4: free practice -->
+    <section class="card" id="t4">
+      <span class="tag free">Task 4 · Your turn</span>
+      <h2>Write a proposal for the student council</h2>
+      <div class="brief">
+        <p>Your school or university is asking students: <b>"What ONE thing would you change about how we learn, how we're assessed or how we pay for our studies?"</b></p>
+        <p>Write <b>60–120 words</b>. Say what you'd change, why, and what difference it would make. Use <b>at least 4 compound nouns</b> from this lesson, with the right verbs.</p>
+        <p>⭐ Bonus: use an idiom from the last unit (setbacks and progress).</p>
+      </div>
+      <textarea id="essay" rows="8" placeholder="I'd like to propose…"></textarea>
+      <div class="meterline"><span>Words: <b id="wc">0</b></span><span>Compound nouns: <b id="cnc">0</b> / 4</span></div>
+      <div class="lbl">Compound nouns you've used</div>
+      <div class="chips" id="cnChips"></div>
+      <div class="lbl">⭐ Idioms from last unit</div>
+      <div class="chips" id="idChips"></div>
+    </section>
+
+    <!-- Submit -->
+    <section class="card" id="sendCard">
+      <span class="tag">Finish</span>
+      <h2>Send your homework</h2>
+      <p class="small" id="submitHint">Check Tasks 1–3 and write at least 60 words in Task 4 first.</p>
+      <div class="row right" style="margin-top:10px"><button class="btn pink" id="submitBtn" disabled>Finish &amp; send to my teacher</button></div>
+    </section>
+
+    <section class="card hidden" id="results">
+      <span class="tag">Done</span>
+      <h2>Your results</h2>
+      <div class="score" id="bigScore"></div>
+      <table class="sum" id="sumTable"></table>
+      <p class="small" id="sendStatus"></p>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 8 · Compound nouns: education',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026',
+  storage: 'hw-compound-nouns-education-v1',
+  minWords: 60
+};
+/* ==================================================== */
+
+/* ===================== DATA ===================== */
+// c = compound noun, a + b = parts, m = meaning, ex = example, go = typical verb, ua = Ukrainian
+const CARDS = [
+  {c:"blended learning", m:"a combination of online and face-to-face studying", ex:"The college offers blended learning: two days on campus, three days online.", go:"offer blended learning", ua:"змішане навчання"},
+  {c:"continuous assessment", m:"judging ability by a person's coursework rather than by an exam", ex:"There's no final exam: the course is based on continuous assessment.", go:"be based on continuous assessment", ua:"поточне (безперервне) оцінювання"},
+  {c:"critical thinking", m:"skills that help you analyse ideas and solve problems", ex:"Good teachers don't just give answers: they help you develop critical thinking.", go:"develop critical thinking", ua:"критичне мислення"},
+  {c:"external accreditation", m:"official confirmation of a standard by an independent organisation", ex:"Check that the course has gained external accreditation before you sign up.", go:"gain external accreditation", ua:"зовнішня акредитація"},
+  {c:"peer assessment", m:"checking and marking of work by classmates of a similar age and level", ex:"We used peer assessment, so I read and marked my partner's essay.", go:"use peer assessment", ua:"взаємооцінювання"},
+  {c:"rote learning", m:"memorising information by repeating it again and again", ex:"Rote learning helped me pass the test, but I forgot everything a week later.", go:"rely on rote learning", ua:"зубріння, механічне заучування"},
+  {c:"student loan", m:"money borrowed from the government or a bank to pay for your studies", ex:"She took out a student loan to cover her rent.", go:"take out a student loan", ua:"студентський кредит"},
+  {c:"tuition fees", m:"money paid to a university or college for its courses", ex:"Tuition fees have gone up again this year.", go:"pay tuition fees", ua:"плата за навчання"},
+  {c:"virtual learning environment", m:"a website or platform where you study the online parts of a course (VLE)", ex:"Our teacher uploads all the slides to the virtual learning environment.", go:"log into the VLE", ua:"віртуальне навчальне середовище"},
+  {c:"vocational training", m:"learning the practical skills you need for a particular job", ex:"After school he did vocational training to become an electrician.", go:"do vocational training", ua:"професійне навчання"}
+];
+
+// Task 1: text with ___, correct answer, options
+const T1 = [
+  {t:"There's no exam at the end of the course: we have ___ assessment, so every essay counts.", a:"continuous", o:["peer","continuous","external"]},
+  {t:"Today we swapped essays and marked each other's work. I'm starting to like ___ assessment.", a:"peer", o:["continuous","blended","peer"]},
+  {t:"Half the course is online and half is in the classroom. It's called ___ learning.", a:"blended", o:["blended","rote","virtual"]},
+  {t:"Memorising 200 dates the night before a test is a classic example of ___ learning.", a:"rote", o:["vocational","rote","blended"]},
+  {t:"My brother didn't go to university. He chose vocational ___ and became a plumber.", a:"training", o:["learning","thinking","training"]},
+  {t:"Our school wants to teach critical ___, not just facts.", a:"thinking", o:["thinking","training","assessment"]},
+  {t:"University isn't free here. Students have to pay tuition ___.", a:"fees", o:["loans","fees","accreditation"]},
+  {t:"My parents couldn't help, so I took out a student ___.", a:"loan", o:["environment","accreditation","loan"]},
+  {t:"All our homework is on the virtual learning ___, so I check it every evening.", a:"environment", o:["environment","assessment","training"]},
+  {t:"The course has external ___, so employers will recognise your certificate.", a:"accreditation", o:["learning","accreditation","loan"]}
+];
+
+// Task 2: forum. Strings + {a: answer}
+const BOX = ["blended learning","continuous assessment","critical thinking","external accreditation","peer assessment","rote learning","student loan","tuition fees","virtual learning environment","vocational training"];
+const FORUM = [
+  {who:"Mia", col:"#f6dce5", ink:"#693751", parts:["I've got offers from two places and I can't decide. Option A is a big university in the city centre. The ", {a:"tuition fees"}, " are huge, so I'd have to take out a ", {a:"student loan"}, " and pay it back for years. Option B is a smaller college. It's cheaper and offers ", {a:"blended learning"}, ": two days on campus and the rest at home on the ", {a:"virtual learning environment"}, "."]},
+  {who:"Jake", col:"#d2e4f8", ink:"#274d71", parts:["Make sure option B has ", {a:"external accreditation"}, " first! My cousin did a course that no official body recognised, and employers just ignored his certificate."]},
+  {who:"Sofia", col:"#f5ddd1", ink:"#7a4a33", parts:["Also ask how they assess you. I hate exams, so I loved my course: it was all ", {a:"continuous assessment"}, ", so the projects I did during the year counted. Some lecturers also used ", {a:"peer assessment"}, ": we gave each other feedback, which was scary at first but really useful."]},
+  {who:"Tom", col:"#e3f4ea", ink:"#2f6b48", parts:["Honestly, if you don't love studying, think about ", {a:"vocational training"}, ". I'm training to be a chef, I'm already earning, and there's zero ", {a:"rote learning"}, ": you learn by doing."]}
+];
+
+// Task 3: before, hint, after, accepted answers, compound noun to highlight
+const T3 = [
+  {b:"If you can't afford university, you can", h:"t___ o__", a:["take out"], after:"a <span class='cn'>student loan</span>."},
+  {b:"Last year I", h:"p___", a:["paid"], after:"my <span class='cn'>tuition fees</span> in two parts."},
+  {b:"I can't", h:"l__ i___", a:["log into","log in to","login to","log onto","log on to"], after:"the <span class='cn'>virtual learning environment</span>: I've forgotten my password!"},
+  {b:"The college finally", h:"g_____", a:["gained"], after:"<span class='cn'>external accreditation</span> in 2024."},
+  {b:"Reading opinion articles can help teenagers", h:"d______", a:["develop"], after:"<span class='cn'>critical thinking</span>."},
+  {b:"Too many students still", h:"r___ o_", a:["rely on"], after:"<span class='cn'>rote learning</span> the night before an exam."},
+  {b:"Our university", h:"o_____", a:["offers"], after:"<span class='cn'>blended learning</span>, so you can study from home three days a week."},
+  {b:"Instead of going to university, my sister", h:"d__", a:["did"], after:"<span class='cn'>vocational training</span> and opened her own salon."}
+];
+
+// Task 4 detection
+const CN_RX = [
+  ["blended learning", /\bblended\s+learning\b/i],
+  ["continuous assessment", /\bcontinuous\s+assessments?\b/i],
+  ["critical thinking", /\bcritical\s+thinking\b/i],
+  ["external accreditation", /\bexternal\s+accreditations?\b/i],
+  ["peer assessment", /\bpeer[\s-]+assessments?\b/i],
+  ["rote learning", /\brote\s+learning\b/i],
+  ["student loan", /\bstudent\s+loans?\b/i],
+  ["tuition fees", /\btuition\s+fees?\b/i],
+  ["virtual learning environment", /\b(virtual\s+learning\s+environments?|VLEs?)\b/i],
+  ["vocational training", /\bvocational\s+training\b/i]
+];
+const ID_RX = [
+  ["throw in the towel", /\b(throw|throws|threw|thrown|throwing)\s+in\s+the\s+towel\b/i],
+  ["knock sb's confidence", /\bknock(s|ed|ing)?\b.{0,30}\bconfidence\b/i],
+  ["(not) cut out for", /\bcut\s+out\s+for\b/i],
+  ["change tack", /\bchang(e|es|ed|ing)\s+tack\b/i],
+  ["make strides", /\b(make|makes|made|making)\s+(great\s+|huge\s+|big\s+|real\s+)?strides\b/i],
+  ["give it a good go", /\b(give|gives|gave|given|giving)\s+(it|this|that)\s+a\s+good\s+go\b/i]
+];
+
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?;:"]/g,"").replace(/\s+/g," ").trim();
+function fb(id,cls,msg){ const f=$(id); f.className="feedback "+cls; f.innerHTML=msg; }
+
+/* ===================== STATE ===================== */
+const S = {name:"", stage:0, t1:null, t2:null, t3:null};
+function save(){ try{ localStorage.setItem(CFG.storage, JSON.stringify({name:S.name, stage:S.stage, essay:$("essay").value})); }catch(e){} }
+function load(){ try{ return JSON.parse(localStorage.getItem(CFG.storage)||"null"); }catch(e){ return null; } }
+
+/* ===================== ROADMAP ===================== */
+const STEPS = ["Learn","Practise","Write","Send"];
+function renderRoad(){
+  const r=$("road"); r.classList.remove("hidden");
+  let cur = S.stage===0 ? 0 : (!(S.t1&&S.t2&&S.t3) ? 1 : (wordCount()<CFG.minWords ? 2 : 3));
+  if(S.sent) cur = 4;
+  r.innerHTML = STEPS.map((t,i)=>{
+    const cls = i<cur ? "done" : i===cur ? "active" : "locked";
+    return `<div class="step ${cls}"><b>${i<cur?"✓":i+1}</b>${t}</div>`;
+  }).join("");
+}
+function goStage(n){
+  S.stage = n; save();
+  const open = S.stage>=1;
+  $("s-cards").classList.toggle("hidden", open);
+  $("gate").classList.toggle("hidden", open);
+  $("main").classList.toggle("hidden", !open);
+  if(!open) initCards(); else initMain();
+  renderRoad();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ===================== STEP 1: FLASHCARDS ===================== */
+let deck=[], learned=0, reviewing=false;
+function initCards(){ deck=shuffle(CARDS.map((_,i)=>i)); learned=0; showCard(); }
+function showCard(){
+  $("cardsBar").style.width = (learned/CARDS.length*100)+"%";
+  $("cardsCount").textContent = learned+" / "+CARDS.length+" learned";
+  if(!deck.length){ reviewing=false; goStage(1); return; }
+  const c=CARDS[deck[0]];
+  const wasOn = $("flip").classList.contains("on");
+  $("flip").classList.remove("on");
+  setTimeout(()=>{
+    $("cFront").textContent=c.c;
+    const p=c.c.split(" "); $("cParts").textContent = p.length===2 ? p[0]+" + "+p[1] : p[0]+" "+p[1]+" + "+p[2];
+    $("cMean").textContent=c.m; $("cEx").textContent="“"+c.ex+"”"; $("cGo").textContent="➜ "+c.go; $("cUa").textContent=c.ua;
+  }, wasOn?200:0);
+}
+$("flip").addEventListener("click", e=>{ if(e.target.id!=="cSpeak") $("flip").classList.toggle("on"); });
+$("cSpeak").addEventListener("click", e=>{
+  e.stopPropagation();
+  try{ const c=CARDS[deck[0]]; const u=new SpeechSynthesisUtterance(c.c+". "+c.ex); u.lang="en-GB"; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(err){}
+});
+$("gotBtn").onclick=()=>{ deck.shift(); learned++; showCard(); };
+$("againBtn").onclick=()=>{ const x=deck.shift(); const pos=Math.min(deck.length, 2+Math.floor(Math.random()*2)); deck.splice(pos,0,x); showCard(); };
+$("reviewBtn").onclick=()=>{
+  reviewing=true;
+  $("main").classList.add("hidden"); $("s-cards").classList.remove("hidden");
+  deck=shuffle(CARDS.map((_,i)=>i)); learned=0; showCard();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+/* ===================== MAIN TASKS ===================== */
+let mainReady=false;
+function initMain(){
+  $("s-cards").classList.add("hidden");
+  if(mainReady) return; mainReady=true;
+
+  /* Task 1 */
+  $("t1List").innerHTML = T1.map((it,i)=>{
+    const [pre,post]=it.t.split("___");
+    return `<li><span class="n">${i+1}</span>${esc(pre)}<span class="choice" data-a="${esc(it.a)}">${shuffle(it.o).map(o=>`<button type="button">${esc(o)}</button>`).join("")}</span>${esc(post)}</li>`;
+  }).join("");
+  $("t1List").querySelectorAll(".choice").forEach(ch=>{
+    ch.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      ch.classList.remove("ok","bad");
+      ch.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    });
+  });
+  $("t1Check").onclick=()=>{
+    const chs=[...$("t1List").querySelectorAll(".choice")];
+    if(chs.some(c=>!c.querySelector(".on"))){ fb("t1Fb","bad","Choose a word in every sentence first."); return; }
+    let sc=0; const wrong=[];
+    chs.forEach((c,i)=>{ const v=c.querySelector(".on").textContent; const ok=v===c.dataset.a; if(ok) sc++; else wrong.push(`${i+1}. ${v} (✓ ${c.dataset.a})`); c.classList.add(ok?"ok":"bad"); });
+    if(S.t1===null) S.t1={score:sc,total:chs.length,wrong};
+    fb("t1Fb", sc===chs.length?"ok":"bad", `${sc} / ${chs.length}. ${sc===chs.length?"Perfect!":"Wrong ones are red: change them and check again (your first score is saved)."}`);
+    afterCheck();
+  };
+
+  /* Task 2 */
+  $("t2Box").innerHTML = BOX.map(w=>`<span data-w="${esc(w)}">${esc(w)}</span>`).join("");
+  let g=0;
+  $("forum").innerHTML = FORUM.map(p=>`<div class="post"><div class="ava" style="background:${p.col};color:${p.ink}">${p.who[0]}</div><div class="bubble"><span class="who">${p.who}</span>${p.parts.map(x=>{
+    if(typeof x==="string") return esc(x);
+    g++;
+    return `<sup>${g}</sup><select data-a="${esc(x.a)}"><option value="">…</option>${BOX.map(w=>`<option>${esc(w)}</option>`).join("")}</select>`;
+  }).join("")}</div></div>`).join("");
+  const sels=[...$("forum").querySelectorAll("select")];
+  sels.forEach(s=>s.onchange=()=>{
+    s.classList.remove("ok","bad");
+    const used=sels.map(x=>x.value).filter(Boolean);
+    $("t2Box").querySelectorAll("span").forEach(sp=>sp.classList.toggle("used", used.includes(sp.dataset.w)));
+  });
+  $("t2Check").onclick=()=>{
+    if(sels.some(s=>!s.value)){ fb("t2Fb","bad","Fill every gap first."); return; }
+    let sc=0; const wrong=[];
+    sels.forEach((s,i)=>{ const ok=s.value===s.dataset.a; if(ok) sc++; else wrong.push(`${i+1}. ${s.value} (✓ ${s.dataset.a})`); s.classList.add(ok?"ok":"bad"); });
+    if(S.t2===null) S.t2={score:sc,total:sels.length,wrong};
+    fb("t2Fb", sc===sels.length?"ok":"bad", `${sc} / ${sels.length}. ${sc===sels.length?"Perfect! (The one you didn't need: <i>critical thinking</i>.)":"Wrong ones are red: try again (your first score is saved)."}`);
+    afterCheck();
+  };
+
+  /* Task 3 */
+  $("t3List").innerHTML = T3.map((it,i)=>
+    `<li><span class="n">${i+1}</span>${esc(it.b)} <input type="text" class="gapin" data-i="${i}" placeholder="${esc(it.h)}" autocomplete="off" autocapitalize="off" spellcheck="false"> ${it.after}<span class="key" id="k3-${i}"></span></li>`
+  ).join("");
+  const ins=[...$("t3List").querySelectorAll(".gapin")];
+  ins.forEach(inp=>inp.addEventListener("input",()=>{ inp.classList.remove("ok","bad"); $("k3-"+inp.dataset.i).textContent=""; }));
+  let t3tries=0;
+  $("t3Check").onclick=()=>{
+    if(ins.some(x=>!x.value.trim())){ fb("t3Fb","bad","Type a verb in every gap first."); return; }
+    t3tries++;
+    let sc=0; const wrong=[];
+    ins.forEach((inp,i)=>{
+      const it=T3[+inp.dataset.i];
+      const ok=it.a.some(a=>norm(a)===norm(inp.value));
+      if(ok) sc++; else wrong.push(`${i+1}. ${inp.value.trim()} (✓ ${it.a[0]})`);
+      inp.classList.add(ok?"ok":"bad");
+      $("k3-"+i).textContent = (!ok && t3tries>=2) ? "→ "+it.a[0] : "";
+    });
+    if(S.t3===null) S.t3={score:sc,total:ins.length,wrong};
+    fb("t3Fb", sc===ins.length?"ok":"bad", `${sc} / ${ins.length}. ${sc===ins.length?"Perfect!":(t3tries>=2?"The right answers are shown in green: copy them in and remember them!":"Wrong ones are red: check the tense and try again (your first score is saved).")}`);
+    afterCheck();
+  };
+
+  /* Task 4 */
+  $("cnChips").innerHTML = CN_RX.map(([n])=>`<span class="chip" data-n="${esc(n)}">${esc(n)}</span>`).join("");
+  $("idChips").innerHTML = ID_RX.map(([n])=>`<span class="chip idiom" data-n="${esc(n)}">${esc(n)}</span>`).join("");
+  $("essay").addEventListener("input",()=>{ track(); save(); });
+  track();
+
+  $("submitBtn").onclick=submit;
+}
+
+function wordCount(){ const t=($("essay")?$("essay").value:"").trim(); return t?t.split(/\s+/).length:0; }
+function usedList(list){ const t=$("essay").value; return list.filter(([,rx])=>rx.test(t)).map(([n])=>n); }
+function track(){
+  const cn=usedList(CN_RX), id=usedList(ID_RX);
+  $("wc").textContent=wordCount(); $("cnc").textContent=cn.length;
+  $("cnChips").querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", cn.includes(c.dataset.n)));
+  $("idChips").querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", id.includes(c.dataset.n)));
+  afterCheck();
+}
+function afterCheck(){
+  const tasks = S.t1 && S.t2 && S.t3;
+  const words = wordCount()>=CFG.minWords;
+  const ready = tasks && words && !S.sent;
+  $("submitBtn").disabled=!ready;
+  const missing=[];
+  if(!S.t1) missing.push("Task 1"); if(!S.t2) missing.push("Task 2"); if(!S.t3) missing.push("Task 3");
+  $("submitHint").textContent = S.sent ? "Sent." : ready ? "Ready when you are." :
+    (missing.length ? "Check "+missing.join(", ")+" first. " : "") + (words ? "" : `Task 4: write at least ${CFG.minWords} words (now ${wordCount()}).`);
+  renderRoad();
+}
+
+/* ===================== SUBMIT ===================== */
+function submit(){
+  const score=S.t1.score+S.t2.score+S.t3.score, max=S.t1.total+S.t2.total+S.t3.total;
+  const pct=Math.round(score/max*100);
+  const essay=$("essay").value.trim(), cn=usedList(CN_RX), id=usedList(ID_RX);
+  S.sent=true; afterCheck();
+  $("results").classList.remove("hidden");
+  $("bigScore").textContent=pct+"%";
+  $("sumTable").innerHTML=`
+    <tr><td>Task 1 · Complete the compound nouns</td><td>${S.t1.score} / ${S.t1.total}</td></tr>
+    <tr><td>Task 2 · Forum posts</td><td>${S.t2.score} / ${S.t2.total}</td></tr>
+    <tr><td>Task 3 · Verbs</td><td>${S.t3.score} / ${S.t3.total}</td></tr>
+    <tr><td>Task 4 · Proposal</td><td>${wordCount()} words · ${cn.length} compound nouns${id.length?" · ⭐ idiom":""}</td></tr>`;
+  $("submitBtn").textContent="Sent";
+  $("results").scrollIntoView({behavior:"smooth"});
+
+  const breakdown = `Ex1 ${S.t1.score}/${S.t1.total} · Ex2 ${S.t2.score}/${S.t2.total} · Ex3 ${S.t3.score}/${S.t3.total} · Ex4 ${wordCount()} words, ${cn.length} compound nouns${id.length?", idioms: "+id.join(", "):""}`;
+  const mistakes = [["Ex1",S.t1],["Ex2",S.t2],["Ex3",S.t3]].filter(([,t])=>t.wrong.length).map(([k,t])=>`${k}: ${t.wrong.join("; ")}`).join("\n");
+  const open = `Ex4 (proposal):\n${essay}\n\nCompound nouns used: ${cn.join(", ")||"—"}` + (mistakes ? `\n\nMistakes (first try):\n${mistakes}` : "");
+
+  $("sendStatus").textContent="Sending to your teacher…";
+  fetch(CFG.scriptUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({key:CFG.key, homework:CFG.homework, student:S.name, score, max, breakdown, open, page:location.href.split("?")[0]})})
+    .then(()=>{ $("sendStatus").textContent="✓ Sent to your teacher. Well done!"; })
+    .catch(()=>{ S.sent=false; afterCheck(); $("submitBtn").textContent="Finish & send to my teacher"; $("sendStatus").textContent="Couldn't send. Check your internet and try again, or take a screenshot of this page."; });
+}
+
+/* ===================== START ===================== */
+const saved=load();
+const qs=new URLSearchParams(location.search);
+const urlName=qs.get("s")||qs.get("student");
+if(saved){ S.stage=saved.stage||0; S.name=saved.name||""; if(saved.essay) $("essay").value=saved.essay; }
+if(urlName) S.name=urlName;
+$("studentName").value=S.name;
+function begin(){ $("nameCard").classList.add("hidden"); goStage(S.stage); }
+$("startBtn").onclick=()=>{ const v=$("studentName").value.trim(); if(!v){ $("studentName").focus(); return; } S.name=v; save(); begin(); };
+$("studentName").addEventListener("keydown",e=>{ if(e.key==="Enter") $("startBtn").click(); });
+if(S.name){ begin(); }
+</script>
+</body>
+</html>
