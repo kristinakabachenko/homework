@@ -1,6 +1,6 @@
 /* Homework Library — shared styles. Colours come from each book's theme (set in hub.js). */
 :root{
-  --bg:#efe9dc; --surface:#f8f5ee; --ink:#2b1f16; --muted:#6e6252; --line:#ddd3c2;
+  --bg:#fbf8f3; --surface:#ffffff; --ink:#2b1f16; --muted:#6e6252; --line:#ddd3c2;
   --primary:#5a1d22; --on-primary:#fff; --secondary:#bfb065;
   --serif:Arial,Helvetica,sans-serif;
   --sans:Arial,Helvetica,sans-serif;
