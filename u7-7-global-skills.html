@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.7 Global skills · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f3fd;--card:#fff;--ink:#1f2a44;--muted:#6b7a90;--brand:#6c4fe0;--brand2:#3b5bdb;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e2ddf3;--soft:#efebfd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#6c4fe0 0%,#e8508a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F9E0";position:absolute;right:14px;top:-14px;font-size:140px;line-height:1;opacity:.16}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2ddf3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips .lbl{width:100%;font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.chip{font:inherit;font-weight:700;font-size:16px;background:#fff;border:2px solid #d3c9fb;color:var(--brand);border-radius:99px;padding:6px 14px;cursor:pointer}
+.chip.sel{background:var(--sun);border-color:var(--sun);color:var(--ink)}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 12px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+textarea{font:inherit;width:100%;min-height:120px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,select:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#1f2a44;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.q{font-weight:700;margin:12px 0 0}
+select{font:inherit;font-weight:800;border:2px solid var(--line);border-radius:12px;padding:6px 8px;background:#fff;color:var(--ink);max-width:100%}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.row p{margin:0;flex:1}
+.ideas{list-style:none;padding:0;margin:0 0 14px}
+.ideas li{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.ideas li b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--soft);color:var(--brand);display:grid;place-items:center}
+.player{background:linear-gradient(135deg,#1f2a44,#24456b);color:#fff;border-radius:20px;padding:16px;margin-bottom:18px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.player p{margin:4px 0 10px;font-size:15px;opacity:.85}
+.player audio{width:100%}
+.text{background:#fbfcfb;border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 12px}
+.text h3{font-family:'Baloo 2',sans-serif;font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.text h3 small{font-family:Nunito,sans-serif;font-size:14px;color:var(--muted);font-weight:700}
+.text p{margin:0}
+.text select{margin-left:auto}
+.strategy{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:16px 18px;margin-bottom:18px}
+.strategy b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.mcq{padding:10px 0;border-bottom:1px solid var(--line)}
+.mcq p{margin:0 0 8px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 6px;cursor:pointer;color:var(--ink)}
+.opt b{color:var(--brand);margin-right:6px}
+.opt.on{border-color:var(--brand);background:var(--soft)}
+.made{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;padding:10px;border:2px dashed var(--line);border-radius:14px;margin-bottom:6px}
+.made .chip{color:var(--ink)}
+.made .hint{color:var(--muted);font-size:15px;align-self:center}
+.msg{background:#eef1f6;border-radius:18px 18px 18px 4px;padding:12px 14px;margin:4px 0 12px;font-style:italic}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e3e9f2;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.tf{padding:10px 0;border-bottom:1px solid var(--line)}
+.tf p{margin:0 0 8px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font:inherit;font-weight:800;min-width:46px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 12px;cursor:pointer;color:var(--ink)}
+.pill.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pill.on.ok{background:var(--ok)!important;color:#fff!important}
+.pill.on.bad{background:var(--bad)!important;color:#fff!important}
+.forum{border:2px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.forum-top{background:#4a4458;color:#fff;font-weight:800;padding:10px 14px;font-size:18px}
+.forum-top span{display:block;font-size:12px;font-weight:600;opacity:.75}
+.post{display:flex;gap:12px;padding:12px 14px;border-top:1px solid var(--line);background:#fff}
+.post i{flex:none;font-style:normal;width:40px;height:40px;border-radius:50%;color:#fff;font-weight:800;display:grid;place-items:center}
+.post b{display:block}.post p{margin:2px 0 0;font-size:16px}
+.tip{border:2px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 12px;background:#fcfbff}
+.tip-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tip-h .big{font-family:'Baloo 2',serif;font-size:38px;line-height:1;color:var(--brand)}
+.tip-h b{font-size:18px;flex:1}
+.tip p{margin:0;line-height:2.1}
+.tip .chips{margin:0 0 6px;padding:8px}
+.hint3{color:var(--muted)!important;font-size:15px;line-height:1.5!important;margin:0 0 6px!important}
+.legend{font-size:14px;color:var(--muted);margin:10px 0 0}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.7 Global skills</small>
+  <h1>Good study habits</h1>
+  <p>Evaluate and discuss good study habits</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 5 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1 -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>What can you remember about the article <i>How we remember things</i>? Are the sentences true (T) or false (F)?</h2></div>
+  <div id="list1"></div>
+  <button class="btn" onclick="check1()">Check</button>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<!-- EX 2 -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Read the online comments. Who is it? Match each statement to a student. Two statements match <b>nobody</b>.</h2></div>
+  <div class="forum">
+    <div class="forum-top">Forum <span>School › Studying › Your comments</span></div>
+    <div class="post"><i style="background:#3b5bdb">R</i><div><b>Rory</b><p>I always take a lot of notes in class – but then I don't read what I've written for a few days, and I can't understand anything!</p></div></div>
+    <div class="post"><i style="background:#e8508a">J</i><div><b>Jess</b><p>I do loads of sport after school, so there isn't much time for homework – and even when I do have free time, I feel too tired to study.</p></div></div>
+    <div class="post"><i style="background:#0f8b7d">L</i><div><b>Layla</b><p>I do most of my homework at the weekend – but I wonder whether I would get better grades if I did a small amount of work every day and took more breaks.</p></div></div>
+    <div class="post"><i style="background:#f07d1b">A</i><div><b>Ali</b><p>I find working on my own incredibly boring – it's much easier to learn at school, when you can share ideas with your classmates.</p></div></div>
+    <div class="post"><i style="background:#7c5cff">M</i><div><b>Mari</b><p>I often study with friends – Mum won't let us listen to music, but we spend a lot of time laughing at stuff on our phones and don't get much work done!</p></div></div>
+  </div>
+  <p class="q" style="margin-bottom:4px">This person …</p>
+  <div id="list2"></div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<!-- EX 3 -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Five ways to improve your study habits. Choose the group of words (A–E) for each tip. Then tap a gap and tap a word to complete the tip.</h2></div>
+  <ul class="ideas" id="groups3"></ul>
+  <div id="tips3"></div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4 -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Which tips from Task 3 would be useful for each student in Task 2? Tap one or more tips for each person.</h2></div>
+  <div id="list4"></div>
+  <button class="btn" onclick="save4()">Save answers</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5 -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Think about your own study habits. Be honest!</h2></div>
+  <p class="q">1. What do you do well when you study?</p>
+  <textarea id="t5a" placeholder="I'm good at..."></textarea>
+  <p class="q">2. What could you do better?</p>
+  <textarea id="t5b" placeholder="I could... / I wish I didn't..."></textarea>
+  <p class="q">3. Your plan: write at least three things you will do to improve the way you study.</p>
+  <textarea id="t5c" placeholder="1. From now on, I'm going to...&#10;2. &#10;3. "></textarea>
+  <button class="btn" onclick="save5()">Save answers</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 5 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.7 Global skills',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false};
+const scores = {}, notes = {};
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: T / F ---------- */
+const E1 = [
+  ['We are able to remember information because neurons in the brain make connections with each other.','T'],
+  ['Using different senses makes no difference to how we learn and remember things.','F'],
+  ['Our brains find it easier to remember new information when it is connected to what we already know.','T'],
+  ['Recalling a piece of information many times helps to make the memory stronger.','T'],
+  ['The more information you receive at one time, the easier it is to remember it.','F'],
+  ['The best way to learn is to study a little and often, and revise what you have studied.','T']
+];
+let a1=Array(E1.length).fill(null), m1=Array(E1.length).fill('');
+function r1(){
+  $('list1').innerHTML=E1.map((it,i)=>'<div class="tf"><p><b>'+(i+1)+'.</b> '+it[0]+'</p><div class="pills">'+
+    ['T','F'].map(v=>'<button class="pill '+(a1[i]===v?'on '+m1[i]:'')+'" onclick="pick1('+i+',\''+v+'\')">'+v+'</button>').join('')+'</div></div>').join('');
+}
+function pick1(i,v){ a1[i]=v; m1[i]=''; r1(); }
+function check1(){
+  if (a1.some(x=>!x)) return fb('fb1','Answer all 6 sentences first.','warn');
+  let s=0; a1.forEach((a,i)=>{ const ok=a===E1[i][1]; m1[i]=ok?'ok':'bad'; if(ok)s++; }); r1();
+  const [m,c]=score('ex1',s,E1.length); fb('fb1',m,c); markDone('ex1');
+}
+
+/* ---------- EX 2: who is it? ---------- */
+const E2 = [
+  ['needs to manage their time more effectively.','Jess'],
+  ['gets distracted when they study with other people.','Mari'],
+  ['listens to music while studying.','nobody'],
+  ['doesn’t review their notes when they get home.','Rory'],
+  ['might learn better if they studied a little and often.','Layla'],
+  ['takes too many breaks while studying.','nobody'],
+  ['would benefit from joining a study group.','Ali']
+];
+const PEOPLE = ['Rory','Jess','Layla','Ali','Mari','nobody'];
+$('list2').innerHTML = E2.map((it,i)=>'<div class="row"><p><b>'+(i+1)+'.</b> … '+it[0]+'</p><select id="s2_'+i+'"><option value="">–</option>'+PEOPLE.map(p=>'<option value="'+p+'">'+(p==='nobody'?'nobody ✗':p)+'</option>').join('')+'</select></div>').join('');
+E2.forEach((_,i)=>{ $('s2_'+i).onchange=()=>$('s2_'+i).classList.remove('ok','bad'); });
+function check2(){
+  const v=E2.map((_,i)=>$('s2_'+i).value);
+  if (v.some(x=>!x)) return fb('fb2','Choose a person (or nobody) for every statement.','warn');
+  const named=v.filter(x=>x!=='nobody');
+  if (new Set(named).size<named.length) return fb('fb2','Each student matches only one statement.','warn');
+  if (v.filter(x=>x==='nobody').length!==2) return fb('fb2','Exactly two statements match nobody.','warn');
+  let s=0; v.forEach((x,i)=>{ const ok=x===E2[i][1]; const el=$('s2_'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex2',s,E2.length); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: tips ---------- */
+const GROUPS = {
+  A:['avoid','distracted','periods','regular'],
+  B:['analyse','discuss','note','relate'],
+  C:['minutes','overload','revising','senses'],
+  D:['notes','questions','recalling','remember'],
+  E:['free time','manage','week','schedule']
+};
+/* each tip: title, correct group, text parts with gaps (answers in order) */
+const TIPS = [
+  {t:'Make connections', g:'B', parts:['Take ',' of new ideas. Think about and ',' new information and ',' it to what you already know. Join a study group and ',' what you are learning.'], ans:['note','analyse','relate','discuss']},
+  {t:'Make a plan', g:'E', parts:['Try to ',' your time effectively. Look at what you do in your ',' and plan when you are going to study. Then ',' time for revising and time for ',' each day.'], ans:['manage','week','schedule','free time']},
+  {t:'Keep focused', g:'A', parts:['Study for short ',' of time and take ',' breaks. Turn off your phone and ',' social media. Find a quiet place to study alone so you aren’t ',' by other people.'], ans:['periods','regular','avoid','distracted']},
+  {t:'Look after your brain', g:'C', parts:['Study each subject for a few ',' every day. Start by ',' what you’ve recently studied. Don’t ',' your brain with too much information. Move around and use different ',' when you study.'], ans:['minutes','revising','overload','senses']},
+  {t:'Revise regularly', g:'D', parts:['Practise ',' information you have learned. Look at your ',' when you get home and ask yourself ',' to check you understand them. It’s important to revise information regularly if you want to ',' it.'], ans:['recalling','notes','questions','remember']}
+];
+$('groups3').innerHTML = Object.keys(GROUPS).map(k=>'<li><b>'+k+'</b><span>'+GROUPS[k].join(', ')+'</span></li>').join('');
+let g3 = Array(TIPS.length).fill(''), gm3 = Array(TIPS.length).fill('');
+let f3 = TIPS.map(t=>Array(t.ans.length).fill(null)), m3 = TIPS.map(t=>Array(t.ans.length).fill('')), act3 = null;
+function r3(){
+  $('tips3').innerHTML = TIPS.map((tp,i)=>{
+    const sel='<select class="'+gm3[i]+'" onchange="grp3('+i+',this.value)"><option value="">Group</option>'+Object.keys(GROUPS).map(k=>'<option'+(g3[i]===k?' selected':'')+'>'+k+'</option>').join('')+'</select>';
+    const bank = g3[i] ? '<div class="chips">'+GROUPS[g3[i]].map(w=>'<button class="chip '+(f3[i].includes(w)?'used':'')+'" onclick="chip3('+i+',\''+w+'\')">'+w+'</button>').join('')+'</div>' : '<p class="hint3">Choose a group of words first.</p>';
+    let txt=''; tp.parts.forEach((p,j)=>{ txt+=p; if(j<tp.ans.length){ const on=act3&&act3[0]===i&&act3[1]===j; txt+='<span class="slot '+(on?'active ':'')+m3[i][j]+'" onclick="slot3('+i+','+j+')">'+(f3[i][j]||'&nbsp;')+'</span>'; } });
+    return '<div class="tip"><div class="tip-h"><span class="big">'+(i+1)+'</span><b>'+tp.t+'</b>'+sel+'</div>'+bank+'<p>'+txt+'</p></div>';
+  }).join('');
+}
+function grp3(i,v){ if(v!==g3[i]){ g3[i]=v; gm3[i]=''; f3[i]=f3[i].map(()=>null); m3[i]=m3[i].map(()=> ''); act3=v?[i,0]:null; } r3(); }
+function slot3(i,j){ if(!g3[i]) return fb('fb3','Choose a group for tip '+(i+1)+' first.','warn'); if(f3[i][j]){ f3[i][j]=null; m3[i][j]=''; } act3=[i,j]; r3(); }
+function chip3(i,w){
+  if (f3[i].includes(w)) return;
+  let j = (act3 && act3[0]===i) ? act3[1] : f3[i].findIndex(x=>!x);
+  if (j<0 || f3[i][j]) j=f3[i].findIndex(x=>!x);
+  if (j<0) return;
+  f3[i][j]=w; m3[i][j]=''; const nx=f3[i].findIndex(x=>!x); act3 = nx<0?null:[i,nx]; r3();
+}
+function check3(){
+  if (g3.some(x=>!x)) return fb('fb3','Choose a group of words for every tip.','warn');
+  if (f3.some(r=>r.some(x=>!x))) return fb('fb3','Fill all the gaps first.','warn');
+  let s=0, max=0;
+  TIPS.forEach((tp,i)=>{ max++; const okg=g3[i]===tp.g; gm3[i]=okg?'ok':'bad'; if(okg)s++;
+    tp.ans.forEach((a,j)=>{ max++; const ok=f3[i][j]===a; m3[i][j]=ok?'ok':'bad'; if(ok)s++; }); });
+  act3=null; r3();
+  const [m,c]=score('ex3',s,max); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: useful tips (teacher checks) ---------- */
+const STUDENTS = ['Rory','Jess','Layla','Ali','Mari'];
+let t4 = STUDENTS.map(()=>[]);
+function r4(){
+  $('list4').innerHTML = STUDENTS.map((st,i)=>'<div class="row"><p><b>'+st+'</b></p><div class="pills">'+
+    TIPS.map((_,k)=>'<button class="pill '+(t4[i].includes(k+1)?'on':'')+'" title="'+TIPS[k].t+'" onclick="tog4('+i+','+(k+1)+')">'+(k+1)+'</button>').join('')+'</div></div>').join('')+
+    '<p class="legend">'+TIPS.map((t,k)=>'<b>'+(k+1)+'</b> '+t.t).join(' · ')+'</p>';
+}
+function tog4(i,k){ const a=t4[i]; const p=a.indexOf(k); if(p<0)a.push(k); else a.splice(p,1); a.sort(); r4(); }
+function save4(){
+  if (t4.some(a=>!a.length)) return fb('fb4','Choose at least one tip for every student.','warn');
+  notes.ex4='EX 4 (useful tips)\n'+STUDENTS.map((st,i)=>st+': '+t4[i].map(k=>k+' '+TIPS[k-1].t).join(', ')).join('\n');
+  fb('fb4','Saved! Your teacher will check this one.','good'); markDone('ex4');
+}
+
+/* ---------- EX 5: own habits ---------- */
+function save5(){
+  const a=$('t5a').value.trim(), b=$('t5b').value.trim(), c=$('t5c').value.trim();
+  if (words(a)<5 || words(b)<5) return fb('fb5','Write at least one full sentence for questions 1 and 2.','warn');
+  if (words(c)<15) return fb('fb5','Write at least three things in your plan.','warn');
+  notes.ex5='EX 5 (my study habits)\nI do well: '+a+'\nI could do better: '+b+'\nMy plan:\n'+c;
+  fb('fb5','Saved! Good luck with your new habits.','good'); markDone('ex5');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+r1(); r3(); r4(); progress();
+</script>
+</body>
+</html>
