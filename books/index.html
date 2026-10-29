@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hub.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div><h1>Homework Library</h1><p>Choose your book</p></div>
+  </header>
+  <div class="shelf" id="shelf"></div>
+</div>
+<script>
+/* To add a book: copy a line and change it. */
+const BOOKS = [
+  { title: 'Life Vision B1+', short: 'LV B1+', note: 'Unit 7 · Education', href: 'life-vision-b1/', color: '#ff7a59' }
+];
+document.getElementById('shelf').innerHTML = BOOKS.map(b => `
+  <a class="book" href="${b.href}">
+    <div class="cover" style="background:${b.color};width:52px;height:68px;font-size:12px">${b.short}</div>
+    <div><b>${b.title}</b><span>${b.note}</span></div>
+  </a>`).join('');
+</script>
+</body>
+</html>
