@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PE2 Giving opinions · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3fb;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#6d4aff;--brand2:#ff5c8a;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e6e0f2;--soft:#f1edff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#6d4aff 0%,#ff5c8a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2dcef;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #d8ccff;color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:140px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.quote{display:block;background:#f3f1f8;border-left:4px solid var(--brand2);border-radius:10px;padding:8px 12px;font-style:italic;margin-bottom:6px}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.dlg{background:#faf9fd;border-radius:16px;padding:12px;margin-bottom:12px}
+.dlg h3{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.line{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.line.r{flex-direction:row-reverse}
+.who{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.bubble{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px;max-width:85%}
+.line.r .bubble{background:var(--soft);border-color:#d8ccff}
+.post{border:2px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post .top{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff5c8a,#ffb020)}
+.post .top b{display:block}.post .top small{color:var(--muted)}
+.post .body{padding:12px 14px;line-height:2}
+.post .acts{display:flex;justify-content:space-around;padding:8px;border-top:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+
+/* ---- LEARN (Quizlet-style) ---- */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#efeaf8;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;height:250px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
+.front{background:linear-gradient(135deg,#6d4aff,#ff5c8a);color:#fff}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:36px;line-height:1.1}
+.front small{opacity:.85;font-weight:700}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg)}
+.back .ua{font-family:'Baloo 2',sans-serif;font-size:26px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted);font-size:15px}
+.say{font:inherit;font-size:20px;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;margin-top:12px;background:rgba(255,255,255,.25);color:#fff}
+.say.dark{background:var(--soft);color:var(--brand)}
+.row2{display:flex;gap:10px}
+.row2 .btn{flex:1;margin:0}
+.btn.grey{background:#ece8f5}
+.btn.green{background:var(--ok);color:#fff}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.qbox{background:var(--soft);border-radius:16px;padding:16px;margin-bottom:12px;text-align:center}
+.qbox .ua{font-family:'Baloo 2',sans-serif;font-size:24px;color:var(--brand)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{font:inherit;font-weight:800;padding:12px 8px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink)}
+.spell{font:inherit;font-weight:800;font-size:20px;width:100%;text-align:center;border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.spell:focus{outline:none;border-color:var(--brand)}
+.hint{color:var(--bad);font-weight:800;text-align:center;margin:0 0 8px}
+.locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.locked:before{content:"\1F512  Learn the words first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
+</style>
+<style>
+:root{--brand:#b9531c;--brand2:#e39a2d;--soft:#fdf1e6;--line:#f0e2d3;--bg:#fbf6ef}
+.hero{background:linear-gradient(135deg,#b9531c 0%,#e39a2d 100%)}
+.hero:after{content:"💬";background:none;width:auto;height:auto;right:14px;top:-4px;font-size:120px;line-height:1;opacity:.2;border-radius:0}
+.track{background:#eee0d0}
+.chip{border-color:#f0cfae}
+.line.r .bubble{border-color:#f0cfae}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow.stack .txt{flex-basis:100%}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:700;font-size:15px;padding:6px 12px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink);text-align:left}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.mini{font:inherit;font-size:14px;border:none;background:var(--soft);border-radius:99px;padding:2px 8px;cursor:pointer;vertical-align:middle}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;background:var(--soft);border-radius:14px;padding:10px 14px;margin:0 0 10px;font-size:15px}
+.legend b{color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+.box{background:var(--soft);border-radius:14px;padding:12px 14px;margin:0 0 12px;font-size:15px}
+.box b{color:var(--brand)}
+.box ul{margin:4px 0 0;padding-left:18px}
+.dlg .bubble{line-height:2}
+.slot{min-width:110px}
+.wq{margin-top:14px}
+.wl{font-weight:700;margin:0}
+.pc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:800;color:var(--muted);margin-top:4px}
+.pc span{background:#efe6da;border-radius:99px;padding:2px 9px}
+.pc span.y{background:var(--okbg);color:var(--ok)}
+.pc em{font-style:normal;font-weight:700;color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Practical English · Episode 2</small>
+  <h1>Giving opinions</h1>
+  <p>Images of London: say what you think, agree and disagree</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Izzy and Max need new photos for <i>Images of London</i>. Who wants what? Choose <b>Izzy</b> or <b>Max</b>.</h2></div>
+  <p class="tip">Remember the video from the lesson.</p>
+  <div id="ex1_body"></div>
+  <button class="btn" onclick="checkChoose('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Complete the conversation with the missing words.</h2></div>
+  <p class="tip">Tap a gap, then tap a word. One word is used twice.</p>
+  <div class="chips sticky" id="ex2_bank"></div>
+  <div id="ex2_body"></div>
+  <button class="btn" onclick="checkFill('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Is the speaker giving an opinion, agreeing, partly agreeing or disagreeing?</h2></div>
+  <div class="legend">
+    <b>A</b><span>Giving your opinion</span>
+    <b>B</b><span>Agreeing</span>
+    <b>C</b><span>Partly agreeing (yes, but…)</span>
+    <b>D</b><span>Disagreeing</span>
+  </div>
+  <p class="tip">Tap 🔊 to listen. Repeat each phrase out loud — copy the rhythm.</p>
+  <div id="ex3_body"></div>
+  <button class="btn" onclick="checkChoose('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Only one sentence is correct. Choose it.</h2></div>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="checkChoose('ex4')">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>What do <u>you</u> think? Give your opinion on each topic.</h2></div>
+  <div class="box"><b>Useful phrases</b>
+    <ul>
+      <li><i>Personally, I think… · If you ask me,… · In my opinion,… · To be honest,…</i></li>
+      <li><i>I agree (that)… · OK, I agree…, but… · I don't agree. · I don't think that's right.</i></li>
+      <li>Give a reason: <i>because… · For example,…</i></li>
+    </ul></div>
+  <p class="tip">Write 25+ words for each topic and use at least 2 phrases. The counter shows the phrases it finds.</p>
+  <div id="ex5_body"></div>
+  <button class="btn" onclick="saveWrite('ex5','EX 5 · My opinion')">Save answers</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>What happened in the episode? Answer the questions.</h2></div>
+  <p class="tip">Use an opinion phrase in every answer (20+ words each).</p>
+  <div id="ex6_body"></div>
+  <button class="btn" onclick="saveWrite('ex6','EX 6 · What do you think?')">Save answers</button>
+  <div class="fb" id="ex6_fb"></div>
+</section>
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'EF PE2 · Giving opinions',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const TASKS=['ex1','ex2','ex3','ex4','ex5','ex6'];
+
+const EX1 = { opts:['Izzy','Max'], items: [
+  ['photos of the most exclusive restaurants and luxurious hotels',1],
+  ['a completely new and exciting vision of London',0],
+  ['more glamorous images – that’s what people dream about',1],
+  ['something the readers have never seen before',0],
+  ['the most iconic sights in London',1],
+  ['a hidden London – a side the readers didn’t know existed',0]
+]};
+
+function L(who, color, text, right){ return '<div class="line'+(right?' r':'')+'"><div class="who" style="background:'+color+'">'+who+'</div><div class="bubble">'+text+'</div></div>'; }
+const I='#e39a2d', M='#3b82f6';
+// bank sorted; answers = index in bank
+const EX2 = { bank:['agree','agree','ask','Don’t','honest','opinion','Personally','right','sure','wrong'],
+  html:'<div class="dlg">'+
+  L('Izzy',I,'OK, let’s start again. We need a completely new and exciting vision of London.')+
+  L('Max',M,'[[0]], I think we didn’t go big enough.',1)+
+  L('Izzy',I,'To be [[1]], I think you’re [[2]]. People are tired of that. Anyway, our magazine isn’t just for rich people. It’s for everyone.')+
+  L('Max',M,'Oh, [[3]]. But if you [[4]] me, people want to see what they can’t have…',1)+
+  L('Izzy',I,'I don’t [[5]]. You think everyone wants the same thing. In my [[6]], we need to show the readers something they’ve never seen before…')+
+  L('Max',M,'I don’t think that’s [[7]]. I think people want to see the most iconic sights in London. [[8]] you agree?',1)+
+  L('Izzy',I,'OK, I [[9]] people like the iconic sights of London, but they’ve probably seen them already…')+
+  '</div>', answers:[6,4,9,8,2,0,5,7,3,1] };
+
+const EX3 = { opts:['A','B','C','D'], say:true, items: [
+  ['Personally, I think…',0],['I don’t agree.',3],['If you ask me,…',0],['I totally agree.',1],
+  ['OK, I agree…, but…',2],['I think you’re wrong.',3],['In my opinion,…',0],['That’s true.',1],
+  ['Oh, sure. But…',2],['To be honest,…',0],['I don’t think that’s right.',3],['Exactly!',1],['You may be right, but…',2]
+]};
+
+const EX4 = { stack:true, items: [
+  ['',['I am agree with you.','I agree with you.'],1],
+  ['',['In my opinion, big cities are noisy.','On my opinion, big cities are noisy.'],0],
+  ['',['Personal, I think it’s a good idea.','Personally, I think it’s a good idea.'],1],
+  ['',['To be honestly, I don’t like it.','To be honest, I don’t like it.'],1],
+  ['',['If you ask me, it’s too expensive.','If you ask to me, it’s too expensive.'],0],
+  ['',['I don’t agree.','I not agree.'],0],
+  ['',['London is beautiful, isn’t you agree?','London is beautiful, don’t you agree?'],1],
+  ['',['I think you wrong.','I think you’re wrong.'],1]
+]};
+
+const OPINION = [
+  ['personally','personally'],['if you ask me','if you ask me'],['in my opinion','in my opinion'],['to be honest','to be honest'],
+  ['don’t you agree?',"don'?t you agree"],['you’re wrong',"you'?re wrong|you are wrong"],['I don’t agree',"i don'?t agree|i do not agree|i disagree"],
+  ['I don’t think that’s right',"i don'?t think that'?s right"],['I agree',"\\bi (totally |completely |partly )?agree"],
+  ['you may be right, but',"you may be right"],['that’s true',"that'?s true"]
+];
+const EX5 = { phrases: OPINION, prompts: [
+  ['a) Big cities are great places to live.',25,2],
+  ['b) City holidays are not very relaxing.',25,2],
+  ['c) Working in an office is more stressful than working from home.',25,2]
+]};
+const EX6 = { phrases: OPINION, prompts: [
+  ['a) Whose fault was it that the presentation went badly – Max’s, Izzy’s or both?',20,1],
+  ['b) Was Izzy right to take the blame in front of Dominic? Why / Why not?',20,1],
+  ['c) Max wants glamorous London, Izzy wants hidden London. Whose idea do you prefer? Why?',20,1]
+]};
+/* ---------- shared helpers ---------- */
+const done = {}; const scores = {}; const notes = {};
+TASKS.forEach(k=>done[k]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`‘]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.innerHTML=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const k=Object.keys(done), n=k.filter(x=>done[x]).length;
+  $('fill').style.width=(n/k.length*100)+'%'; $('ptext').textContent=n+' of '+k.length+' tasks done';
+  $('cl').innerHTML=k.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<k.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+function speak(t){ try{ const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,'').replace(/…|\.\.\./g,'')); u.lang='en-GB'; u.rate=.9;
+  const v=speechSynthesis.getVoices().find(v=>/en-GB/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+
+/* ---------- FILL engine (inline gaps, each chip used once) ---------- */
+const FILL = {};
+function setupFill(id, ex){ FILL[id]={...ex, fill:Array(ex.answers.length).fill(-1), mark:Array(ex.answers.length).fill(''), act:0}; renderFill(id); }
+function renderFill(id){
+  const t=FILL[id];
+  $(id+'_bank').innerHTML=t.bank.map((w,k)=>'<button class="chip '+(t.fill.includes(k)?'used':'')+'" onclick="fillChip(\''+id+'\','+k+')">'+w+'</button>').join('');
+  $(id+'_body').innerHTML=t.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>{ n=+n; const v=t.fill[n];
+    return '<span class="slot '+(n===t.act?'active ':'')+t.mark[n]+'" onclick="fillSlot(\''+id+'\','+n+')"><small style="opacity:.6">'+(n+1)+'</small> '+(v>=0?t.bank[v]:'&nbsp;')+'</span>'; });
+}
+function fillSlot(id,i){ const t=FILL[id]; if(t.fill[i]>=0){ t.fill[i]=-1; t.mark[i]=''; } t.act=i; renderFill(id); }
+function fillChip(id,k){ const t=FILL[id]; if(t.fill.includes(k)) return; if(t.act<0) t.act=t.fill.indexOf(-1); if(t.act<0) return;
+  t.fill[t.act]=k; t.mark[t.act]=''; t.act=t.fill.indexOf(-1); renderFill(id); }
+function checkFill(id){ const t=FILL[id];
+  if(t.fill.includes(-1)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((a,i)=>{ const ok=t.bank[t.fill[i]]===t.bank[a]; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderFill(id); record(id,s,t.answers.length); }
+
+/* ---------- CHOOSE engine (one option per row; options can differ per row) ----------
+   item: [text, [options], correctIndex]   or with shared opts: [text, correctIndex]  */
+const CH = {};
+function setupChoose(id, ex){
+  const items=ex.items.map(it=>Array.isArray(it[1])?it:[it[0],ex.opts,it[1]]);
+  CH[id]={items, pick:Array(items.length).fill(-1), stack:!!ex.stack};
+  $(id+'_body').innerHTML=items.map((it,i)=>'<div class="sortrow'+(ex.stack?' stack':'')+'"><span class="txt">'+(i+1)+'. '+it[0]+
+    (ex.say?' <button class="mini" onclick="speak(CH[\''+id+'\'].items['+i+'][0])" aria-label="Listen">🔊</button>':'')+'</span><span class="btns">'+
+    it[1].map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickRow(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>').join(''); }
+function pickRow(id,i,k){ const t=CH[id]; t.pick[i]=k;
+  t.items[i][1].forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkChoose(id){ const t=CH[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on'); const ok=t.pick[i]===it[2]; b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); }
+
+/* ---------- WRITE engine: open answers + live phrase counter ----------
+   ex: { prompts:[[label, minWords, minPhrases]], phrases:[regex strings] } */
+const WR = {};
+function setupWrite(id, ex){ WR[id]=ex;
+  $(id+'_body').innerHTML=ex.prompts.map((p,i)=>'<div class="wq"><p class="wl">'+p[0]+'</p><textarea id="'+id+'_t'+i+'" oninput="liveWrite(\''+id+'\','+i+')"'+(p[1]>=60?' style="min-height:200px"':'')+'></textarea><div class="pc" id="'+id+'_c'+i+'"></div></div>').join('');
+  ex.prompts.forEach((_,i)=>liveWrite(id,i)); }
+function found(id,txt){ const t=norm(txt); return WR[id].phrases.filter(p=>new RegExp(p[1],'i').test(t)).map(p=>p[0]); }
+function liveWrite(id,i){ const p=WR[id].prompts[i], v=$(id+'_t'+i).value, f=found(id,v), w=words(v);
+  $(id+'_c'+i).innerHTML='<span class="'+(w>=p[1]?'y':'')+'">'+w+'/'+p[1]+' words</span><span class="'+(f.length>=p[2]?'y':'')+'">'+f.length+'/'+p[2]+' phrases</span>'+(f.length?'<em>'+f.join(' · ')+'</em>':''); }
+function saveWrite(id, title){ const ex=WR[id];
+  const vals=ex.prompts.map((_,i)=>$(id+'_t'+i).value.trim());
+  for(let i=0;i<vals.length;i++){ const p=ex.prompts[i];
+    if(words(vals[i])<p[1]) return fb(id+'_fb','Write a bit more in answer '+(i+1)+' (at least '+p[1]+' words).','warn');
+    if(found(id,vals[i]).length<p[2]) return fb(id+'_fb','Answer '+(i+1)+': use at least '+p[2]+' phrase'+(p[2]>1?'s':'')+' from the lesson.','warn'); }
+  notes[id]=title+'\n'+ex.prompts.map((p,i)=>(i+1)+') '+p[0].replace(/<[^>]+>/g,'')+'\n→ '+vals[i]).join('\n');
+  fb(id+'_fb','Saved! Your teacher will read your answers.','good'); markDone(id); }
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupChoose('ex1',EX1); setupFill('ex2',EX2); setupChoose('ex3',EX3); setupChoose('ex4',EX4);
+setupWrite('ex5',EX5); setupWrite('ex6',EX6);
+progress();
+
+</script>
+</body>
+</html>

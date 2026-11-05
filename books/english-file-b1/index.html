@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English File B1 · Homework</title>
+<link rel="stylesheet" href="../hub.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+window.BOOK = {
+  title: 'English File B1',
+  kicker: 'Homework collection',
+  subtitle: 'Choose a unit, then tap a card to see what\'s inside.',
+  theme: {
+    bg: '#FBF8F3', surface: '#FFFFFF', ink: '#3A1F10', muted: '#6E5444', line: '#EAE3D8',
+    primary: '#8A3B12', secondary: '#D98A3D', tertiary: '#E8C9A0',
+    skills: {
+      'Vocabulary': '#D98A3D', 'Grammar': '#8A3B12', 'Reading': '#E8C9A0', 'Listening': '#A9613A',
+      'Speaking': '#B9531C', 'Writing': '#5E2A0E'
+    }
+  },
+  units: [
+    { id: 'PE2', name: 'Practical English · Images of London', topics: ['Giving opinions', 'Social English'] }
+  ]
+};
+
+/* To add a homework: copy one { … } block, paste it at the end, change the details. */
+window.HOMEWORK = [
+  {
+    unit: 'PE2', code: 'PE2', skill: 'Speaking', isNew: true,
+    title: 'Giving opinions', topic: 'Pictures of you · Episode 2',
+    desc: 'Say what you think, agree and disagree — like Izzy and Max.',
+    tasks: [
+      'Who wants what? Izzy or Max',
+      'Complete the conversation',
+      'Opinion, agree, partly agree or disagree?',
+      'Only one is correct',
+      'Your opinion on 3 topics',
+      'What do you think about the episode?'
+    ],
+    file: 'ef-pe2-giving-opinions.html'
+  },
+  {
+    unit: 'PE2', code: 'PE2', skill: 'Vocabulary', isNew: true,
+    title: 'Social English', topic: 'Pictures of you · Episode 2',
+    desc: 'Useful phrases to react, reassure and say what went wrong.',
+    tasks: [
+      'Who says it? Max, Izzy or Dominic',
+      'Match phrases and responses',
+      'Pamela has an idea: complete the scene',
+      'What does it mean?',
+      'New situations: best response',
+      'Write your own conversation'
+    ],
+    file: 'ef-pe2-social-english.html'
+  }
+];
+</script>
+<script src="../hub.js"></script>
+</body>
+</html>

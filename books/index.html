@@ -21,7 +21,8 @@
 const BOOKS = [
   { title: 'Speakout C1–C2',  note: 'Unit 1 · Learning', href: 'speakout-c1-c2/',  colors: ['#5A1D22','#BFB065','#A9BFD4','#ECE7DC'] },
   { title: 'Life Vision B1+', note: 'Unit 7 · Education', href: 'life-vision-b1/',  colors: ['#3A230A','#A4530C','#8DA28C','#EEE9C1'] },
-  { title: 'Outcomes A2/B1',  note: 'Unit 4 · Food',      href: 'outcomes-a2-b1/', colors: ['#8C2E3E','#867B18','#C9BE78','#EDE6D4'] }
+  { title: 'Outcomes A2/B1',  note: 'Unit 4 · Food',      href: 'outcomes-a2-b1/', colors: ['#8C2E3E','#867B18','#C9BE78','#EDE6D4'] },
+  { title: 'English File B1', note: 'Practical English · Episode 2', href: 'english-file-b1/', colors: ['#8A3B12','#D98A3D','#E8C9A0','#F3E6D6'] }
 ];
 document.getElementById('shelf').innerHTML = BOOKS.map(b => `
   <a class="book" href="${b.href}" style="background:${b.colors[0]};border-color:${b.colors[0]}">
