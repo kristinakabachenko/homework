@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.8 Speaking · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3fb;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#6d4aff;--brand2:#ff5c8a;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e6e0f2;--soft:#f1edff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#6d4aff 0%,#ff5c8a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2dcef;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #d8ccff;color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:140px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.quote{display:block;background:#f3f1f8;border-left:4px solid var(--brand2);border-radius:10px;padding:8px 12px;font-style:italic;margin-bottom:6px}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.dlg{background:#faf9fd;border-radius:16px;padding:12px;margin-bottom:12px}
+.dlg h3{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.line{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.line.r{flex-direction:row-reverse}
+.who{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.bubble{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px;max-width:85%}
+.line.r .bubble{background:var(--soft);border-color:#d8ccff}
+.post{border:2px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post .top{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff5c8a,#ffb020)}
+.post .top b{display:block}.post .top small{color:var(--muted)}
+.post .body{padding:12px 14px;line-height:2}
+.post .acts{display:flex;justify-content:space-around;padding:8px;border-top:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+
+/* ---- LEARN (Quizlet-style) ---- */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#efeaf8;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;height:250px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
+.front{background:linear-gradient(135deg,#6d4aff,#ff5c8a);color:#fff}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:36px;line-height:1.1}
+.front small{opacity:.85;font-weight:700}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg)}
+.back .ua{font-family:'Baloo 2',sans-serif;font-size:26px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted);font-size:15px}
+.say{font:inherit;font-size:20px;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;margin-top:12px;background:rgba(255,255,255,.25);color:#fff}
+.say.dark{background:var(--soft);color:var(--brand)}
+.row2{display:flex;gap:10px}
+.row2 .btn{flex:1;margin:0}
+.btn.grey{background:#ece8f5}
+.btn.green{background:var(--ok);color:#fff}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.qbox{background:var(--soft);border-radius:16px;padding:16px;margin-bottom:12px;text-align:center}
+.qbox .ua{font-family:'Baloo 2',sans-serif;font-size:24px;color:var(--brand)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{font:inherit;font-weight:800;padding:12px 8px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink)}
+.spell{font:inherit;font-weight:800;font-size:20px;width:100%;text-align:center;border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.spell:focus{outline:none;border-color:var(--brand)}
+.hint{color:var(--bad);font-weight:800;text-align:center;margin:0 0 8px}
+.locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.locked:before{content:"\1F512  Learn the words first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
+</style>
+<style>
+.hero{background:linear-gradient(135deg,#ff5c8a 0%,#6d4aff 100%)}
+.hero:after{content:"\1F5E3";background:none;width:auto;height:auto;right:14px;top:-6px;font-size:130px;line-height:1;opacity:.18;border-radius:0}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:16px;padding:14px 14px 10px;margin:0 0 14px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:18px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.statement{background:#22213a;color:#fff;border-radius:14px;padding:12px 16px;text-align:center;font-family:'Baloo 2',sans-serif;font-size:20px;margin-bottom:10px}
+.dlg .bubble{line-height:2}
+.slot{min-width:150px}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:800;font-size:14px;padding:6px 11px;border:2px solid var(--line);border-radius:99px;background:#fff;cursor:pointer;color:var(--ink)}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;background:var(--soft);border-radius:14px;padding:10px 14px;margin:0 0 10px;font-size:15px}
+.legend b{color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+u{text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--brand2)}
+select.name{background:#fff}
+.checks label{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-weight:600}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.8 Speaking</small>
+  <h1>Let's debate!</h1>
+  <p>Present and counter arguments, ask for clarification and add emphasis</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Listen to Toby and Kate. Complete the script with the useful phrases.</h2></div>
+  <div class="player">
+    <b>Track 7.04 · The debate</b>
+    <iframe src="https://drive.google.com/file/d/1_QFRk-Z4phFfhV78lO0b5rGj6ArM9rDo/preview" allow="autoplay"></iframe>
+    <a href="https://drive.google.com/file/d/1_QFRk-Z4phFfhV78lO0b5rGj6ArM9rDo/view" target="_blank" rel="noopener">Audio not playing? Open it here</a>
+  </div>
+  <p class="tip">Tap a gap, then tap a phrase.</p>
+  <div class="chips sticky" id="ex1_bank"></div>
+  <div class="statement">‘We should stop using exams to measure students’ learning.’</div>
+  <div id="ex1_body"></div>
+  <button class="btn" onclick="checkFill('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>What does each phrase do? Choose the function A–E.</h2></div>
+  <div class="legend">
+    <b>A</b><span>Expressing certainty</span>
+    <b>B</b><span>Giving clarification</span>
+    <b>C</b><span>Presenting an argument</span>
+    <b>D</b><span>Asking for clarification</span>
+    <b>E</b><span>Countering an argument</span>
+  </div>
+  <div id="ex2_body"></div>
+  <button class="btn" onclick="checkSort('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Does the adverb in bold make the opinion stronger or softer?</h2></div>
+  <p class="strategy"><b>Strategy:</b> in a debate we add adverbs to stress our opinion (<i>This is <b>absolutely</b> the right thing to do.</i>) or to make it softer and more polite (<i>I don't think this is <b>particularly</b> useful.</i>).</p>
+  <div id="ex3_body"></div>
+  <button class="btn" onclick="checkSort('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Pronunciation. Listen. How is the underlined letter <i>a</i> pronounced in each word?</h2></div>
+  <div class="player">
+    <b>Track 7.05 · Pronunciation</b>
+    <iframe src="https://drive.google.com/file/d/1aPbXLwKtsGXcsPqM5nEQUvjCZRtIwyhZ/preview" allow="autoplay"></iframe>
+    <a href="https://drive.google.com/file/d/1aPbXLwKtsGXcsPqM5nEQUvjCZRtIwyhZ/view" target="_blank" rel="noopener">Audio not playing? Open it here</a>
+  </div>
+  <div class="legend">
+    <b>/æ/</b><span>like in <i>cat</i></span>
+    <b>/ɑː/</b><span>like in <i>car</i></span>
+    <b>/eɪ/</b><span>like in <i>day</i></span>
+  </div>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="checkSort('ex4')">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Your turn! Write a script of a similar discussion.</h2></div>
+  <p style="font-weight:700;margin:0">1. Choose a statement</p>
+  <select class="name" id="ex5_st" onchange="$('ex5_own').style.display=this.value==='own'?'block':'none'">
+    <option value="">Choose…</option>
+    <option>Everyone should take a gap year between school and university.</option>
+    <option>Doing sport at school is just as important as studying academic subjects.</option>
+    <option value="own">My own idea…</option>
+  </select>
+  <input class="name" id="ex5_own" placeholder="Type your own statement" style="display:none">
+  <div id="ex5_body"></div>
+  <p style="font-weight:700;margin:16px 0 0">Before you send it, check that you have…</p>
+  <div class="checks">
+    <label><input type="checkbox" class="ck"> used phrases to present and counter arguments</label>
+    <label><input type="checkbox" class="ck"> used phrases to ask for and give clarification</label>
+    <label><input type="checkbox" class="ck"> used adverbs to emphasise or soften your arguments</label>
+    <label><input type="checkbox" class="ck"> read your script aloud (bonus: record it with a friend!)</label>
+  </div>
+  <button class="btn" onclick="saveScript()">Save answers</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.8 Speaking',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+/* ---------- EXERCISE CONTENT ---------- */
+// EX1: inline gaps [[n]]; answers[n] = index in bank (each phrase used once)
+const EX1_BANK = ['and there’s no doubt that','first of all,','how do you mean?','it’s true to say that','let me put it another way.','that’s a good point, but','the first thing I’d like to say is','you may be right, but'];
+function L(who, color, text, right){ return '<div class="line'+(right?' r':'')+'"><div class="who" style="background:'+color+'">'+who+'</div><div class="bubble">'+text+'</div></div>'; }
+const T='#3b82f6', K='#ff5c8a';
+const EX1 = { bank: EX1_BANK, html: '<div class="dlg">'+
+  L('Toby',T,'So, [[0]] I disagree with the statement. I’m absolutely convinced that exams are the best and fairest way to measure students’ progress.')+
+  L('Kate',K,'That may have been true once, but it isn’t true anymore. There are two points I’d like to mention. [[1]], sitting exams is extremely stressful for many students. Secondly, exams don’t actually measure what you’ve learned about a subject – they just show how good you are at learning to pass exams.',1)+
+  L('Toby',T,'[[2]] exams aren’t only about testing what you know. They also help you to understand about success in the real world.')+
+  L('Kate',K,'I’m not with you.',1)+
+  L('Toby',T,'[[3]] I think if you have to pass an exam to get to university or gain a qualification, it makes you try harder. Exams make you more competitive. [[4]] life is a competition. That’s fairly obvious.')+
+  L('Kate',K,'[[5]] I don’t think you need to fail an exam to understand that. The point of education is to discover new things and enjoy learning. And besides, there are definitely better ways to measure progress than testing.',1)+
+  L('Toby',T,'[[6]]')+
+  L('Kate',K,'What I mean is the best person to decide what grades you should get is your teacher. Why not have a system where teachers give students grades based on the coursework they’ve done over the year?',1)+
+  L('Toby',T,'I’m not saying coursework isn’t important. It certainly is important. But we should think carefully about what’s fair too. [[7]] if everyone does the same exam, at the same time, they all have an equal chance of succeeding. You can’t argue with that.')+
+  '</div>', answers: [1,6,5,4,0,7,2,3] };
+
+// Sort exercises: [text, correct option index]
+const EX2 = { opts:['A','B','C','D','E'], items: [
+  ['first of all',2],['how do you mean?',3],['and there\u2019s no doubt that',0],['that\u2019s a good point, but',4],
+  ['let me put it another way',1],['the first thing I\u2019d like to say is',2],['you may be right, but',4],
+  ['it\u2019s true to say that',0],['I\u2019m not with you',3],['what I mean is',1],
+  ['that may have been true once, but',4],['I\u2019m absolutely convinced that',0],['secondly',2]
+]};
+const EX3 = { opts:['stronger','softer'], items: [
+  ['I’m <b>absolutely</b> convinced that exams are the fairest way.',0],
+  ['Sitting exams is <b>extremely</b> stressful for many students.',0],
+  ['Exams don’t <b>actually</b> measure what you’ve learned.',0],
+  ['There are <b>definitely</b> better ways to measure progress.',0],
+  ['Life is a competition. That’s <b>fairly</b> obvious.',1],
+  ['Coursework <b>certainly</b> is important.',0],
+  ['I don’t think a gap year is <b>particularly</b> useful.',1],
+  ['The new rules are <b>slightly</b> unfair, in my opinion.',1],
+  ['That’s <b>totally</b> wrong!',0],
+  ['Sport at school is <b>quite</b> a good idea, I suppose.',1]
+]};
+const EX4 = { opts:['/æ/','/ɑː/','/eɪ/'], items: [
+  ['it m<u>a</u>kes you try harder',2],['it makes you try h<u>a</u>rder',1],
+  ['f<u>a</u>il an exam',2],
+  ['gr<u>a</u>des based on coursework',2],['grades b<u>a</u>sed on coursework',2],
+  ['h<u>a</u>ve an equal chance',0],['have an equal ch<u>a</u>nce',1],
+  ['you c<u>a</u>n’t argue with that',1],['you can’t <u>a</u>rgue with that',1],['you can’t argue with th<u>a</u>t',0]
+]};
+
+// EX5 open prompts: [prompt, minimum words]
+const EX5 = [
+  ['Arguments FOR the statement (notes are fine)', 8],
+  ['Arguments AGAINST the statement (notes are fine)', 8],
+  ['Your script: a discussion between two people (100+ words). Use the useful phrases and at least four adverbs.', 100]
+];
+/* -------------------------------------- */
+
+const done = {}; const scores = {}; const notes = {};
+['ex1','ex2','ex3','ex4','ex5'].forEach(k=>done[k]=false);
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const k=Object.keys(done), n=k.filter(x=>done[x]).length;
+  $('fill').style.width=(n/k.length*100)+'%'; $('ptext').textContent=n+' of '+k.length+' tasks done';
+  $('cl').innerHTML=k.map((x,i)=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<k.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first) scores[id]={s,max};
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+
+/* ---------- FILL engine (inline gaps, each chip used once) ---------- */
+const FILL = {};
+function setupFill(id, ex){ FILL[id]={...ex, fill:Array(ex.answers.length).fill(-1), mark:Array(ex.answers.length).fill(''), act:0}; renderFill(id); }
+function renderFill(id){
+  const t=FILL[id];
+  $(id+'_bank').innerHTML=t.bank.map((w,k)=>'<button class="chip '+(t.fill.includes(k)?'used':'')+'" onclick="fillChip(\''+id+'\','+k+')">'+w+'</button>').join('');
+  $(id+'_body').innerHTML=t.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>{ n=+n; const v=t.fill[n];
+    return '<span class="slot '+(n===t.act?'active ':'')+t.mark[n]+'" onclick="fillSlot(\''+id+'\','+n+')"><small style="opacity:.6">'+(n+1)+'</small> '+(v>=0?t.bank[v]:'&nbsp;')+'</span>'; });
+}
+function fillSlot(id,i){ const t=FILL[id]; if(t.fill[i]>=0){ t.fill[i]=-1; t.mark[i]=''; } t.act=i; renderFill(id); }
+function fillChip(id,k){ const t=FILL[id]; if(t.fill.includes(k)) return; if(t.act<0) t.act=t.fill.indexOf(-1); if(t.act<0) return;
+  t.fill[t.act]=k; t.mark[t.act]=''; t.act=t.fill.indexOf(-1); renderFill(id); }
+function checkFill(id){ const t=FILL[id];
+  if(t.fill.includes(-1)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((a,i)=>{ const ok=t.fill[i]===a; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderFill(id); record(id,s,t.answers.length); }
+
+/* ---------- SORT engine (choose one option per row) ---------- */
+const SORT = {};
+function setupSort(id, ex){ SORT[id]={...ex, pick:Array(ex.items.length).fill(-1)};
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>'<div class="sortrow"><span class="txt">'+(i+1)+'. '+it[0]+'</span><span class="btns">'+
+    ex.opts.map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickSort(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>').join(''); }
+function pickSort(id,i,k){ const t=SORT[id]; t.pick[i]=k;
+  t.opts.forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkSort(id){ const t=SORT[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on'); const ok=t.pick[i]===it[1]; b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); }
+
+/* ---------- EX5: script writing ---------- */
+$('ex5_body').innerHTML=EX5.map((it,i)=>'<p style="font-weight:700;margin:14px 0 0">'+(i+2)+'. '+it[0]+'</p><textarea id="ex5_t'+i+'"'+(it[1]>=100?' style="min-height:220px"':'')+'></textarea>').join('');
+function saveScript(){
+  let st=$('ex5_st').value; if(st==='own') st=$('ex5_own').value.trim();
+  if(!st) return fb('ex5_fb','Choose a statement first.','warn');
+  const vals=EX5.map((_,i)=>$('ex5_t'+i).value.trim());
+  const short=EX5.findIndex((x,i)=>words(vals[i])<x[1]);
+  if(short>=0) return fb('ex5_fb','Write a bit more for task '+(short+2)+' (at least '+EX5[short][1]+' words).','warn');
+  if([...document.querySelectorAll('.ck')].some(c=>!c.checked)) return fb('ex5_fb','Check your script and tick all the boxes.','warn');
+  notes.ex5='EX 5\nStatement: '+st+'\n'+EX5.map((q,i)=>(i+2)+') '+q[0]+'\n→ '+vals[i]).join('\n');
+  fb('ex5_fb','Saved! Your teacher will read your script.','good'); markDone('ex5'); }
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupFill('ex1', EX1);
+setupSort('ex2', EX2); setupSort('ex3', EX3); setupSort('ex4', EX4);
+progress();
+</script>
+</body>
+</html>
