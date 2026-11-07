@@ -5,7 +5,7 @@
    and  HWR.snap('ex1')  right after the first score is saved. */
 (function(){
   /* ====== SETTINGS: paste the web-app URL of the "Homework Results" script here ====== */
-  var RESULTS_URL = '';
+  var RESULTS_URL = 'https://script.google.com/macros/s/AKfycbzRiGs4VvXxrWnn2Mvp7uSl_ir-wuyIvJq2JEx10qHi80tMU_oyf1QED1IkYlLy777Veg/exec';
   var KEY = 'moody-hw-2026';
   /* ================================================================================== */
 
@@ -92,7 +92,11 @@
   window.HWR = {
     snap: function(id){ setTimeout(function(){ take(id); }, 0); },
     snaps: snaps,
-    enabled: function(){ return !!RESULTS_URL; }
+    enabled: function(){ return !!RESULTS_URL; },
+    /* new homeworks: HWR.send({homework, student, score, max, breakdown, open}) */
+    send: function(data){
+      return origFetch(RESULTS_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(buildPayload(data))});
+    }
   };
 
   if (!origFetch) return;

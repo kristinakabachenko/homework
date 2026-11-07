@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice: adjective + preposition, manage &amp; solve</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #f6f7f9; color: #222; margin: 0; padding: 24px 16px 60px; line-height: 1.5; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { color: #666; margin: 0 0 24px; }
+  h2 { font-size: 19px; margin: 36px 0 12px; padding-top: 8px; border-top: 2px solid #dde3ec; }
+  .card { background: #fff; border: 1px solid #e3e6eb; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; }
+  .card h3 { margin: 0 0 4px; font-size: 16px; }
+  .card.done { border-color: #2e9d55; }
+  .task { color: #555; margin: 0 0 14px; font-size: 14px; }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid #f0f1f3; }
+  .row:last-child { border-bottom: none; }
+  .ua { min-width: 230px; flex: 1; }
+  input[type=text] { font: inherit; padding: 5px 8px; border: 1px solid #c9ced6; border-radius: 6px; width: 170px; }
+  input.short { width: 70px; }
+  input.ok { border-color: #2e9d55; background: #eaf7ef; }
+  input.bad { border-color: #d24b4b; background: #fdeeee; }
+  .opts button, .chip { font: inherit; padding: 4px 12px; border: 1px solid #c9ced6; background: #fff; border-radius: 6px; cursor: pointer; color: #222; }
+  .opts button:hover, .chip:hover { background: #f0f3f8; }
+  .opts button.ok { background: #2e9d55; color: #fff; border-color: #2e9d55; }
+  .opts button.bad { background: #d24b4b; color: #fff; border-color: #d24b4b; }
+  .opts { display: flex; gap: 6px; flex-wrap: wrap; }
+  .text p { margin: 0 0 12px; line-height: 2.1; }
+  .btns { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .main { font: inherit; padding: 7px 16px; border-radius: 6px; border: none; background: #2d5fa8; color: #fff; cursor: pointer; }
+  .main.light { background: #e7ecf4; color: #2d5fa8; }
+  .main:disabled { opacity: .5; cursor: default; }
+  .score { margin-left: auto; align-self: center; font-weight: 600; }
+  .first { width: 100%; font-size: 13px; color: #2d5fa8; }
+  summary { cursor: pointer; margin-bottom: 4px; }
+  .box { background: #fff8d6; border: 1px solid #f0e2a0; border-radius: 8px; padding: 10px 14px; font-size: 14px; margin-bottom: 14px; }
+  .uns { padding: 12px 0; border-bottom: 1px solid #f0f1f3; }
+  .uns:last-child { border-bottom: none; }
+  .line { min-height: 38px; border: 1px dashed #c9ced6; border-radius: 6px; padding: 5px; display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+  .line.ok { border: 1px solid #2e9d55; background: #eaf7ef; }
+  .line.bad { border: 1px solid #d24b4b; background: #fdeeee; }
+  .pool { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip.used { visibility: hidden; }
+  .num { color: #999; width: 22px; }
+  .answer { font-size: 13px; color: #2e7d4a; }
+  .name { font: inherit; font-size: 16px; width: 100%; padding: 9px 11px; border: 1px solid #c9ced6; border-radius: 8px; margin-top: 6px; }
+  .final .msg { font-size: 14px; margin-top: 10px; }
+  .msg.good { color: #2e7d4a; } .msg.warn { color: #b03a3a; }
+  .checklist { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .checklist i { font-style: normal; font-size: 13px; padding: 3px 10px; border-radius: 99px; background: #eef0f3; color: #777; }
+  .checklist i.y { background: #eaf7ef; color: #2e7d4a; }
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Practice time ✏️</h1>
+  <p class="sub">Part 1: adjective + preposition · Part 2: manage &amp; solve</p>
+
+  <div class="card" id="nameCard">
+    <b>Your name</b>
+    <input class="name" id="student" placeholder="Type your name">
+  </div>
+
+  <h2>Part 1. Adjective + preposition</h2>
+
+  <details class="box"><summary><b>💡 Hint (open if you need help)</b></summary> afraid <b>of</b> · fond <b>of</b> · interested <b>in</b> · pleased <b>with</b> · rude <b>to</b> · angry <b>with</b> + person · angry <b>about</b> + thing · different <b>from</b><br>
+  After a preposition: a person (<i>her, them</i>), a thing (<i>big dogs</i>) or <b>-ing</b> (<i>I'm afraid of flying</i>).</details>
+
+  <section class="card" id="ex1">
+    <h3>1. Translate into English</h3>
+    <p class="task">Write the adjective + preposition, e.g. <i>afraid of</i>.</p>
+  </section>
+
+  <section class="card" id="ex2">
+    <h3>2. Which preposition?</h3>
+    <p class="task">Click the correct preposition. Your first click counts!</p>
+  </section>
+
+  <section class="card" id="ex3">
+    <h3>3. Complete the report</h3>
+    <p class="task">Write one preposition in each gap.</p>
+    <div class="text"></div>
+  </section>
+
+  <section class="card" id="ex4">
+    <h3>4. Person, thing or -ing?</h3>
+    <p class="task">Put the word in brackets in the correct form: <i>-ing</i> (learn → learning) or a pronoun (we → us).</p>
+  </section>
+
+  <h2>Part 2. manage &amp; solve</h2>
+
+  <details class="box"><summary><b>💡 Hint (open if you need help)</b></summary>
+    <b>manage</b> — Yesterday I <b>managed</b> · Right now I <b>am managing</b> · Today in the evening I <b>will manage</b> · I like <b>to manage</b> · I like <b>management</b> (noun)<br>
+    <b>solve</b> — Yesterday I <b>solved</b> · Now I <b>am solving</b> · Today I <b>will solve</b> · Can you help me <b>to solve</b> this problem? · <b>a solution</b> (noun)<br>
+    I have <b>a</b> solution. · I don't have <b>any</b> solution. · I have <b>no</b> solution.
+  </details>
+
+  <section class="card" id="ex5">
+    <h3>5. The right form</h3>
+    <p class="task">Look at the time words. Write the correct form of the word in brackets.</p>
+  </section>
+
+  <section class="card" id="ex6">
+    <h3>6. Unscramble the sentence</h3>
+    <p class="task">Click the words in the right order. Click a word in the line to remove it.</p>
+  </section>
+
+  <div class="card final">
+    <h3>Finished?</h3>
+    <p class="task" style="margin:0">Check all 6 exercises, then send your homework to your teacher.</p>
+    <div class="checklist" id="cl"></div>
+    <button class="main" id="sendBtn" disabled>Send to my teacher</button>
+    <div class="msg" id="sendMsg"></div>
+  </div>
+</div>
+
+<script>
+const CFG = { homework: 'Adjective + preposition · manage & solve' };
+const TASKS = ['ex1','ex2','ex3','ex4','ex5','ex6'];
+const scores = {};
+const norm = s => s.toLowerCase().replace(/[’‘`]/g, "'").replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+const stripBe = s => norm(s).replace(/^(to be|be|am|is|are|was|were|i'm|i am) /, "");
+const $ = id => document.getElementById(id);
+
+/* first try is saved, later tries are just practice */
+function record(id, s, max){
+  const first = !scores[id];
+  if (first){ scores[id] = {s, max}; if (window.HWR) HWR.snap(id); $(id).classList.add('done'); progress(); }
+  return first ? '' : ' (first try ' + scores[id].s + '/' + scores[id].max + ' saved)';
+}
+function progress(){
+  const n = TASKS.filter(k => scores[k]).length;
+  $('cl').innerHTML = TASKS.map(k => '<i class="' + (scores[k] ? 'y' : '') + '">Ex ' + k.slice(2) + '</i>').join('');
+  $('sendBtn').disabled = n < TASKS.length || sent;
+}
+
+function addButtons(card, checkFn, resetFn) {
+  const b = document.createElement("div");
+  b.className = "btns";
+  b.innerHTML = '<button class="main">Check</button><button class="main light">Try again</button><span class="score"></span>';
+  card.appendChild(b);
+  b.children[0].onclick = () => { const [s, max] = checkFn(); b.children[2].textContent = s + " / " + max + record(card.id, s, max); };
+  b.children[1].onclick = () => { resetFn(); b.children[2].textContent = ""; };
+}
+
+function gapCheck(inputs, wrapFn) {
+  let n = 0;
+  inputs.forEach(inp => {
+    const ok = inp._ans.some(a => wrapFn(inp.value) === norm(a));
+    inp.classList.remove("ok", "bad");
+    inp.classList.add(ok ? "ok" : "bad");
+    const fb = inp.parentElement.querySelector(".answer");
+    if (fb) fb.textContent = ok ? "" : "→ " + inp._ans[0];
+    if (ok) n++;
+  });
+  return [n, inputs.length];
+}
+function gapReset(inputs) {
+  inputs.forEach(i => { i.value = ""; i.classList.remove("ok", "bad"); const fb = i.parentElement.querySelector(".answer"); if (fb) fb.textContent = ""; });
+}
+
+/* ---------- Ex 1: translate ---------- */
+const ex1 = [
+  ["боятися (чогось)", ["afraid of"]],
+  ["сердитися на (когось)", ["angry with"]],
+  ["сердитися через (щось)", ["angry about"]],
+  ["відрізнятися від", ["different from"]],
+  ["дуже любити (когось / щось)", ["fond of"]],
+  ["цікавитися (чимось)", ["interested in"]],
+  ["бути грубим з (кимось)", ["rude to"]],
+  ["бути задоволеним (кимось / чимось)", ["pleased with"]]
+];
+(function () {
+  const card = $("ex1"); const inputs = [];
+  ex1.forEach(([ua, ans], i) => {
+    const r = document.createElement("div"); r.className = "row";
+    r.innerHTML = `<span class="num">${i + 1}</span><span class="ua">${ua}</span><input type="text"><span class="answer"></span>`;
+    const inp = r.querySelector("input"); inp._ans = ans; inputs.push(inp);
+    card.appendChild(r);
+  });
+  addButtons(card, () => gapCheck(inputs, stripBe), () => gapReset(inputs));
+})();
+
+/* ---------- Ex 2: pick the preposition (first click counts) ---------- */
+const ex2 = [
+  ["afraid", "of", ["of", "from"]],
+  ["angry ___ a person", "with", ["with", "on", "about"]],
+  ["angry ___ a situation", "about", ["about", "on", "with"]],
+  ["different", "from", ["from", "of", "with"]],
+  ["fond", "of", ["of", "with", "to"]],
+  ["interested", "in", ["in", "about", "of"]],
+  ["rude", "to", ["to", "with", "for"]],
+  ["pleased", "with", ["with", "of", "about"]]
+];
+(function () {
+  const card = $("ex2"); const rows = [];
+  ex2.forEach(([adj, ans, opts], i) => {
+    const r = document.createElement("div"); r.className = "row";
+    r.innerHTML = `<span class="num">${i + 1}</span><span class="ua"><b>${adj}</b></span><div class="opts"></div>`;
+    const o = r.querySelector(".opts");
+    [...opts].sort(() => Math.random() - 0.5).forEach(p => {
+      const b = document.createElement("button"); b.textContent = p;
+      b.onclick = () => {
+        o.querySelectorAll("button").forEach(x => x.classList.remove("ok", "bad"));
+        b.classList.add(p === ans ? "ok" : "bad"); r._done = p === ans;
+        if (r._first === undefined) r._first = p === ans;
+        update();
+      };
+      o.appendChild(b);
+    });
+    rows.push(r); card.appendChild(r);
+  });
+  const sc = document.createElement("div"); sc.className = "btns";
+  sc.innerHTML = '<button class="main light">Try again</button><span class="score"></span>'; card.appendChild(sc);
+  function update() {
+    let extra = '';
+    if (rows.every(r => r._first !== undefined)) extra = record('ex2', rows.filter(r => r._first).length, rows.length);
+    sc.children[1].textContent = rows.filter(r => r._done).length + " / " + rows.length + extra;
+  }
+  sc.children[0].onclick = () => { rows.forEach(r => { r._done = false; r.querySelectorAll("button").forEach(x => x.classList.remove("ok", "bad")); }); sc.children[1].textContent = ""; };
+})();
+
+/* ---------- Ex 3: report gap-fill ---------- */
+const ex3 = [
+  "Our new client, Mr Koval, is very fond {of} his old furniture, so we must be careful. He was angry {with} his last cleaning company because the cleaners were rude {to} his wife.",
+  "He was also angry {about} the price: it was very different {from} the price in the contract.",
+  "Our cleaner Olena is interested {in} old furniture, and she isn't afraid {of} hard work. I think Mr Koval will be pleased {with} her."
+];
+(function () {
+  const card = $("ex3"); const t = card.querySelector(".text"); const inputs = [];
+  ex3.forEach(par => {
+    const p = document.createElement("p");
+    p.innerHTML = par.replace(/\{(\w+)\}/g, (_, a) => `<input type="text" class="short" data-a="${a}">`);
+    t.appendChild(p);
+  });
+  t.querySelectorAll("input").forEach(i => { i._ans = [i.dataset.a]; inputs.push(i); });
+  addButtons(card, () => {
+    const s = gapCheck(inputs, norm);
+    inputs.forEach(i => { if (i.classList.contains("bad")) i.placeholder = i._ans[0]; });
+    return s;
+  }, () => { gapReset(inputs); inputs.forEach(i => i.placeholder = ""); });
+})();
+
+/* ---------- Ex 4: forms after prepositions ---------- */
+const ex4 = [
+  ["I'm interested in", "(learn) more about eco products.", ["learning"]],
+  ["Iryna is afraid of", "(clean) houses with big dogs.", ["cleaning"]],
+  ["The client was angry with", "(we) because we were late.", ["us"]],
+  ["Mrs Bondar is fond of", "(walk) her dogs in the park.", ["walking"]],
+  ["The Lees were rude to Oksana, but she wasn't rude to", "(they).", ["them"]],
+  ["The manager said she was very pleased with", "(I).", ["me"]],
+  ["Is your new job very different from", "(work) in an office?", ["working"]],
+  ["Are you afraid of", "(make) mistakes in English?", ["making"]]
+];
+(function () {
+  const card = $("ex4"); const inputs = [];
+  ex4.forEach(([a, b, ans], i) => {
+    const r = document.createElement("div"); r.className = "row";
+    r.innerHTML = `<span class="num">${i + 1}</span><span>${a} <input type="text" style="width:110px"> ${b}</span><span class="answer"></span>`;
+    const inp = r.querySelector("input"); inp._ans = ans; inputs.push(inp); card.appendChild(r);
+  });
+  addButtons(card, () => gapCheck(inputs, norm), () => gapReset(inputs));
+})();
+
+/* ---------- Ex 5: manage / solve forms ---------- */
+const ex5 = [
+  ["Yesterday I", "(manage) the new cleaners.", ["managed"]],
+  ["Right now I", "(manage) the process.", ["am managing", "'m managing"]],
+  ["Today in the evening I", "(manage) the new orders.", ["will manage", "'ll manage"]],
+  ["I like", "(manage) processes.", ["to manage", "managing"]],
+  ["I really like my job. I like", "(manage → noun).", ["management"]],
+  ["Yesterday I", "(solve) one problem.", ["solved"]],
+  ["Look! Right now I", "(solve) this problem.", ["am solving", "'m solving"]],
+  ["Don't worry! I", "(solve) this problem today in the evening.", ["will solve", "'ll solve"]],
+  ["Can you help me", "(solve) this problem?", ["to solve", "solve"]],
+  ["Good news! I have a", "(solve → noun).", ["solution"]],
+  ["Sorry, I don't have", "solution.", ["any"]],
+  ["I have", "solution. (= I don't have any solution)", ["no"]]
+];
+(function () {
+  const card = $("ex5"); const inputs = [];
+  ex5.forEach(([a, b, ans], i) => {
+    const r = document.createElement("div"); r.className = "row";
+    r.innerHTML = `<span class="num">${i + 1}</span><span>${a} <input type="text" style="width:130px"> ${b}</span><span class="answer"></span>`;
+    const inp = r.querySelector("input"); inp._ans = ans; inputs.push(inp); card.appendChild(r);
+  });
+  addButtons(card, () => gapCheck(inputs, v => norm(v).replace(/^i'm /, "am ").replace(/^i'll /, "will ").replace(/^'m /, "am ").replace(/^'ll /, "will ").replace(/^i /, "")), () => gapReset(inputs));
+})();
+
+/* ---------- Ex 6: unscramble ---------- */
+const ex6 = [
+  "Can you help me to solve this problem?",
+  "Did you manage the new cleaners yesterday?",
+  "Are you solving this problem right now?",
+  "Will you manage the orders today in the evening?",
+  "Do you like to manage processes?",
+  "I don't have any solution.",
+  "I have no solution.",
+  "I like management."
+];
+(function () {
+  const card = $("ex6"); const items = [];
+  ex6.forEach((s, i) => {
+    const end = s.slice(-1); const words = s.slice(0, -1).split(" ");
+    const d = document.createElement("div"); d.className = "uns";
+    d.innerHTML = `<div><span class="num">${i + 1}</span></div><div class="line"></div><div class="pool"></div><div class="answer"></div>`;
+    const line = d.querySelector(".line"), pool = d.querySelector(".pool");
+    let shuffled = [...words];
+    do { shuffled.sort(() => Math.random() - 0.5); } while (shuffled.join(" ") === words.join(" ") && words.length > 1);
+    shuffled.forEach(w => {
+      const c = document.createElement("button"); c.className = "chip";
+      c.textContent = w.toLowerCase() === w || w === "I" ? w : w.toLowerCase();
+      c.onclick = () => {
+        c.classList.add("used");
+        const m = document.createElement("button"); m.className = "chip"; m.textContent = c.textContent;
+        m.onclick = () => { m.remove(); c.classList.remove("used"); line.classList.remove("ok", "bad"); };
+        line.appendChild(m); line.classList.remove("ok", "bad");
+      };
+      pool.appendChild(c);
+    });
+    d.querySelector(".num").insertAdjacentText("afterend", end === "?" ? " (question)" : "");
+    items.push({ d, line, s, words, end }); card.appendChild(d);
+  });
+  addButtons(card, () => {
+    let n = 0;
+    items.forEach(it => {
+      const got = [...it.line.children].map(c => c.textContent).join(" ").toLowerCase();
+      const ok = got === it.words.join(" ").toLowerCase();
+      it.line.classList.remove("ok", "bad"); it.line.classList.add(ok ? "ok" : "bad");
+      it.d.querySelector(".answer").textContent = ok ? "" : "→ " + it.s;
+      if (ok) n++;
+    });
+    return [n, items.length];
+  }, () => {
+    items.forEach(it => {
+      it.line.innerHTML = ""; it.line.classList.remove("ok", "bad");
+      it.d.querySelector(".answer").textContent = "";
+      it.d.querySelectorAll(".pool .chip").forEach(c => c.classList.remove("used"));
+    });
+  });
+})();
+
+/* ---------- SEND ---------- */
+let sent = false;
+const fromLink = new URLSearchParams(location.search).get('s');
+if (fromLink){ $('student').value = fromLink; $('nameCard').style.display = 'none'; }
+function msg(t, c){ $('sendMsg').textContent = t; $('sendMsg').className = 'msg ' + (c || ''); }
+$('sendBtn').onclick = () => {
+  const student = $('student').value.trim();
+  if (!student){ $('nameCard').style.display = 'block'; $('student').focus(); window.scrollTo(0, 0); return msg('Please type your name at the top first.', 'warn'); }
+  let s = 0, max = 0; const parts = [];
+  TASKS.forEach(k => { s += scores[k].s; max += scores[k].max; parts.push('Ex' + k.slice(2) + ' ' + scores[k].s + '/' + scores[k].max); });
+  $('sendBtn').disabled = true; msg('Sending...');
+  HWR.send({homework: CFG.homework, student, score: s, max, breakdown: parts.join(' · '), open: ''})
+    .then(() => { sent = true; msg('Sent! Your score: ' + s + '/' + max + '. Well done! 🎉', 'good'); $('sendBtn').textContent = 'Sent ✓'; })
+    .catch(() => { $('sendBtn').disabled = false; msg('Not sent. Check your internet and try again.', 'warn'); });
+};
+progress();
+</script>
+</body>
+</html>
