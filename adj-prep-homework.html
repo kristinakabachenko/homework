@@ -4,182 +4,302 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homework: Adjectives + prepositions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: Arial, Helvetica, sans-serif; background: #f6f7f9; color: #222; margin: 0; padding: 24px 16px 60px; line-height: 1.5; }
-  .wrap { max-width: 760px; margin: 0 auto; }
-  h1 { font-size: 26px; margin: 0 0 10px; }
-  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 24px; }
-  .tags span { font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 8px; background: #d6e2f3; color: #2d4a73; }
-  .tags span.hw { background: #dfe6df; color: #4a6150; }
-  .card { background: #fff; border: 1px solid #e3e6eb; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; }
-  .card.done { border-color: #2e9d55; }
-  .card h3 { margin: 0 0 4px; font-size: 17px; }
-  .task { color: #555; margin: 0 0 14px; font-size: 14px; }
-  .text { background: #f0f4fb; border-radius: 8px; padding: 14px 16px; line-height: 2.3; font-size: 16px; }
-  input[type=text] { font: inherit; padding: 4px 8px; border: 1px solid #c9ced6; border-radius: 6px; background: #fff; }
-  input.short { width: 80px; }
-  input.ok, textarea.ok { border-color: #2e9d55; background: #eaf7ef; }
-  input.bad, textarea.bad { border-color: #d24b4b; background: #fdeeee; }
-  .row { padding: 10px 0; border-bottom: 1px solid #f0f1f3; }
-  .row:last-child { border-bottom: none; }
-  .wrong { color: #8a8f98; font-size: 14px; margin-bottom: 4px; }
-  .wrong s { color: #b03a3a; }
-  .row input { width: 100%; }
-  .answer { font-size: 13px; color: #2e7d4a; margin-top: 3px; }
-  textarea { font: inherit; width: 100%; min-height: 160px; padding: 10px 12px; border: 1px dashed #c9ced6; border-radius: 8px; resize: vertical; }
-  .meter { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; margin-top: 8px; color: #555; }
-  .meter b.y { color: #2e7d4a; } .meter b.n { color: #b03a3a; }
-  .found { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  .found span { font-size: 13px; background: #eaf7ef; color: #2e7d4a; border-radius: 99px; padding: 2px 10px; }
-  .note { background: #d5d870; border: 1px solid #b9bc4f; border-radius: 8px; padding: 14px 16px; font-size: 14px; text-align: center; max-width: 340px; margin: 12px 0; }
-  .questions { margin: 0 0 6px; padding-left: 20px; }
-  .tick { display: flex; gap: 10px; align-items: center; font-weight: 700; margin-top: 10px; cursor: pointer; }
-  .tick input { width: 20px; height: 20px; }
-  .btns { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .main { font: inherit; padding: 7px 16px; border-radius: 6px; border: none; background: #2d5fa8; color: #fff; cursor: pointer; }
-  .main.light { background: #e7ecf4; color: #2d5fa8; }
-  .main:disabled { opacity: .5; cursor: default; }
-  .score { font-weight: 600; font-size: 14px; }
-  .score.warn { color: #b03a3a; } .score.good { color: #2e7d4a; }
-  summary { cursor: pointer; }
-  .box { background: #fff8d6; border: 1px solid #f0e2a0; border-radius: 8px; padding: 10px 14px; font-size: 14px; margin-bottom: 16px; }
-  .name { font: inherit; font-size: 16px; width: 100%; padding: 9px 11px; border: 1px solid #c9ced6; border-radius: 8px; margin-top: 6px; }
-  .checklist { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
-  .checklist i { font-style: normal; font-size: 13px; padding: 3px 10px; border-radius: 99px; background: #eef0f3; color: #777; }
-  .checklist i.y { background: #eaf7ef; color: #2e7d4a; }
+  :root{
+    --bg:#eaf2f1; --paper:#ffffff; --ink:#12343b; --soft:#4b6a70; --line:#cfe0dd;
+    --teal:#1c6e6a; --mint:#d3efe6; --marker:#ffd23f; --markerbg:#fff3bf;
+    --ok:#1f8f5f; --okbg:#e3f6ec; --bad:#d9482b; --badbg:#fde8e2; --tg:#2aa3dc;
+    --r-lg:22px; --r-md:14px; --r-sm:9px;
+    --head:'Bricolage Grotesque', Arial, sans-serif; --body:'Figtree', Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--body)}
+  button,input,textarea{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 80px}
+
+  /* top bar: progress through the 4 tasks */
+  .bar{position:sticky;top:0;z-index:5;background:rgba(234,242,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar .in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;gap:6px;align-items:center}
+  .step{flex:1;display:flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;font-weight:600;color:var(--soft);min-width:0}
+  .step b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);background:var(--paper);font-size:13px}
+  .step span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .step.y b{background:var(--teal);border-color:var(--teal);color:#fff}
+  .step.y{color:var(--ink)}
+  @media (max-width:520px){ .step span{display:none} .step{flex:none} .bar .in{justify-content:space-between} .step::after{content:"";flex:1} }
+
+  /* hero */
+  .hero{padding:34px 0 22px}
+  .hero small{display:block;font-weight:700;color:var(--teal);font-size:14px;margin-bottom:6px}
+  .hero h1{font:800 clamp(34px,8vw,54px)/1 var(--head);letter-spacing:-.02em;margin:0 0 14px}
+  .hero p{margin:0;color:var(--soft);max-width:52ch}
+  .name{margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .name label{font-weight:700}
+  .name input{flex:1;min-width:200px;padding:11px 14px;border:2px solid var(--line);border-radius:var(--r-md);background:var(--paper)}
+
+  /* cheat sheet */
+  .cheat{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 30px}
+  .cheat span{background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:14px}
+  .cheat span i{font-style:normal;font-weight:700;color:var(--teal)}
+
+  /* tasks */
+  .task{background:var(--paper);border-radius:var(--r-lg);padding:24px 22px 22px;margin-bottom:22px;border:2px solid transparent;scroll-margin-top:70px;transition:border-color .3s}
+  .task.done{border-color:var(--ok)}
+  .th{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+  .num{flex:none;width:44px;height:44px;border-radius:14px;background:var(--mint);color:var(--teal);font:800 24px/44px var(--head);text-align:center}
+  .task.done .num{background:var(--ok);color:#fff}
+  .th h2{font:800 22px/1.15 var(--head);margin:2px 0 4px;letter-spacing:-.01em}
+  .th p{margin:0;color:var(--soft);font-size:15px}
+
+  /* Task 1 — Oksana's staff card */
+  .staff{border:2px solid var(--ink);border-radius:var(--r-md);overflow:hidden}
+  .staff .top{display:flex;gap:14px;align-items:center;background:var(--ink);color:#fff;padding:14px 16px}
+  .ava{flex:none;width:58px;height:58px;border-radius:50%;background:var(--marker);color:var(--ink);font:800 24px/58px var(--head);text-align:center}
+  .staff .top b{display:block;font:800 22px/1.1 var(--head)}
+  .staff .top em{font-style:normal;font-size:14px;opacity:.8}
+  .badge{margin-left:auto;font-size:12px;font-weight:700;background:rgba(255,255,255,.14);border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .staff .body{padding:16px;line-height:2.5}
+  .gap{width:78px;padding:2px 6px;border:0;border-bottom:3px solid var(--teal);background:var(--mint);border-radius:6px 6px 0 0;text-align:center;font-weight:700}
+  .gap.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+  .gap.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+  .gap.bad::placeholder{color:var(--bad);opacity:.55}
+
+  /* Task 2 — tap the mistake */
+  .fix{padding:14px 0;border-bottom:1px dashed var(--line)}
+  .fix:last-of-type{border-bottom:0}
+  .fix .n{font-size:13px;font-weight:700;color:var(--soft);margin-bottom:4px}
+  .sent{display:flex;flex-wrap:wrap;gap:2px 4px;font-size:18px}
+  .w{border:0;background:none;padding:2px 4px;border-radius:6px;cursor:pointer}
+  .w:hover{background:var(--markerbg)}
+  .w.sel{background:var(--marker);text-decoration:line-through;text-decoration-thickness:2px}
+  .w .rep{display:inline-block;margin-left:6px;text-decoration:none;font-weight:700;color:var(--teal);background:var(--paper);border-radius:5px;padding:0 5px}
+  .fix.ok .w.sel{background:var(--okbg)} .fix.ok .rep{color:var(--ok)}
+  .fix.bad .w.sel{background:var(--badbg)} .fix.bad .rep{color:var(--bad)}
+  .fix.bad .sent{outline:2px solid var(--badbg);border-radius:8px}
+  .opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .opts[hidden]{display:none}
+  .opts button{border:2px solid var(--line);background:var(--paper);border-radius:99px;padding:4px 14px;font-weight:700;cursor:pointer}
+  .opts button:hover,.opts button.on{border-color:var(--teal);background:var(--mint)}
+  .key{font-size:14px;color:var(--ok);margin-top:6px;font-weight:600}
+
+  /* Task 3 — profile form */
+  .form{border:2px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+  .form textarea{display:block;width:100%;min-height:200px;border:0;padding:16px;resize:vertical;line-height:1.6;background:#fbfdfc}
+  .form textarea:focus{outline:none;background:#fff}
+  .form.ok{border-color:var(--ok)} .form.bad{border-color:var(--bad)}
+  .meters{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:12px 16px;border-top:2px solid var(--line);background:var(--paper)}
+  .meter small{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--soft)}
+  .meter small b{color:var(--ink)}
+  .track{position:relative;height:9px;border-radius:99px;background:#e8efee;margin-top:5px;overflow:hidden}
+  .track .zone{position:absolute;top:0;bottom:0;background:#cfe9de}
+  .track .fill{position:absolute;left:0;top:0;bottom:0;background:var(--teal);border-radius:99px;transition:width .2s}
+  .track .fill.ok{background:var(--ok)}
+  .pairs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;min-height:28px}
+  .pairs span{font-size:14px;font-weight:700;background:var(--okbg);color:var(--ok);border-radius:99px;padding:3px 11px}
+  .pairs em{font-size:14px;color:var(--soft)}
+
+  /* Task 4 — Telegram voice message */
+  .chat{background:#e6f1f8;border-radius:var(--r-md);padding:14px}
+  .bubble{background:#fff;border-radius:14px 14px 14px 4px;padding:9px 13px;margin:0 0 8px;max-width:88%;font-size:16px;width:fit-content}
+  .bubble b{color:var(--tg)}
+  .rec{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff;border-radius:14px;padding:12px 14px;margin-top:12px}
+  .mic{flex:none;width:52px;height:52px;border-radius:50%;border:0;background:var(--tg);color:#fff;cursor:pointer;display:grid;place-items:center}
+  .mic.run{background:var(--bad)}
+  .rec .clock{font:800 28px/1 var(--head);font-variant-numeric:tabular-nums}
+  .rec .tip{font-size:14px;color:var(--soft);flex:1;min-width:180px}
+  .rec .tip b{color:var(--ink)}
+  .notes{width:100%;min-height:90px;margin-top:12px;border:2px dashed var(--line);border-radius:var(--r-md);padding:12px 14px;resize:vertical;background:#fbfdfc}
+  .tick{display:flex;gap:12px;align-items:center;margin-top:14px;font-weight:700;cursor:pointer;padding:12px 14px;border-radius:var(--r-md);background:#f3f8f7}
+  .tick input{width:22px;height:22px;accent-color:var(--ok)}
+
+  /* buttons + feedback */
+  .act{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+  .btn{border:0;border-radius:var(--r-md);padding:12px 20px;font-weight:700;background:var(--ink);color:#fff;cursor:pointer}
+  .btn:hover{background:var(--teal)}
+  .btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+  .btn.ghost:hover{background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink)}
+  .btn:disabled{opacity:.45;cursor:default;background:var(--ink)}
+  .fb{font-size:15px;font-weight:700}
+  .fb.good{color:var(--ok)} .fb.warn{color:var(--bad)}
+
+  /* send */
+  .send{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:26px 22px}
+  .send h2{font:800 28px/1.1 var(--head);margin:0 0 6px}
+  .send p{margin:0;opacity:.8}
+  .send .list{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .send .list span{border:2px solid rgba(255,255,255,.25);border-radius:99px;padding:3px 12px;font-size:14px;font-weight:700}
+  .send .list span.y{background:var(--ok);border-color:var(--ok)}
+  .send .btn{background:var(--marker);color:var(--ink);font-size:18px;padding:14px 26px}
+  .send .btn:disabled{background:var(--marker)}
+  .send .fb.good{color:#8ff0bf} .send .fb.warn{color:#ffb4a3}
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important;scroll-behavior:auto!important} }
 </style>
 <script src="assets/hw-report.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <h1>Homework: Adjectives + prepositions</h1>
-  <div class="tags"><span>Unit 3</span><span>Vocabulary</span><span class="hw">Homework</span></div>
 
-  <div class="card" id="nameCard">
-    <b>Your name</b>
-    <input class="name" id="student" placeholder="Type your name">
+<nav class="bar" aria-label="Your progress"><div class="in" id="steps"></div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <small>Unit 3 · Vocabulary homework</small>
+    <h1>Adjectives + prepositions</h1>
+    <p>Four short tasks about the people you work with. Your first answer in Tasks 1 and 2 is the one that counts, so take your time.</p>
+    <div class="name" id="nameCard"><label for="student">Your name</label><input id="student" placeholder="Type your name"></div>
+  </header>
+
+  <div class="cheat" aria-label="Cheat sheet">
+    <span>afraid <i>of</i></span><span>fond <i>of</i></span><span>interested <i>in</i></span><span>pleased <i>with</i></span>
+    <span>rude <i>to</i></span><span>angry <i>with</i> + person</span><span>angry <i>about</i> + thing</span><span>different <i>from</i></span>
   </div>
 
-  <details class="box"><summary><b>💡 Hint (open if you need help)</b></summary>
-    afraid <b>of</b> · fond <b>of</b> · interested <b>in</b> · pleased <b>with</b> · rude <b>to</b> · angry <b>with</b> + person · angry <b>about</b> + thing · different <b>from</b>
-  </details>
-
-  <section class="card" id="ex1">
-    <h3>1. Complete Oksana's profile with prepositions.</h3>
-    <p class="task">Write one preposition in each gap.</p>
-    <div class="text" id="text1"></div>
+  <section class="task" id="ex1">
+    <div class="th"><div class="num">1</div><div><h2>Complete Oksana's profile</h2><p>Write one preposition in each gap.</p></div></div>
+    <div class="staff">
+      <div class="top"><div class="ava" aria-hidden="true">O</div><div><b>Oksana</b><em>Cleaner · 3 years with us</em></div><span class="badge">🐾 Pet-friendly</span></div>
+      <div class="body" id="text1"></div>
+    </div>
+    <div class="act" data-check></div>
   </section>
 
-  <section class="card" id="ex2">
-    <h3>2. Correct the mistakes.</h3>
-    <p class="task">Each sentence has one mistake. Fix it in the box and write the correct sentence.</p>
+  <section class="task" id="ex2">
+    <div class="th"><div class="num">2</div><div><h2>Correct the mistakes</h2><p>Each sentence has one wrong word. Tap it, then choose the right preposition.</p></div></div>
     <div id="list2"></div>
+    <div class="act" data-check></div>
   </section>
 
-  <section class="card" id="ex3">
-    <h3>3. Write a short profile (60–80 words) of a real person from your work.</h3>
-    <p class="task">You can change the name. Use at least 5 adjectives + prepositions.</p>
-    <textarea id="t3" placeholder="My colleague Iryna is very fond of..."></textarea>
-    <div class="meter"><span>Words: <b id="wc3">0</b> / 60–80</span><span>Adjectives + prepositions: <b id="ap3">0</b> / 5</span></div>
-    <div class="found" id="found3"></div>
-    <div class="btns"><button class="main" id="save3">Save my profile</button><span class="score" id="fb3"></span></div>
+  <section class="task" id="ex3">
+    <div class="th"><div class="num">3</div><div><h2>Write a profile of someone from your work</h2><p>60–80 words. You can change the name. Use at least 5 adjectives + prepositions.</p></div></div>
+    <div class="form" id="form3">
+      <textarea id="t3" aria-label="Your profile" placeholder="My colleague Iryna is very fond of…"></textarea>
+      <div class="meters">
+        <div class="meter"><small>Words <b id="wc3">0</b></small><div class="track"><div class="zone" style="left:66.6%;width:22.2%"></div><div class="fill" id="wf3"></div></div></div>
+        <div class="meter"><small>Adjective + preposition <b id="ap3">0 / 5</b></small><div class="track"><div class="fill" id="af3"></div></div></div>
+      </div>
+    </div>
+    <div class="pairs" id="found3"><em>The pairs you use will appear here.</em></div>
+    <div class="act"><button class="btn" id="save3">Save my profile</button><span class="fb" id="fb3"></span></div>
   </section>
 
-  <section class="card" id="ex4">
-    <h3>4. Record a voice message on TELEGRAM (1.5 minutes).</h3>
-    <p class="task">Tell me about someone in your family:</p>
-    <ul class="questions">
-      <li>What are they <b>fond of</b>?</li>
-      <li>What are they <b>interested in</b>?</li>
-      <li>What are they <b>afraid of</b>?</li>
-      <li>What makes them <b>angry</b>?</li>
-    </ul>
-    <div class="note">NOTE<br>Make notes first, but speak from MEMORY, <b>without reading</b></div>
-    <textarea id="t4" style="min-height:90px" placeholder="Your notes (optional): who? fond of… / interested in… / afraid of… / angry about / with…"></textarea>
+  <section class="task" id="ex4">
+    <div class="th"><div class="num">4</div><div><h2>Send me a voice message on Telegram</h2><p>About 1.5 minutes. Tell me about someone in your family.</p></div></div>
+    <div class="chat">
+      <div class="bubble">What are they <b>fond of</b>?</div>
+      <div class="bubble">What are they <b>interested in</b>?</div>
+      <div class="bubble">What are they <b>afraid of</b>?</div>
+      <div class="bubble">What makes them <b>angry</b>?</div>
+      <div class="rec">
+        <button class="mic" id="mic" aria-label="Start practice timer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <span class="clock" id="clock">1:30</span>
+        <span class="tip">Practice first with the timer. Make notes, but <b>speak from memory, without reading</b>.</span>
+      </div>
+    </div>
+    <textarea class="notes" id="t4" aria-label="Your notes" placeholder="Notes (optional): who? fond of… · interested in… · afraid of… · angry about / with…"></textarea>
     <label class="tick"><input type="checkbox" id="c4"> I sent my voice message on Telegram</label>
-    <div class="btns"><button class="main" id="save4">Save</button><span class="score" id="fb4"></span></div>
+    <div class="act"><button class="btn" id="save4">Save</button><span class="fb" id="fb4"></span></div>
   </section>
 
-  <div class="card final">
-    <h3>Finished?</h3>
-    <p class="task" style="margin:0">Do all 4 tasks, then send your homework to your teacher.</p>
-    <div class="checklist" id="cl"></div>
-    <button class="main" id="sendBtn" disabled>Send to my teacher</button>
-    <span class="score" id="sendMsg" style="display:block;margin-top:10px"></span>
+  <div class="send final">
+    <h2>Ready to send?</h2>
+    <p>Finish all four tasks, then send your homework to your teacher.</p>
+    <div class="list" id="cl"></div>
+    <button class="btn" id="sendBtn" disabled>Send to my teacher</button>
+    <div class="fb" id="sendMsg" style="margin-top:12px"></div>
   </div>
 </div>
 
 <script>
 const CFG = { homework: 'Unit 3 Vocabulary · Adjectives + prepositions (homework)' };
 const TASKS = ['ex1','ex2','ex3','ex4'];
+const NAMES = {ex1:'Oksana', ex2:'Mistakes', ex3:'Profile', ex4:'Voice'};
 const scores = {}, done = {}, notes = {};
 const $ = id => document.getElementById(id);
-const norm = s => String(s||'').toLowerCase().replace(/[’‘`]/g, "'").replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim()
-  .replace(/\bi'm\b/g,'i am').replace(/\bwe're\b/g,'we are').replace(/\bshe's\b/g,'she is').replace(/\bhe's\b/g,'he is');
-function fb(id, t, c){ $(id).textContent = t; $(id).className = 'score ' + (c||''); }
+const norm = s => String(s||'').toLowerCase().replace(/[’‘`]/g, "'").replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+function fb(id, t, c){ $(id).textContent = t; $(id).className = 'fb ' + (c||''); }
 function markDone(id){ done[id] = true; $(id).classList.add('done'); progress(); }
 function progress(){
-  $('cl').innerHTML = TASKS.map(k => '<i class="' + (done[k] ? 'y' : '') + '">Task ' + k.slice(2) + '</i>').join('');
+  $('steps').innerHTML = TASKS.map((k,i) => '<a class="step' + (done[k] ? ' y' : '') + '" href="#' + k + '"><b>' + (done[k] ? '✓' : i+1) + '</b><span>' + NAMES[k] + '</span></a>').join('');
+  $('cl').innerHTML = TASKS.map((k,i) => '<span class="' + (done[k] ? 'y' : '') + '">' + (done[k] ? '✓ ' : '') + NAMES[k] + '</span>').join('');
   $('sendBtn').disabled = TASKS.some(k => !done[k]) || sent;
 }
-function record(id, s, max, fbId){
+function record(id, s, max){
   const first = !scores[id];
   if (first){ scores[id] = {s, max}; if (window.HWR) HWR.snap(id); }
-  fb(fbId, s === max ? 'Perfect! ' + s + '/' + max + (first ? '' : ' (first try ' + scores[id].s + '/' + max + ' saved)')
-    : (first ? 'Score saved: ' + s + '/' + max + '.' : 'Your first try (' + scores[id].s + '/' + max + ') is saved.') + ' Fix the red ones and check again.',
+  fb(id + '_fb', s === max ? 'Perfect! ' + s + '/' + max + (first ? '' : ' · first try ' + scores[id].s + '/' + max + ' saved')
+    : (first ? 'First try saved: ' + s + '/' + max + '.' : 'Your first try (' + scores[id].s + '/' + max + ') is saved.') + ' Fix the red ones and check again.',
     s === max ? 'good' : 'warn');
   markDone(id);
 }
 const CHECKS = {};
 function addButtons(card, checkFn, resetFn){
   CHECKS[card.id] = checkFn;
-  const b = document.createElement('div'); b.className = 'btns';
-  b.innerHTML = '<button class="main">Check</button><button class="main light">Try again</button><span class="score" id="' + card.id + '_fb"></span>';
-  card.appendChild(b);
-  b.children[0].onclick = () => { const [s, max] = checkFn(); record(card.id, s, max, card.id + '_fb'); save(); };
+  const b = card.querySelector('[data-check]');
+  b.innerHTML = '<button class="btn">Check</button><button class="btn ghost">Try again</button><span class="fb" id="' + card.id + '_fb"></span>';
+  b.children[0].onclick = () => { const [s, max] = checkFn(); record(card.id, s, max); save(); };
   b.children[1].onclick = () => { resetFn(); fb(card.id + '_fb', ''); save(); };
 }
 
 /* ---------- Task 1: Oksana's profile ---------- */
 const TEXT1 = "Oksana is very fond {of} animals and she's interested {in} dog training. She's never rude {to} clients, but she gets angry {with} people who are cruel to pets. She's a bit afraid {of} heights, so she doesn't clean windows. Our clients are always pleased {with} her work. She's very different {from} other cleaners: she always remembers the dogs' names!";
 (function(){
-  $('text1').innerHTML = TEXT1.replace(/\{(\w+)\}/g, (_, a) => '<input type="text" class="short" data-a="' + a + '">');
+  let n = 0;
+  $('text1').innerHTML = TEXT1.replace(/\{(\w+)\}/g, (_, a) => '<input type="text" class="gap" data-a="' + a + '" aria-label="Gap ' + (++n) + '" autocomplete="off" autocapitalize="off" spellcheck="false">');
   const inputs = [...$('text1').querySelectorAll('input')];
+  inputs.forEach(i => i.addEventListener('input', () => i.classList.remove('ok','bad')));
   addButtons($('ex1'), () => {
     let n = 0;
-    inputs.forEach(i => { const ok = norm(i.value) === i.dataset.a; i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad'); if (!ok) i.placeholder = i.dataset.a; if (ok) n++; });
+    inputs.forEach(i => { const ok = norm(i.value) === i.dataset.a; i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad'); if (!ok) { i.placeholder = i.dataset.a; i.value = i.value; } if (ok) n++; });
     return [n, inputs.length];
   }, () => inputs.forEach(i => { i.value = ''; i.placeholder = ''; i.classList.remove('ok','bad'); }));
 })();
 
-/* ---------- Task 2: correct the mistakes ---------- */
+/* ---------- Task 2: tap the mistake, choose the fix ---------- */
 const EX2 = [
-  ["I'm angry on my neighbour.", "on", ["I'm angry with my neighbour."]],
-  ["Is your son interested about sport?", "about", ["Is your son interested in sport?"]],
-  ["Our new office is very different of the old one.", "of", ["Our new office is very different from the old one."]],
-  ["She was rude with me.", "with", ["She was rude to me."]],
-  ["We're pleased from our new website.", "from", ["We're pleased with our new website."]]
+  ["I'm angry on my neighbour.", 2, "with"],
+  ["Is your son interested about sport?", 4, "in"],
+  ["Our new office is very different of the old one.", 6, "from"],
+  ["She was rude with me.", 3, "to"],
+  ["We're pleased from our new website.", 2, "with"]
 ];
+const PREPS = ['of','in','to','with','from','about','on','at','for'];
+const pick2 = EX2.map(() => ({i:null, rep:null}));
+function paint2(k){
+  const row = $('fix' + k), st = pick2[k];
+  row.querySelectorAll('.w').forEach((w, j) => {
+    w.classList.toggle('sel', j === st.i);
+    const old = w.querySelector('.rep'); if (old) old.remove();
+    if (j === st.i && st.rep) { const r = document.createElement('span'); r.className = 'rep'; r.textContent = st.rep; w.appendChild(r); }
+  });
+  const o = row.querySelector('.opts'); o.hidden = st.i === null;
+  o.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.textContent === st.rep));
+}
 (function(){
-  const list = $('list2'), inputs = [];
-  EX2.forEach(([wrong, bad, right], i) => {
-    const r = document.createElement('div'); r.className = 'row';
-    r.innerHTML = '<div class="wrong">' + (i+1) + ') ' + wrong.replace(new RegExp('\\b' + bad + '\\b'), '<s>' + bad + '</s>').replace('<s>' + bad + '</s>', bad) + '</div>' +
-      '<input type="text"><div class="answer"></div>';
-    const inp = r.querySelector('input'); inp.value = wrong; inp._ans = right; inputs.push(inp);
-    list.appendChild(r);
+  EX2.forEach(([s], k) => {
+    const words = s.split(' ');
+    const d = document.createElement('div'); d.className = 'fix'; d.id = 'fix' + k;
+    d.innerHTML = '<div class="n">Sentence ' + (k+1) + '</div><div class="sent">' +
+      words.map((w, j) => '<button class="w" data-j="' + j + '">' + w.replace(/[<>&]/g,'') + '</button>').join('') + '</div>' +
+      '<div class="opts" hidden>' + PREPS.map(p => '<button>' + p + '</button>').join('') + '</div><div class="key"></div>';
+    d.querySelectorAll('.w').forEach(w => w.onclick = () => { const j = +w.dataset.j; pick2[k] = {i: j, rep: pick2[k].i === j ? pick2[k].rep : null}; d.classList.remove('ok','bad'); d.querySelector('.key').textContent = ''; paint2(k); save(); });
+    d.querySelectorAll('.opts button').forEach(b => b.onclick = () => { pick2[k].rep = b.textContent; d.classList.remove('ok','bad'); d.querySelector('.key').textContent = ''; paint2(k); save(); });
+    $('list2').appendChild(d);
   });
   addButtons($('ex2'), () => {
     let n = 0;
-    inputs.forEach(i => {
-      const ok = i._ans.some(a => norm(a) === norm(i.value));
-      i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad');
-      i.parentElement.querySelector('.answer').textContent = ok ? '' : '→ ' + i._ans[0];
+    EX2.forEach(([s, wi, rep], k) => {
+      const d = $('fix' + k), st = pick2[k], ok = st.i === wi && st.rep === rep;
+      d.classList.remove('ok','bad'); d.classList.add(ok ? 'ok' : 'bad');
+      const words = s.split(' '); words[wi] = rep;
+      d.querySelector('.key').textContent = ok ? '' : '✓ ' + words.join(' ');
+      d.querySelector('.opts').hidden = true;
       if (ok) n++;
     });
-    return [n, inputs.length];
-  }, () => inputs.forEach((i, k) => { i.value = EX2[k][0]; i.classList.remove('ok','bad'); i.parentElement.querySelector('.answer').textContent = ''; }));
+    return [n, EX2.length];
+  }, () => EX2.forEach((_, k) => { pick2[k] = {i:null, rep:null}; const d = $('fix' + k); d.classList.remove('ok','bad'); d.querySelector('.key').textContent = ''; paint2(k); }));
 })();
 
 /* ---------- Task 3: profile ---------- */
@@ -188,32 +308,41 @@ const PAIRS = ['afraid of','fond of','interested in','pleased with','rude to','a
 const words = s => s.trim().split(/\s+/).filter(Boolean).length;
 function found3(){
   const t = ' ' + norm($('t3').value).replace(/[^a-z' ]/g, ' ').replace(/\s+/g, ' ') + ' ';
-  return PAIRS.filter(p => t.includes(' ' + p + ' ') || (p.startsWith('angry') && false));
+  return PAIRS.filter(p => t.includes(' ' + p + ' '));
 }
 function meter3(){
   const w = words($('t3').value), f = found3();
-  $('wc3').textContent = w; $('wc3').className = (w >= 60 && w <= 80) ? 'y' : 'n';
-  $('ap3').textContent = f.length; $('ap3').className = f.length >= 5 ? 'y' : 'n';
-  $('found3').innerHTML = f.map(p => '<span>' + p + '</span>').join('');
+  $('wc3').textContent = w + (w > 80 ? ' · a bit long' : '');
+  $('wf3').style.width = Math.min(100, w / 90 * 100) + '%'; $('wf3').classList.toggle('ok', w >= 60 && w <= 80);
+  $('ap3').textContent = f.length + ' / 5';
+  $('af3').style.width = Math.min(100, f.length / 5 * 100) + '%'; $('af3').classList.toggle('ok', f.length >= 5);
+  $('found3').innerHTML = f.length ? f.map(p => '<span>' + p + '</span>').join('') : '<em>The pairs you use will appear here.</em>';
 }
-$('t3').addEventListener('input', meter3);
+$('t3').addEventListener('input', () => { meter3(); $('form3').classList.remove('ok','bad'); });
 $('save3').onclick = () => {
   const v = $('t3').value.trim(), w = words(v), f = found3();
-  $('t3').classList.remove('ok','bad');
-  if (w < 55) { $('t3').classList.add('bad'); return fb('fb3', 'Write a bit more: 60–80 words (now ' + w + ').', 'warn'); }
-  if (f.length < 5) { $('t3').classList.add('bad'); return fb('fb3', 'Use at least 5 adjectives + prepositions (now ' + f.length + '). Look at the hint at the top.', 'warn'); }
-  $('t3').classList.add('ok');
+  $('form3').classList.remove('ok','bad');
+  if (w < 55) { $('form3').classList.add('bad'); return fb('fb3', 'Write a bit more: 60–80 words. You have ' + w + '.', 'warn'); }
+  if (f.length < 5) { $('form3').classList.add('bad'); return fb('fb3', 'Use at least 5 adjectives + prepositions. You have ' + f.length + '. The cheat sheet at the top can help.', 'warn'); }
+  $('form3').classList.add('ok');
   notes.ex3 = 'TASK 3 (profile, ' + w + ' words · ' + f.join(', ') + ')\n' + v;
-  fb('fb3', 'Saved! Your teacher will read your profile.' + (w > 80 ? ' (It is a bit long, but that’s OK.)' : ''), 'good');
+  fb('fb3', 'Profile saved. Your teacher will read it.', 'good');
   markDone('ex3'); save();
 };
 
 /* ---------- Task 4: voice message ---------- */
+let timer = null, left = 90;
+function showClock(){ $('clock').textContent = Math.floor(left/60) + ':' + String(left%60).padStart(2,'0'); }
+$('mic').onclick = () => {
+  if (timer){ clearInterval(timer); timer = null; $('mic').classList.remove('run'); $('mic').setAttribute('aria-label','Start practice timer'); left = 90; showClock(); return; }
+  left = 90; showClock(); $('mic').classList.add('run'); $('mic').setAttribute('aria-label','Stop practice timer');
+  timer = setInterval(() => { left--; showClock(); if (left <= 0){ clearInterval(timer); timer = null; $('mic').classList.remove('run'); $('clock').textContent = 'Time!'; } }, 1000);
+};
 $('save4').onclick = () => {
-  if (!$('c4').checked) return fb('fb4', 'Record and send your voice message on Telegram first, then tick the box.', 'warn');
+  if (!$('c4').checked) return fb('fb4', 'Send your voice message on Telegram first, then tick the box.', 'warn');
   const n = $('t4').value.trim();
   notes.ex4 = 'TASK 4 (voice message): sent on Telegram ✓' + (n ? '\nNotes:\n' + n : '');
-  fb('fb4', 'Great! Your teacher will listen to it on Telegram.', 'good');
+  fb('fb4', 'Saved. Your teacher will listen to it on Telegram.', 'good');
   markDone('ex4'); save();
 };
 
@@ -223,32 +352,34 @@ const fromLink = new URLSearchParams(location.search).get('s');
 if (fromLink){ $('student').value = fromLink; $('nameCard').style.display = 'none'; }
 $('sendBtn').onclick = () => {
   const student = $('student').value.trim();
-  if (!student){ $('nameCard').style.display = 'block'; $('student').focus(); window.scrollTo(0, 0); return fb('sendMsg', 'Please type your name at the top first.', 'warn'); }
+  if (!student){ $('nameCard').style.display = 'flex'; $('student').focus(); window.scrollTo(0, 0); return fb('sendMsg', 'Type your name at the top first.', 'warn'); }
   let s = 0, max = 0; const parts = [];
   ['ex1','ex2'].forEach(k => { s += scores[k].s; max += scores[k].max; parts.push('Ex' + k.slice(2) + ' ' + scores[k].s + '/' + scores[k].max); });
-  $('sendBtn').disabled = true; fb('sendMsg', 'Sending...');
+  $('sendBtn').disabled = true; fb('sendMsg', 'Sending…');
   HWR.send({homework: CFG.homework, student, score: s, max, breakdown: parts.join(' · '), open: [notes.ex3, notes.ex4].join('\n\n')})
     .then(() => { sent = true; fb('sendMsg', 'Sent! Your score: ' + s + '/' + max + '. Well done! 🎉', 'good'); $('sendBtn').textContent = 'Sent ✓'; save(); })
     .catch(() => { $('sendBtn').disabled = false; fb('sendMsg', 'Not sent. Check your internet and try again.', 'warn'); });
 };
+
 /* ---------- AUTOSAVE: answers stay on this device if the tab is closed ---------- */
 const STORE = 'hw:' + location.pathname + ':' + (fromLink || '');
-const fields = () => [...document.querySelectorAll('#text1 input, #list2 input, #t3, #t4, #student')];
+const fields = () => [...document.querySelectorAll('#text1 input, #t3, #t4, #student')];
 function save(){
-  try { localStorage.setItem(STORE, JSON.stringify({
-    v: fields().map(f => f.value), c4: $('c4').checked, scores, done, notes, sent,
+  try { localStorage.setItem(STORE, JSON.stringify({ v2: 2,
+    v: fields().map(f => f.value), pick2, c4: $('c4').checked, scores, done, notes, sent,
     snaps: window.HWR ? HWR.snaps : {} })); } catch(e){}
 }
 function restore(){
   let d; try { d = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){}
-  if (!d) return;
+  if (!d || !d.v2) return;
   fields().forEach((f, i) => { if (d.v[i] != null && !(f.id === 'student' && fromLink)) f.value = d.v[i]; });
+  (d.pick2 || []).forEach((p, k) => { if (pick2[k] && p) { pick2[k] = p; paint2(k); } });
   $('c4').checked = !!d.c4;
   Object.assign(scores, d.scores || {}); Object.assign(notes, d.notes || {});
   if (window.HWR && d.snaps) Object.assign(HWR.snaps, d.snaps);
   ['ex1','ex2'].forEach(k => { if (scores[k]) { CHECKS[k](); fb(k + '_fb', 'Your first try (' + scores[k].s + '/' + scores[k].max + ') is saved.', scores[k].s === scores[k].max ? 'good' : 'warn'); } });
-  if (d.done && d.done.ex3) fb('fb3', 'Saved! Your teacher will read your profile.', 'good');
-  if (d.done && d.done.ex4) fb('fb4', 'Great! Your teacher will listen to it on Telegram.', 'good');
+  if (d.done && d.done.ex3) { $('form3').classList.add('ok'); fb('fb3', 'Profile saved. Your teacher will read it.', 'good'); }
+  if (d.done && d.done.ex4) fb('fb4', 'Saved. Your teacher will listen to it on Telegram.', 'good');
   Object.keys(d.done || {}).forEach(k => d.done[k] && markDone(k));
   meter3();
   if (d.sent) { sent = true; $('sendBtn').textContent = 'Sent ✓'; fb('sendMsg', 'You already sent this homework. Well done! 🎉', 'good'); }
@@ -256,6 +387,7 @@ function restore(){
 document.addEventListener('input', save);
 document.addEventListener('change', save);
 restore();
+meter3();
 progress();
 </script>
 </body>
