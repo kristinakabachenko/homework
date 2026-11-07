@@ -82,6 +82,15 @@ button,textarea{font:inherit}
 .snap iframe{display:block;width:100%;border:0;height:120px;background:#fff}
 .note{font-size:14px;color:var(--muted);background:#f4efe6;border-radius:12px;padding:12px 14px}
 
+/* to do */
+.todo{display:grid;gap:10px}
+.todo a.card{display:flex;gap:14px;align-items:center;text-decoration:none;border:2px solid var(--secondary);transition:transform .15s}
+.todo a.card:hover{transform:translateY(-2px)}
+.todo .go{flex:none;width:46px;height:46px;border-radius:50%;background:var(--secondary);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
+.todo .t{font-weight:700;font-size:17px}
+.todo .meta{font-size:13px;color:var(--muted)}
+.todo .start{margin-left:auto;font-weight:700;font-size:14px;white-space:nowrap}
+
 /* teacher home */
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .stu{text-decoration:none;display:block;border-top:6px solid var(--c)}
@@ -204,6 +213,24 @@ function wireChart(subs, open){
   });
 }
 
+/* ---------- homework given (results/assignments.json) ---------- */
+let ASSIGN = null;
+function loadAssign(){
+  if (ASSIGN) return Promise.resolve(ASSIGN);
+  return fetch('assignments.json?v=' + Date.now()).then(r => r.json()).then(j => (ASSIGN = j)).catch(() => (ASSIGN = {}));
+}
+const fileOf = u => String(u||'').split('?')[0].split('#')[0].split('/').pop();
+function todoOf(token, subs){
+  const list = (ASSIGN && ASSIGN[token]) || [];
+  const sent = new Set(subs.map(x => fileOf(x.page)));
+  return list.filter(a => !sent.has(fileOf(a.page)));
+}
+function todoBlock(token, name, subs){
+  const t = todoOf(token, subs); if (!t.length) return '';
+  return '<p class="label">To do (' + t.length + ')</p><div class="todo">' + t.map(a =>
+    '<a class="card" href="../' + esc(a.page) + '?s=' + encodeURIComponent(name) + '"><span class="go" aria-hidden="true">✎</span><div><div class="t">' + esc(a.title) + '</div><div class="meta">' + esc(a.about || '') + (a.given ? (a.about ? ' · ' : '') + 'given ' + fmtDate(a.given) : '') + (a.due ? ' · due ' + fmtDate(a.due) : '') + '</div></div><span class="start">Start</span></a>').join('') + '</div>';
+}
+
 /* ---------- student page ---------- */
 function studentPage(){
   cached('s:' + TOKEN, {action:'student', token:TOKEN}, d => {
@@ -230,11 +257,12 @@ function studentPage(){
         '<div class="card tile"><div class="v">'+trend+'</div><div class="k">Last 3 vs 3 before</div></div>' +
         (KEY ? '<div class="card tile"><div class="v" style="color:#6b4e00">'+toCheck+'</div><div class="k">Waiting for your check</div></div>' : '') +
       '</div>' +
+      todoBlock(TOKEN, st.name, subs) +
       (n ? '<p class="label">Progress tracker</p>' + chart(subs) : '') +
       '<p class="label">All homework</p><div class="list">' +
       (n ? subs.slice().reverse().map(x => { const p = pct(x);
         return '<a class="card hw" href="#hw='+x.id+'">'+ring(p)+'<div class="grow"><div class="t">'+esc(x.homework)+'</div><div class="meta">'+fmtDateLong(x.at)+' · '+x.score+'/'+x.max+' points</div></div>'+statusPill(x)+'</a>'; }).join('')
-         : '<div class="note">No homework yet. When you send your first homework, it will appear here.</div>') + '</div>';
+         : '<div class="note">' + (todoOf(TOKEN, subs).length ? 'When you send your homework, your results will appear here.' : 'No homework yet. When you send your first homework, it will appear here.') + '</div>') + '</div>';
     wireChart(subs, id => location.hash = 'hw=' + id);
     window.scrollTo(0, 0);
   });
@@ -321,7 +349,7 @@ function teacherPage(){
       '<p class="label">Students</p><div class="grid2">' + d.students.map(s => { const L = by[s.name], n = L.length, avg = n ? Math.round(L.reduce((a,x)=>a+pct(x),0)/n) : null;
         const c = (BOOKS[Object.keys(BOOKS).find(k => s.book.toLowerCase().includes(k))] || ['#6e6252'])[0];
         return '<div class="card stu" style="--c:'+c+'"><a href="'+qs({s:s.token})+'" style="text-decoration:none"><h3>'+esc(s.name)+'</h3><div class="muted small">'+esc(s.book)+'</div>' +
-          '<div class="row" style="margin:12px 0"><span class="big" style="font-size:34px;color:'+(avg==null?'var(--muted)':bandColor(avg))+'">'+(avg==null?'—':avg+'%')+'</span><span class="muted small">'+n+' homework'+(n===1?'':'s')+'<br>'+L.filter(x=>x.status!=='checked').length+' to check</span></div></a>' +
+          '<div class="row" style="margin:12px 0"><span class="big" style="font-size:34px;color:'+(avg==null?'var(--muted)':bandColor(avg))+'">'+(avg==null?'—':avg+'%')+'</span><span class="muted small">'+n+' homework'+(n===1?'':'s')+'<br>'+L.filter(x=>x.status!=='checked').length+' to check · '+todoOf(s.token, L).length+' not done yet</span></div></a>' +
           '<button class="copy" data-l="'+esc(base+'?s='+s.token)+'">Copy student link</button></div>'; }).join('') + '</div>' +
       (lost.length ? '<p class="label">Name not recognised ('+lost.length+')</p><div class="note">'+lost.map(x => '“'+esc(x.typed||'(empty)')+'” — '+esc(x.homework)+', '+fmtDate(x.at)).join('<br>')+'<br><br>Add these spellings to “Aliases” in the Students tab of the “Homework Results DB” sheet.</div>' : '');
     document.querySelectorAll('.copy').forEach(b => b.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(b.dataset.l); b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy student link', 1500); });
@@ -338,7 +366,7 @@ function demoApi(p){
 }
 
 /* ---------- start ---------- */
-function route(){ if (TOKEN) studentPage(); else if (KEY) teacherPage(); else fail(new Error('student')); }
+function route(){ loadAssign().then(() => { if (TOKEN) studentPage(); else if (KEY) teacherPage(); else fail(new Error('student')); }); }
 window.addEventListener('hashchange', route);
 if (DEMO){ const s = document.createElement('script'); s.src = 'demo-data.js'; s.onload = route; document.head.appendChild(s); } else route();
 </script>
