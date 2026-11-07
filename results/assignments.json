@@ -1,9 +1,21 @@
 {
   "_help": "Homework given to each student, by their dashboard token. page = file in the homework repo. Done ones are found automatically.",
   "2MXaeS3DhU5M": [
-    { "title": "Adjectives + prepositions", "page": "adj-prep-homework.html", "about": "Unit 3 · Vocabulary · 4 tasks + a voice message on Telegram", "given": "2026-11-07" }
+    {
+      "title": "Adjectives + prepositions",
+      "page": "adj-prep-homework.html",
+      "about": "Unit 3 · Vocabulary · 4 tasks + a voice message on Telegram",
+      "given": "2026-11-07"
+    }
   ],
-  "pdmRcMsZrf22": [],
+  "pdmRcMsZrf22": [
+    {
+      "title": "7.7 Global skills",
+      "page": "u7-7-global-skills.html",
+      "about": "Life Vision B1+ · Unit 7",
+      "given": "2026-11-07"
+    }
+  ],
   "Qb2mQqZIK47R": [],
   "X4C04a1tzaH7": []
 }
