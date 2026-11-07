@@ -75,6 +75,7 @@ select{font:inherit;font-weight:800;width:100%;border:2px solid var(--line);bord
 .checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e3e9f2;color:var(--muted);font-weight:800;display:grid;place-items:center}
 .checklist i.y{background:var(--ok);color:#fff}
 </style>
+<script src="assets/hw-report.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -251,7 +252,7 @@ function check1(){
   if (f1.some(x=>!x)) return fb('fb1','Fill all the gaps first.','warn');
   let s=0; E1.items.forEach((it,i)=>{ const ok=f1[i]===it[2]; m1[i]=ok?'ok':'bad'; if(ok)s++; });
   act1=-1; r1();
-  const first=!scores.ex1; if(first) scores.ex1={s,max:E1.items.length};
+  const first=!scores.ex1; if(first){ scores.ex1={s,max:E1.items.length}; if(window.HWR) HWR.snap('ex1'); }
   fb('fb1', scoreMsg('ex1',s,E1.items.length,first), s===E1.items.length?'good':'warn');
   markDone('ex1');
 }
@@ -272,7 +273,7 @@ function check3(){
   if (new Set(ans).size<3) return fb('fb3','Each idea can be used only once.','warn');
   if (KEY3.every(k=>k)) {
     let s=0; ans.forEach((a,i)=>{ const ok=a===KEY3[i]; $('p'+i).className=ok?'ok':'bad'; if(ok)s++; });
-    const first=!scores.ex3; if(first) scores.ex3={s,max:3};
+    const first=!scores.ex3; if(first){ scores.ex3={s,max:3}; if(window.HWR) HWR.snap('ex3'); }
     fb('fb3', scoreMsg('ex3',s,3,first), s===3?'good':'warn');
   } else {
     notes.ex3='Part 1 '+ans[0]+', Part 2 '+ans[1]+', Part 3 '+ans[2];
@@ -304,7 +305,7 @@ function check4(){
   if (a4.some(x=>!x)) return fb('fb4','Answer all 8 sentences first.','warn');
   if (KEY4.every(k=>k)) {
     let s=0; a4.forEach((a,i)=>{ const ok=a===KEY4[i]; m4[i]=ok?'ok':'bad'; if(ok)s++; }); shown4=!!scores.ex4; r4();
-    const first=!scores.ex4; if(first) scores.ex4={s,max:E4.length};
+    const first=!scores.ex4; if(first){ scores.ex4={s,max:E4.length}; if(window.HWR) HWR.snap('ex4'); }
     fb('fb4', scoreMsg('ex4',s,E4.length,first), s===E4.length?'good':'warn');
   } else {
     notes.ex4=a4.map((a,i)=>(i+1)+' '+a).join(', ');
@@ -336,7 +337,7 @@ function check5(){
   const vals=E5.items.map((_,i)=>$('g5_'+i).value);
   if (vals.some(v=>!v.trim())) return fb('fb5','Fill all the gaps first.','warn');
   let s=0; E5.items.forEach((it,i)=>{ const ok=it[2].includes(norm(vals[i])); const el=$('g5_'+i); el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
-  const first=!scores.ex5; if(first) scores.ex5={s,max:E5.items.length};
+  const first=!scores.ex5; if(first){ scores.ex5={s,max:E5.items.length}; if(window.HWR) HWR.snap('ex5'); }
   fb('fb5', scoreMsg('ex5',s,E5.items.length,first), s===E5.items.length?'good':'warn');
   markDone('ex5');
 }

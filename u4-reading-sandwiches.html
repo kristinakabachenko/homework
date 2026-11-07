@@ -78,6 +78,7 @@ select{font:inherit;font-weight:800;border:2px solid var(--line);border-radius:1
 .checklist i.y{background:var(--ok);color:#fff}
 .small{font-size:14px;color:var(--muted);margin:4px 0 0}
 </style>
+<script src="assets/hw-report.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -229,7 +230,7 @@ function progress(){
   $('sendBtn').disabled = n<keys.length || sent;
 }
 function score(id, s, max){
-  const first=!scores[id]; if(first) scores[id]={s,max};
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
   const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
     : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
   return [msg, s===max?'good':'warn'];

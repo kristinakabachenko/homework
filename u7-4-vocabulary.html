@@ -99,6 +99,7 @@ textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
 .locked{position:relative;opacity:.45;pointer-events:none;filter:grayscale(.4)}
 .locked:before{content:"\1F512  Learn the words first";position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;z-index:2}
 </style>
+<script src="assets/hw-report.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -277,7 +278,7 @@ function progress(){
   $('sendBtn').disabled = n<k.length || sent;
 }
 function record(id,s,max){
-  const first=!scores[id]; if(first) scores[id]={s,max};
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
   const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
     : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
   fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);

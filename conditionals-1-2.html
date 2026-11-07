@@ -99,6 +99,7 @@ input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
 .checklist i.y{background:var(--ok);color:#fff}
 @media (max-width:480px){.opts.three{grid-template-columns:1fr}.front .t{font-size:26px}}
 </style>
+<script src="assets/hw-report.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -198,7 +199,7 @@ function progress(){
   $('sendBtn').disabled = n<TASKS.length || sent;
 }
 function record(id,s,max){
-  const first=!scores[id]; if(first) scores[id]={s,max};
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
   const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
     : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
   fb(id+'_fb',msg,s===max?'good':'warn'); markDone(id);
