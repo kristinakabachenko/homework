@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Adjectives + prepositions</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #f6f7f9; color: #222; margin: 0; padding: 24px 16px 60px; line-height: 1.5; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 10px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 24px; }
+  .tags span { font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 8px; background: #d6e2f3; color: #2d4a73; }
+  .tags span.hw { background: #dfe6df; color: #4a6150; }
+  .card { background: #fff; border: 1px solid #e3e6eb; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; }
+  .card.done { border-color: #2e9d55; }
+  .card h3 { margin: 0 0 4px; font-size: 17px; }
+  .task { color: #555; margin: 0 0 14px; font-size: 14px; }
+  .text { background: #f0f4fb; border-radius: 8px; padding: 14px 16px; line-height: 2.3; font-size: 16px; }
+  input[type=text] { font: inherit; padding: 4px 8px; border: 1px solid #c9ced6; border-radius: 6px; background: #fff; }
+  input.short { width: 80px; }
+  input.ok, textarea.ok { border-color: #2e9d55; background: #eaf7ef; }
+  input.bad, textarea.bad { border-color: #d24b4b; background: #fdeeee; }
+  .row { padding: 10px 0; border-bottom: 1px solid #f0f1f3; }
+  .row:last-child { border-bottom: none; }
+  .wrong { color: #8a8f98; font-size: 14px; margin-bottom: 4px; }
+  .wrong s { color: #b03a3a; }
+  .row input { width: 100%; }
+  .answer { font-size: 13px; color: #2e7d4a; margin-top: 3px; }
+  textarea { font: inherit; width: 100%; min-height: 160px; padding: 10px 12px; border: 1px dashed #c9ced6; border-radius: 8px; resize: vertical; }
+  .meter { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; margin-top: 8px; color: #555; }
+  .meter b.y { color: #2e7d4a; } .meter b.n { color: #b03a3a; }
+  .found { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .found span { font-size: 13px; background: #eaf7ef; color: #2e7d4a; border-radius: 99px; padding: 2px 10px; }
+  .note { background: #d5d870; border: 1px solid #b9bc4f; border-radius: 8px; padding: 14px 16px; font-size: 14px; text-align: center; max-width: 340px; margin: 12px 0; }
+  .questions { margin: 0 0 6px; padding-left: 20px; }
+  .tick { display: flex; gap: 10px; align-items: center; font-weight: 700; margin-top: 10px; cursor: pointer; }
+  .tick input { width: 20px; height: 20px; }
+  .btns { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .main { font: inherit; padding: 7px 16px; border-radius: 6px; border: none; background: #2d5fa8; color: #fff; cursor: pointer; }
+  .main.light { background: #e7ecf4; color: #2d5fa8; }
+  .main:disabled { opacity: .5; cursor: default; }
+  .score { font-weight: 600; font-size: 14px; }
+  .score.warn { color: #b03a3a; } .score.good { color: #2e7d4a; }
+  summary { cursor: pointer; }
+  .box { background: #fff8d6; border: 1px solid #f0e2a0; border-radius: 8px; padding: 10px 14px; font-size: 14px; margin-bottom: 16px; }
+  .name { font: inherit; font-size: 16px; width: 100%; padding: 9px 11px; border: 1px solid #c9ced6; border-radius: 8px; margin-top: 6px; }
+  .checklist { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .checklist i { font-style: normal; font-size: 13px; padding: 3px 10px; border-radius: 99px; background: #eef0f3; color: #777; }
+  .checklist i.y { background: #eaf7ef; color: #2e7d4a; }
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Homework: Adjectives + prepositions</h1>
+  <div class="tags"><span>Unit 3</span><span>Vocabulary</span><span class="hw">Homework</span></div>
+
+  <div class="card" id="nameCard">
+    <b>Your name</b>
+    <input class="name" id="student" placeholder="Type your name">
+  </div>
+
+  <details class="box"><summary><b>💡 Hint (open if you need help)</b></summary>
+    afraid <b>of</b> · fond <b>of</b> · interested <b>in</b> · pleased <b>with</b> · rude <b>to</b> · angry <b>with</b> + person · angry <b>about</b> + thing · different <b>from</b>
+  </details>
+
+  <section class="card" id="ex1">
+    <h3>1. Complete Oksana's profile with prepositions.</h3>
+    <p class="task">Write one preposition in each gap.</p>
+    <div class="text" id="text1"></div>
+  </section>
+
+  <section class="card" id="ex2">
+    <h3>2. Correct the mistakes.</h3>
+    <p class="task">Each sentence has one mistake. Fix it in the box and write the correct sentence.</p>
+    <div id="list2"></div>
+  </section>
+
+  <section class="card" id="ex3">
+    <h3>3. Write a short profile (60–80 words) of a real person from your work.</h3>
+    <p class="task">You can change the name. Use at least 5 adjectives + prepositions.</p>
+    <textarea id="t3" placeholder="My colleague Iryna is very fond of..."></textarea>
+    <div class="meter"><span>Words: <b id="wc3">0</b> / 60–80</span><span>Adjectives + prepositions: <b id="ap3">0</b> / 5</span></div>
+    <div class="found" id="found3"></div>
+    <div class="btns"><button class="main" id="save3">Save my profile</button><span class="score" id="fb3"></span></div>
+  </section>
+
+  <section class="card" id="ex4">
+    <h3>4. Record a voice message on TELEGRAM (1.5 minutes).</h3>
+    <p class="task">Tell me about someone in your family:</p>
+    <ul class="questions">
+      <li>What are they <b>fond of</b>?</li>
+      <li>What are they <b>interested in</b>?</li>
+      <li>What are they <b>afraid of</b>?</li>
+      <li>What makes them <b>angry</b>?</li>
+    </ul>
+    <div class="note">NOTE<br>Make notes first, but speak from MEMORY, <b>without reading</b></div>
+    <textarea id="t4" style="min-height:90px" placeholder="Your notes (optional): who? fond of… / interested in… / afraid of… / angry about / with…"></textarea>
+    <label class="tick"><input type="checkbox" id="c4"> I sent my voice message on Telegram</label>
+    <div class="btns"><button class="main" id="save4">Save</button><span class="score" id="fb4"></span></div>
+  </section>
+
+  <div class="card final">
+    <h3>Finished?</h3>
+    <p class="task" style="margin:0">Do all 4 tasks, then send your homework to your teacher.</p>
+    <div class="checklist" id="cl"></div>
+    <button class="main" id="sendBtn" disabled>Send to my teacher</button>
+    <span class="score" id="sendMsg" style="display:block;margin-top:10px"></span>
+  </div>
+</div>
+
+<script>
+const CFG = { homework: 'Unit 3 Vocabulary · Adjectives + prepositions (homework)' };
+const TASKS = ['ex1','ex2','ex3','ex4'];
+const scores = {}, done = {}, notes = {};
+const $ = id => document.getElementById(id);
+const norm = s => String(s||'').toLowerCase().replace(/[’‘`]/g, "'").replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim()
+  .replace(/\bi'm\b/g,'i am').replace(/\bwe're\b/g,'we are').replace(/\bshe's\b/g,'she is').replace(/\bhe's\b/g,'he is');
+function fb(id, t, c){ $(id).textContent = t; $(id).className = 'score ' + (c||''); }
+function markDone(id){ done[id] = true; $(id).classList.add('done'); progress(); }
+function progress(){
+  $('cl').innerHTML = TASKS.map(k => '<i class="' + (done[k] ? 'y' : '') + '">Task ' + k.slice(2) + '</i>').join('');
+  $('sendBtn').disabled = TASKS.some(k => !done[k]) || sent;
+}
+function record(id, s, max, fbId){
+  const first = !scores[id];
+  if (first){ scores[id] = {s, max}; if (window.HWR) HWR.snap(id); }
+  fb(fbId, s === max ? 'Perfect! ' + s + '/' + max + (first ? '' : ' (first try ' + scores[id].s + '/' + max + ' saved)')
+    : (first ? 'Score saved: ' + s + '/' + max + '.' : 'Your first try (' + scores[id].s + '/' + max + ') is saved.') + ' Fix the red ones and check again.',
+    s === max ? 'good' : 'warn');
+  markDone(id);
+}
+const CHECKS = {};
+function addButtons(card, checkFn, resetFn){
+  CHECKS[card.id] = checkFn;
+  const b = document.createElement('div'); b.className = 'btns';
+  b.innerHTML = '<button class="main">Check</button><button class="main light">Try again</button><span class="score" id="' + card.id + '_fb"></span>';
+  card.appendChild(b);
+  b.children[0].onclick = () => { const [s, max] = checkFn(); record(card.id, s, max, card.id + '_fb'); save(); };
+  b.children[1].onclick = () => { resetFn(); fb(card.id + '_fb', ''); save(); };
+}
+
+/* ---------- Task 1: Oksana's profile ---------- */
+const TEXT1 = "Oksana is very fond {of} animals and she's interested {in} dog training. She's never rude {to} clients, but she gets angry {with} people who are cruel to pets. She's a bit afraid {of} heights, so she doesn't clean windows. Our clients are always pleased {with} her work. She's very different {from} other cleaners: she always remembers the dogs' names!";
+(function(){
+  $('text1').innerHTML = TEXT1.replace(/\{(\w+)\}/g, (_, a) => '<input type="text" class="short" data-a="' + a + '">');
+  const inputs = [...$('text1').querySelectorAll('input')];
+  addButtons($('ex1'), () => {
+    let n = 0;
+    inputs.forEach(i => { const ok = norm(i.value) === i.dataset.a; i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad'); if (!ok) i.placeholder = i.dataset.a; if (ok) n++; });
+    return [n, inputs.length];
+  }, () => inputs.forEach(i => { i.value = ''; i.placeholder = ''; i.classList.remove('ok','bad'); }));
+})();
+
+/* ---------- Task 2: correct the mistakes ---------- */
+const EX2 = [
+  ["I'm angry on my neighbour.", "on", ["I'm angry with my neighbour."]],
+  ["Is your son interested about sport?", "about", ["Is your son interested in sport?"]],
+  ["Our new office is very different of the old one.", "of", ["Our new office is very different from the old one."]],
+  ["She was rude with me.", "with", ["She was rude to me."]],
+  ["We're pleased from our new website.", "from", ["We're pleased with our new website."]]
+];
+(function(){
+  const list = $('list2'), inputs = [];
+  EX2.forEach(([wrong, bad, right], i) => {
+    const r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = '<div class="wrong">' + (i+1) + ') ' + wrong.replace(new RegExp('\\b' + bad + '\\b'), '<s>' + bad + '</s>').replace('<s>' + bad + '</s>', bad) + '</div>' +
+      '<input type="text"><div class="answer"></div>';
+    const inp = r.querySelector('input'); inp.value = wrong; inp._ans = right; inputs.push(inp);
+    list.appendChild(r);
+  });
+  addButtons($('ex2'), () => {
+    let n = 0;
+    inputs.forEach(i => {
+      const ok = i._ans.some(a => norm(a) === norm(i.value));
+      i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad');
+      i.parentElement.querySelector('.answer').textContent = ok ? '' : '→ ' + i._ans[0];
+      if (ok) n++;
+    });
+    return [n, inputs.length];
+  }, () => inputs.forEach((i, k) => { i.value = EX2[k][0]; i.classList.remove('ok','bad'); i.parentElement.querySelector('.answer').textContent = ''; }));
+})();
+
+/* ---------- Task 3: profile ---------- */
+const PAIRS = ['afraid of','fond of','interested in','pleased with','rude to','angry with','angry about','different from',
+  'proud of','good at','bad at','tired of','worried about','excited about','kind to','polite to','nice to','happy with','bored with','keen on','famous for','responsible for','scared of','surprised at','surprised by'];
+const words = s => s.trim().split(/\s+/).filter(Boolean).length;
+function found3(){
+  const t = ' ' + norm($('t3').value).replace(/[^a-z' ]/g, ' ').replace(/\s+/g, ' ') + ' ';
+  return PAIRS.filter(p => t.includes(' ' + p + ' ') || (p.startsWith('angry') && false));
+}
+function meter3(){
+  const w = words($('t3').value), f = found3();
+  $('wc3').textContent = w; $('wc3').className = (w >= 60 && w <= 80) ? 'y' : 'n';
+  $('ap3').textContent = f.length; $('ap3').className = f.length >= 5 ? 'y' : 'n';
+  $('found3').innerHTML = f.map(p => '<span>' + p + '</span>').join('');
+}
+$('t3').addEventListener('input', meter3);
+$('save3').onclick = () => {
+  const v = $('t3').value.trim(), w = words(v), f = found3();
+  $('t3').classList.remove('ok','bad');
+  if (w < 55) { $('t3').classList.add('bad'); return fb('fb3', 'Write a bit more: 60–80 words (now ' + w + ').', 'warn'); }
+  if (f.length < 5) { $('t3').classList.add('bad'); return fb('fb3', 'Use at least 5 adjectives + prepositions (now ' + f.length + '). Look at the hint at the top.', 'warn'); }
+  $('t3').classList.add('ok');
+  notes.ex3 = 'TASK 3 (profile, ' + w + ' words · ' + f.join(', ') + ')\n' + v;
+  fb('fb3', 'Saved! Your teacher will read your profile.' + (w > 80 ? ' (It is a bit long, but that’s OK.)' : ''), 'good');
+  markDone('ex3'); save();
+};
+
+/* ---------- Task 4: voice message ---------- */
+$('save4').onclick = () => {
+  if (!$('c4').checked) return fb('fb4', 'Record and send your voice message on Telegram first, then tick the box.', 'warn');
+  const n = $('t4').value.trim();
+  notes.ex4 = 'TASK 4 (voice message): sent on Telegram ✓' + (n ? '\nNotes:\n' + n : '');
+  fb('fb4', 'Great! Your teacher will listen to it on Telegram.', 'good');
+  markDone('ex4'); save();
+};
+
+/* ---------- SEND ---------- */
+let sent = false;
+const fromLink = new URLSearchParams(location.search).get('s');
+if (fromLink){ $('student').value = fromLink; $('nameCard').style.display = 'none'; }
+$('sendBtn').onclick = () => {
+  const student = $('student').value.trim();
+  if (!student){ $('nameCard').style.display = 'block'; $('student').focus(); window.scrollTo(0, 0); return fb('sendMsg', 'Please type your name at the top first.', 'warn'); }
+  let s = 0, max = 0; const parts = [];
+  ['ex1','ex2'].forEach(k => { s += scores[k].s; max += scores[k].max; parts.push('Ex' + k.slice(2) + ' ' + scores[k].s + '/' + scores[k].max); });
+  $('sendBtn').disabled = true; fb('sendMsg', 'Sending...');
+  HWR.send({homework: CFG.homework, student, score: s, max, breakdown: parts.join(' · '), open: [notes.ex3, notes.ex4].join('\n\n')})
+    .then(() => { sent = true; fb('sendMsg', 'Sent! Your score: ' + s + '/' + max + '. Well done! 🎉', 'good'); $('sendBtn').textContent = 'Sent ✓'; save(); })
+    .catch(() => { $('sendBtn').disabled = false; fb('sendMsg', 'Not sent. Check your internet and try again.', 'warn'); });
+};
+/* ---------- AUTOSAVE: answers stay on this device if the tab is closed ---------- */
+const STORE = 'hw:' + location.pathname + ':' + (fromLink || '');
+const fields = () => [...document.querySelectorAll('#text1 input, #list2 input, #t3, #t4, #student')];
+function save(){
+  try { localStorage.setItem(STORE, JSON.stringify({
+    v: fields().map(f => f.value), c4: $('c4').checked, scores, done, notes, sent,
+    snaps: window.HWR ? HWR.snaps : {} })); } catch(e){}
+}
+function restore(){
+  let d; try { d = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){}
+  if (!d) return;
+  fields().forEach((f, i) => { if (d.v[i] != null && !(f.id === 'student' && fromLink)) f.value = d.v[i]; });
+  $('c4').checked = !!d.c4;
+  Object.assign(scores, d.scores || {}); Object.assign(notes, d.notes || {});
+  if (window.HWR && d.snaps) Object.assign(HWR.snaps, d.snaps);
+  ['ex1','ex2'].forEach(k => { if (scores[k]) { CHECKS[k](); fb(k + '_fb', 'Your first try (' + scores[k].s + '/' + scores[k].max + ') is saved.', scores[k].s === scores[k].max ? 'good' : 'warn'); } });
+  if (d.done && d.done.ex3) fb('fb3', 'Saved! Your teacher will read your profile.', 'good');
+  if (d.done && d.done.ex4) fb('fb4', 'Great! Your teacher will listen to it on Telegram.', 'good');
+  Object.keys(d.done || {}).forEach(k => d.done[k] && markDone(k));
+  meter3();
+  if (d.sent) { sent = true; $('sendBtn').textContent = 'Sent ✓'; fb('sendMsg', 'You already sent this homework. Well done! 🎉', 'good'); }
+}
+document.addEventListener('input', save);
+document.addEventListener('change', save);
+restore();
+progress();
+</script>
+</body>
+</html>
