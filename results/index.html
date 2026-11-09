@@ -302,7 +302,7 @@ function sideCard(x, name){
     '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
     '<div class="ptrack"><div class="pfill" style="width:'+Math.max(x.p, x.done ? 3 : 0)+'%;'+(x.p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
     '<div class="pn">'+(x.total ? x.done+'/'+x.total+' '+esc(x.ext && a.unit ? a.unit : 'tasks')+' · '+x.p+'%' : '0 tasks done')+(x.last ? ' · sent '+fmtDate(x.last.at) : '')+'</div>'+(a.note ? '<div class="meta" style="margin-top:4px">'+esc(a.note)+'</div>' : '')+'</div>' +
-    '<div class="acts"><a class="btn small" href="'+(x.ext ? esc(a.page)+'" target="_blank" rel="noopener' : '../'+esc(a.page)+'?s='+encodeURIComponent(name))+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+(x.ext ? ' ↗' : '')+'</a>' +
+    '<div class="acts"><a class="btn small" href="'+(x.ext ? esc(a.page)+'" target="_blank" rel="noopener' : '../'+esc(a.page)+'?s='+encodeURIComponent(name)+'&d='+encodeURIComponent(TOKEN))+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+(x.ext ? ' ↗' : '')+'</a>' +
     (x.last ? '<a class="go2" href="#hw='+x.last.id+'">Answers →</a>' : '')+'</div></div>';
 }
 function linkCard(x){
