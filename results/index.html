@@ -257,10 +257,12 @@ function todoBlock(token, name, subs){
 }
 
 /* ---------- side skill (assignments with "type": "side") ---------- */
-function sideFiles(){ const f = new Set(); Object.keys(ASSIGN||{}).forEach(k => Array.isArray(ASSIGN[k]) && ASSIGN[k].forEach(a => a.type === 'side' && f.add(fileOf(a.page)))); return f; }
+const isExt = u => /^https?:\/\//i.test(String(u||''));
+function sideFiles(){ const f = new Set(); Object.keys(ASSIGN||{}).forEach(k => Array.isArray(ASSIGN[k]) && ASSIGN[k].forEach(a => a.type === 'side' && !isExt(a.page) && f.add(fileOf(a.page)))); return f; }
 const isSide = x => { const f = fileOf(x.page); return /^side-/.test(f) || sideFiles().has(f); };
 function localProg(file){ try { return JSON.parse(localStorage.getItem('side:' + file) || 'null'); } catch(e){ return null; } }
 function sideInfo(a, subs){
+  if (isExt(a.page)) return { a, last:null, done:0, total:0, p:0, status:'link', days:null, unsent:false };
   const f = fileOf(a.page), last = subs.filter(x => fileOf(x.page) === f).sort((p,q) => new Date(q.at) - new Date(p.at))[0];
   const lp = KEY ? null : localProg(f);
   let done = last ? +last.score : 0, total = last ? +last.max : 0;
@@ -285,6 +287,7 @@ function dueTag(x){
   return '<span class="tg '+cls+'">📅 Deadline '+fmtDate(x.a.due)+' · '+txt+'</span>';
 }
 function sideCard(x, name){
+  if (x.status === 'link') return linkCard(x);
   const a = x.a, st = STATUS[x.status];
   const skills = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
   return '<div class="card sk" data-st="'+x.status+'"><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow">' +
@@ -295,10 +298,18 @@ function sideCard(x, name){
     '<div class="acts"><a class="btn small" href="../'+esc(a.page)+'?s='+encodeURIComponent(name)+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+'</a>' +
     (x.last ? '<a class="go2" href="#hw='+x.last.id+'">Answers →</a>' : '')+'</div></div>';
 }
+function linkCard(x){
+  const a = x.a, skills = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
+  return '<div class="card sk" data-st="link"><span class="ic" aria-hidden="true">'+esc(a.emoji || '🔗')+'</span><div class="grow">' +
+    '<div class="tgs"><span class="tg due0">🔗 No deadline · practise any time</span></div>' +
+    '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
+    (a.note ? '<div class="meta" style="margin-top:6px">'+esc(a.note)+'</div>' : '') + '</div>' +
+    '<div class="acts"><a class="btn small" href="'+esc(a.page)+'" target="_blank" rel="noopener">Open ↗</a></div></div>';
+}
 function sidePage(st, subs){
-  const L = sideList(TOKEN, subs), order = {progress:0, new:1, done:2};
+  const L = sideList(TOKEN, subs), order = {progress:0, new:1, link:2, done:3};
   L.sort((p,q) => order[p.status] - order[q.status] || (p.status === 'done' ? new Date(q.a.due||0) - new Date(p.a.due||0) : new Date(p.a.due||'2999') - new Date(q.a.due||'2999')));
-  const nd = L.filter(x => x.status === 'done').length, np = L.filter(x => x.status === 'progress').length, nn = L.length - nd - np;
+  const nd = L.filter(x => x.status === 'done').length, np = L.filter(x => x.status === 'progress').length, nl = L.filter(x => x.status === 'link').length, nn = L.length - nd - np - nl;
   const allT = L.reduce((s,x) => s + x.total, 0), allD = L.reduce((s,x) => s + x.done, 0);
   const next = L.filter(x => x.status !== 'done' && x.a.due).sort((p,q) => new Date(p.a.due) - new Date(q.a.due))[0];
   document.title = st.name + ' · Side skill';
@@ -312,7 +323,7 @@ function sidePage(st, subs){
       '<div class="card tile"><div class="v" style="color:var(--mid)">'+np+'</div><div class="k">In progress</div></div>' +
       '<div class="card tile"><div class="v">'+(next ? fmtDate(next.a.due) : '—')+'</div><div class="k">Next deadline'+(next ? ' · '+esc(next.a.title) : '')+'</div></div>' +
     '</div>' +
-    '<div class="filters"><button class="on" data-f="all">All ('+L.length+')</button><button data-f="progress">In progress ('+np+')</button><button data-f="new">Not started ('+nn+')</button><button data-f="done">Done ('+nd+')</button></div>' +
+    '<div class="filters"><button class="on" data-f="all">All ('+L.length+')</button><button data-f="progress">In progress ('+np+')</button><button data-f="new">Not started ('+nn+')</button><button data-f="done">Done ('+nd+')</button>'+(nl ? '<button data-f="link">Any time ('+nl+')</button>' : '')+'</div>' +
     '<div class="side" id="sideList">' + (L.length ? L.map(x => sideCard(x, st.name)).join('') : '<div class="note">No side skill tasks yet.</div>') + '</div>';
   document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
     document.querySelectorAll('.filters button').forEach(o => o.classList.toggle('on', o === b));
