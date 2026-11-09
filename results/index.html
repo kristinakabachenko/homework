@@ -262,7 +262,13 @@ function sideFiles(){ const f = new Set(); Object.keys(ASSIGN||{}).forEach(k => 
 const isSide = x => { const f = fileOf(x.page); return /^side-/.test(f) || sideFiles().has(f); };
 function localProg(file){ try { return JSON.parse(localStorage.getItem('side:' + file) || 'null'); } catch(e){ return null; } }
 function sideInfo(a, subs){
-  if (isExt(a.page)) return { a, last:null, done:0, total:0, p:0, status:'link', days:null, unsent:false };
+  if (isExt(a.page)) {
+    if (!a.total) return { a, last:null, done:0, total:0, p:0, status:'link', days:null, unsent:false };
+    /* external page (e.g. Notion) with progress set by the teacher in assignments.json: "done" / "total" */
+    const d = Math.min(+a.done || 0, +a.total), pp = Math.round(d / a.total * 100), t0 = new Date(); t0.setHours(0,0,0,0);
+    return { a, last:null, done:d, total:+a.total, p:pp, status: d >= a.total ? 'done' : d ? 'progress' : 'new', ext:true,
+      days: a.due ? Math.round((new Date(a.due + 'T00:00:00') - t0) / 864e5) : null, unsent:false };
+  }
   const f = fileOf(a.page), last = subs.filter(x => fileOf(x.page) === f).sort((p,q) => new Date(q.at) - new Date(p.at))[0];
   const lp = KEY ? null : localProg(f);
   let done = last ? +last.score : 0, total = last ? +last.max : 0;
@@ -294,8 +300,8 @@ function sideCard(x, name){
     '<div class="tgs"><span class="tg '+st[0]+'">'+st[1]+'</span>'+dueTag(x)+(x.unsent ? '<span class="tg soon">not sent yet</span>' : '')+(x.last && x.last.status === 'checked' ? '<span class="tg done">✓ checked by teacher</span>' : '')+'</div>' +
     '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
     '<div class="ptrack"><div class="pfill" style="width:'+Math.max(x.p, x.done ? 3 : 0)+'%;'+(x.p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
-    '<div class="pn">'+(x.total ? x.done+'/'+x.total+' tasks · '+x.p+'%' : '0 tasks done')+(x.last ? ' · sent '+fmtDate(x.last.at) : '')+'</div></div>' +
-    '<div class="acts"><a class="btn small" href="../'+esc(a.page)+'?s='+encodeURIComponent(name)+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+'</a>' +
+    '<div class="pn">'+(x.total ? x.done+'/'+x.total+' '+esc(x.ext && a.unit ? a.unit : 'tasks')+' · '+x.p+'%' : '0 tasks done')+(x.last ? ' · sent '+fmtDate(x.last.at) : '')+'</div>'+(a.note ? '<div class="meta" style="margin-top:4px">'+esc(a.note)+'</div>' : '')+'</div>' +
+    '<div class="acts"><a class="btn small" href="'+(x.ext ? esc(a.page)+'" target="_blank" rel="noopener' : '../'+esc(a.page)+'?s='+encodeURIComponent(name))+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+(x.ext ? ' ↗' : '')+'</a>' +
     (x.last ? '<a class="go2" href="#hw='+x.last.id+'">Answers →</a>' : '')+'</div></div>';
 }
 function linkCard(x){
