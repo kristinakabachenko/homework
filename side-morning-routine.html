@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Side skill · Morning routine</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/side-video.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Side skill · Pronunciation · Video</small>
+  <h1>☀️ Morning routine</h1>
+  <p>Watch a real morning vlog in short parts. Write what you hear, then speak together with the video — copy the speed and the intonation.</p>
+  <div class="tags"><span>🎧 Listening</span><span>🗣 Pronunciation</span><span>🎬 Video · 15 min</span><span>✍️ Phrases</span></div>
+</header>
+
+<div class="card" id="intro">
+  <div id="nameCard">
+    <b>What's your name?</b>
+    <input class="name" id="student" placeholder="Type your name" autocomplete="off">
+  </div>
+  <ul class="how">
+    <li>Do one part a day. Each part: watch → write the sentences → shadow it 3 times.</li>
+    <li>Everything saves on this device automatically. You can close the page and come back.</li>
+    <li>Parts you already did have a green tick ✓ — carry on with the next part.</li>
+    <li>A task gets a green tick ✓ when you finish it. Send your progress to me any time.</li>
+  </ul>
+</div>
+
+<div class="bar">
+  <div class="prog"><div class="track"><div class="fill" id="fill"></div></div><span id="cnt">0/0</span></div>
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<div id="steps"></div>
+
+<div class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <button class="btn" id="next">Next →</button>
+</div>
+
+<div class="card final">
+  <h2>📨 Send to Kristina</h2>
+  <p style="margin:0;color:var(--muted)">You can send your progress now and again later — I will see the newest version.</p>
+  <div class="sum" id="sum"></div>
+  <button class="btn" id="sendBtn">Send my progress</button>
+  <div class="fb" id="fbS"></div>
+  <div class="saved" id="saved"></div>
+</div>
+
+</div>
+<script src="assets/hw-report.js"></script>
+<script>
+window.SV = {
+  homework: 'Side skill · Watch the video: morning routine',
+  store: 'sidehw:morning-routine', progress: 'side:side-morning-routine.html',
+  video: 'nh36jE2M064',
+  parts: [{"title": "Waking up", "lab": "Waking up", "start": 0, "end": 76, "about": "She wakes up, gets out of bed and makes it to start the morning properly."}, {"title": "Morning self-care", "lab": "Self-care", "start": 76, "end": 181, "about": "Opening the blinds, washing her face and putting on skin care products."}, {"title": "Before the gym", "lab": "Gym prep", "start": 181, "end": 359, "about": "Changing into gym clothes, packing the gym bag and having a protein shake."}, {"title": "Brunch after the gym", "lab": "Brunch", "start": 359, "end": 764, "about": "A shower, filtered water and a brunch of bagels, eggs and coffee. A long part — do it in two or three goes.", "wordsMin": 40}, {"title": "Getting ready", "lab": "Getting ready", "start": 764, "end": 885, "about": "Make-up and getting ready for a live stream."}],
+  seed: { w1: "I’v just woken up.But now I’m going to get up.So phisically getting out of the bed,I’m going to get up.On a Sunday,I try to lie in.I try to have lie in,which means to sleep later than you usually would.So.on a weekday ,I usually wake up at about 7.But on a Sunday I try to lie in and wake up at about 8.So,what time is it?Oh,yeah 8 .So the first thing I’m going to do is get up and make my bed.I love make my bed first think in the morning so that I feel like the day is properly beginning.So,let’s make the bed. So ,now that’s done.", c1: 3, w2: "Let’s let a bit of light into this room.Let’s open the blinds.There is a little bit of frost outside today we’re getting really into the winter now.Sorry for the terrible angle but this is the only place I can put you.So now I’m going to brush my teeth and wash my face.So plash my face with water just to wake myself up a little bit more.Then I have a couple of lotions and potions.\n\nI like to put on my face sometimes you might hear people describe moisurizers.serums things for the face as lotions and potions,It’s kind of a light hearted way of descrubing them.\n\nGo conna put a couple of creams on my face and then brush my teeth.We would say I’m putting cream on my face .I’m applying cream to my face it sounds a little bit formal.I would just say putting crean on my face .So now I’ve done that.I’m going to get changed.I’m going to get chance in to my gymwear.", c2: 3 },
+  startTab: 3, seedFor: /^(tanya|tetyana|tetiana|таня|тетяна)$/i,
+  extra: []
+};
+/* ---- extra step: phrases from the video ---- */
+(function(){
+  const PHR = [["get up", "get out of bed"], ["lie in / have a lie-in", "sleep later than you usually do"], ["make the bed", "put the covers on the bed in order"], ["open the blinds", "let light into the room"], ["splash your face", "put water on your face quickly"], ["lotions and potions", "creams for your face (a funny way to say it)"], ["get changed", "put on different clothes"]];
+  const ORDER = [3,6,0,5,2,4,1];             // meanings in mixed order
+  const STEMS = [/\b(get|gets|got|getting) up\b/, /\b(lie|lay|lying) in\b|\blie-in\b/, /\b(make|made|making|makes) (my|the|our) bed\b/, /\bblinds\b/, /\bsplash/, /\blotions?\b|\bpotions?\b/, /\b(get|gets|got|getting) changed\b/];
+  const used = () => { const t = String(SVS.V('my')).toLowerCase(); return STEMS.map((r,i) => r.test(t) ? i : -1).filter(i => i >= 0); };
+  const nSent = () => String(SVS.V('my')).split(/[.!?]+/).map(s => s.trim()).filter(s => s.split(/\s+/).length >= 3).length;
+  window.SV.extra.push({
+    title: 'Phrases from the video', lab: 'Phrases',
+    html: '<p class="about">Useful phrases from the video. Match them, then use them to talk about <b>your</b> morning.</p>' +
+      '<div class="task" data-t="m1"><div class="tk"><span class="chk"></span><div class="tl">Match the phrase with its meaning.</div></div><div class="match">' +
+      PHR.map((p,i) => '<div class="w">' + p[0] + '</div><select class="f" data-k="m' + i + '" data-l="' + p[0] + '"><option value="">choose…</option>' + ORDER.map(j => '<option value="' + j + '">' + PHR[j][1] + '</option>').join('') + '</select>').join('') +
+      '</div><div class="hint" id="mh"></div></div>' +
+      '<div class="task" data-t="m2"><div class="tk"><span class="chk"></span><div class="tl">Write about <b>your</b> morning: at least 4 sentences with at least 3 phrases from the list.</div></div>' +
+      '<textarea class="f" data-k="my" data-l="My morning" placeholder="On weekdays I get up at… On Sunday I…"></textarea><div class="checks" id="mc"></div>' +
+      '<div class="tips">💬 Then read your text aloud with the same intonation as in the video.</div></div>',
+    done: {
+      m1: () => PHR.every((_,i) => SVS.V('m' + i) === String(i)),
+      m2: () => nSent() >= 4 && used().length >= 3
+    },
+    refresh(){
+      let ok = 0, ch = 0;
+      PHR.forEach((_,i) => { const el = document.querySelector('[data-k="m' + i + '"]'), v = SVS.V('m' + i);
+        el.classList.toggle('ok', v === String(i)); el.classList.toggle('no', v !== '' && v !== String(i)); if (v !== '') ch++; if (v === String(i)) ok++; });
+      const h = document.getElementById('mh'); h.textContent = ch ? ok + '/' + PHR.length + ' correct' + (ok < ch ? ' — fix the red ones' : '') : ''; h.className = 'hint ' + (ok === PHR.length ? 'ok' : ch ? 'no' : '');
+      const u = used();
+      document.getElementById('mc').innerHTML = PHR.map((p,i) => '<span class="' + (u.includes(i) ? 'ok' : '') + '">' + p[0] + '</span>').join('') +
+        '<span class="' + (nSent() >= 4 ? 'ok' : '') + '">' + nSent() + '/4 sentences</span>';
+    },
+    text(){ const l = PHR.map((p,i) => { const v = SVS.V('m' + i); return v === '' ? '' : p[0] + ' → ' + PHR[+v][1] + (v === String(i) ? ' ✓' : ' ✗'); }).filter(Boolean);
+      if (String(SVS.V('my')).trim()) l.push('My morning: ' + String(SVS.V('my')).trim()); return l.join('\n'); }
+  });
+})();
+</script>
+<script src="assets/side-video.js"></script>
+</body>
+</html>

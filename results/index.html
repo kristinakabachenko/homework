@@ -273,6 +273,7 @@ function sideInfo(a, subs){
   const lp = KEY ? null : localProg(f);
   let done = last ? +last.score : 0, total = last ? +last.max : 0;
   if (lp && lp.total && (!last || new Date(lp.at) > new Date(last.at))) { done = lp.done; total = lp.total; }
+  if (!total && a.total) { done = Math.min(+a.done || 0, +a.total); total = +a.total; }   // starting point set by the teacher (work done before)
   const p = total ? Math.round(done / total * 100) : 0;
   const status = total && done >= total ? 'done' : done ? 'progress' : 'new';
   const today = new Date(); today.setHours(0,0,0,0);

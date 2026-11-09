@@ -1,5 +1,5 @@
 {
-  "_help": "Homework given to each student, by their dashboard token. page = file in the homework repo. Done ones are found automatically. Side skill on an external page (Notion): set \"done\" and \"total\" by hand to show progress.",
+  "_help": "Homework given to each student, by their dashboard token. page = file in the homework repo. Done ones are found automatically. Side skill: \"done\"/\"total\" = starting progress (work done before the page existed); the page's own progress replaces it.",
   "2MXaeS3DhU5M": [
     {
       "title": "Adjectives + prepositions",
@@ -49,24 +49,21 @@
     },
     {
       "title": "Watch the video: morning routine",
-      "page": "https://app.notion.com/p/Watch-the-video-morning-routine-3ecc3ec6179a8070b0b1eb0af99d64d7",
+      "page": "side-morning-routine.html",
       "about": "Pronunciation · Video",
       "type": "side",
       "emoji": "☀️",
-      "done": 2,
-      "total": 5,
-      "unit": "parts",
-      "note": "Watch each part, write the sentences and copy the tempo and intonation."
+      "done": 4,
+      "total": 12
     },
     {
       "title": "Shadowing",
-      "page": "https://app.notion.com/p/Shadowing-3e2c3ec6179a80aba567da2a163082fe",
+      "page": "side-shadowing.html",
       "about": "Pronunciation · Shadowing",
       "type": "side",
       "emoji": "🎧",
       "done": 8,
-      "total": 8,
-      "unit": "parts"
+      "total": 8
     }
   ],
   "X4C04a1tzaH7": []
