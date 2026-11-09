@@ -103,6 +103,17 @@ button,textarea{font:inherit}
 .sk .pn{font-size:13px;font-weight:700}
 .sk .acts{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
 .sk .go2{font-weight:700;font-size:14px;white-space:nowrap;text-decoration:none}
+.views{display:flex;gap:6px;background:#efe8dc;border-radius:16px;padding:5px;margin:0 0 18px;width:max-content;max-width:100%}
+.views a{text-decoration:none;font-weight:700;padding:9px 16px;border-radius:12px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.views a.on{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px -4px rgba(0,0,0,.3)}
+.views .cnt{font-size:12px;background:var(--tertiary);color:#fff;border-radius:99px;padding:1px 7px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 12px}
+.filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted)}
+.filters button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tgs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.tg{font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.tg.done{background:var(--goodbg);color:var(--good)} .tg.prog{background:var(--midbg);color:#7a5200} .tg.new0{background:#efeae1;color:var(--muted)}
+.tg.due0{background:#eef1f5;color:#44536a} .tg.soon{background:#fff3c4;color:#6b4e00} .tg.late{background:var(--lowbg);color:var(--low)}
 .tagx{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;background:#eef3ee;color:#4b5f4a;margin-right:4px}
 
 /* teacher home */
@@ -249,24 +260,65 @@ function todoBlock(token, name, subs){
 function sideFiles(){ const f = new Set(); Object.keys(ASSIGN||{}).forEach(k => Array.isArray(ASSIGN[k]) && ASSIGN[k].forEach(a => a.type === 'side' && f.add(fileOf(a.page)))); return f; }
 const isSide = x => { const f = fileOf(x.page); return /^side-/.test(f) || sideFiles().has(f); };
 function localProg(file){ try { return JSON.parse(localStorage.getItem('side:' + file) || 'null'); } catch(e){ return null; } }
-function sideBlock(token, name, subs){
-  const list = ((ASSIGN && ASSIGN[token]) || []).filter(a => a.type === 'side'); if (!list.length) return '';
-  return '<p class="label">Side skill (' + list.length + ')</p><div class="side">' + list.slice().reverse().map(a => {
-    const f = fileOf(a.page), sent = subs.filter(x => fileOf(x.page) === f).sort((p,q) => new Date(q.at) - new Date(p.at)), last = sent[0];
-    const lp = KEY ? null : localProg(f);
-    let done = last ? +last.score : 0, total = last ? +last.max : 0;
-    if (lp && lp.total && (!last || new Date(lp.at) > new Date(last.at))) { done = lp.done; total = lp.total; }
-    const p = total ? Math.round(done / total * 100) : 0;
-    const state = !total || !done ? 'Not started' : done >= total ? (last && +last.score >= +last.max ? 'Done' : 'Done · not sent yet') : 'In progress';
-    const tags = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
-    const week = (a.given ? fmtDate(a.given) : '') + (a.due ? ' – ' + fmtDate(a.due) : '');
-    return '<div class="card sk"><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow"><div class="t">'+esc(a.title)+'</div>' +
-      '<div class="meta">'+tags+(week ? ' 📅 '+week : '')+'</div>' +
-      '<div class="ptrack"><div class="pfill" style="width:'+Math.max(p, done ? 3 : 0)+'%;'+(p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
-      '<div class="pn">'+(total ? done+'/'+total+' tasks · '+p+'%' : '0 tasks done')+' · '+state+(last ? ' · sent '+fmtDate(last.at)+(last.status === 'checked' ? ' · ✓ checked' : '') : '')+'</div></div>' +
-      '<div class="acts"><a class="btn small" href="../'+esc(a.page)+'?s='+encodeURIComponent(name)+'">'+(done ? 'Continue' : 'Start')+'</a>' +
-      (last ? '<a class="go2" href="#hw='+last.id+'">Answers →</a>' : '')+'</div></div>';
-  }).join('') + '</div>';
+function sideInfo(a, subs){
+  const f = fileOf(a.page), last = subs.filter(x => fileOf(x.page) === f).sort((p,q) => new Date(q.at) - new Date(p.at))[0];
+  const lp = KEY ? null : localProg(f);
+  let done = last ? +last.score : 0, total = last ? +last.max : 0;
+  if (lp && lp.total && (!last || new Date(lp.at) > new Date(last.at))) { done = lp.done; total = lp.total; }
+  const p = total ? Math.round(done / total * 100) : 0;
+  const status = total && done >= total ? 'done' : done ? 'progress' : 'new';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = a.due ? Math.round((new Date(a.due + 'T00:00:00') - today) / 864e5) : null;
+  return { a, last, done, total, p, status, days, unsent: status === 'done' && !(last && +last.score >= +last.max) };
+}
+function sideList(token, subs){ return ((ASSIGN && ASSIGN[token]) || []).filter(a => a.type === 'side').map(a => sideInfo(a, subs)); }
+function views(on, nSide){
+  if (!nSide) return '';
+  return '<nav class="views"><a href="#"'+(on==='hw'?' class="on"':'')+'>📚 Homework</a><a href="#side"'+(on==='side'?' class="on"':'')+'>🧩 Side skill <span class="cnt">'+nSide+'</span></a></nav>';
+}
+const STATUS = { done:['done','✓ Done'], progress:['prog','● In progress'], new:['new0','○ Not started'] };
+function dueTag(x){
+  if (!x.a.due) return '';
+  if (x.status === 'done') return '<span class="tg due0">📅 Deadline '+fmtDate(x.a.due)+'</span>';
+  const d = x.days, cls = d < 0 ? 'late' : d <= 2 ? 'soon' : 'due0';
+  const txt = d < 0 ? 'overdue by ' + (-d) + ' day' + (d === -1 ? '' : 's') : d === 0 ? 'today!' : d === 1 ? 'tomorrow' : d + ' days left';
+  return '<span class="tg '+cls+'">📅 Deadline '+fmtDate(x.a.due)+' · '+txt+'</span>';
+}
+function sideCard(x, name){
+  const a = x.a, st = STATUS[x.status];
+  const skills = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
+  return '<div class="card sk" data-st="'+x.status+'"><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow">' +
+    '<div class="tgs"><span class="tg '+st[0]+'">'+st[1]+'</span>'+dueTag(x)+(x.unsent ? '<span class="tg soon">not sent yet</span>' : '')+(x.last && x.last.status === 'checked' ? '<span class="tg done">✓ checked by teacher</span>' : '')+'</div>' +
+    '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
+    '<div class="ptrack"><div class="pfill" style="width:'+Math.max(x.p, x.done ? 3 : 0)+'%;'+(x.p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
+    '<div class="pn">'+(x.total ? x.done+'/'+x.total+' tasks · '+x.p+'%' : '0 tasks done')+(x.last ? ' · sent '+fmtDate(x.last.at) : '')+'</div></div>' +
+    '<div class="acts"><a class="btn small" href="../'+esc(a.page)+'?s='+encodeURIComponent(name)+'">'+(x.status === 'done' ? 'Open' : x.done ? 'Continue' : 'Start')+'</a>' +
+    (x.last ? '<a class="go2" href="#hw='+x.last.id+'">Answers →</a>' : '')+'</div></div>';
+}
+function sidePage(st, subs){
+  const L = sideList(TOKEN, subs), order = {progress:0, new:1, done:2};
+  L.sort((p,q) => order[p.status] - order[q.status] || (p.status === 'done' ? new Date(q.a.due||0) - new Date(p.a.due||0) : new Date(p.a.due||'2999') - new Date(q.a.due||'2999')));
+  const nd = L.filter(x => x.status === 'done').length, np = L.filter(x => x.status === 'progress').length, nn = L.length - nd - np;
+  const allT = L.reduce((s,x) => s + x.total, 0), allD = L.reduce((s,x) => s + x.done, 0);
+  const next = L.filter(x => x.status !== 'done' && x.a.due).sort((p,q) => new Date(p.a.due) - new Date(q.a.due))[0];
+  document.title = st.name + ' · Side skill';
+  $('#app').innerHTML =
+    (KEY ? '<div class="crumbs"><a href="'+qs()+'">← All students</a></div>' : '') +
+    '<header class="masthead"><p class="kicker">'+esc(st.name)+' · Side skill</p><h1>Side skill</h1><p>Your own weekly work: real articles, videos, pronunciation and more. Do a little every day and finish before the deadline.</p></header>' +
+    views('side', L.length) +
+    '<div class="tiles">' +
+      '<div class="card tile"><div class="v">'+(allT ? Math.round(allD/allT*100)+'%' : '0%')+'</div><div class="k">Overall progress</div></div>' +
+      '<div class="card tile"><div class="v" style="color:var(--good)">'+nd+'</div><div class="k">Done</div></div>' +
+      '<div class="card tile"><div class="v" style="color:var(--mid)">'+np+'</div><div class="k">In progress</div></div>' +
+      '<div class="card tile"><div class="v">'+(next ? fmtDate(next.a.due) : '—')+'</div><div class="k">Next deadline'+(next ? ' · '+esc(next.a.title) : '')+'</div></div>' +
+    '</div>' +
+    '<div class="filters"><button class="on" data-f="all">All ('+L.length+')</button><button data-f="progress">In progress ('+np+')</button><button data-f="new">Not started ('+nn+')</button><button data-f="done">Done ('+nd+')</button></div>' +
+    '<div class="side" id="sideList">' + (L.length ? L.map(x => sideCard(x, st.name)).join('') : '<div class="note">No side skill tasks yet.</div>') + '</div>';
+  document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.filters button').forEach(o => o.classList.toggle('on', o === b));
+    document.querySelectorAll('#sideList .sk').forEach(c => c.style.display = b.dataset.f === 'all' || c.dataset.st === b.dataset.f ? '' : 'none');
+  });
+  window.scrollTo(0, 0);
 }
 
 /* ---------- student page ---------- */
@@ -276,6 +328,8 @@ function studentPage(){
     theme(st.book);
     const id = (location.hash.match(/hw=([^&]+)/)||[])[1];
     if (id) { const x = allSubs.find(s => s.id === id); if (x) return detail(st, x, d.teacher || !!KEY); }
+    const nSide = sideList(TOKEN, allSubs).length;
+    if (location.hash === '#side' && nSide) return sidePage(st, allSubs);
     document.title = st.name + ' · Homework results';
     const n = subs.length, avg = n ? Math.round(subs.reduce((a,x) => a + pct(x), 0)/n) : 0;
     const best = n ? Math.max.apply(null, subs.map(pct)) : 0;
@@ -288,6 +342,7 @@ function studentPage(){
     $('#app').innerHTML =
       (KEY ? '<div class="crumbs"><a href="'+qs()+'">← All students</a></div>' : '') +
       '<header class="masthead"><p class="kicker">'+esc(st.book)+' · Homework results</p><h1>Hi, '+esc(st.name)+'!</h1><p>'+esc(intro)+'</p></header>' +
+      views('hw', nSide) +
       '<div class="tiles">' +
         '<div class="card tile"><div class="v" style="color:'+bandColor(avg)+'">'+(n?avg+'%':'—')+'</div><div class="k">Average score '+(n?'· '+bandWord(avg):'')+'</div></div>' +
         '<div class="card tile"><div class="v">'+n+'</div><div class="k">Homeworks done</div></div>' +
@@ -296,7 +351,6 @@ function studentPage(){
         (KEY ? '<div class="card tile"><div class="v" style="color:#6b4e00">'+toCheck+'</div><div class="k">Waiting for your check</div></div>' : '') +
       '</div>' +
       todoBlock(TOKEN, st.name, subs) +
-      sideBlock(TOKEN, st.name, allSubs) +
       (n ? '<p class="label">Progress tracker</p>' + chart(subs) : '') +
       '<p class="label">All homework</p><div class="list">' +
       (n ? subs.slice().reverse().map(x => { const p = pct(x);
@@ -312,7 +366,7 @@ function detail(st, x, teacher){
   const p = pct(x);
   document.title = x.homework + ' · ' + st.name;
   $('#app').innerHTML =
-    '<div class="crumbs">' + (KEY ? '<a href="'+qs()+'">All students</a><span>/</span>' : '') + '<a href="#">← '+esc(st.name)+'’s results</a></div>' +
+    '<div class="crumbs">' + (KEY ? '<a href="'+qs()+'">All students</a><span>/</span>' : '') + (isSide(x) ? '<a href="#side">← Side skill</a>' : '<a href="#">← '+esc(st.name)+'’s results</a>')+'</div>' +
     '<div class="card head">'+ring(p).replace('class="ring"','class="ring" style="width:84px;height:84px"')+
       '<div style="flex:1;min-width:220px"><p class="kicker muted" style="margin:0 0 4px">'+esc(st.book)+'</p><h2>'+esc(x.homework)+'</h2>' +
       '<div class="muted small" style="margin-top:4px">'+fmtDateLong(x.at)+' · <b style="color:var(--ink)">'+x.score+'/'+x.max+'</b> '+(isSide(x) ? 'tasks done · Side skill' : 'points · '+bandWord(p))+'</div>' +
