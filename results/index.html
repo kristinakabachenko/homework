@@ -91,6 +91,20 @@ button,textarea{font:inherit}
 .todo .meta{font-size:13px;color:var(--muted)}
 .todo .start{margin-left:auto;font-weight:700;font-size:14px;white-space:nowrap}
 
+/* side skill */
+.side{display:grid;gap:10px}
+.sk{display:flex;gap:14px;align-items:center;text-decoration:none;border-left:6px solid var(--tertiary)}
+.sk .ic{flex:none;width:52px;height:52px;border-radius:16px;background:#eef3ee;display:grid;place-items:center;font-size:28px}
+.sk .grow{flex:1;min-width:0}
+.sk .t{font-weight:700;font-size:17px}
+.sk .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.sk .ptrack{height:10px;background:var(--grid);border-radius:99px;overflow:hidden;margin:9px 0 4px}
+.sk .pfill{height:100%;border-radius:99px;background:var(--tertiary)}
+.sk .pn{font-size:13px;font-weight:700}
+.sk .acts{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.sk .go2{font-weight:700;font-size:14px;white-space:nowrap;text-decoration:none}
+.tagx{display:inline-block;font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;background:#eef3ee;color:#4b5f4a;margin-right:4px}
+
 /* teacher home */
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .stu{text-decoration:none;display:block;border-top:6px solid var(--c)}
@@ -169,7 +183,7 @@ function parseBreakdown(sub, snaps){
   });
   return out.sort((a,b) => (a.lab.match(/\d+/)||[99])[0] - (b.lab.match(/\d+/)||[99])[0] || 0);
 }
-const exName = id => /^ex0$/i.test(id) ? 'Rules (first try)' : /^ex(\d+)$/i.test(id) ? 'Ex ' + id.slice(2) : id;
+const exName = id => /^step(\d+)$/i.test(id) ? 'Step ' + id.slice(4) : /^ex0$/i.test(id) ? 'Rules (first try)' : /^ex(\d+)$/i.test(id) ? 'Ex ' + id.slice(2) : id;
 
 /* ---------- pieces ---------- */
 function ring(p){
@@ -221,7 +235,7 @@ function loadAssign(){
 }
 const fileOf = u => String(u||'').split('?')[0].split('#')[0].split('/').pop();
 function todoOf(token, subs){
-  const list = (ASSIGN && ASSIGN[token]) || [];
+  const list = ((ASSIGN && ASSIGN[token]) || []).filter(a => a.type !== 'side');
   const sent = new Set(subs.map(x => fileOf(x.page)));
   return list.filter(a => !sent.has(fileOf(a.page)));
 }
@@ -231,13 +245,37 @@ function todoBlock(token, name, subs){
     '<a class="card" href="../' + esc(a.page) + '?s=' + encodeURIComponent(name) + '"><span class="go" aria-hidden="true">✎</span><div><div class="t">' + esc(a.title) + '</div><div class="meta">' + esc(a.about || '') + (a.given ? (a.about ? ' · ' : '') + 'given ' + fmtDate(a.given) : '') + (a.due ? ' · due ' + fmtDate(a.due) : '') + '</div></div><span class="start">Start</span></a>').join('') + '</div>';
 }
 
+/* ---------- side skill (assignments with "type": "side") ---------- */
+function sideFiles(){ const f = new Set(); Object.keys(ASSIGN||{}).forEach(k => Array.isArray(ASSIGN[k]) && ASSIGN[k].forEach(a => a.type === 'side' && f.add(fileOf(a.page)))); return f; }
+const isSide = x => { const f = fileOf(x.page); return /^side-/.test(f) || sideFiles().has(f); };
+function localProg(file){ try { return JSON.parse(localStorage.getItem('side:' + file) || 'null'); } catch(e){ return null; } }
+function sideBlock(token, name, subs){
+  const list = ((ASSIGN && ASSIGN[token]) || []).filter(a => a.type === 'side'); if (!list.length) return '';
+  return '<p class="label">Side skill (' + list.length + ')</p><div class="side">' + list.slice().reverse().map(a => {
+    const f = fileOf(a.page), sent = subs.filter(x => fileOf(x.page) === f).sort((p,q) => new Date(q.at) - new Date(p.at)), last = sent[0];
+    const lp = KEY ? null : localProg(f);
+    let done = last ? +last.score : 0, total = last ? +last.max : 0;
+    if (lp && lp.total && (!last || new Date(lp.at) > new Date(last.at))) { done = lp.done; total = lp.total; }
+    const p = total ? Math.round(done / total * 100) : 0;
+    const state = !total || !done ? 'Not started' : done >= total ? (last && +last.score >= +last.max ? 'Done' : 'Done · not sent yet') : 'In progress';
+    const tags = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
+    const week = (a.given ? fmtDate(a.given) : '') + (a.due ? ' – ' + fmtDate(a.due) : '');
+    return '<div class="card sk"><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow"><div class="t">'+esc(a.title)+'</div>' +
+      '<div class="meta">'+tags+(week ? ' 📅 '+week : '')+'</div>' +
+      '<div class="ptrack"><div class="pfill" style="width:'+Math.max(p, done ? 3 : 0)+'%;'+(p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
+      '<div class="pn">'+(total ? done+'/'+total+' tasks · '+p+'%' : '0 tasks done')+' · '+state+(last ? ' · sent '+fmtDate(last.at)+(last.status === 'checked' ? ' · ✓ checked' : '') : '')+'</div></div>' +
+      '<div class="acts"><a class="btn small" href="../'+esc(a.page)+'?s='+encodeURIComponent(name)+'">'+(done ? 'Continue' : 'Start')+'</a>' +
+      (last ? '<a class="go2" href="#hw='+last.id+'">Answers →</a>' : '')+'</div></div>';
+  }).join('') + '</div>';
+}
+
 /* ---------- student page ---------- */
 function studentPage(){
   cached('s:' + TOKEN, {action:'student', token:TOKEN}, d => {
-    const st = d.student, subs = d.subs.slice().sort((a,b) => new Date(a.at) - new Date(b.at));
+    const st = d.student, allSubs = d.subs.slice().sort((a,b) => new Date(a.at) - new Date(b.at)), subs = allSubs.filter(x => !isSide(x));
     theme(st.book);
     const id = (location.hash.match(/hw=([^&]+)/)||[])[1];
-    if (id) { const x = subs.find(s => s.id === id); if (x) return detail(st, x, d.teacher || !!KEY); }
+    if (id) { const x = allSubs.find(s => s.id === id); if (x) return detail(st, x, d.teacher || !!KEY); }
     document.title = st.name + ' · Homework results';
     const n = subs.length, avg = n ? Math.round(subs.reduce((a,x) => a + pct(x), 0)/n) : 0;
     const best = n ? Math.max.apply(null, subs.map(pct)) : 0;
@@ -258,6 +296,7 @@ function studentPage(){
         (KEY ? '<div class="card tile"><div class="v" style="color:#6b4e00">'+toCheck+'</div><div class="k">Waiting for your check</div></div>' : '') +
       '</div>' +
       todoBlock(TOKEN, st.name, subs) +
+      sideBlock(TOKEN, st.name, allSubs) +
       (n ? '<p class="label">Progress tracker</p>' + chart(subs) : '') +
       '<p class="label">All homework</p><div class="list">' +
       (n ? subs.slice().reverse().map(x => { const p = pct(x);
@@ -276,9 +315,9 @@ function detail(st, x, teacher){
     '<div class="crumbs">' + (KEY ? '<a href="'+qs()+'">All students</a><span>/</span>' : '') + '<a href="#">← '+esc(st.name)+'’s results</a></div>' +
     '<div class="card head">'+ring(p).replace('class="ring"','class="ring" style="width:84px;height:84px"')+
       '<div style="flex:1;min-width:220px"><p class="kicker muted" style="margin:0 0 4px">'+esc(st.book)+'</p><h2>'+esc(x.homework)+'</h2>' +
-      '<div class="muted small" style="margin-top:4px">'+fmtDateLong(x.at)+' · <b style="color:var(--ink)">'+x.score+'/'+x.max+'</b> points · '+bandWord(p)+'</div>' +
+      '<div class="muted small" style="margin-top:4px">'+fmtDateLong(x.at)+' · <b style="color:var(--ink)">'+x.score+'/'+x.max+'</b> '+(isSide(x) ? 'tasks done · Side skill' : 'points · '+bandWord(p))+'</div>' +
       '<div class="row" style="margin-top:10px">'+statusPill(x)+(x.page ? '<a class="btn ghost small" href="'+esc(x.page)+'" target="_blank" rel="noopener">Open homework ↗</a>' : '')+'</div></div></div>' +
-    '<p class="label">Score by exercise</p><div class="card bars" id="bars"><span class="muted small">Loading…</span></div>' +
+    '<p class="label">'+(isSide(x) ? 'Tasks done by step' : 'Score by exercise')+'</p><div class="card bars" id="bars"><span class="muted small">Loading…</span></div>' +
     (x.open ? '<p class="label">Open answers — to read</p><div class="card open">'+esc(x.open)+'</div>' : '') +
     (teacher ? reviewBox(x) : (x.comment ? '<p class="label">Teacher’s comment</p><div class="card comment" style="white-space:pre-wrap">'+esc(x.comment)+'</div>' : '')) +
     '<p class="label">Answers, as you saw them</p><div id="snaps"><div class="note">Loading answers…</div></div>';
@@ -306,7 +345,7 @@ function snapshots(x, snaps){
   if (!snaps.length){ box.innerHTML = '<div class="note">Pictures of the answers are saved for homework sent after 7 November 2026. For this one you can see the score by exercise and the open answers above.</div>'; return; }
   box.innerHTML = snaps.map(s => { const has = s.max != null && s.max !== ''; const p = has && +s.max ? Math.round(s.s/s.max*100) : null;
     return '<div class="card snap" id="snap-'+esc(s.id)+'"><div class="sh"><span>'+esc(exName(s.id))+(s.title && s.title !== s.id ? ' · <span class="muted" style="font-weight:400">'+esc(s.title)+'</span>' : '')+'</span>' +
-      (p != null ? '<span class="pill '+band(p)+'">First try '+s.s+'/'+s.max+'</span>' : '<span class="pill new">Open task</span>')+'</div><iframe title="'+esc(exName(s.id))+'" loading="lazy"></iframe></div>'; }).join('');
+      (p != null ? '<span class="pill '+band(p)+'">'+(/^step/i.test(s.id) ? 'Done '+s.s+'/'+s.max : 'First try '+s.s+'/'+s.max)+'</span>' : '<span class="pill new">Open task</span>')+'</div><iframe title="'+esc(exName(s.id))+'" loading="lazy"></iframe></div>'; }).join('');
   pageCss(x.page).then(css => {
     box.querySelectorAll('iframe').forEach((f, i) => {
       f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><base href="'+esc(x.page)+'">'+css+
@@ -346,7 +385,7 @@ function teacherPage(){
       '<header class="masthead"><p class="kicker">moody · teacher</p><h1>Homework results</h1><p>'+recent.length+' homework'+(recent.length===1?'':'s')+' waiting for your check.</p></header>' +
       (recent.length ? '<p class="label">To check</p><div class="list">' + recent.map(x => { const s = d.students.find(s => s.name === x.who), p = pct(x);
         return '<a class="card hw" href="'+qs({s:s.token})+'#hw='+x.id+'">'+ring(p)+'<div class="grow"><div class="t">'+esc(x.homework)+'</div><div class="meta"><b>'+esc(x.who)+'</b> · '+fmtDateLong(x.at)+' · '+x.score+'/'+x.max+'</div></div><span class="pill new">Check →</span></a>'; }).join('') + '</div>' : '') +
-      '<p class="label">Students</p><div class="grid2">' + d.students.map(s => { const L = by[s.name], n = L.length, avg = n ? Math.round(L.reduce((a,x)=>a+pct(x),0)/n) : null;
+      '<p class="label">Students</p><div class="grid2">' + d.students.map(s => { const L = by[s.name], M = L.filter(x => !isSide(x)), n = M.length, avg = n ? Math.round(M.reduce((a,x)=>a+pct(x),0)/n) : null;
         const c = (BOOKS[Object.keys(BOOKS).find(k => s.book.toLowerCase().includes(k))] || ['#6e6252'])[0];
         return '<div class="card stu" style="--c:'+c+'"><a href="'+qs({s:s.token})+'" style="text-decoration:none"><h3>'+esc(s.name)+'</h3><div class="muted small">'+esc(s.book)+'</div>' +
           '<div class="row" style="margin:12px 0"><span class="big" style="font-size:34px;color:'+(avg==null?'var(--muted)':bandColor(avg))+'">'+(avg==null?'—':avg+'%')+'</span><span class="muted small">'+n+' homework'+(n===1?'':'s')+'<br>'+L.filter(x=>x.status!=='checked').length+' to check · '+todoOf(s.token, L).length+' not done yet</span></div></a>' +

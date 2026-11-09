@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Side skill · What is bioprinting?</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef6f4;--card:#fff;--ink:#132a2a;--muted:#5d7472;--brand:#0f766e;--brand2:#14b8a6;--coral:#ff6b5c;--sun:#ffb020;--ok:#16a34a;--okbg:#e5f7ec;--bad:#e5484d;--badbg:#fdecec;--line:#d7e7e3;--soft:#e3f4f0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 100px}
+button,input,textarea,select{font:inherit;color:inherit}
+.hero{background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.18) 0 70px,transparent 71px),radial-gradient(circle at 70% 110%,rgba(255,107,92,.55) 0 80px,transparent 81px),linear-gradient(135deg,#0b4f4a 0%,#0f766e 55%,#14b8a6 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 16px}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85;font-size:13px}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:36px;line-height:1.05;margin:6px 0 8px}
+.hero p{margin:0 0 14px;opacity:.95;max-width:540px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tags span{background:rgba(255,255,255,.18);border-radius:99px;padding:3px 10px;font-size:13px;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:14px;padding:11px 18px;font-weight:800;cursor:pointer;background:var(--brand);color:#fff;text-decoration:none}
+.btn.white{background:#fff;color:var(--brand)}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.small{padding:7px 12px;font-size:14px;border-radius:11px}
+.btn:disabled{opacity:.45;cursor:default}
+.card{background:var(--card);border-radius:20px;padding:18px;box-shadow:0 10px 28px -22px rgba(10,60,55,.55);margin-bottom:14px}
+.name{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px}
+.how{margin:0;padding-left:20px;color:var(--muted);font-size:15px}
+/* sticky progress + tabs */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;margin:0 -16px 6px;padding-left:16px;padding-right:16px}
+.prog{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px}
+.track{flex:1;height:12px;background:#d3e6e1;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .35s}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 2px 4px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.tab{flex:none;scroll-snap-align:start;border:2px solid var(--line);background:#fff;border-radius:14px;padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:7px;font-weight:800;font-size:14px;white-space:nowrap}
+.tab .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--brand);font-size:13px}
+.tab .lab{font-weight:700;color:var(--muted)}
+.tab.on{border-color:var(--brand);box-shadow:0 0 0 3px rgba(15,118,110,.15)}
+.tab.on .lab{color:var(--ink)}
+.tab.part .n{background:#fff1cf;color:#8a5a00}
+.tab.full .n{background:var(--ok);color:#fff}
+.tab.full .n::before{content:"✓"}.tab.full .n span{display:none}
+/* steps */
+.step .head{display:flex;align-items:flex-start;gap:12px;margin-bottom:6px}
+.step .num{flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center;font-family:'Baloo 2';font-size:22px;font-weight:800}
+.step h2{font-family:'Baloo 2',sans-serif;font-size:25px;line-height:1.1;margin:2px 0 0}
+.step .sub{color:var(--muted);font-size:14px;font-weight:700}
+.read{background:var(--soft);border-radius:14px;padding:10px 14px;margin:10px 0 4px;font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.read b{color:var(--brand)}
+.task{border:2px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;transition:border-color .2s,background .2s}
+.task.done{border-color:#9fd9b4;background:#f7fdf9}
+.tk{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.chk{flex:none;width:24px;height:24px;border-radius:8px;border:2px solid #b9d3cd;margin-top:2px;display:grid;place-items:center;background:#fff;transition:.2s}
+.task.done .chk{background:var(--ok);border-color:var(--ok)}
+.task.done .chk::after{content:"✓";color:#fff;font-weight:800;font-size:15px}
+.tl{font-weight:700}
+.tl i{font-weight:600}
+input.f,textarea.f,select.f{width:100%;border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff;outline:none;transition:border-color .15s}
+input.f:focus,textarea.f:focus,select.f:focus{border-color:var(--brand2)}
+textarea.f{min-height:76px;resize:vertical}
+.f.filled{border-color:#a9dcc9}
+.q{margin:10px 0}
+.q label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+/* method table */
+.mt{display:grid;gap:10px}
+.mrow{border:2px dashed var(--line);border-radius:14px;padding:10px}
+.mrow h4{margin:0 0 8px;font-size:16px;display:flex;gap:8px;align-items:center}
+.mrow h4 span{font-size:20px}
+.mcols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mcols label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.mcols textarea.f{min-height:64px;font-size:15px}
+/* true / false */
+.tf{border-bottom:1px solid var(--line);padding:10px 0}
+.tf:last-child{border-bottom:0}
+.tf p{margin:0 0 8px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:6px 16px;font-weight:800;cursor:pointer}
+.seg button+button{border-left:2px solid var(--line)}
+.seg button.on.t{background:var(--ok);color:#fff}
+.seg button.on.fl{background:var(--coral);color:#fff}
+.tf .fix{margin-top:8px}
+/* ordering */
+.pool,.ord{display:flex;flex-direction:column;gap:8px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;text-align:left;cursor:pointer;font-weight:700}
+.chip:hover{border-color:var(--brand2)}
+.chip.used{opacity:.35;pointer-events:none}
+.ord .chip{border-color:var(--brand2);background:var(--soft);display:flex;gap:10px;align-items:center}
+.ord .chip b{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;flex:none}
+.ord:empty::before{content:"Tap the steps below in the right order";color:var(--muted);font-size:14px;border:2px dashed var(--line);border-radius:12px;padding:10px;text-align:center}
+.cap{font-size:13px;color:var(--muted);font-weight:700;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+/* vocab */
+.vw{display:grid;grid-template-columns:150px 1fr;gap:8px 10px;align-items:center}
+.vw .w{font-weight:800;color:var(--brand)}
+.sent{display:grid;grid-template-columns:150px 1fr;gap:8px;margin-bottom:8px;align-items:start}
+.hint{font-size:13px;font-weight:700;margin-top:3px;min-height:1px}
+.hint.ok{color:var(--ok)}.hint.no{color:#a15c00}
+/* writing checklist */
+.checks{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.checks span{font-size:13px;font-weight:800;border-radius:99px;padding:3px 10px;background:#edf2f1;color:var(--muted)}
+.checks span.ok{background:var(--okbg);color:var(--ok)}
+.checks span.ok::before{content:"✓ "}
+.ex{background:#fffaf0;border-left:4px solid var(--sun);border-radius:10px;padding:8px 12px;font-size:15px;margin:8px 0}
+/* pronunciation */
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.word{border:2px solid var(--line);border-radius:14px;padding:10px;display:flex;align-items:center;gap:8px}
+.word.full{border-color:#9fd9b4;background:#f7fdf9}
+.word .wt{flex:1;font-weight:800}
+.word .wt small{display:block;font-weight:600;color:var(--muted);font-size:12px}
+.play{border:0;width:34px;height:34px;border-radius:50%;background:var(--soft);color:var(--brand);cursor:pointer;font-size:14px;flex:none}
+.dots{display:flex;gap:4px;cursor:pointer;border:0;background:none;padding:4px}
+.dots i{width:13px;height:13px;border-radius:50%;background:#dbe7e4;display:block}
+.dots i.on{background:var(--ok)}
+.counter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.big3{display:flex;gap:6px}
+.big3 i{width:22px;height:22px;border-radius:50%;background:#dbe7e4;display:block}
+.big3 i.on{background:var(--ok)}
+.tick{display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer;margin-top:8px}
+.tick input{width:22px;height:22px;accent-color:var(--ok)}
+.rec{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.rec audio{height:36px;max-width:100%}
+.recdot{width:10px;height:10px;border-radius:50%;background:var(--bad);display:inline-block;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.2}}
+.timer{font-family:'Baloo 2';font-size:40px;font-weight:800;line-height:1;min-width:110px}
+.timer.ok{color:var(--ok)}
+.qcard{background:linear-gradient(135deg,#0b4f4a,#0f766e);color:#fff;border-radius:16px;padding:14px 16px;font-weight:700;font-size:18px}
+/* nav + final */
+.nav{display:flex;justify-content:space-between;gap:10px;margin:4px 0 18px}
+.final h2{font-family:'Baloo 2';margin:0 0 6px;font-size:26px}
+.sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin:10px 0 14px}
+.sum span{font-size:13px;font-weight:800;border-radius:10px;padding:6px 8px;background:#edf2f1;color:var(--muted)}
+.sum span.full{background:var(--okbg);color:var(--ok)}
+.sum span.part{background:#fff1cf;color:#8a5a00}
+.fb{margin-top:10px;font-weight:700;font-size:15px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#a15c00}
+.saved{font-size:12px;color:var(--muted);font-weight:700;text-align:right;margin-top:6px}
+@media (max-width:600px){
+  .hero h1{font-size:30px}
+  .grid3,.mcols{grid-template-columns:1fr}
+  .vw,.sent{grid-template-columns:1fr}
+  .vw .w{margin-top:6px}
+  .tab .lab{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Side skill · one week</small>
+  <h1>🧬 What is bioprinting?</h1>
+  <p>Can a printer make a new ear or new skin? Read a real science article, watch a video, learn new words and get ready to talk about it in our lesson.</p>
+  <div class="tags"><span>📖 Reading</span><span>🔬 Science article</span><span>🎬 Video</span><span>📅 8 – 15 Nov</span></div>
+  <a class="btn white" href="https://www.snexplores.org/article/explainer-what-is-bioprinting" target="_blank" rel="noopener">Open the article ↗</a>
+</header>
+
+<div class="card" id="intro">
+  <div id="nameCard">
+    <b>What's your name?</b>
+    <input class="name" id="student" placeholder="Type your name" autocomplete="off">
+  </div>
+  <ul class="how">
+    <li>Do the steps in order — a little every day. Keep the article open in another tab.</li>
+    <li>Everything saves on this device automatically. You can close the page and come back.</li>
+    <li>A task gets a green tick ✓ when you finish it. Send your progress to me any time.</li>
+  </ul>
+</div>
+
+<div class="bar">
+  <div class="prog"><div class="track"><div class="fill" id="fill"></div></div><span id="cnt">0/0</span></div>
+  <div class="tabs" id="tabs" role="tablist"></div>
+</div>
+
+<div id="steps"></div>
+
+<div class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <button class="btn" id="next">Next step →</button>
+</div>
+
+<div class="card final">
+  <h2>📨 Send to Kristina</h2>
+  <p style="margin:0;color:var(--muted)">You can send your progress now and again later — I will see the newest version.</p>
+  <div class="sum" id="sum"></div>
+  <button class="btn" id="sendBtn">Send my progress</button>
+  <div class="fb" id="fbS"></div>
+  <div class="saved" id="saved"></div>
+</div>
+
+</div>
+<script src="assets/hw-report.js"></script>
+<script>
+const CFG = { key:'moody-hw-2026', homework:'Side skill · Explainer: What is bioprinting?', store:'sidehw:bioprinting', progress:'side:side-bioprinting.html' };
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- saved state ---------- */
+let S = { v:{}, tab:1 };
+try { const o = JSON.parse(localStorage.getItem(CFG.store) || 'null'); if (o && o.v) S = o; } catch(e){}
+const V = k => (S.v[k] == null ? '' : S.v[k]);
+const has = (k, n) => String(V(k)).trim().length >= (n || 2);
+const all = ks => ks.every(k => has(k));
+
+/* ---------- little builders ---------- */
+const inp = (k, ph, l) => `<input class="f" data-k="${k}" data-l="${esc(l||ph||k)}" placeholder="${esc(ph||'')}" autocomplete="off">`;
+const ta  = (k, ph, l) => `<textarea class="f" data-k="${k}" data-l="${esc(l||ph||k)}" placeholder="${esc(ph||'')}"></textarea>`;
+const q   = (k, label, ph, big) => `<div class="q"><label>${label}</label>${big ? ta(k, ph, label.replace(/<[^>]+>/g,'')) : inp(k, ph, label.replace(/<[^>]+>/g,''))}</div>`;
+const task = (id, label, body) => `<div class="task" data-t="${id}"><div class="tk"><span class="chk" aria-hidden="true"></span><div class="tl">${label}</div></div><div class="tb">${body}</div></div>`;
+const read = what => `<div class="read">📖 <span>Read <b>${what}</b></span><a class="btn small ghost" href="https://www.snexplores.org/article/explainer-what-is-bioprinting" target="_blank" rel="noopener">Article ↗</a></div>`;
+
+/* ---------- content ---------- */
+const TF = [
+  'In 2022, a patient got a 3-D printed ear made from their own cells.',
+  'Scientists have already printed real living bone for people.',
+  'Doctors in Australia tested bioprinted skin on burn patients.',
+  'Printing a full heart is already possible.',
+  'Oxygen can travel only a few millimetres into tissue.'
+];
+const ORDER = ['AI plans the blood vessels', 'the printer makes the vessels in seconds', 'a camera system finds the cells'];
+const VOCAB = [
+  ['layer by layer','layer'], ['swap out','swap'], ['mimic','mimic'], ['squeeze','squeez'],
+  ['mature (verb)','matur'], ['gentle','gentl'], ['tricky','trick'], ['a work in progress','progress'],
+  ['hurdle','hurdle'], ['suffocate','suffocat'], ['haul away','haul'], ['hollow','hollow'], ['promising','promising']
+];
+const SAY = [['tissue','TISH-oo'],['oxygen','OK-si-jen'],['cartilage','KAR-ti-lij'],['kidney','KID-nee'],['vessel','VES-el'],['nozzle','NOZ-el'],['suffocate','SUF-o-kate'],['alginate','AL-jin-ate'],['fibroblasts','FY-broh-blasts']];
+const METHODS = [['ext','🧴','Extrusion'],['ink','💧','Inkjet bioprinting'],['las','🔦','Printing with a laser (all at once)']];
+const LINKERS = ['first','then','after that','once','finally'];
+const PASSIVE = /\b(am|is|are|was|were|be|been|being)\s+(?:\w+ly\s+)?(?:\w+ed|\w+en|made|built|grown|put|kept|sent|done|seen|found|held|left|cut|set|spread|fed|brought|taught|shown|known|given|taken|laid|placed|printed|used)\b/gi;
+const sentences = t => String(t).split(/[.!?]+/).map(s => s.trim()).filter(s => s.split(/\s+/).length >= 3);
+
+const STEPS = [
+ { title:'Before you read', lab:'Before', time:'5 min', html:
+   task('1a','Look at the title and the picture. What do you think <i>bioprinting</i> is? (1–2 sentences)', ta('p_guess','I think bioprinting is…','My guess')) +
+   task('1b','What can a normal 3-D printer make? Name 3 things.', `<div class="grid3">${inp('p_t1','1.','Thing 1')}${inp('p_t2','2.','Thing 2')}${inp('p_t3','3.','Thing 3')}</div>`) },
+
+ { title:'First reading: the big picture', lab:'Big picture', time:'15 min', read:'the introduction and the part <i>It starts with the ink</i>', html:
+   task('q1','Q1. What do bioprinters use instead of plastic or metal?', ta('q1','Answer…','Q1')) +
+   task('q2','Q2. The writer compares bioinks to a food. Which one, and why?', ta('q2','The food is… because…','Q2')) +
+   task('q3','Q3. Where does alginate come from? What is collagen?', ta('q3','Alginate comes from… Collagen is…','Q3')) +
+   task('q4','Q4. What happens to the printed cells inside an incubator?', ta('q4','Answer…','Q4')) },
+
+ { title:'Three ways to print', lab:'3 methods', time:'15 min', read:'<i>Printing living cells</i>', html:
+   task('m','Fill in the table for the 3 methods.', '<div class="mt">' + METHODS.map(([k,e,n]) =>
+     `<div class="mrow"><h4><span>${e}</span>${n}</h4><div class="mcols">
+       <div><label>How it works</label>${ta('m_'+k+'_how','','​'+n+' — how it works')}</div>
+       <div><label>Good for</label>${ta('m_'+k+'_good','','​'+n+' — good for')}</div>
+       <div><label>Problem / advantage</label>${ta('m_'+k+'_pro','','​'+n+' — problem / advantage')}</div></div></div>`).join('') + '</div>') +
+   task('q5','Q5. Why does speed matter so much?', ta('q5','Speed matters because…','Q5')) },
+
+ { title:'What can we print today?', lab:'Today', time:'15 min', read:'<i>What\'s being printed</i> and <i>Heart of the matter</i>', html:
+   task('tf','True or False? If it is false, correct it.', TF.map((s,i) =>
+     `<div class="tf" data-tf="${i}"><p><b>${i+1}.</b> ${s}</p><div class="seg"><button class="t" data-v="T">True</button><button class="fl" data-v="F">False</button></div>
+      <div class="fix" hidden>${inp('tfc'+i,'Correct it: …','Correction '+(i+1))}</div></div>`).join('')) +
+   task('q6','Q6. What is the biggest problem for printing full organs? Explain the <i>“city with no roads”</i> example in your own words.', ta('q6','The biggest problem is… It is like a city with no roads because…','Q6')) },
+
+ { title:'The future', lab:'Future', time:'15 min', read:'<i>Moving forward</i>', html:
+   task('q7','Q7. What are sacrificial inks? What happens to them?', ta('q7','Sacrificial inks are…','Q7')) +
+   task('q8','Q8. How does the GRACE system work? Put the steps in order.',
+     `<div class="cap">Your order</div><div class="ord" id="ord"></div><div class="cap">Steps</div><div class="pool" id="pool">${ORDER.map((t,i)=>`<button class="chip" data-i="${i}">${t}</button>`).join('')}</div>`) +
+   task('q9','Q9. Read the last sentence. What does the writer mean: <i>“no longer if … it\'s when”</i>?', ta('q9','The writer means that…','Q9')) },
+
+ { title:'Video', lab:'Video', time:'10 min', read:'— find the short video in the article (the doctor talks about printing skin onto burn wounds)', html:
+   task('v1','Watch the video. Use subtitles if you need them.', `<label class="tick"><input type="checkbox" data-k="watched" data-l="Watched the video"> I watched the video</label>`) +
+   task('v2','Write 3 facts you learned from the video.', ['1','2','3'].map(n => `<div class="q">${inp('fact'+n,'Fact '+n,'Fact '+n)}</div>`).join('')) },
+
+ { title:'Vocabulary in context', lab:'Vocabulary', time:'25 min', html:
+   task('w1','Find these words in the text and explain them in English (or give a synonym).', '<div class="vw">' + VOCAB.map(([w],i) => `<div class="w">${w}</div>${inp('vw'+i,'meaning / synonym','Meaning: '+w)}`).join('') + '</div>') +
+   task('w2','Write 6 sentences about <b>your own life</b> with 6 of these words.', [0,1,2,3,4,5].map(i =>
+     `<div class="sent"><select class="f" data-k="sw${i}" data-l="Sentence ${i+1} word"><option value="">word…</option>${VOCAB.map(([w],j)=>`<option value="${j}">${w}</option>`).join('')}</select>
+      <div>${inp('ss'+i,'My sentence…','Sentence '+(i+1))}<div class="hint" id="sh${i}"></div></div></div>`).join('')) +
+   task('w3','Open the <b>Power Words</b> list at the end of the article. Choose 5 new words for your vocabulary.', `<div class="grid3">${[1,2,3,4,5].map(n=>inp('pw'+n,'word '+n,'Power word '+n)).join('')}</div>`) },
+
+ { title:'Grammar: the Passive', lab:'Passive', time:'20 min', html:
+   `<div class="ex">Science texts use the passive a lot: <i>is pushed, are printed, is used</i>. <b>be + past participle</b></div>` +
+   task('g1','Find 6 passive sentences in the text and copy them.', [1,2,3,4,5,6].map(n => `<div class="q">${inp('ps'+n,'Passive sentence '+n,'Passive '+n)}<div class="hint" id="ph${n}"></div></div>`).join('')) +
+   task('g2','Change 3 of them into active sentences.',
+     `<div class="ex"><i>The bioink is pushed through a nozzle.</i> → <i>A machine pushes the bioink through a nozzle.</i></div>` +
+     [1,2,3].map(n => `<div class="q"><label>${n}. Passive</label>${inp('ap'+n,'Passive…','Active '+n+' (passive)')}<label style="margin-top:6px">→ Active</label>${inp('aa'+n,'Active…','Active '+n+' (active)')}</div>`).join('')) },
+
+ { title:'Describing a process', lab:'Process', time:'20 min', html:
+   task('d1','Write how scientists print skin (5–6 sentences). Use <b>first, then, after that, once, finally</b> + at least 2 passive forms.',
+     ta('proc','First, … Then, …','How scientists print skin') + `<div class="checks" id="pc"></div>`) },
+
+ { title:'Pronunciation & shadowing', lab:'Pronunciation', time:'20 min', html:
+   task('s1','Say each word aloud 3 times. Tap ▶ to listen, then tap the dots each time you say it.', '<div class="words">' + SAY.map(([w,g],i) =>
+     `<div class="word" data-w="${i}"><button class="play" data-say="${w}" aria-label="Listen: ${w}">▶</button><div class="wt">${w}<small>${g}</small></div><button class="dots" data-c="c${i}" aria-label="I said it">${'<i></i>'.repeat(3)}</button></div>`).join('') + '</div>') +
+   task('s2','Press <b>Listen to this article</b> at the top of the article. Choose one paragraph and shadow it (repeat right after the voice) 3 times.',
+     inp('shpar','Which paragraph? Write its first words','Shadowing paragraph') +
+     `<div class="counter"><button class="btn small" id="shBtn">+1 time</button><div class="big3" id="sh3"><i></i><i></i><i></i></div><button class="btn small ghost" id="shReset">reset</button></div>`) +
+   task('s3','Record yourself reading that paragraph and send it to me.',
+     `<div class="rec"><button class="btn small" id="recBtn">🎙 Record</button><span id="recSt" class="hint"></span><audio id="recAud" controls hidden></audio></div>
+      <p style="font-size:14px;color:var(--muted);margin:6px 0 0">Listen to yourself here, then record a voice message for me on Telegram.</p>
+      <label class="tick"><input type="checkbox" data-k="sent_rec" data-l="Sent the recording"> I sent my recording to Kristina</label>`) },
+
+ { title:'Get ready to speak', lab:'Speaking', time:'15 min', html:
+   `<div class="qcard">Would you agree to get a bioprinted body part? What could bioprinting change in the next 20 years?</div>` +
+   task('k1','Prepare a 1–2 minute answer for our lesson. Write only key words (no full sentences!), then practise aloud without reading.',
+     ta('notes','key words: yes / no because… · 20 years: …','Speaking notes (key words)') +
+     `<div class="counter"><div class="timer" id="tm">0:00</div><button class="btn small" id="tmBtn">▶ Start practice</button><span class="hint" id="tmHint">Talk for 1–2 minutes.</span></div>
+      <label class="tick"><input type="checkbox" data-k="spoke" data-l="Practised speaking aloud"> I practised my answer aloud (1–2 min)</label>`) }
+];
+
+/* ---------- which tasks are done ---------- */
+const DONE = {
+  '1a':()=>has('p_guess',8), '1b':()=>all(['p_t1','p_t2','p_t3']),
+  q1:()=>has('q1',3), q2:()=>has('q2',3), q3:()=>has('q3',3), q4:()=>has('q4',3),
+  m:()=>METHODS.every(([k]) => all(['m_'+k+'_how','m_'+k+'_good','m_'+k+'_pro'])), q5:()=>has('q5',3),
+  tf:()=>TF.every((_,i) => V('tf'+i) === 'T' || (V('tf'+i) === 'F' && has('tfc'+i,3))), q6:()=>has('q6',10),
+  q7:()=>has('q7',3), q8:()=>String(V('q8')).split(',').filter(Boolean).length === 3, q9:()=>has('q9',5),
+  v1:()=>V('watched') === true, v2:()=>all(['fact1','fact2','fact3']),
+  w1:()=>VOCAB.every((_,i) => has('vw'+i)), w2:()=>[0,1,2,3,4,5].every(i => sentOk(i)), w3:()=>all(['pw1','pw2','pw3','pw4','pw5']),
+  g1:()=>all(['ps1','ps2','ps3','ps4','ps5','ps6']), g2:()=>all(['ap1','aa1','ap2','aa2','ap3','aa3']),
+  d1:()=>procInfo().ok,
+  s1:()=>SAY.every((_,i) => (+V('c'+i)||0) >= 3), s2:()=>has('shpar') && (+V('shc')||0) >= 3, s3:()=>V('sent_rec') === true,
+  k1:()=>V('spoke') === true
+};
+function sentOk(i){
+  const w = V('sw'+i), s = String(V('ss'+i)).toLowerCase();
+  return w !== '' && s.trim().split(/\s+/).length >= 4 && s.includes(VOCAB[+w][1]);
+}
+function procInfo(){
+  const t = String(V('proc')).toLowerCase(), n = sentences(t).length;
+  const used = LINKERS.filter(l => new RegExp('\\b' + l + '\\b').test(t));
+  const pas = (t.match(PASSIVE) || []).length;
+  return { n, used, pas, ok: n >= 5 && used.length >= 3 && pas >= 2 };
+}
+
+/* ---------- render ---------- */
+$('steps').innerHTML = STEPS.map((s,i) =>
+  `<section class="card step" id="step${i+1}" hidden><div class="head"><div class="num">${i+1}</div><div><h2>Step ${i+1} — ${s.title}</h2><div class="sub">⏱ about ${s.time}</div></div></div>${s.read ? read(s.read) : ''}${s.html}</section>`).join('');
+$('tabs').innerHTML = STEPS.map((s,i) => `<button class="tab" role="tab" data-s="${i+1}"><span class="n"><span>${i+1}</span></span><span class="lab">${s.lab}</span></button>`).join('');
+const stepTasks = STEPS.map((_,i) => [...document.querySelectorAll('#step'+(i+1)+' .task')].map(t => t.dataset.t));
+const TOTAL = stepTasks.flat().length;
+
+// fill saved values
+document.querySelectorAll('[data-k]').forEach(el => {
+  const k = el.dataset.k;
+  if (el.type === 'checkbox') el.checked = V(k) === true; else el.value = V(k);
+  el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', () => {
+    S.v[k] = el.type === 'checkbox' ? el.checked : el.value; update();
+  });
+});
+
+/* true / false */
+document.querySelectorAll('.tf').forEach(row => {
+  const i = row.dataset.tf;
+  row.querySelectorAll('.seg button').forEach(b => b.onclick = () => { S.v['tf'+i] = b.dataset.v; update(); });
+});
+/* ordering */
+$('pool').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return;
+  const a = String(V('q8')).split(',').filter(Boolean); if (a.length < 3 && !a.includes(b.dataset.i)) { a.push(b.dataset.i); S.v.q8 = a.join(','); update(); } });
+$('ord').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return;
+  S.v.q8 = String(V('q8')).split(',').filter(x => x && x !== b.dataset.i).join(','); update(); });
+/* pronunciation */
+document.querySelectorAll('.play').forEach(b => b.onclick = () => {
+  if (!window.speechSynthesis) return; speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(b.dataset.say); u.lang = 'en-GB'; u.rate = .85;
+  const v = speechSynthesis.getVoices().find(v => /en-GB/i.test(v.lang)); if (v) u.voice = v; speechSynthesis.speak(u);
+});
+document.querySelectorAll('.dots').forEach(b => b.onclick = () => { const k = b.dataset.c; S.v[k] = ((+V(k)||0) + 1) % 4; update(); });
+$('shBtn').onclick = () => { S.v.shc = Math.min(3, (+V('shc')||0) + 1); update(); };
+$('shReset').onclick = () => { S.v.shc = 0; update(); };
+/* recorder */
+let rec = null, chunks = [];
+$('recBtn').onclick = async () => {
+  if (rec && rec.state === 'recording') { rec.stop(); return; }
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({audio:true});
+    rec = new MediaRecorder(st); chunks = [];
+    rec.ondataavailable = e => chunks.push(e.data);
+    rec.onstop = () => { st.getTracks().forEach(t => t.stop()); const a = $('recAud'); a.src = URL.createObjectURL(new Blob(chunks, {type: rec.mimeType})); a.hidden = false;
+      $('recBtn').textContent = '🎙 Record again'; $('recSt').innerHTML = 'Listen to yourself ↓'; };
+    rec.start(); $('recBtn').textContent = '⏹ Stop'; $('recSt').innerHTML = '<span class="recdot"></span> recording…';
+  } catch(e){ $('recSt').textContent = 'Microphone is not available here — just record on Telegram.'; }
+};
+/* speaking timer */
+let tmT = null, tmS = 0;
+$('tmBtn').onclick = () => {
+  if (tmT) { clearInterval(tmT); tmT = null; $('tmBtn').textContent = '▶ Start again';
+    if (tmS >= 60) { S.v.spoke = true; document.querySelector('[data-k="spoke"]').checked = true; update(); }
+    $('tmHint').textContent = tmS >= 60 ? (tmS > 120 ? 'A bit long — try to say it in 2 minutes.' : 'Great length! ✓') : 'Too short — try for at least 1 minute.'; return; }
+  tmS = 0; $('tm').textContent = '0:00'; $('tm').classList.remove('ok'); $('tmBtn').textContent = '⏹ Stop'; $('tmHint').textContent = 'Speak! Don’t read.';
+  tmT = setInterval(() => { tmS++; $('tm').textContent = Math.floor(tmS/60) + ':' + String(tmS%60).padStart(2,'0'); $('tm').classList.toggle('ok', tmS >= 60 && tmS <= 120); }, 1000);
+};
+
+/* tabs */
+function goTop(){ const y = $('steps').getBoundingClientRect().top + window.scrollY - document.querySelector('.bar').offsetHeight - 10; window.scrollTo({top:y, behavior:'smooth'}); }
+function show(n){
+  S.tab = Math.max(1, Math.min(STEPS.length, n));
+  document.querySelectorAll('.step').forEach((s,i) => s.hidden = i+1 !== S.tab);
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', +t.dataset.s === S.tab));
+  const on = document.querySelector('.tab.on'); if (on) on.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+  $('prev').disabled = S.tab === 1;
+  $('next').textContent = S.tab === STEPS.length ? 'Go to send ↓' : 'Next step →';
+  save();
+}
+$('tabs').onclick = e => { const t = e.target.closest('.tab'); if (t) { show(+t.dataset.s); goTop(); } };
+$('prev').onclick = () => { show(S.tab - 1); goTop(); };
+$('next').onclick = () => { if (S.tab === STEPS.length) { document.querySelector('.final').scrollIntoView({behavior:'smooth'}); return; } show(S.tab + 1); goTop(); };
+
+/* ---------- update everything ---------- */
+let scores = {};
+function counts(){
+  return stepTasks.map(ids => ({ s: ids.filter(id => DONE[id]()).length, max: ids.length }));
+}
+function save(){
+  try { localStorage.setItem(CFG.store, JSON.stringify(S)); } catch(e){}
+}
+function update(){
+  // live widgets
+  document.querySelectorAll('[data-k]').forEach(el => { if (el.classList.contains('f')) el.classList.toggle('filled', String(el.value).trim().length >= 2); });
+  document.querySelectorAll('.tf').forEach(row => { const i = row.dataset.tf, v = V('tf'+i);
+    row.querySelectorAll('.seg button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); row.querySelector('.fix').hidden = v !== 'F'; });
+  const a = String(V('q8')).split(',').filter(Boolean);
+  $('ord').innerHTML = a.map((i,n) => `<button class="chip" data-i="${i}"><b>${n+1}</b>${ORDER[i]}</button>`).join('');
+  $('pool').querySelectorAll('.chip').forEach(b => b.classList.toggle('used', a.includes(b.dataset.i)));
+  [0,1,2,3,4,5].forEach(i => { const h = $('sh'+i), w = V('sw'+i), s = String(V('ss'+i)).trim();
+    if (!s || w === '') { h.textContent = ''; h.className = 'hint'; return; }
+    const ok = sentOk(i); h.textContent = ok ? '✓ uses “' + VOCAB[+w][0] + '”' : (s.split(/\s+/).length < 4 ? 'Write a longer sentence.' : 'I can’t find “' + VOCAB[+w][0] + '” in your sentence.'); h.className = 'hint ' + (ok ? 'ok' : 'no'); });
+  [1,2,3,4,5,6].forEach(n => { const h = $('ph'+n), s = String(V('ps'+n)).trim();
+    if (!s) { h.textContent = ''; h.className = 'hint'; return; }
+    const ok = new RegExp(PASSIVE.source, 'i').test(s); h.textContent = ok ? '✓ looks passive' : 'Hmm, I can’t see be + past participle. Check it.'; h.className = 'hint ' + (ok ? 'ok' : 'no'); });
+  const p = procInfo();
+  $('pc').innerHTML = LINKERS.map(l => `<span class="${p.used.includes(l) ? 'ok' : ''}">${l}</span>`).join('') +
+    `<span class="${p.n >= 5 ? 'ok' : ''}">${p.n}/5 sentences</span><span class="${p.pas >= 2 ? 'ok' : ''}">passive ×${p.pas}</span>`;
+  document.querySelectorAll('.word').forEach(w => { const c = +V('c'+w.dataset.w) || 0;
+    w.querySelectorAll('.dots i').forEach((d,j) => d.classList.toggle('on', j < c)); w.classList.toggle('full', c >= 3); });
+  $('sh3').querySelectorAll('i').forEach((d,j) => d.classList.toggle('on', j < (+V('shc')||0)));
+
+  // ticks, tabs, progress
+  document.querySelectorAll('.task').forEach(t => t.classList.toggle('done', DONE[t.dataset.t]()));
+  const c = counts(), done = c.reduce((x,y) => x + y.s, 0);
+  scores = {}; c.forEach((x,i) => scores['step'+(i+1)] = x);
+  document.querySelectorAll('.tab').forEach((t,i) => { t.classList.toggle('full', c[i].s === c[i].max); t.classList.toggle('part', c[i].s > 0 && c[i].s < c[i].max); });
+  $('fill').style.width = (done / TOTAL * 100) + '%';
+  $('cnt').textContent = done + '/' + TOTAL + ' tasks';
+  $('sum').innerHTML = c.map((x,i) => `<span class="${x.s === x.max ? 'full' : x.s ? 'part' : ''}">Step ${i+1} · ${x.s}/${x.max}</span>`).join('');
+  $('sendBtn').textContent = done === TOTAL ? 'Send my homework ✓' : 'Send my progress (' + done + '/' + TOTAL + ')';
+  $('sendBtn').disabled = done === 0 || sending;
+  save();
+  try { localStorage.setItem(CFG.progress, JSON.stringify({done, total:TOTAL, at:new Date().toISOString(), sentAt:S.sentAt || ''})); } catch(e){}
+  $('saved').textContent = 'Saved on this device ✓' + (S.sentAt ? ' · last sent ' + new Date(S.sentAt).toLocaleString('en-GB', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '');
+}
+
+/* ---------- name + send ---------- */
+const fromLink = new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value = fromLink; $('nameCard').style.display = 'none'; }
+else if (S.name) $('student').value = S.name;
+$('student').addEventListener('input', () => { S.name = $('student').value; save(); });
+
+function openText(){
+  const out = [];
+  STEPS.forEach((s,i) => {
+    const lines = [], sec = $('step'+(i+1));
+    sec.querySelectorAll('[data-k]').forEach(el => {
+      const k = el.dataset.k; let v = V(k);
+      if (el.type === 'checkbox') { if (v === true) lines.push('✓ ' + el.dataset.l); return; }
+      if (el.tagName === 'SELECT') return;
+      if (/^ss\d$/.test(k) && V('sw'+k.slice(2)) !== '') v = '[' + VOCAB[+V('sw'+k.slice(2))][0] + '] ' + v;
+      if (String(v).trim()) lines.push(el.dataset.l.replace('​','') + ': ' + String(v).trim());
+    });
+    if (i === 3) TF.forEach((t,j) => { const v = V('tf'+j); if (v) lines.splice(j, 0, 'T/F ' + (j+1) + ': ' + (v === 'T' ? 'True' : 'False')); });
+    if (i === 4 && V('q8')) lines.push('Q8 order: ' + String(V('q8')).split(',').filter(Boolean).map((x,n) => (n+1) + ') ' + ORDER[x]).join('  '));
+    if (i === 9) { lines.unshift('Words said 3×: ' + SAY.filter((_,j) => (+V('c'+j)||0) >= 3).length + '/' + SAY.length); lines.push('Shadowing: ' + (+V('shc')||0) + '/3 times'); }
+    if (lines.length) out.push('STEP ' + (i+1) + ' — ' + s.title.toUpperCase() + '\n' + lines.join('\n'));
+  });
+  return out.join('\n\n');
+}
+let sending = false;
+$('sendBtn').onclick = () => {
+  const student = $('student').value.trim();
+  if (!student) { $('nameCard').style.display = 'block'; window.scrollTo({top:0, behavior:'smooth'}); $('student').focus();
+    $('fbS').className = 'fb warn'; $('fbS').textContent = 'Please type your name at the top first.'; return; }
+  update();
+  const c = counts(), done = c.reduce((x,y) => x + y.s, 0);
+  Object.keys(HWR.snaps).forEach(k => delete HWR.snaps[k]);   // fresh pictures every time
+  sending = true; $('sendBtn').disabled = true; $('fbS').className = 'fb'; $('fbS').textContent = 'Sending…';
+  HWR.send({ homework: CFG.homework, student, score: done, max: TOTAL,
+    breakdown: c.map((x,i) => 'Step ' + (i+1) + ' ' + x.s + '/' + x.max).join(' · '), open: openText() })
+  .then(() => { S.sentAt = new Date().toISOString(); $('fbS').className = 'fb good';
+    $('fbS').textContent = done === TOTAL ? 'Sent! 🎉 Great job — see you in the lesson.' : 'Sent ✓ Keep going — you can send again later.'; })
+  .catch(() => { $('fbS').className = 'fb warn'; $('fbS').textContent = 'Not sent. Check your internet and try again.'; })
+  .finally(() => { sending = false; update(); });
+};
+
+update();
+show(S.tab || 1);
+</script>
+</body>
+</html>
