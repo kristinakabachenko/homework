@@ -66,5 +66,30 @@
       "total": 8
     }
   ],
-  "X4C04a1tzaH7": []
+  "X4C04a1tzaH7": [
+    {
+      "title": "Compound nouns: education",
+      "page": "compound-nouns-education.html",
+      "about": "Speakout C1–C2 · Unit 1 · Vocabulary",
+      "given": "2026-11-10"
+    },
+    {
+      "title": "Use of English: fix my mistakes",
+      "page": "https://claude.ai/artifact/SKvnmiyavfMd1hXFjPdNea",
+      "about": "UoF · Grammar · Error cards",
+      "type": "side",
+      "emoji": "🃏",
+      "given": "2026-11-01",
+      "note": "Your own mistakes from FCE tests. Open it whenever you like and practise again."
+    },
+    {
+      "title": "FCE Practice Tests",
+      "page": "https://www.flo-joe.co.uk/fce/students/tests/",
+      "about": "UoF · Grammar · Use of English",
+      "type": "side",
+      "emoji": "📝",
+      "given": "2026-11-01",
+      "note": "Do one test, then add your mistakes to the error cards."
+    }
+  ]
 }
