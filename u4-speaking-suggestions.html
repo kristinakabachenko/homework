@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 Speaking · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf5f1;--card:#fff;--ink:#2a2230;--muted:#7a6f78;--brand:#c8414f;--brand2:#e9784a;--sun:#ffc23d;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#efe3dc;--soft:#fdf0ec;--good:#2f9e63;--goodbg:#e4f6ec;--neg:#c8414f;--negbg:#fde9ea}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#c8414f 0%,#e9784a 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F4AC";position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.goal{background:#eaf9ef;border:2px solid #9fe0b8;border-radius:18px;padding:14px 18px;margin:18px 0}
+.goal b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.goal p{margin:4px 0 0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#eadbd3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.name,.inp{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff;color:var(--ink)}
+.name:focus,.inp:focus,textarea:focus{outline:none;border-color:var(--brand)}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:var(--ink);border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:10px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.small{font-size:14px;color:var(--muted);margin:4px 0 0}
+
+/* EX1 flashcards */
+.modes{display:flex;gap:8px;margin-bottom:12px}
+.modes button{flex:1;font:inherit;font-weight:800;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px;cursor:pointer;color:var(--muted)}
+.modes button.on{border-color:var(--brand);color:var(--brand);background:var(--soft)}
+.flip{perspective:1200px;height:260px;cursor:pointer;margin-bottom:12px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.turned .flip-in{transform:rotateY(180deg)}
+.side{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.front{background:linear-gradient(135deg,#fff1ea,#ffdccd);border:2px solid #f4bfa8}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;color:var(--brand)}
+.front .hint{font-size:14px;color:var(--muted);margin-top:10px}
+.back{background:#fff;border:2px solid var(--brand);transform:rotateY(180deg)}
+.back .ua{font-weight:800;font-size:22px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted)}
+.decks{display:flex;gap:8px}
+.decks .btn{flex:1;margin-top:0}
+.btn.again{background:#fdecec;color:var(--bad)}
+.btn.know{background:var(--okbg);color:var(--ok)}
+.stat{display:flex;justify-content:space-between;font-weight:800;font-size:14px;color:var(--muted);margin-bottom:8px}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.dots i{width:14px;height:14px;border-radius:5px;background:#f0e2da}
+.dots i.y{background:var(--ok)}
+.typebox{display:flex;gap:8px}
+.typebox .inp{margin-top:0}
+.typebox .btn{margin-top:0;flex:none}
+
+/* EX2 thumbs */
+.sort{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.sort p{margin:0;flex:1;font-weight:700;border-radius:8px;padding:2px 6px}
+.tog{display:flex;gap:6px}
+.tog button{font:inherit;font-size:20px;width:52px;height:42px;border:2px solid var(--line);background:#fff;border-radius:12px;cursor:pointer}
+.tog button.up.on{background:var(--goodbg);border-color:var(--good)}
+.tog button.down.on{background:var(--negbg);border-color:var(--neg)}
+
+/* EX3 dialogue gaps */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #f0c3b4;color:var(--brand);border-radius:99px;padding:6px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+.dlg{display:flex;flex-direction:column;gap:8px}
+.ln{max-width:88%;padding:10px 14px;border-radius:18px;line-height:1.75}
+.ln.a{align-self:flex-start;background:#f6eee9;border-bottom-left-radius:6px}
+.ln.b{align-self:flex-end;background:#fff1d6;border-bottom-right-radius:6px}
+.ln .who{font-weight:800;font-size:13px;color:var(--muted);display:block;line-height:1.2}
+.slot{display:inline-block;min-width:110px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.sel{background:#ffe7a8}
+.slot.ok,.slot.bad{border-bottom-style:solid}
+
+/* EX4 order */
+.map{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:800;color:var(--muted);margin-bottom:12px}
+.map span{background:var(--soft);border-radius:99px;padding:4px 10px;color:var(--brand)}
+.olist{display:flex;flex-direction:column;gap:6px;min-height:60px;padding:8px;border:2px dashed var(--line);border-radius:14px;margin-bottom:10px}
+.olist .hint{color:var(--muted);font-size:15px;padding:8px}
+.oline{font:inherit;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;color:var(--ink)}
+.oline b{color:var(--brand);margin-right:6px}
+.oline.used{opacity:.25;cursor:default}
+.olist .oline{border-color:#f0c3b4}
+
+/* EX5 chat */
+.brief{background:#fff8e6;border:2px dashed var(--sun);border-radius:18px;padding:14px 16px;margin-bottom:14px}
+.brief p{margin:0 0 6px}
+.phone{background:#f4ece7;border-radius:22px;padding:14px 12px;display:flex;flex-direction:column;gap:10px}
+.phone .top{text-align:center;font-weight:800;font-size:14px;color:var(--muted);padding-bottom:6px;border-bottom:1px solid #e6d9d1}
+.msg{max-width:85%;padding:10px 14px;border-radius:18px;background:#fff;align-self:flex-start;border-bottom-left-radius:6px}
+.me{align-self:flex-end;width:85%}
+.me textarea{font:inherit;width:100%;min-height:74px;border:2px solid #f4bfa8;border-radius:18px;border-bottom-right-radius:6px;padding:10px 14px;resize:vertical;background:#fff3ec}
+.me .ph{font-size:13px;color:var(--muted);text-align:right;margin-top:3px}
+.need{list-style:none;padding:0;margin:6px 0 10px}
+.need li{padding:5px 0 5px 30px;position:relative;font-size:15px}
+.need li:before{content:"\2713";position:absolute;left:4px;top:5px;width:20px;height:20px;border-radius:6px;background:var(--soft);color:var(--brand);font-weight:800;font-size:13px;display:grid;place-items:center}
+.need li.y:before{background:var(--ok);color:#fff}
+.lbl{font-weight:800;font-size:15px;margin-top:14px;display:block}
+.words{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.words span{font-size:14px;font-weight:700;border:2px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.words span.y{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+.bonus{background:var(--soft);border-radius:14px;padding:10px 14px;font-size:15px;margin-top:12px}
+
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#ece2dc;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 4 · Eat · Speaking + Vocabulary homework</small>
+  <h1>Shall we get something to eat?</h1>
+  <p>restaurant words · making and responding to suggestions</p>
+</header>
+
+<div class="goal">
+  <b>Your goal</b>
+  <p>Describe a place to eat and agree with a friend where to go: suggest, say no politely, suggest something else, accept.</p>
+</div>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 5 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1: FLASHCARDS -->
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Learn the words. First flip the cards, then test yourself.</h2></div>
+  <div class="modes"><button id="mLearn" class="on" onclick="mode('learn')">1 · Learn</button><button id="mTest" onclick="mode('test')">2 · Test yourself</button></div>
+
+  <div id="learnBox">
+    <div class="stat"><span id="lCount"></span><span>tap the card to flip</span></div>
+    <div class="flip" id="flip" onclick="this.classList.toggle('turned')">
+      <div class="flip-in">
+        <div class="side front"><div class="w" id="fW"></div><div class="hint">What does it mean?</div></div>
+        <div class="side back"><div class="ua" id="bUa"></div><div class="def" id="bDef"></div><div class="ex" id="bEx"></div></div>
+      </div>
+    </div>
+    <div class="decks"><button class="btn again" onclick="rate(false)">↻ Again</button><button class="btn know" onclick="rate(true)">✓ I know it</button></div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <div id="testBox" style="display:none">
+    <div class="stat"><span id="tCount"></span><span id="tScore"></span></div>
+    <div class="front side" style="position:relative;height:auto;min-height:150px;border-radius:20px;margin-bottom:12px">
+      <div id="tUa" style="font-weight:800;font-size:22px;color:var(--brand)"></div>
+      <div id="tEx" style="margin-top:8px;font-style:italic"></div>
+    </div>
+    <div class="typebox"><input class="inp" id="tIn" placeholder="Type the word or phrase" autocomplete="off" autocapitalize="off"><button class="btn" onclick="checkT()">Check</button></div>
+    <div class="fb" id="fbT"></div>
+  </div>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<!-- EX 2: GOOD OR BAD -->
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Would you go there? Is each sentence good 👍 or bad 👎 news about a restaurant?</h2></div>
+  <div id="list2"></div>
+  <button class="btn" onclick="check2()">Check</button>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<!-- EX 3: DIALOGUE GAPS -->
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Complete the chat. Tap a gap, then tap a phrase. One phrase is extra.</h2></div>
+  <div class="chips" id="bank3"></div>
+  <div class="dlg" id="dlg3"></div>
+  <button class="btn" onclick="check3()">Check</button>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4: ORDER -->
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Put the conversation in order. Tap the lines one by one.</h2></div>
+  <div class="map"><span>suggest</span>→<span>say no + reason</span>→<span>suggest something else</span>→<span>accept</span>→<span>arrange to meet</span></div>
+  <div class="olist" id="pick4"></div>
+  <div class="dlg" id="bank4"></div>
+  <button class="btn" onclick="check4()">Check</button>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5: REAL CHAT -->
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Your real lunch plan 🍜</h2></div>
+  <div class="brief">
+    <p>Your friend wants to have lunch with you this week. Think of <b>real</b> places in Kyiv that you know.</p>
+    <p style="margin:0">Answer each message. Describe the places with the new words, and use at least <b>four</b> phrases for suggestions.</p>
+  </div>
+
+  <div class="phone" id="phone"></div>
+
+  <span class="lbl">Use at least four:</span>
+  <ul class="need" id="need5">
+    <li data-k="how">How about …? / Why don't we …?</li>
+    <li data-k="honest">To be honest, I don't really feel like …</li>
+    <li data-k="rather">I'd rather not, if you don't mind.</li>
+    <li data-k="could">We could … instead.</li>
+    <li data-k="sounds">Sounds good. I've heard …</li>
+    <li data-k="shall">So, shall we meet at …?</li>
+  </ul>
+  <span class="lbl">Restaurant words you used (at least 3):</span>
+  <div class="words" id="words5"></div>
+
+  <div class="bonus">🎙 <b>Bonus:</b> read your chat out loud and send it to your teacher as a voice message on Telegram.</div>
+  <button class="btn" onclick="save5()">Save my chat</button>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<!-- SEND -->
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 5 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 4 Speaking · Making suggestions + restaurant words',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false};
+const scores = {};
+const notes = {};
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: flashcards ---------- */
+const CARDS = [
+  {w:'a little place', a:['a little place','little place'], ua:'невеличкий заклад', def:'a small café or restaurant', ex:'There\'s ___ near my office, which does great sushi.'},
+  {w:'do great (sushi)', a:['does great','do great'], ua:'класно готувати (якусь страву)', def:'a restaurant makes a dish very well', ex:'Go to Mario\'s. It ___ pizza!'},
+  {w:'get really busy', a:['gets really busy','get really busy','gets busy','get busy'], ua:'бути переповненим (людьми)', def:'there are a lot of people there', ex:'It often ___ at lunchtime, so go early.'},
+  {w:'get a seat', a:['get a seat','to get a seat'], ua:'знайти вільне місце', def:'find a free chair or table', ex:'We had to wait for twenty minutes to ___.'},
+  {w:'the service', a:['the service','service'], ua:'обслуговування', def:'how the waiters work with you', ex:'___ there is great: fast and friendly.'},
+  {w:'the staff', a:['the staff','staff'], ua:'персонал', def:'all the people who work there', ex:'___ are always really friendly.'},
+  {w:'choice', a:['choice'], ua:'вибір', def:'how many things you can choose from', ex:'They have a fixed menu, and there isn\'t much ___.'},
+  {w:'option', a:['options','option'], ua:'варіант', def:'one thing you can choose', ex:'There are usually just two or three ___ for each course.'},
+  {w:'taste disgusting', a:['tasted disgusting','tastes disgusting','taste disgusting'], ua:'бути огидним на смак', def:'have a very bad taste', ex:'I had a fish dish which ___. I couldn\'t eat it!'},
+  {w:'rude', a:['rude'], ua:'грубий, неввічливий', def:'not polite', ex:'When I complained, the waiter was quite ___.'},
+  {w:'good value for money', a:['good value for money','good value'], ua:'вигідно, вартує своїх грошей', def:'the price is good for what you get', ex:'It\'s really ___: not expensive at all.'},
+  {w:'a wide selection', a:['a wide selection','wide selection'], ua:'широкий вибір', def:'a lot of different things to choose from', ex:'They have ___ of vegetarian dishes.'}
+];
+const NC = CARDS.length;
+function fillEx(c){ const f=c.a[0]; return c.ex.indexOf('___')===0 ? c.ex.replace('___',f[0].toUpperCase()+f.slice(1)) : c.ex.replace('___',f); }
+let queue = CARDS.map((_,i)=>i), known = new Set(), repeats = 0;
+function showCard(){
+  $('flip').classList.remove('turned');
+  if (!queue.length){ $('lCount').textContent='All '+NC+' learned! Now test yourself →'; $('fW').textContent='🎉'; return; }
+  const c=CARDS[queue[0]];
+  setTimeout(()=>{ $('fW').textContent=c.w; $('bUa').textContent=c.ua; $('bDef').textContent=c.def; $('bEx').textContent=fillEx(c); },150);
+  $('lCount').textContent=known.size+' / '+NC+' learned';
+  $('dots').innerHTML=CARDS.map((_,i)=>'<i class="'+(known.has(i)?'y':'')+'"></i>').join('');
+}
+function rate(k){
+  if (!queue.length) return;
+  const i=queue.shift();
+  if (k) known.add(i); else { repeats++; queue.splice(Math.min(3,queue.length),0,i); }
+  showCard();
+  if (!queue.length) { $('dots').innerHTML=CARDS.map(()=>'<i class="y"></i>').join(''); setTimeout(()=>mode('test'),700); }
+}
+function mode(m){
+  $('mLearn').classList.toggle('on',m==='learn'); $('mTest').classList.toggle('on',m==='test');
+  $('learnBox').style.display=m==='learn'?'block':'none'; $('testBox').style.display=m==='test'?'block':'none';
+  if (m==='test') showT();
+}
+let tOrder = shuffle(CARDS.map((_,i)=>i)), tPos = 0, tFirst = 0, tTried = false, tWrong = [];
+function showT(){
+  if (tPos>=tOrder.length){ $('tUa').textContent='Done! 🎉'; $('tEx').textContent=''; $('tCount').textContent=NC+' / '+NC; return; }
+  const c=CARDS[tOrder[tPos]];
+  $('tUa').textContent=c.ua; $('tEx').textContent=c.ex;
+  $('tCount').textContent=(tPos+1)+' / '+NC; $('tScore').textContent='first try: '+tFirst;
+  $('tIn').value=''; $('tIn').classList.remove('ok','bad'); fb('fbT','');
+}
+function checkT(){
+  if (tPos>=tOrder.length) return;
+  const c=CARDS[tOrder[tPos]], v=norm($('tIn').value);
+  if (!v) return;
+  if (c.a.includes(v)){
+    $('tIn').classList.add('ok'); if(!tTried) tFirst++; else tWrong.push(c.w);
+    fb('fbT','Yes! '+fillEx(c),'good'); tTried=false; tPos++;
+    setTimeout(()=>{ showT(); if(tPos>=tOrder.length) finish1(); },1200);
+  } else {
+    $('tIn').classList.add('bad'); tTried=true;
+    fb('fbT','Not quite. It starts with "'+c.a[0].slice(0,3)+'…". Try again!','warn');
+  }
+}
+$('tIn').addEventListener('keydown',e=>{ if(e.key==='Enter') checkT(); });
+function finish1(){
+  scores.ex1={s:tFirst,max:NC}; if(window.HWR) HWR.snap('ex1');
+  notes.ex1='EX 1 (flashcards): '+repeats+' cards repeated in Learn mode. Test first try: '+tFirst+'/'+NC+(tWrong.length?'. Difficult: '+tWrong.join(', '):'');
+  fb('fb1','Great! Test score (first try): '+tFirst+'/'+NC+'.', tFirst===NC?'good':'warn'); markDone('ex1');
+}
+
+/* ---------- EX 2: good or bad ---------- */
+const E2 = [
+  ['The service there is great.','up'],
+  ['It gets really busy, so you can\'t always get a seat.','down'],
+  ['There isn\'t much choice on the menu.','down'],
+  ['It\'s really good value for money.','up'],
+  ['My steak tasted disgusting.','down'],
+  ['The staff are always really friendly.','up'],
+  ['The waiter was quite rude to us.','down'],
+  ['They have a wide selection of vegetarian dishes.','up'],
+  ['It\'s a little place, but it does great pasta.','up'],
+  ['There are only two options, and both are too expensive.','down']
+];
+let a2 = E2.map(()=>null), m2 = E2.map(()=>'');
+function r2(){
+  $('list2').innerHTML = E2.map((x,i)=>'<div class="sort"><p class="'+m2[i]+'">'+(i+1)+'. '+esc(x[0])+'</p><div class="tog">'+
+    '<button class="up '+(a2[i]==='up'?'on':'')+'" onclick="p2('+i+',\'up\')">👍</button>'+
+    '<button class="down '+(a2[i]==='down'?'on':'')+'" onclick="p2('+i+',\'down\')">👎</button></div></div>').join('');
+}
+function p2(i,v){ a2[i]=v; m2[i]=''; r2(); }
+function check2(){
+  if (a2.some(x=>!x)) return fb('fb2','Choose 👍 or 👎 for every sentence first.','warn');
+  let s=0; a2.forEach((x,i)=>{ const ok=x===E2[i][1]; m2[i]=ok?'ok':'bad'; if(ok)s++; }); r2();
+  const [m,c]=score('ex2',s,E2.length); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: dialogue gaps ---------- */
+const BANK3 = ['Do you fancy','How about','To be honest, I don\'t really feel like','Why don\'t we','I\'d rather not, if you don\'t mind','we could','Sounds good','shall we meet','Let\'s to'];
+const D3 = [
+  ['a','Tanya','Are you hungry? ',0,' getting something to eat?'],
+  ['b','Max','Yeah, I\'m starving. Where are you thinking of going?'],
+  ['a','Tanya','',1,' that little Japanese place near the station? It does great sushi.'],
+  ['b','Max','Hmm. ',2,' fish today. And it always gets really busy at lunchtime.'],
+  ['a','Tanya','OK. ',3,' try the new Peruvian café instead? The staff are really friendly.'],
+  ['b','Max','',4,'. I went there once and my dish tasted disgusting.'],
+  ['a','Tanya','Oh no! Well, ',5,' go to Mario\'s. They have a wide selection of pizzas and it\'s good value for money.'],
+  ['b','Max','',6,'. I\'ve heard the pasta is delicious too.'],
+  ['a','Tanya','Great. So, ',7,' at one?']
+];
+const ANS3 = ['Do you fancy','How about','To be honest, I don\'t really feel like','Why don\'t we','I\'d rather not, if you don\'t mind','we could','Sounds good','shall we meet'];
+let f3 = ANS3.map(()=>null), m3 = ANS3.map(()=>''), sel3 = 0;
+function r3(){
+  const used = f3.filter(x=>x!==null);
+  $('bank3').innerHTML = BANK3.map((b,j)=>'<button class="chip '+(used.includes(j)?'used':'')+'" onclick="tap3('+j+')">'+esc(b)+'</button>').join('');
+  $('dlg3').innerHTML = D3.map(d=>'<div class="ln '+d[0]+'"><span class="who">'+d[1]+'</span>'+esc(d[2])+
+    (d.length>3 ? '<span class="slot '+(sel3===d[3]?'sel ':'')+m3[d[3]]+'" onclick="sel(' + d[3] + ')">'+(f3[d[3]]!==null?esc(BANK3[f3[d[3]]]):(d[3]+1)+' ……')+'</span>'+esc(d[4]) : '')+'</div>').join('');
+}
+function sel(k){ if (f3[k]!==null){ f3[k]=null; m3[k]=''; } sel3=k; r3(); }
+function tap3(j){
+  if (f3.includes(j) || sel3===null) return;
+  f3[sel3]=j; m3[sel3]='';
+  const next=f3.findIndex(x=>x===null); sel3 = next<0 ? null : next; r3();
+}
+function check3(){
+  if (f3.some(x=>x===null)) return fb('fb3','Fill in every gap first.','warn');
+  let s=0; f3.forEach((x,k)=>{ const ok=BANK3[x]===ANS3[k]; m3[k]=ok?'ok':'bad'; if(ok)s++; }); r3();
+  const [m,c]=score('ex3',s,ANS3.length); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: put in order ---------- */
+const E4 = [
+  'A: Do you want to get something to eat after work?',
+  'B: Yeah, good idea. Where are you thinking of going?',
+  'A: Shall we go to the burger place on the corner?',
+  'B: Hmm, I\'d rather not. The service there is really slow.',
+  'A: OK. Why don\'t we try the Indian restaurant instead? It\'s good value for money.',
+  'B: Sounds good. Have you ever been there?',
+  'A: Yes, once. The food was delicious, and there\'s plenty of choice.',
+  'B: Great. So, shall we meet at seven?'
+];
+let bank4 = shuffle(E4.map((t,i)=>({t,i}))), pick4 = [], m4 = '';
+function r4(){
+  $('pick4').className='olist '+m4;
+  $('pick4').innerHTML = pick4.length ? pick4.map((p,j)=>'<button class="oline" onclick="undo4('+j+')"><b>'+(j+1)+'</b>'+esc(p.t)+'</button>').join('') : '<div class="hint">Your conversation will appear here. Start with A\'s first line.</div>';
+  $('bank4').innerHTML = bank4.map((b,j)=>'<button class="oline '+(pick4.some(p=>p.i===b.i)?'used':'')+'" onclick="tap4('+j+')">'+esc(b.t)+'</button>').join('');
+}
+function tap4(j){ const b=bank4[j]; if (pick4.some(p=>p.i===b.i)) return; pick4.push(b); m4=''; r4(); }
+function undo4(j){ pick4.splice(j,1); m4=''; r4(); }
+function check4(){
+  if (pick4.length<E4.length) return fb('fb4','Use all 8 lines first.','warn');
+  let s=0; pick4.forEach((p,j)=>{ if(p.i===j) s++; });
+  m4 = s===E4.length ? 'ok' : 'bad'; r4();
+  if (s<E4.length){
+    const wrong = pick4.map((p,j)=>p.i===j?null:j+1).filter(Boolean);
+    const [m,c]=score('ex4',s,E4.length); fb('fb4',m.replace('Fix the red ones','Lines in the wrong place: '+wrong.join(', ')+'. Tap a line to take it out')+'',c);
+  } else { const [m,c]=score('ex4',s,E4.length); fb('fb4',m,c); }
+  markDone('ex4');
+}
+
+/* ---------- EX 5: real chat ---------- */
+const CHAT = [
+  ['friend','Hey! Are you hungry? Do you want to get lunch together this week? 🙂'],
+  ['me','Suggest a real place and say why it\'s good.'],
+  ['friend','Hmm, I\'ve never been there. What\'s it like?'],
+  ['me','Describe it: the food, the service, the staff, the choice, the prices…'],
+  ['friend','To be honest, I\'m not sure. I don\'t really feel like that kind of food. Any other ideas?'],
+  ['me','Suggest something else.'],
+  ['friend','Sounds good! When are you free?'],
+  ['me','Arrange the time and the place to meet.']
+];
+$('phone').innerHTML = '<div class="top">Chat with your friend</div>' + CHAT.map((c,i)=> c[0]==='friend'
+  ? '<div class="msg">'+esc(c[1])+'</div>'
+  : '<div class="me"><textarea id="c5_'+i+'" placeholder="Type your message…"></textarea><div class="ph">'+esc(c[1])+'</div></div>').join('');
+const CH5 = {
+  how: t=>/how about|why don'?t we/.test(t),
+  honest: t=>/to be honest/.test(t) || /(don'?t|do not) really feel like/.test(t),
+  rather: t=>/i'?d rather not|i would rather not/.test(t),
+  could: t=>/we could/.test(t),
+  sounds: t=>/sounds good|i'?ve heard/.test(t),
+  shall: t=>/shall we/.test(t)
+};
+const W5 = [
+  ['a little place',/little (\w+ )?place/],['does great …',/(do|does|did) great/],['gets busy',/gets? (really |very |so )?busy/],['get a seat',/get a (seat|table)/],
+  ['service',/service/],['staff',/staff/],['choice',/choice/],['options',/options?/],['disgusting',/disgusting/],['rude',/rude/],
+  ['good value for money',/good value/],['a wide selection',/wide selection/],['delicious',/delicious/],['friendly',/friendly/]
+];
+function myText(){ return CHAT.map((c,i)=>c[0]==='me'?$('c5_'+i).value:'').join(' '); }
+function live5(){
+  const t=norm(myText());
+  document.querySelectorAll('#need5 li').forEach(li=>li.classList.toggle('y', CH5[li.dataset.k](t)));
+  $('words5').innerHTML = W5.map(w=>'<span class="'+(w[1].test(t)?'y':'')+'">'+esc(w[0])+'</span>').join('');
+}
+CHAT.forEach((c,i)=>{ if(c[0]==='me') $('c5_'+i).addEventListener('input',live5); });
+function save5(){
+  const empty = CHAT.some((c,i)=>c[0]==='me' && !$('c5_'+i).value.trim());
+  if (empty) return fb('fb5','Answer all four messages first.','warn');
+  const t=norm(myText());
+  const ph = Object.keys(CH5).filter(k=>CH5[k](t)).length;
+  const wd = W5.filter(w=>w[1].test(t)).map(w=>w[0]);
+  if (ph<4) return fb('fb5','You used '+ph+' phrase'+(ph===1?'':'s')+' from the list. Use at least four, then save again.','warn');
+  if (wd.length<3) return fb('fb5','Add more restaurant words (at least 3). You have '+wd.length+'.','warn');
+  notes.ex5='EX 5 (real chat)\n'+CHAT.map((c,i)=>(c[0]==='friend'?'Friend: '+c[1]:'Me: '+$('c5_'+i).value.trim())).join('\n')+'\nPhrases used: '+ph+'/6 · Words: '+wd.join(', ');
+  if(window.HWR) HWR.snap('ex5');
+  fb('fb5','Saved! Great chat 😋 Now read it out loud for the bonus.','good');
+  markDone('ex5');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+showCard(); r2(); r3(); r4(); live5(); progress();
+</script>
+</body>
+</html>
