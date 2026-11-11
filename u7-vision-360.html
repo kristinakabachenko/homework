@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School of the future · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4fd;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#7c3aed;--brand2:#f59e0b;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e6e0f2;--soft:#f1ebff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#7c3aed 0%,#f59e0b 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2dcef;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #d8ccff;color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:140px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.quote{display:block;background:#f3f1f8;border-left:4px solid var(--brand2);border-radius:10px;padding:8px 12px;font-style:italic;margin-bottom:6px}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.dlg{background:#faf9fd;border-radius:16px;padding:12px;margin-bottom:12px}
+.dlg h3{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.line{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.line.r{flex-direction:row-reverse}
+.who{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.bubble{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px;max-width:85%}
+.line.r .bubble{background:var(--soft);border-color:#d8ccff}
+.post{border:2px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post .top{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ffb020)}
+.post .top b{display:block}.post .top small{color:var(--muted)}
+.post .body{padding:12px 14px;line-height:2}
+.post .acts{display:flex;justify-content:space-around;padding:8px;border-top:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:16px;padding:14px 14px 10px;margin:0 0 14px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:18px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.statement{background:#22213a;color:#fff;border-radius:14px;padding:12px 16px;text-align:center;font-family:'Baloo 2',sans-serif;font-size:20px;margin-bottom:10px}
+.dlg .bubble{line-height:2}
+.slot{min-width:150px}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:800;font-size:14px;padding:6px 11px;border:2px solid var(--line);border-radius:99px;background:#fff;cursor:pointer;color:var(--ink)}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;background:var(--soft);border-radius:14px;padding:10px 14px;margin:0 0 10px;font-size:15px}
+.legend b{color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+u{text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--brand2)}
+select.name{background:#fff}
+.checks label{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-weight:600}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none}
+
+.hero{background:linear-gradient(135deg,#7c3aed 0%,#f59e0b 100%)}
+.hero:after{content:"\1F680";background:none;width:auto;height:auto;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.2;border-radius:0}
+.zones{display:grid;gap:10px}
+.zone{background:var(--soft);border-radius:14px;padding:10px 12px;line-height:1.9}
+.article{background:#fffdf7;border:2px solid #efe6cf;border-radius:18px;padding:18px;margin-bottom:12px}
+.article .kick{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand2)}
+.article h3{font-family:'Baloo 2',sans-serif;font-size:26px;line-height:1.15;margin:4px 0 10px}
+.article p{margin:0 0 10px}
+.article .src{font-size:13px;color:var(--muted)}
+.article .src a{color:var(--muted)}
+.wish{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;padding:10px 0;border-bottom:1px solid var(--line)}
+.wish .orig{flex:1 1 100%;font-weight:600}
+.wish b{color:var(--brand)}
+.wish input.gap{flex:1 1 220px;width:auto}
+.wish .key{flex:1 1 100%;font-size:14px;color:var(--ok);font-weight:700;display:none}
+.counter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;font-weight:800;color:var(--muted);margin-top:6px}
+.counter .good{color:var(--ok)}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:#eef1f6;color:#9aa3b2}
+.found span.on{background:var(--okbg);color:var(--ok)}
+.postcard{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#7c3aed,#f59e0b) border-box;border:3px solid transparent;border-radius:18px;padding:14px}
+.postcard .stamp{float:right;width:64px;height:76px;border:2px dashed #d6c8fb;border-radius:8px;display:grid;place-items:center;font-size:30px;margin:0 0 6px 10px}
+.postcard textarea{min-height:220px;border-style:dashed}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · Vision 360</small>
+  <h1>The school of the future</h1>
+  <p>Future classrooms, real schools and your own school in 2050</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Remember the tour from our lesson? Which zone is it?</h2></div>
+  <p class="tip">Tap a gap, then tap a zone.</p>
+  <div class="chips sticky" id="ex1_bank"></div>
+  <div id="ex1_body"></div>
+  <button class="btn" onclick="checkFill('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Complete the sentences with the words from the lesson.</h2></div>
+  <p class="tip">Tap a gap, then tap the words.</p>
+  <div class="chips sticky" id="ex2_bank"></div>
+  <div id="ex2_body"></div>
+  <button class="btn" onclick="checkFill('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Read about one more real school. Are the sentences true, false or not given?</h2></div>
+  <div class="article">
+    <div class="kick">Real schools · Madrid, Spain</div>
+    <h3>The Submarine School</h3>
+    <p>In September 2022, a very unusual school opened on the edge of Madrid. Its students quickly gave it a nickname: ‘the submarine’, because of its round windows and its strange shape.</p>
+    <p>The Reggio School was designed by the architect Andrés Jaque. It follows the Reggio Emilia approach, a way of teaching that started in Italy in 1945. In this approach, children learn by exploring and asking questions, and the building itself is seen as a kind of ‘third teacher’.</p>
+    <p>That’s why nothing in the building is hidden. Pipes and cables are left in the open, so students can see how a building really works. In the middle of the school, there is a small indoor forest under a glass roof, and the classrooms for older students are higher up, around it.</p>
+    <p>The school also tries to be kind to nature. Its walls are covered with a thick layer of cork, which keeps the building warm, and tiny gardens on the outside walls attract birds, butterflies and even bats.</p>
+    <p>About 750 students, aged from two to eighteen, study here. And when the school’s owners first met the architect, they told him exactly what they wanted: magic.</p>
+    <div class="src">Based on: <a href="https://monocle.com/design/education/madrids-reggio-school-educational-architecture/" target="_blank" rel="noopener">Monocle</a>, <a href="https://www.architecturalrecord.com/articles/15989-at-madrids-colegio-reggio-explora-the-andres-jaque-founded-firm-makes-the-environment-a-teacher" target="_blank" rel="noopener">Architectural Record</a>, <a href="https://www.baunetzwissen.de/nachhaltig-bauen/objekte/bildung/reggio-school-in-madrid-8335413" target="_blank" rel="noopener">Baunetz Wissen</a>, <a href="https://www.archdaily.com/921802/andres-jaque-office-for-political-innovation-unveil-experimental-madrid-school" target="_blank" rel="noopener">ArchDaily</a></div>
+  </div>
+  <div id="ex3_body"></div>
+  <button class="btn" onclick="checkSort('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>School regrets. Make a wish about each problem. Use <i>I wish</i> + Past Simple.</h2></div>
+  <p class="strategy"><b>Remember:</b> we have a test → I wish we <b>didn’t have</b> a test. · I can’t sing → I wish I <b>could</b> sing.</p>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="checkWish()">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>A postcard from 2050! You are a student at the school of the future. Write to a friend about your school day (80–120 words).</h2></div>
+  <p class="tip">Describe at least two zones, use three words from Task 2 and one <i>I wish…</i> (maybe you miss something from 2026?). The words light up when you use them.</p>
+  <div class="postcard"><div class="stamp">🪐</div><textarea id="pc" oninput="liveCount()" placeholder="Hi Max! Greetings from 2050…"></textarea></div>
+  <div class="counter"><span id="wc">0 words</span><span id="wk">0 lesson words</span></div>
+  <div class="found" id="found"></div>
+  <button class="btn" onclick="savePost()">Save my postcard</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Vision 360: The school of the future',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+/* ---------- CONTENT ---------- */
+const EX1 = { bank:['Creative zone','Discovery zone','Explore zone','Life zone','Study zone','Team zone'],
+  html:'<div class="zones">'+
+   '<div class="zone">[[0]] Students sit on exercise balls and learn with a teacher on a video call.</div>'+
+   '<div class="zone">[[1]] A 3D hologram of the human body helps students learn biology.</div>'+
+   '<div class="zone">[[2]] Students relax on beanbags and visit famous places as holograms.</div>'+
+   '<div class="zone">[[3]] Students wear VR headsets and explore a world map on a giant screen.</div>'+
+   '<div class="zone">[[4]] Students build and design models at special tables.</div>'+
+   '<div class="zone">[[5]] Students work together at big touch screens.</div></div>',
+  answers:[4,3,2,1,0,5] };
+const EX2 = { bank:['access to technology','collaborative learning','curriculum','distractions','face-to-face','flexible timetable','layout'],
+  html:'<ol class="items">'+
+   '<li>With a [[0]], you can study at any time of the day.</li>'+
+   '<li>In [[1]], students work in groups and learn from each other.</li>'+
+   '<li>My phone and social media are the biggest [[2]] when I’m doing homework.</li>'+
+   '<li>Not every student has [[3]] at home: some have no laptop or internet.</li>'+
+   '<li>The [[4]] is the list of all the subjects that a school teaches.</li>'+
+   '<li>We changed the [[5]] of our classroom, and now the desks are in a circle.</li>'+
+   '<li>Some people learn better in [[6]] lessons with a real teacher than online.</li></ol>',
+  answers:[5,1,3,0,2,6,4] };
+const EX3 = { opts:['True','False','Not given'], items: [
+  ['The students gave the school its nickname.',0],
+  ['The Reggio Emilia approach started in Spain.',1],
+  ['In this approach, the building is seen as a kind of teacher.',0],
+  ['The pipes and cables are hidden behind the walls.',1],
+  ['There are more than 100 trees in the indoor forest.',2],
+  ['Older students have their classrooms on the higher floors.',0],
+  ['The cork on the walls helps to keep the building warm.',0],
+  ['The school is free for all students.',2],
+  ['The owners asked the architect for an ordinary, simple building.',1]
+]};
+// EX4: [problem, accepted endings after "I wish"]
+const EX4 = [
+  ['We have so many tests.', ['we didnt have so many tests','we didnt have so many tests at school','we had fewer tests','we did not have so many tests']],
+  ['My school doesn’t have a garden.', ['my school had a garden','our school had a garden']],
+  ['We can’t choose our subjects.', ['we could choose our subjects','we could choose our own subjects']],
+  ['Lessons start at 8 a.m.', ['lessons didnt start at 8 am','lessons didnt start at 8','lessons started later','lessons did not start at 8 am','lessons did not start at 8']],
+  ['I don’t know how to manage money.', ['i knew how to manage money']],
+  ['Our classroom is so boring.', ['our classroom wasnt so boring','our classroom werent so boring','our classroom wasnt boring','our classroom werent boring','our classroom was more interesting','our classroom were more interesting','our classroom was not so boring','our classroom was not boring']]
+];
+const LESSON_WORDS = ['access to technology','collaborative learning','curriculum','distraction','face-to-face','flexible timetable','layout','zone','hologram','vr','i wish'];
+/* -------------------------------------- */
+
+const done={}, scores={}, notes={};
+['ex1','ex2','ex3','ex4','ex5'].forEach(k=>done[k]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+let sent=false;
+function progress(){
+  const k=Object.keys(done), n=k.filter(x=>done[x]).length;
+  $('fill').style.width=(n/k.length*100)+'%'; $('ptext').textContent=n+' of '+k.length+' tasks done';
+  $('cl').innerHTML=k.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<k.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+
+/* FILL engine */
+const FILL={};
+function setupFill(id,ex){ FILL[id]={...ex,fill:Array(ex.answers.length).fill(-1),mark:Array(ex.answers.length).fill(''),act:0}; renderFill(id); }
+function renderFill(id){ const t=FILL[id];
+  $(id+'_bank').innerHTML=t.bank.map((w,k)=>'<button class="chip '+(t.fill.includes(k)?'used':'')+'" onclick="fillChip(\''+id+'\','+k+')">'+w+'</button>').join('');
+  $(id+'_body').innerHTML=t.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>{ n=+n; const v=t.fill[n];
+    return '<span class="slot '+(n===t.act?'active ':'')+t.mark[n]+'" onclick="fillSlot(\''+id+'\','+n+')">'+(v>=0?t.bank[v]:'&nbsp;')+'</span>'; }); }
+function fillSlot(id,i){ const t=FILL[id]; if(t.fill[i]>=0){ t.fill[i]=-1; t.mark[i]=''; } t.act=i; renderFill(id); }
+function fillChip(id,k){ const t=FILL[id]; if(t.fill.includes(k)) return; if(t.act<0) t.act=t.fill.indexOf(-1); if(t.act<0) return;
+  t.fill[t.act]=k; t.mark[t.act]=''; t.act=t.fill.indexOf(-1); renderFill(id); }
+function checkFill(id){ const t=FILL[id];
+  if(t.fill.includes(-1)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((a,i)=>{ const ok=t.fill[i]===a; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderFill(id); record(id,s,t.answers.length); }
+
+/* SORT engine */
+const SORT={};
+function setupSort(id,ex){ SORT[id]={...ex,pick:Array(ex.items.length).fill(-1)};
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>'<div class="sortrow"><span class="txt">'+(i+1)+'. '+it[0]+'</span><span class="btns">'+
+    ex.opts.map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickSort(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>').join(''); }
+function pickSort(id,i,k){ const t=SORT[id]; t.pick[i]=k;
+  t.opts.forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkSort(id){ const t=SORT[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on'); const ok=t.pick[i]===it[1]; b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); }
+
+/* EX4 wishes */
+$('ex4_body').innerHTML=EX4.map((it,i)=>'<div class="wish"><span class="orig">'+(i+1)+'. '+it[0]+'</span><b>I wish</b><input class="gap" id="w'+i+'" autocomplete="off"><span class="key" id="k'+i+'"></span></div>').join('');
+function clean(v){ return norm(v).replace(/^i wish\s+/,'').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim(); }
+function checkWish(){
+  const inp=EX4.map((_,i)=>$('w'+i));
+  if(inp.some(x=>!x.value.trim())) return fb('ex4_fb','Write all the wishes first.','warn');
+  let s=0; EX4.forEach((it,i)=>{ const ok=it[1].includes(clean(inp[i].value)); inp[i].classList.remove('ok','bad'); inp[i].classList.add(ok?'ok':'bad');
+    const k=$('k'+i); if(!ok){ k.style.display='block'; k.textContent='Possible answer: I wish '+it[1][0].replace('didnt','didn’t').replace('wasnt','wasn’t').replace('8 am','8 a.m.')+'.'; } else k.style.display='none'; if(ok)s++; });
+  record('ex4',s,EX4.length);
+}
+
+/* EX5 postcard */
+function usedWords(t){ const n=' '+norm(t).replace(/[^a-z' -]/g,' ').replace(/\s+/g,' ')+' '; return LESSON_WORDS.filter(w=>n.includes(' '+w)); }
+function liveCount(){ const t=$('pc').value, w=words(t), u=usedWords(t);
+  $('wc').textContent=w+' words'; $('wc').className=(w>=80&&w<=120)?'good':'';
+  $('wk').textContent=u.length+' lesson words'; $('wk').className=u.length>=4?'good':'';
+  $('found').innerHTML=LESSON_WORDS.map(x=>'<span class="'+(u.includes(x)?'on':'')+'">'+(x==='vr'?'VR':x)+'</span>').join(''); }
+liveCount();
+function savePost(){ const t=$('pc').value.trim(), w=words(t);
+  if(w<70) return fb('ex5_fb','Write a bit more ('+w+' words). Aim for 80–120.','warn');
+  if(!/i wish/i.test(t)) return fb('ex5_fb','Add one sentence with “I wish…”.','warn');
+  notes.ex5='EX 5 · POSTCARD FROM 2050 ('+w+' words; words used: '+(usedWords(t).join(', ')||'none')+')\n\n'+t;
+  fb('ex5_fb','Postcard saved! 📮','good'); markDone('ex5'); }
+
+/* SEND */
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupFill('ex1',EX1); setupFill('ex2',EX2); setupSort('ex3',EX3);
+progress();
+</script>
+</body>
+</html>

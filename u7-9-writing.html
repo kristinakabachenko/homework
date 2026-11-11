@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7.9 Writing · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3fb;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#6d4aff;--brand2:#ff5c8a;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e6e0f2;--soft:#f1edff}
+:root{--bg:#f3f7fc;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#2f6fdf;--brand2:#14b8a6;--sun:#ffb020;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#dde6f2;--soft:#eaf2ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,#2f6fdf 0%,#14b8a6 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px}
+.hero p{margin:0;opacity:.92}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:#e2dcef;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid #c4d8fb;color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:120px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:140px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+.quote{display:block;background:#f3f1f8;border-left:4px solid var(--brand2);border-radius:10px;padding:8px 12px;font-style:italic;margin-bottom:6px}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.dlg{background:#faf9fd;border-radius:16px;padding:12px;margin-bottom:12px}
+.dlg h3{font-family:'Baloo 2',sans-serif;font-size:17px;margin:0 0 6px;color:var(--muted)}
+.line{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.line.r{flex-direction:row-reverse}
+.who{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff}
+.bubble{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 12px;max-width:85%}
+.line.r .bubble{background:var(--soft);border-color:#c4d8fb}
+.post{border:2px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post .top{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#14b8a6,#ffb020)}
+.post .top b{display:block}.post .top small{color:var(--muted)}
+.post .body{padding:12px 14px;line-height:2}
+.post .acts{display:flex;justify-content:space-around;padding:8px;border-top:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:16px;padding:14px 14px 10px;margin:0 0 14px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:18px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.statement{background:#22213a;color:#fff;border-radius:14px;padding:12px 16px;text-align:center;font-family:'Baloo 2',sans-serif;font-size:20px;margin-bottom:10px}
+.dlg .bubble{line-height:2}
+.slot{min-width:150px}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:800;font-size:14px;padding:6px 11px;border:2px solid var(--line);border-radius:99px;background:#fff;cursor:pointer;color:var(--ink)}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;background:var(--soft);border-radius:14px;padding:10px 14px;margin:0 0 10px;font-size:15px}
+.legend b{color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+u{text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--brand2)}
+select.name{background:#fff}
+.checks label{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-weight:600}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none}
+
+.hero{background:linear-gradient(135deg,#2f6fdf 0%,#14b8a6 100%)}
+.hero:after{content:"\270D";background:none;width:auto;height:auto;right:14px;top:-6px;font-size:130px;line-height:1;opacity:.18;border-radius:0}
+.essay{background:#fffdf7;border:2px solid #efe6cf;border-radius:16px;padding:16px 18px;font-family:Georgia,serif;font-size:17px;line-height:1.7}
+.essay h3{font-family:Nunito,sans-serif;font-size:15px;margin:0 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.essay p{margin:0 0 12px}
+.essay u sup{font-family:Nunito,sans-serif;font-weight:800;color:var(--brand);font-size:12px;margin-right:2px}
+details.peek{margin:0 0 12px}
+details.peek summary{cursor:pointer;font-weight:800;color:var(--brand);padding:6px 0}
+.task{background:#22213a;color:#fff;border-radius:14px;padding:12px 16px;font-size:16px;margin-bottom:12px}
+.task b{display:block;font-family:'Baloo 2',sans-serif;font-size:19px;margin-top:4px}
+.mcq{padding:10px 0;border-bottom:1px solid var(--line)}
+.mcq .q{font-weight:700;margin-bottom:8px}
+.mcq .btns{display:flex;flex-direction:column;gap:6px}
+.mcq .pick{text-align:left;border-radius:12px}
+.notes{background:#fff;border:2px dashed #c4d8fb;border-radius:16px;padding:12px 16px;font-family:'Baloo 2',cursive;font-size:18px;line-height:2.1}
+.notes input.gap{width:150px}
+.planbox{background:var(--soft);border-radius:14px;padding:10px 12px;margin:10px 0}
+.planbox b{color:var(--brand)}
+.planbox textarea{min-height:64px;background:#fff}
+.counter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;font-weight:800;color:var(--muted);margin-top:6px}
+.counter .good{color:var(--ok)}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:#eef1f6;color:#9aa3b2}
+.found span.on{background:var(--okbg);color:var(--ok)}
+.stmts label{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;cursor:pointer;font-weight:700}
+.stmts input{margin-top:4px;width:18px;height:18px;flex:none}
+.stmts label:has(input:checked){border-color:var(--brand);background:var(--soft)}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · 7.9 Writing</small>
+  <h1>For or against?</h1>
+  <p>Plan and write a for and against essay</p>
+</header>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Read the essay task. Is each idea an argument FOR the statement or AGAINST it?</h2></div>
+  <div class="task">Write an essay discussing the arguments for and against this statement:<b>‘Online learning should replace face-to-face teaching for all university courses.’</b></div>
+  <div id="ex1_body"></div>
+  <button class="btn" onclick="checkSort('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Read the essay quickly. Then answer the questions.</h2></div>
+  <div class="essay" id="essayMain"></div>
+  <div id="ex2_body" style="margin-top:10px"></div>
+  <button class="btn" onclick="checkMC('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Read the essay again and complete the writer’s plan. Write one or two words in each gap.</h2></div>
+  <details class="peek"><summary>📄 Show the essay</summary><div class="essay essayCopy"></div></details>
+  <div class="notes" id="ex3_body"></div>
+  <button class="btn" onclick="checkGaps('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Look at the underlined phrases 1–8 in the essay. What does each one do? Choose A–E.</h2></div>
+  <details class="peek"><summary>📄 Show the essay</summary><div class="essay essayCopy"></div></details>
+  <div class="legend">
+    <b>A</b><span>making general statements</span>
+    <b>B</b><span>introducing facts</span>
+    <b>C</b><span>adding emphasis</span>
+    <b>D</b><span>saying something is partially true</span>
+    <b>E</b><span>explaining or clarifying a statement</span>
+  </div>
+  <div id="ex4_body"></div>
+  <button class="btn" onclick="checkSort('ex4')">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>Which underlined phrase (1–8) in the essay could each of these replace?</h2></div>
+  <p class="tip">Sometimes two numbers are possible. Choose one.</p>
+  <details class="peek"><summary>📄 Show the essay</summary><div class="essay essayCopy"></div></details>
+  <div id="ex5_body"></div>
+  <button class="btn" onclick="checkSort('ex5')">Check</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card" id="ex6">
+  <div class="head"><div class="num">6</div><h2>Your turn! Choose a statement and plan your essay.</h2></div>
+  <div class="stmts" id="ex6_st">
+    <label><input type="radio" name="st" value="Studying maths and sciences is more useful than studying art and literature."> Studying maths and sciences is more useful than studying art and literature.</label>
+    <label><input type="radio" name="st" value="End-of-year exams should be abolished in schools."> End-of-year exams should be abolished in schools.</label>
+    <label><input type="radio" name="st" value="Mobile phones should be banned from all schools."> Mobile phones should be banned from all schools.</label>
+    <label><input type="radio" name="st" value="All secondary students should be taught in single-sex schools."> All secondary students should be taught in single-sex schools.</label>
+  </div>
+  <div id="ex6_body"></div>
+  <button class="btn" onclick="savePlan()">Save my plan</button>
+  <div class="fb" id="ex6_fb"></div>
+</section>
+
+<section class="card" id="ex7">
+  <div class="head"><div class="num">7</div><h2>Write your essay (150–200 words). Follow your plan.</h2></div>
+  <p class="tip">The phrases light up green when you use them. Try to use at least four!</p>
+  <textarea id="essay" style="min-height:300px" oninput="liveCount()" placeholder="Paragraph 1: introduction…"></textarea>
+  <div class="counter"><span id="wc">0 words</span><span id="pc">0 phrases</span></div>
+  <div class="found" id="found"></div>
+  <p style="font-weight:700;margin:16px 0 0">Check your work. Did you…</p>
+  <div class="checks">
+    <label><input type="checkbox" class="ck"> follow the plan: introduction, arguments for, arguments against, conclusion with your opinion?</label>
+    <label><input type="checkbox" class="ck"> give explanations or examples for your arguments?</label>
+    <label><input type="checkbox" class="ck"> use phrases from the Phrasebook?</label>
+    <label><input type="checkbox" class="ck"> check your spelling, grammar and punctuation?</label>
+  </div>
+  <button class="btn" onclick="saveEssay()">Save my essay</button>
+  <div class="fb" id="ex7_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7.9 Writing',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+/* ---------- CONTENT ---------- */
+function U(n,t){ return '<u><sup>'+n+'</sup>'+t+'</u>'; }
+const ESSAY = '<h3>Online learning: the future of university?</h3>'+
+ '<p>Many universities now offer at least some of their courses online. It is a very convenient way to study, but should it completely replace lectures and classrooms?</p>'+
+ '<p>'+U(1,'Overall')+', the biggest advantage of online learning is freedom. Students can study from home, from another city or even from another country. It is also usually cheaper, because they don’t need to pay for rent and travel in an expensive university city. '+U(2,'Clearly')+', this helps people who don’t have much money. '+U(3,'Needless to say')+', it also makes it easier to have a part-time job while you are studying.</p>'+
+ '<p>'+U(4,'In reality')+', however, online learning does not suit everyone. '+U(5,'The fact of the matter is')+' that you need a lot of self-discipline to study alone at home with your phone next to you. Online students also miss out on the social side of university life. '+U(6,'In other words')+', they get the knowledge, but not the friends, clubs and discussions that make university special. It is also harder to work on group projects with classmates you have never met.</p>'+
+ '<p>'+U(7,'To a certain extent')+', online learning is a good alternative to face-to-face teaching, but not for every course. In subjects like medicine, chemistry or engineering, students need real labs and real practice with their teachers. '+U(8,'In general')+', then, I believe online learning should support traditional teaching, not replace it.</p>';
+
+const EX1 = { opts:['FOR','AGAINST'], items: [
+  ['You miss out on the social side of student life.',1],
+  ['You can study from any place in the world.',0],
+  ['Teachers can’t see if students really understand.',1],
+  ['It’s harder to do group projects with classmates.',1],
+  ['It’s easier to combine studying with a job.',0],
+  ['It usually costs less than moving to a university city.',0]
+]};
+const EX2 = [
+  ['What is the writer’s opinion?', ['Online learning should replace all face-to-face teaching.','Online learning should help traditional teaching, not replace it.','Online learning is never a good idea.'],1],
+  ['Which argument from Task 1 is NOT in the essay?', ['You can study from any place in the world.','It’s harder to do group projects with classmates.','Teachers can’t see if students really understand.','It usually costs less than moving to a university city.'],2],
+  ['Which subjects need real labs, according to the writer?', ['art and literature','medicine, chemistry and engineering','maths and languages'],1]
+];
+// EX3 notes: [[n]] gaps; answers[n] = accepted answers
+const EX3 = { html:
+  '<b>1 Introduction:</b> OL is convenient, but should it [[0]] lectures completely?<br>'+
+  '<b>2 For:</b><br>– students can study from [[1]], another city or another country<br>– it’s [[2]]: no rent or travel costs<br>– easier to have a [[3]] job<br>'+
+  '<b>3 Against:</b><br>– you need a lot of [[4]] to study alone<br>– you miss the [[5]] side of university life<br>– harder to do [[6]] projects<br>'+
+  '<b>4 Conclusion:</b> some subjects need real [[7]] and practice → OL should [[8]] traditional teaching, not replace it',
+  answers: [['replace'],['home'],['cheaper','cheap','less expensive'],['part-time','part time'],['self-discipline','self discipline','discipline'],['social'],['group'],['labs','lab','laboratories'],['support','help']] };
+const EX4 = { opts:['A','B','C','D','E'], items: [
+  ['1 Overall',0],['2 Clearly',2],['3 Needless to say',2],['4 In reality',1],
+  ['5 The fact of the matter is',1],['6 In other words',4],['7 To a certain extent',3],['8 In general',0]
+]};
+// EX5: correct = array of accepted option indexes
+const EX5 = { opts:['1','2','3','4','5','6','7','8'], items: [
+  ['it is obvious that',[1,2]],
+  ['to put it another way',[5]],
+  ['it is true to say that',[3,4]],
+  ['generally speaking',[0,7]],
+  ['up to a point',[6]]
+]};
+const PLAN = [
+  ['Opening: a general statement about the topic','e.g. Nowadays, many people think that…'],
+  ['Arguments FOR + explanations or examples','2–3 arguments'],
+  ['Arguments AGAINST + explanations or examples','2–3 arguments'],
+  ['Conclusion: summary + your opinion','e.g. On the whole, I believe…']
+];
+const PHRASES = ['generally speaking','in general','on the whole','overall','in fact','it is true to say','the fact of the matter is','in reality','it is obvious that','indeed','clearly','needless to say','in a way','in some cases','to a certain extent','up to a point','in other words','to put it another way','that is to say'];
+/* -------------------------------------- */
+
+const done={}, scores={}, notes={};
+['ex1','ex2','ex3','ex4','ex5','ex6','ex7'].forEach(k=>done[k]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+let sent=false;
+function progress(){
+  const k=Object.keys(done), n=k.filter(x=>done[x]).length;
+  $('fill').style.width=(n/k.length*100)+'%'; $('ptext').textContent=n+' of '+k.length+' tasks done';
+  $('cl').innerHTML=k.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<k.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+
+/* essay */
+$('essayMain').innerHTML=ESSAY; document.querySelectorAll('.essayCopy').forEach(e=>e.innerHTML=ESSAY);
+
+/* SORT engine (one option per row; correct may be a number or an array) */
+const SORT={};
+function setupSort(id,ex){ SORT[id]={...ex,pick:Array(ex.items.length).fill(-1)};
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>'<div class="sortrow"><span class="txt">'+it[0]+'</span><span class="btns">'+
+    ex.opts.map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickSort(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>').join(''); }
+function pickSort(id,i,k){ const t=SORT[id]; t.pick[i]=k;
+  t.opts.forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkSort(id){ const t=SORT[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on');
+    const ok=[].concat(it[1]).includes(t.pick[i]); b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); }
+
+/* MC engine */
+const MC={};
+function setupMC(id,items){ MC[id]={items,pick:Array(items.length).fill(-1)};
+  $(id+'_body').innerHTML=items.map((it,i)=>'<div class="mcq"><div class="q">'+(i+1)+'. '+it[0]+'</div><div class="btns">'+
+    it[1].map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickMC(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</div></div>').join(''); }
+function pickMC(id,i,k){ const t=MC[id]; t.pick[i]=k;
+  t.items[i][1].forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkMC(id){ const t=MC[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all the questions first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on'); const ok=t.pick[i]===it[2]; b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); }
+
+/* GAPS engine (typed) */
+function setupGaps(id,ex){ $(id+'_body').innerHTML=ex.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>'<input class="gap" id="'+id+'_g'+n+'" autocomplete="off" spellcheck="false">'); }
+function checkGaps(id){ const ex=EX3; const vals=ex.answers.map((_,i)=>$(id+'_g'+i));
+  if(vals.some(v=>!v.value.trim())) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; ex.answers.forEach((a,i)=>{ const ok=a.map(norm).includes(norm(vals[i].value)); vals[i].classList.remove('ok','bad'); vals[i].classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,ex.answers.length); }
+
+/* EX6 plan */
+$('ex6_body').innerHTML=PLAN.map((p,i)=>'<div class="planbox"><b>'+(i+1)+'. '+p[0]+'</b><textarea id="plan'+i+'" placeholder="'+p[1]+'"></textarea></div>').join('');
+function chosen(){ const r=document.querySelector('input[name=st]:checked'); return r?r.value:''; }
+function savePlan(){
+  if(!chosen()) return fb('ex6_fb','Choose a statement first.','warn');
+  const v=PLAN.map((_,i)=>$('plan'+i).value.trim());
+  const e=v.findIndex(x=>words(x)<3); if(e>=0) return fb('ex6_fb','Write a few more notes for part '+(e+1)+'.','warn');
+  notes.ex6='EX 6 · PLAN\nStatement: '+chosen()+'\n'+PLAN.map((p,i)=>(i+1)+') '+p[0]+'\n→ '+v[i]).join('\n');
+  fb('ex6_fb','Plan saved! Now write your essay.','good'); markDone('ex6');
+}
+
+/* EX7 essay with live counter */
+function usedPhrases(t){ const n=' '+norm(t).replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ')+' '; return PHRASES.filter(p=>n.includes(' '+p+' ')); }
+function liveCount(){
+  const t=$('essay').value, w=words(t), u=usedPhrases(t);
+  $('wc').textContent=w+' words'; $('wc').className=(w>=150&&w<=200)?'good':'';
+  $('pc').textContent=u.length+' phrase'+(u.length===1?'':'s'); $('pc').className=u.length>=4?'good':'';
+  $('found').innerHTML=PHRASES.map(p=>'<span class="'+(u.includes(p)?'on':'')+'">'+p+'</span>').join('');
+}
+liveCount();
+function saveEssay(){
+  const t=$('essay').value.trim(), w=words(t), u=usedPhrases(t);
+  if(w<120) return fb('ex7_fb','Your essay is a bit short ('+w+' words). Aim for 150–200 words.','warn');
+  if(u.length<2) return fb('ex7_fb','Use some phrases from the Phrasebook (you have '+u.length+').','warn');
+  if([...document.querySelectorAll('.ck')].some(c=>!c.checked)) return fb('ex7_fb','Check your work and tick all the boxes.','warn');
+  notes.ex7='EX 7 · ESSAY ('+w+' words; phrases: '+(u.join(', ')||'none')+')\nStatement: '+(chosen()||'-')+'\n\n'+t;
+  fb('ex7_fb','Essay saved! Your teacher will read it.','good'); markDone('ex7');
+}
+
+/* SEND */
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupSort('ex1',EX1); setupMC('ex2',EX2); setupGaps('ex3',EX3); setupSort('ex4',EX4); setupSort('ex5',EX5);
+progress();
+</script>
+</body>
+</html>
