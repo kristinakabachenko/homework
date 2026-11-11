@@ -110,6 +110,13 @@ button,textarea{font:inherit}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 12px}
 .filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted)}
 .filters button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.dfilter{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:16px 0 4px}
+.dfilter .lb{font-size:13px;font-weight:700;color:var(--muted);margin-right:2px}
+.dfilter button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted)}
+.dfilter button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.dfilter input[type=date]{border:1px solid var(--line);border-radius:99px;padding:5px 10px;font:inherit;font-size:13px;color:var(--ink);background:#fff}
+.dfilter input.on{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary) inset}
+.dnone{display:none!important}
 .tgs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
 .tg{font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;white-space:nowrap}
 .tg.done{background:var(--goodbg);color:var(--good)} .tg.prog{background:var(--midbg);color:#7a5200} .tg.new0{background:#efeae1;color:var(--muted)}
@@ -148,8 +155,8 @@ const pct = x => x.max ? Math.round(x.score / x.max * 100) : 0;
 const band = p => p >= 85 ? 'g' : p >= 65 ? 'm' : 'l';
 const bandColor = p => ({g:'var(--good)', m:'var(--mid)', l:'var(--low)'})[band(p)];
 const bandWord = p => ({g:'✓ Great', m:'● Good', l:'▲ Practise'})[band(p)];
-const fmtDate = s => { const d = new Date(s); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {day:'numeric', month:'short'}); };
-const fmtDateLong = s => { const d = new Date(s); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'}); };
+const fmtDate = s => { const d = new Date(s); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}); };
+const fmtDateLong = s => { const d = new Date(s); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'}); };
 const qs = extra => { const p = new URLSearchParams(); if (KEY) p.set('t', KEY); if (DEMO) p.set('demo',''); Object.entries(extra||{}).forEach(([k,v]) => v && p.set(k, v)); return '?' + p.toString().replace(/=(&|$)/g,'$1'); };
 
 function theme(book){
@@ -244,16 +251,48 @@ function loadAssign(){
   if (ASSIGN) return Promise.resolve(ASSIGN);
   return fetch('assignments.json?v=' + Date.now()).then(r => r.json()).then(j => (ASSIGN = j)).catch(() => (ASSIGN = {}));
 }
+/* ---------- date filter (month chips + exact day) ---------- */
+const ymd = s => { if (!s) return ''; if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s; const d = new Date(s); if (isNaN(d)) return ''; return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const dAttr = (...ds) => ' data-d="' + ds.map(ymd).filter(Boolean).join(' ') + '"';
+function dateFilter(dates){
+  const months = [...new Set(dates.map(ymd).filter(Boolean).map(d => d.slice(0,7)))].sort().reverse();
+  if (!months.length) return '';
+  const mName = m => new Date(m + '-01T00:00:00').toLocaleDateString('en-GB', {month:'short', year:'numeric'});
+  return '<div class="dfilter" id="dfilter"><span class="lb">📅 Date:</span><button class="on" data-m="">All dates</button>' +
+    months.map(m => '<button data-m="'+m+'">'+mName(m)+'</button>').join('') +
+    '<input type="date" id="dday" aria-label="Find by day" title="Find by day"></div><div class="note dnone" id="dempty">No homework on this date.</div>';
+}
+function wireDateFilter(){
+  const box = $('#dfilter'); if (!box) return;
+  const day = $('#dday');
+  const apply = (m, d) => {
+    box.querySelectorAll('button').forEach(b => b.classList.toggle('on', !d && b.dataset.m === m));
+    day.classList.toggle('on', !!d);
+    document.querySelectorAll('[data-d]').forEach(el => {
+      const ds = el.dataset.d.split(' ').filter(Boolean);
+      const ok = d ? ds.includes(d) : !m || ds.some(x => x.startsWith(m));
+      el.classList.toggle('dnone', !ok);
+    });
+    document.querySelectorAll('[data-dgroup]').forEach(g => {
+      const any = [...g.querySelectorAll('[data-d]')].some(el => !el.classList.contains('dnone'));
+      g.classList.toggle('dnone', !any && g.querySelector('[data-d]') !== null);
+    });
+    const e = $('#dempty'); if (e) e.classList.toggle('dnone', !(m || d) || [...document.querySelectorAll('[data-d]')].some(el => !el.classList.contains('dnone')));
+  };
+  box.querySelectorAll('button').forEach(b => b.onclick = () => { day.value = ''; apply(b.dataset.m, ''); });
+  day.onchange = () => apply('', day.value);
+}
 const fileOf = u => String(u||'').split('?')[0].split('#')[0].split('/').pop();
 function todoOf(token, subs){
   const list = ((ASSIGN && ASSIGN[token]) || []).filter(a => a.type !== 'side');
   const sent = new Set(subs.map(x => fileOf(x.page)));
   return list.filter(a => !sent.has(fileOf(a.page)));
 }
+function givenOf(x){ const a = ((ASSIGN && ASSIGN[TOKEN]) || []).find(a => fileOf(a.page) === fileOf(x.page)); return a ? a.given : ''; }
 function todoBlock(token, name, subs){
   const t = todoOf(token, subs); if (!t.length) return '';
-  return '<p class="label">To do (' + t.length + ')</p><div class="todo">' + t.map(a =>
-    '<a class="card" href="../' + esc(a.page) + '?s=' + encodeURIComponent(name) + '"><span class="go" aria-hidden="true">✎</span><div><div class="t">' + esc(a.title) + '</div><div class="meta">' + esc(a.about || '') + (a.given ? (a.about ? ' · ' : '') + 'given ' + fmtDate(a.given) : '') + (a.due ? ' · due ' + fmtDate(a.due) : '') + '</div></div><span class="start">Start</span></a>').join('') + '</div>';
+  return '<div data-dgroup><p class="label">To do (' + t.length + ')</p><div class="todo">' + t.map(a =>
+    '<a class="card"' + dAttr(a.given, a.due) + ' href=""../' + esc(a.page) + '?s=' + encodeURIComponent(name) + '"><span class="go" aria-hidden="true">✎</span><div><div class="t">' + esc(a.title) + '</div><div class="meta">' + esc(a.about || '') + (a.given ? (a.about ? ' · ' : '') + 'given ' + fmtDate(a.given) : '') + (a.due ? ' · due ' + fmtDate(a.due) : '') + '</div></div><span class="start">Start</span></a>').join('') + '</div></div>';
 }
 
 /* ---------- side skill (assignments with "type": "side") ---------- */
@@ -297,7 +336,7 @@ function sideCard(x, name){
   if (x.status === 'link') return linkCard(x);
   const a = x.a, st = STATUS[x.status];
   const skills = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
-  return '<div class="card sk" data-st="'+x.status+'"><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow">' +
+  return '<div class="card sk" data-st="'+x.status+'"'+dAttr(a.given, a.due, x.last && x.last.at)+'><span class="ic" aria-hidden="true">'+esc(a.emoji || '📚')+'</span><div class="grow">' +
     '<div class="tgs"><span class="tg '+st[0]+'">'+st[1]+'</span>'+dueTag(x)+(x.unsent ? '<span class="tg soon">not sent yet</span>' : '')+(x.last && x.last.status === 'checked' ? '<span class="tg done">✓ checked by teacher</span>' : '')+'</div>' +
     '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
     '<div class="ptrack"><div class="pfill" style="width:'+Math.max(x.p, x.done ? 3 : 0)+'%;'+(x.p >= 100 ? 'background:var(--good)' : '')+'"></div></div>' +
@@ -307,7 +346,7 @@ function sideCard(x, name){
 }
 function linkCard(x){
   const a = x.a, skills = String(a.about || '').split('·').map(t => t.trim()).filter(Boolean).map(t => '<span class="tagx">'+esc(t)+'</span>').join('');
-  return '<div class="card sk" data-st="link"><span class="ic" aria-hidden="true">'+esc(a.emoji || '🔗')+'</span><div class="grow">' +
+  return '<div class="card sk" data-st="link"'+dAttr(a.given)+'><span class="ic" aria-hidden="true">'+esc(a.emoji || '🔗')+'</span><div class="grow">' +
     '<div class="tgs"><span class="tg due0">🔗 No deadline · practise any time</span></div>' +
     '<div class="t">'+esc(a.title)+'</div><div class="meta">'+skills+(a.given ? ' given '+fmtDate(a.given) : '')+'</div>' +
     (a.note ? '<div class="meta" style="margin-top:6px">'+esc(a.note)+'</div>' : '') + '</div>' +
@@ -331,11 +370,13 @@ function sidePage(st, subs){
       '<div class="card tile"><div class="v">'+(next ? fmtDate(next.a.due) : '—')+'</div><div class="k">Next deadline'+(next ? ' · '+esc(next.a.title) : '')+'</div></div>' +
     '</div>' +
     '<div class="filters"><button class="on" data-f="all">All ('+L.length+')</button><button data-f="progress">In progress ('+np+')</button><button data-f="new">Not started ('+nn+')</button><button data-f="done">Done ('+nd+')</button>'+(nl ? '<button data-f="link">Any time ('+nl+')</button>' : '')+'</div>' +
+    dateFilter(L.flatMap(x => [x.a.given, x.a.due, x.last && x.last.at])) +
     '<div class="side" id="sideList">' + (L.length ? L.map(x => sideCard(x, st.name)).join('') : '<div class="note">No side skill tasks yet.</div>') + '</div>';
   document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
     document.querySelectorAll('.filters button').forEach(o => o.classList.toggle('on', o === b));
     document.querySelectorAll('#sideList .sk').forEach(c => c.style.display = b.dataset.f === 'all' || c.dataset.st === b.dataset.f ? '' : 'none');
   });
+  wireDateFilter();
   window.scrollTo(0, 0);
 }
 
@@ -368,13 +409,16 @@ function studentPage(){
         '<div class="card tile"><div class="v">'+trend+'</div><div class="k">Last 3 vs 3 before</div></div>' +
         (KEY ? '<div class="card tile"><div class="v" style="color:#6b4e00">'+toCheck+'</div><div class="k">Waiting for your check</div></div>' : '') +
       '</div>' +
+      dateFilter(todoOf(TOKEN, subs).map(a => a.given).concat(subs.map(x => x.at), subs.map(x => givenOf(x)))) +
       todoBlock(TOKEN, st.name, subs) +
       (n ? '<p class="label">Progress tracker</p>' + chart(subs) : '') +
       '<p class="label">All homework</p><div class="list">' +
       (n ? subs.slice().reverse().map(x => { const p = pct(x);
-        return '<a class="card hw" href="#hw='+x.id+'">'+ring(p)+'<div class="grow"><div class="t">'+esc(x.homework)+'</div><div class="meta">'+fmtDateLong(x.at)+' · '+x.score+'/'+x.max+' points</div></div>'+statusPill(x)+'</a>'; }).join('')
+        const g = givenOf(x);
+        return '<a class="card hw"'+dAttr(x.at, g)+' href="#hw='+x.id+'">'+ring(p)+'<div class="grow"><div class="t">'+esc(x.homework)+'</div><div class="meta">'+(g ? 'given '+fmtDate(g)+' · sent ' : '')+fmtDateLong(x.at)+' · '+x.score+'/'+x.max+' points</div></div>'+statusPill(x)+'</a>'; }).join('')
          : '<div class="note">' + (todoOf(TOKEN, subs).length ? 'When you send your homework, your results will appear here.' : 'No homework yet. When you send your first homework, it will appear here.') + '</div>') + '</div>';
     wireChart(subs, id => location.hash = 'hw=' + id);
+    wireDateFilter();
     window.scrollTo(0, 0);
   });
 }
