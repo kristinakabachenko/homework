@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grammar: nominal relative clauses</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --body:#4a4a4a; --muted:#8a8580;
+  --paper:#ffffff; --desk:#f7f4ee; --cream:#fbf9f0; --line:#e8e2d6;
+  --olive:#57502a; --olive-l:#ece8d3; --olive-m:#a39a63;
+  --pink:#f6dce5; --pink-d:#693751;
+  --blue:#d2e4f8; --blue-d:#274d71;
+  --ok:#2f8a57; --ok-bg:#e3f4ea; --bad:#b33a3a; --bad-bg:#fbe5e5;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+header{margin-bottom:18px}
+.pills{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px}
+.pill.unit{background:var(--blue);color:var(--blue-d)}
+.pill.gr{background:var(--olive);color:#fff}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,6vw,40px);margin:0 0 4px;line-height:1.1}
+.sub{color:var(--body);margin:0}
+.road{display:flex;gap:6px;margin:22px 0 20px;flex-wrap:wrap}
+.step{flex:1 1 0;min-width:0;white-space:nowrap;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 6px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:5px;overflow:hidden}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--body);font-size:12px;flex:none}
+.step.active{border-color:var(--olive-m);color:var(--ink)}
+.step.active b{background:var(--olive);color:#fff}
+.step.done{color:var(--ok)} .step.done b{background:var(--ok);color:#fff}
+.step.locked{opacity:.55}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+@media (max-width:480px){.card{padding:18px 16px}}
+.card h2{font-size:20px;margin:0 0 4px}
+.card .hint{color:var(--body);margin:0 0 18px;font-size:15px}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:600}
+.btn:hover{background:#333}
+.btn.olive{background:var(--olive)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.right{justify-content:flex-end}
+input[type=text],textarea{font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;background:#fff;color:var(--ink)}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--olive-m)}
+input.ok{border-color:var(--ok)!important;background:var(--ok-bg)!important}
+input.bad{border-color:var(--bad)!important;background:var(--bad-bg)!important}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
+.feedback.ok{background:var(--ok-bg);color:var(--ok)}
+.feedback.bad{background:var(--bad-bg);color:var(--bad)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--olive-l);color:var(--olive);margin-bottom:10px}
+.tag.free{background:var(--pink);color:var(--pink-d)}
+.small{font-size:13px;color:var(--muted)}
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:12px 0;border-bottom:1px solid var(--line);line-height:1.9}
+.list li:last-child{border-bottom:0}
+.list .n{font-weight:700;color:var(--muted);margin-right:6px}
+.key{display:block;font-size:13.5px;color:var(--ok);font-weight:600;margin-top:4px}
+.why{display:block;font-size:13.5px;color:var(--body);background:var(--cream);border-radius:8px;padding:4px 10px;margin-top:6px}
+
+/* cheat sheet */
+details.cheat{background:var(--olive);color:#fff;border-radius:var(--radius);padding:16px 20px;margin-bottom:18px}
+details.cheat summary{cursor:pointer;font-weight:700;font-size:16px;list-style:none}
+details.cheat summary::-webkit-details-marker{display:none}
+details.cheat summary::after{content:" ▾";opacity:.7}
+details.cheat[open] summary::after{content:" ▴"}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media (max-width:600px){.rules{grid-template-columns:1fr}}
+.rule{background:rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.5}
+.rule b{display:block;margin-bottom:2px}
+.rule .x{color:#ffc2c2}
+
+/* choices */
+.choice{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden;vertical-align:middle;background:#fff;flex-wrap:wrap}
+.choice button{border:0;background:transparent;padding:1px 12px;font-size:14px;line-height:1.8;color:var(--ink)}
+.choice button+button{border-left:1.5px solid var(--line)}
+.choice button.on{background:var(--olive);color:#fff}
+.choice.ok{border-color:var(--ok)} .choice.ok button.on{background:var(--ok)}
+.choice.bad{border-color:var(--bad)} .choice.bad button.on{background:var(--bad)}
+.blank{display:inline-block;min-width:80px;border-bottom:2px dotted var(--olive-m);text-align:center;color:var(--olive);font-weight:600}
+
+/* right / wrong */
+.verdict{display:inline-flex;gap:6px;margin-left:6px;vertical-align:middle}
+.verdict button{border:1.5px solid var(--line);background:#fff;border-radius:99px;width:38px;height:30px;font-size:15px}
+.verdict button.on{background:var(--olive);color:#fff;border-color:var(--olive)}
+.fix{margin-top:8px}
+.fix .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:6px 12px;font-size:15px;margin-bottom:6px;color:var(--ink)}
+.fix .opt.on{border-color:var(--olive);background:var(--olive-l);font-weight:600}
+li.ok{background:linear-gradient(90deg,var(--ok-bg),transparent 70%)}
+li.bad{background:linear-gradient(90deg,var(--bad-bg),transparent 70%)}
+.sent{font-weight:600}
+
+/* rewrite */
+.orig{display:block;margin-bottom:6px}
+.start{color:var(--olive);font-weight:700}
+
+/* dialogue */
+.dlg{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:10px;line-height:2}
+.dlg .a{color:var(--muted)}
+select{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:1px 6px;background:#fff;font-size:15px;color:var(--ink)}
+select.ok{border-color:var(--ok);background:var(--ok-bg)}
+select.bad{border-color:var(--bad);background:var(--bad-bg)}
+
+/* writing */
+.brief{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:15px}
+.brief p{margin:0 0 8px}.brief p:last-child{margin:0}
+.msg{background:#fff;border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 12px;margin:8px 0;max-width:90%}
+.msg .who{font-weight:700;font-size:13px;display:block;color:var(--pink-d)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.chip{font-size:13px;border:1.5px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);background:#fff}
+.chip.on{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:600}
+.meterline{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--body);margin-top:10px}
+.meterline b{color:var(--ink)}
+.lbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:14px}
+.found{font-size:14px;color:var(--body);margin-top:8px}
+.found mark{background:var(--olive-l);border-radius:4px;padding:0 3px}
+
+.score{font-family:"Fraunces",Georgia,serif;font-size:54px;line-height:1;margin:6px 0}
+table.sum{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+table.sum td{padding:8px 4px;border-bottom:1px solid var(--line)}
+table.sum td:last-child{text-align:right;font-weight:600}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pills"><span class="pill unit">Unit 1</span><span class="pill gr">grammar</span></div>
+    <h1>Nominal relative clauses</h1>
+    <p class="sub">Homework. <i>What</i> you know, <i>whatever</i> you do, <i>whoever</i> you ask: let's make them automatic.</p>
+  </header>
+
+  <section class="card" id="nameCard">
+    <h2>Hi! What's your name?</h2>
+    <p class="hint">Your teacher will see your results.</p>
+    <div class="row">
+      <input type="text" id="studentName" placeholder="Your name" style="flex:1;min-width:180px">
+      <button class="btn" id="startBtn">Start</button>
+    </div>
+  </section>
+
+  <nav class="road hidden" id="road"></nav>
+
+  <div id="main" class="hidden">
+    <details class="cheat">
+      <summary>📌 Cheat sheet: the rules from our lesson</summary>
+      <div class="rules">
+        <div class="rule"><b>what = the thing(s) that</b>No noun before it. <span class="x">✗ everything what · the video what</span></div>
+        <div class="rule"><b>how = the way</b>One or the other. <span class="x">✗ the way how</span></div>
+        <div class="rule"><b>Emphasis (cleft)</b>What I need is a break. · All I want is… · What she did was (to)…</div>
+        <div class="rule"><b>That's just / exactly / precisely + what…</b>That's exactly what I meant!</div>
+        <div class="rule"><b>whoever / whatever / whenever / wherever / however</b>= any person who / anything that / any time that / any place that / any way that</div>
+        <div class="rule"><b>whichever</b>= the one(s) that, from a limited choice. Whichever of you…</div>
+        <div class="rule"><b>who vs whoever</b>whoever = any person. <span class="x">✗ Who broke it should pay.</span></div>
+        <div class="rule"><b>+ to-infinitive</b>what / how / where / who / when to… <span class="x">✗ why to</span></div>
+      </div>
+    </details>
+
+    <!-- Ex1 -->
+    <section class="card" id="ex1">
+      <span class="tag">Task 1 · Warm up</span>
+      <h2>Choose the correct word</h2>
+      <p class="hint">Tap the word that completes each sentence.</p>
+      <ol class="list" id="t1List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t1Check">Check</button></div>
+      <div class="feedback hidden" id="t1Fb"></div>
+    </section>
+
+    <!-- Ex2 -->
+    <section class="card" id="ex2">
+      <span class="tag">Task 2 · Trap detector</span>
+      <h2>Right or wrong?</h2>
+      <p class="hint">Tap ✓ if the sentence is correct and ✗ if it's wrong. If it's wrong, choose the correct version.</p>
+      <ol class="list" id="t2List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t2Check">Check</button></div>
+      <div class="feedback hidden" id="t2Fb"></div>
+    </section>
+
+    <!-- Ex3 -->
+    <section class="card" id="ex3">
+      <span class="tag">Task 3 · Say it shorter</span>
+      <h2>Replace the words in bold with one pronoun</h2>
+      <p class="hint">Rewrite the whole sentence with <i>what, whoever, whatever, whenever, whichever</i> or <i>how</i>. Make any other changes you need.</p>
+      <ol class="list" id="t3List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t3Check">Check</button></div>
+      <div class="feedback hidden" id="t3Fb"></div>
+    </section>
+
+    <!-- Ex4 -->
+    <section class="card" id="ex4">
+      <span class="tag">Task 4 · Make it stronger</span>
+      <h2>Rewrite to emphasise the part in bold</h2>
+      <p class="hint">Start with the words given. This is how we sound more emphatic in speaking and more elegant in writing.</p>
+      <ol class="list" id="t4List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t4Check">Check</button></div>
+      <div class="feedback hidden" id="t4Fb"></div>
+    </section>
+
+    <!-- Ex5 -->
+    <section class="card" id="ex5">
+      <span class="tag">Task 5 · Real conversations</span>
+      <h2>Choose the best reply</h2>
+      <p class="hint">These short replies are everywhere in real life. Choose the word that fits.</p>
+      <div id="t5List"></div>
+      <div class="row right" style="margin-top:6px"><button class="btn" id="t5Check">Check</button></div>
+      <div class="feedback hidden" id="t5Fb"></div>
+    </section>
+
+    <!-- Ex6 -->
+    <section class="card" id="ex6">
+      <span class="tag free">Task 6 · Your turn</span>
+      <h2>Give your friend some honest advice</h2>
+      <div class="brief">
+        <p>Your friend Marta wants to start learning Spanish and texts you:</p>
+        <div class="msg"><span class="who">Marta</span>OK, I'm finally doing it 🇪🇸 But how do I even start?? App, teacher, course, YouTube? How often? You've been learning English forever, what actually worked for you? 😅</div>
+        <p>Reply with real advice from your own experience (<b>80–130 words</b>). Use <b>at least 5 nominal relative clauses</b>, for example: <i>What helped me most was… · Whoever you choose… · whenever you… · All you need is… · That's exactly what…</i></p>
+      </div>
+      <textarea id="essay" rows="8" placeholder="Honestly, what helped me most was…"></textarea>
+      <div class="meterline"><span>Words: <b id="wc">0</b></span><span>Nominal relative clauses: <b id="nrc">0</b> / 5</span></div>
+      <div class="lbl">Pronouns you've used</div>
+      <div class="chips" id="nrChips"></div>
+      <div class="found" id="found"></div>
+    </section>
+
+    <section class="card" id="sendCard">
+      <span class="tag">Finish</span>
+      <h2>Send your homework</h2>
+      <p class="small" id="submitHint">Check Tasks 1–5 and write at least 80 words in Task 6 first.</p>
+      <div class="row right" style="margin-top:10px"><button class="btn olive" id="submitBtn" disabled>Finish &amp; send to my teacher</button></div>
+    </section>
+
+    <section class="card hidden" id="results">
+      <span class="tag">Done</span>
+      <h2>Your results</h2>
+      <div class="score" id="bigScore"></div>
+      <table class="sum" id="sumTable"></table>
+      <p class="small" id="sendStatus"></p>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = { homework:'Unit 1 · Grammar: nominal relative clauses', storage:'hw-u1b-grammar-nominal-v1', minWords:80, minClauses:5 };
+
+/* ===================== DATA ===================== */
+const T1 = [
+  {t:"I'd like to speak with you later, ___ you have a few minutes spare.", o:["whatever","whichever","whenever"], a:"whenever"},
+  {t:"I like the new curriculum. It's ___ what these students need.", o:["precisely","when","whatever"], a:"precisely"},
+  {t:"___ other people think doesn't matter to me.", o:["What","When","Where"], a:"What"},
+  {t:"This website shows ___ to study in a virtual-learning environment.", o:["how","who","you"], a:"how"},
+  {t:"___ gets the most points wins the game.", o:["Whatever","What","Whoever"], a:"Whoever"},
+  {t:"___ we're looking for is a way to blend online and face-to-face learning.", o:["Who","What","That"], a:"What"},
+  {t:"There are three dates left – just pick ___ suits you best.", o:["whatever","whichever","whoever"], a:"whichever"},
+  {t:"I honestly didn't know ___ to say, so I just smiled.", o:["what","that","which"], a:"what"}
+];
+// ok: sentence is correct; fix: options (first = correct)
+const T2 = [
+  {s:"Everything what he told me turned out to be true.", ok:false, fix:["Everything he told me turned out to be true.","All what he told me turned out to be true.","Everything whatever he told me turned out to be true."], why:"After everything / all / something we use that or nothing, never what."},
+  {s:"Whichever team scores first usually wins.", ok:true, why:"Correct: a limited set of teams → whichever."},
+  {s:"I've got so much work, I don't know why to start.", ok:false, fix:["I've got so much work, I don't know where to start.","I've got so much work, I don't know why start.","I've got so much work, I don't know whatever to start."], why:"No why + to-infinitive. Use where / how / what to…"},
+  {s:"The way how you speak to people really matters.", ok:false, fix:["How you speak to people really matters.","The way what you speak to people really matters.","The how you speak to people really matters."], why:"Use how OR the way, never both."},
+  {s:"Whoever told you that was wrong.", ok:true, why:"Correct: whoever = the person (we don't know who) who."},
+  {s:"Who broke my favourite mug owes me a new one!", ok:false, fix:["Whoever broke my favourite mug owes me a new one!","Whatever broke my favourite mug owes me a new one!","Which broke my favourite mug owes me a new one!"], why:"For an unknown person we need whoever, not who."},
+  {s:"She gave me exactly what I needed.", ok:true, why:"Correct: what = the thing that."},
+  {s:"You can sit whenever you like – there are plenty of free seats.", ok:false, fix:["You can sit wherever you like – there are plenty of free seats.","You can sit whatever you like – there are plenty of free seats.","You can sit however you like – there are plenty of free seats."], why:"It's about a place, so wherever (= any place that)."},
+  {s:"It's a book what changed my life.", ok:false, fix:["It's a book that changed my life.","It's a book whatever changed my life.","It's what a book changed my life."], why:"After a noun (a book) we use a normal relative pronoun: that / which."},
+  {s:"What surprised me most were the prices.", ok:true, why:"Correct. Was is also possible (more formal)."}
+];
+const T3 = [
+  {s:"<b>Anything that</b> you decide is fine with me.", a:["whatever you decide is fine with me"]},
+  {s:"<b>The thing that</b> worries me is the cost.", a:["what worries me is the cost"]},
+  {s:"<b>Any person who</b> finishes early can help the others.", a:["whoever finishes early can help the others","whoever finishes early can help others"]},
+  {s:"I'll call you <b>at any time that</b> I get home.", a:["ill call you whenever i get home","i will call you whenever i get home"]},
+  {s:"Both courses are free, so take <b>the one that</b> you prefer.", a:["both courses are free so take whichever you prefer","both courses are free so take whichever one you prefer","both courses are free so take whichever course you prefer"]},
+  {s:"I love <b>the way that</b> she explains things.", a:["i love how she explains things"]}
+];
+const T4 = [
+  {s:"<b>The noise</b> annoys me most.", st:"What annoys me most…", a:["what annoys me most is the noise"]},
+  {s:"I only want <b>a quiet weekend</b>.", st:"All I…", a:["all i want is a quiet weekend","all i want is to have a quiet weekend"]},
+  {s:"We need <b>better teachers</b>, not more tests.", st:"What we need…", a:["what we need is better teachers not more tests","what we need are better teachers not more tests"]},
+  {s:"She <b>quit her job and moved to Lisbon</b>.", st:"What she did…", a:["what she did was quit her job and move to lisbon","what she did was to quit her job and move to lisbon","what she did was she quit her job and moved to lisbon"]},
+  {s:"I was surprised by <b>how calm he was</b>.", st:"What surprised me…", a:["what surprised me was how calm he was"]},
+  {s:"A: Tech will do the boring jobs for us. B: Yes! <b>I meant that.</b>", st:"That's exactly…", a:["thats exactly what i meant"]}
+];
+const T5 = [
+  {a:"Shall we meet at 6 or at 7?", b:["","suits you – I'm free all evening."], o:["Whichever","Whatever","Whoever"], k:"Whichever"},
+  {a:"I think we should just ask for help.", b:["That's exactly","I was going to say!"], o:["what","which","that"], k:"what"},
+  {a:"Who should I leave the keys with?", b:["Leave them with","gets home first."], o:["whoever","whatever","who"], k:"whoever"},
+  {a:"Sorry, I can't make it on Friday.", b:["No worries. Come round","you can."], o:["whenever","whatever","however"], k:"whenever"},
+  {a:"How do you want your coffee?", b:["","you make it is fine – I'm not fussy."], o:["However","Whatever","Whichever"], k:"However"},
+  {a:"Look! I've bought you that book you wanted!", b:["Oh, it's just","I wanted! Thank you!"], o:["what","which","whatever"], k:"what"}
+];
+const NR = [
+  ["what", /\bwhat\s+(?!(do|does|did|is|are|was|were|should|would|could|can|will|about|if)\b)\w+/gi],
+  ["all … is", /\ball\s+(i|you|we|they|he|she|people)\s+\w+\s+(is|was)\b/gi],
+  ["whoever", /\bwhoever\b/gi],
+  ["whatever", /\bwhatever\b/gi],
+  ["whichever", /\bwhichever\b/gi],
+  ["whenever", /\bwhenever\b/gi],
+  ["wherever", /\bwherever\b/gi],
+  ["however + clause", /\bhowever\s+(?![,.])\w+/gi],
+  ["how to / what to", /\b(how|where|who)\s+to\s+\w+/gi]
+];
+
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’‘'`]/g,"").replace(/[–—-]/g," ").replace(/[.,!?;:"()…]/g,"").replace(/\s+/g," ").trim();
+function fb(id,cls,msg){ const f=$(id); f.className="feedback "+cls; f.innerHTML=msg; }
+
+const scores = {}; const S = {name:"", r:{}, sent:false};
+function first(id,s,max,wrong){ if(!scores[id]){ scores[id]={s,max}; S.r[id]={wrong}; if(window.HWR) HWR.snap(id); } }
+function save(){ try{ localStorage.setItem(CFG.storage, JSON.stringify({name:S.name, essay:$("essay").value})); }catch(e){} }
+function load(){ try{ return JSON.parse(localStorage.getItem(CFG.storage)||"null"); }catch(e){ return null; } }
+
+const STEPS=["Practise","Write","Send"], REQ=["ex1","ex2","ex3","ex4","ex5"];
+function renderRoad(){
+  const r=$("road"); r.classList.remove("hidden");
+  const cur = S.sent?3 : REQ.some(k=>!scores[k])?0 : (wordCount()<CFG.minWords||clauses().total<CFG.minClauses)?1 : 2;
+  r.innerHTML = STEPS.map((t,i)=>`<div class="step ${i<cur?"done":i===cur?"active":"locked"}"><b>${i<cur?"✓":i+1}</b>${t}</div>`).join("");
+}
+
+/* ===================== TASKS ===================== */
+function init(){
+  /* T1 */
+  $("t1List").innerHTML = T1.map((it,i)=>{ const [pre,post]=it.t.split("___");
+    return `<li><span class="n">${i+1}</span>${esc(pre)}<span class="choice" data-a="${esc(it.a)}">${shuffle(it.o).map(o=>`<button type="button">${esc(o)}</button>`).join("")}</span>${esc(post)}</li>`; }).join("");
+  $("t1List").querySelectorAll(".choice").forEach(ch=>ch.querySelectorAll("button").forEach(b=>b.onclick=()=>{ ch.classList.remove("ok","bad"); ch.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); }));
+  $("t1Check").onclick=()=>{
+    const chs=[...$("t1List").querySelectorAll(".choice")];
+    if(chs.some(c=>!c.querySelector(".on"))){ fb("t1Fb","bad","Choose a word in every sentence first."); return; }
+    let sc=0; const wrong=[];
+    chs.forEach((c,i)=>{ const v=c.querySelector(".on").textContent, ok=v===c.dataset.a; if(ok) sc++; else wrong.push(`${i+1}. ${v} (✓ ${c.dataset.a})`); c.classList.add(ok?"ok":"bad"); });
+    first("ex1",sc,chs.length,wrong);
+    fb("t1Fb", sc===chs.length?"ok":"bad", `${sc} / ${chs.length}. ${sc===chs.length?"Perfect start!":"Red = wrong. Open the cheat sheet, fix them and check again (your first score is saved)."}`);
+    after();
+  };
+
+  /* T2 */
+  $("t2List").innerHTML = T2.map((it,i)=>`<li data-i="${i}"><span class="n">${i+1}</span><span class="sent">${esc(it.s)}</span>
+    <span class="verdict"><button type="button" data-v="1">✓</button><button type="button" data-v="0">✗</button></span>
+    <div class="fix hidden">${it.fix?shuffle(it.fix).map(f=>`<button type="button" class="opt">${esc(f)}</button>`).join(""):""}</div>
+    <span class="why hidden"></span></li>`).join("");
+  $("t2List").querySelectorAll("li").forEach(li=>{
+    const it=T2[+li.dataset.i], fix=li.querySelector(".fix");
+    li.querySelectorAll(".verdict button").forEach(b=>b.onclick=()=>{
+      li.classList.remove("ok","bad"); li.querySelector(".why").classList.add("hidden");
+      li.querySelectorAll(".verdict button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+      const wrongV=b.dataset.v==="0";
+      fix.classList.toggle("hidden", !(wrongV && it.fix));
+      if(wrongV && !it.fix){ fix.classList.remove("hidden"); fix.innerHTML=`<span class="small">Hmm… are you sure? Think about it, then check.</span>`; }
+    });
+    fix.addEventListener("click",e=>{ const o=e.target.closest(".opt"); if(!o) return; li.classList.remove("ok","bad"); fix.querySelectorAll(".opt").forEach(x=>x.classList.remove("on")); o.classList.add("on"); });
+  });
+  $("t2Check").onclick=()=>{
+    const L=[...$("t2List").querySelectorAll("li")];
+    if(L.some(li=>!li.querySelector(".verdict .on"))){ fb("t2Fb","bad","Tap ✓ or ✗ for every sentence first."); return; }
+    if(L.some(li=>li.querySelector(".verdict .on").dataset.v==="0" && T2[+li.dataset.i].fix && !li.querySelector(".fix .on"))){ fb("t2Fb","bad","Choose the correct version for every ✗ sentence."); return; }
+    let sc=0; const wrong=[];
+    L.forEach((li,i)=>{
+      const it=T2[i], v=li.querySelector(".verdict .on").dataset.v==="1";
+      let ok = v===it.ok;
+      if(ok && !it.ok){ ok = li.querySelector(".fix .on").textContent===it.fix[0]; }
+      if(ok) sc++; else wrong.push(`${i+1}. ${it.s}`);
+      li.classList.add(ok?"ok":"bad");
+      const w=li.querySelector(".why"); w.classList.remove("hidden"); w.innerHTML=(ok?"✅ ":"💡 ")+esc(it.why);
+    });
+    first("ex2",sc,L.length,wrong);
+    fb("t2Fb", sc===L.length?"ok":"bad", `${sc} / ${L.length}. ${sc===L.length?"Nothing gets past you! 🕵️":"Read the 💡 notes: these are the classic traps. Fix them and check again (your first score is saved)."}`);
+    after();
+  };
+
+  rewriteTask("t3List", T3, "t3Check", "t3Fb", "ex3", s=>`<span class="orig">${s.s}</span>`, ()=> "Rewrite the sentence…");
+  rewriteTask("t4List", T4, "t4Check", "t4Fb", "ex4", s=>`<span class="orig">${s.s}</span>`, s=> s.st);
+
+  /* T5 */
+  $("t5List").innerHTML = T5.map((it,i)=>`<div class="dlg"><span class="a">A:</span> ${esc(it.a)}<br><b>B:</b> ${esc(it.b[0])} <select data-k="${esc(it.k)}"><option value="">…</option>${shuffle(it.o).map(o=>`<option>${esc(o)}</option>`).join("")}</select> ${esc(it.b[1])}</div>`).join("");
+  const sels=[...$("t5List").querySelectorAll("select")];
+  sels.forEach(s=>s.onchange=()=>s.classList.remove("ok","bad"));
+  $("t5Check").onclick=()=>{
+    if(sels.some(s=>!s.value)){ fb("t5Fb","bad","Choose a word in every reply first."); return; }
+    let sc=0; const wrong=[];
+    sels.forEach((s,i)=>{ const ok=s.value===s.dataset.k; if(ok) sc++; else wrong.push(`${i+1}. ${s.value} (✓ ${s.dataset.k})`); s.classList.add(ok?"ok":"bad"); });
+    first("ex5",sc,sels.length,wrong);
+    fb("t5Fb", sc===sels.length?"ok":"bad", `${sc} / ${sels.length}. ${sc===sels.length?"You sound like a native speaker!":"Red = not quite. Try again (your first score is saved)."}`);
+    after();
+  };
+
+  /* T6 */
+  $("nrChips").innerHTML = NR.map(([n])=>`<span class="chip" data-n="${esc(n)}">${esc(n)}</span>`).join("");
+  $("essay").addEventListener("input",()=>{ track(); save(); });
+  track();
+  $("submitBtn").onclick=submit;
+}
+
+function rewriteTask(listId, data, btn, fbId, exId, top, ph){
+  $(listId).innerHTML = data.map((it,i)=>`<li><span class="n">${i+1}</span>${top(it)}<input type="text" data-i="${i}" placeholder="${esc(ph(it))}" autocomplete="off" spellcheck="false"><span class="key" id="${listId}k${i}"></span></li>`).join("");
+  const ins=[...$(listId).querySelectorAll("input")];
+  ins.forEach(inp=>inp.addEventListener("input",()=>{ inp.classList.remove("ok","bad"); $(listId+"k"+inp.dataset.i).textContent=""; }));
+  let tries=0;
+  $(btn).onclick=()=>{
+    if(ins.some(x=>!x.value.trim())){ fb(fbId,"bad","Write every sentence first."); return; }
+    tries++; let sc=0; const wrong=[];
+    ins.forEach((inp,i)=>{
+      const ok=data[i].a.some(a=>norm(a)===norm(inp.value));
+      if(ok) sc++; else wrong.push(`${i+1}. ${inp.value.trim()}`);
+      inp.classList.add(ok?"ok":"bad");
+      $(listId+"k"+i).textContent = (!ok && tries>=2) ? "→ "+cap(data[i].a[0])+"." : "";
+    });
+    first(exId,sc,ins.length,wrong);
+    fb(fbId, sc===ins.length?"ok":"bad", `${sc} / ${ins.length}. ${sc===ins.length?"Excellent!":(tries>=2?"Model answers are in green. Compare them with yours: if yours means the same and you think it's correct, it's fine – your teacher will see it.":"Red = not quite. Check the pronoun and the verb (is/was?). Try again (your first score is saved).")}`);
+    after();
+  };
+}
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1).replace(/\bi\b/g,"I").replace(/\bill\b/,"I'll").replace(/\bthats\b/,"that's").replace(/\blisbon\b/,"Lisbon");
+
+function wordCount(){ const t=($("essay")?$("essay").value:"").trim(); return t?t.split(/\s+/).length:0; }
+function clauses(){
+  const t=$("essay").value, found=[], kinds=new Set();
+  NR.forEach(([n,rx])=>{ rx.lastIndex=0; let m; while((m=rx.exec(t))){ found.push(m[0]); kinds.add(n); } });
+  return {total:found.length, kinds:[...kinds], found};
+}
+function track(){
+  const c=clauses(); $("wc").textContent=wordCount(); $("nrc").textContent=c.total;
+  $("nrChips").querySelectorAll(".chip").forEach(ch=>ch.classList.toggle("on",c.kinds.includes(ch.dataset.n)));
+  $("found").innerHTML = c.found.length ? "Found: "+c.found.map(f=>`<mark>${esc(f)}…</mark>`).join(" ") : "";
+  after();
+}
+function after(){
+  const missing=REQ.filter(k=>!scores[k]).map(k=>"Task "+k.slice(2));
+  const okW=wordCount()>=CFG.minWords, okC=clauses().total>=CFG.minClauses;
+  const ready=!missing.length&&okW&&okC&&!S.sent;
+  $("submitBtn").disabled=!ready;
+  $("submitHint").textContent = S.sent?"Sent.":ready?"Ready when you are.":
+    (missing.length?"Check "+missing.join(", ")+" first. ":"")+(okW?"":`Task 6: write at least ${CFG.minWords} words (now ${wordCount()}). `)+(okC?"":`Use at least ${CFG.minClauses} nominal relative clauses.`);
+  renderRoad();
+}
+
+function submit(){
+  let score=0,max=0; REQ.forEach(k=>{score+=scores[k].s; max+=scores[k].max;});
+  const pct=Math.round(score/max*100), essay=$("essay").value.trim(), c=clauses();
+  S.sent=true; after();
+  $("results").classList.remove("hidden"); $("bigScore").textContent=pct+"%";
+  const names={ex1:"Choose the word",ex2:"Right or wrong",ex3:"Say it shorter",ex4:"Make it stronger",ex5:"Real conversations"};
+  $("sumTable").innerHTML = REQ.map(k=>`<tr><td>Task ${k.slice(2)} · ${names[k]}</td><td>${scores[k].s} / ${scores[k].max}</td></tr>`).join("") +
+    `<tr><td>Task 6 · Advice for Marta</td><td>${wordCount()} words · ${c.total} clauses</td></tr>`;
+  $("submitBtn").textContent="Sent"; $("results").scrollIntoView({behavior:"smooth"});
+  const breakdown = REQ.map(k=>`Ex${k.slice(2)} ${scores[k].s}/${scores[k].max}`).join(" · ")+` · Ex6 ${wordCount()} words, ${c.total} clauses`;
+  const mistakes = REQ.filter(k=>S.r[k]&&S.r[k].wrong.length).map(k=>`Ex${k.slice(2)}: ${S.r[k].wrong.join("; ")}`).join("\n");
+  const open = `Ex6 (advice for Marta):\n${essay}\n\nClauses found: ${c.found.join(" | ")||"—"}`+(mistakes?`\n\nMistakes (first try):\n${mistakes}`:"");
+  $("sendStatus").textContent="Sending to your teacher…";
+  const p = window.HWR ? HWR.send({homework:CFG.homework, student:S.name, score, max, breakdown, open}) : Promise.reject();
+  p.then(()=>{ $("sendStatus").textContent="✓ Sent to your teacher. Well done!"; })
+   .catch(()=>{ S.sent=false; after(); $("submitBtn").textContent="Finish & send to my teacher"; $("sendStatus").textContent="Couldn't send. Check your internet and try again, or take a screenshot of this page."; });
+}
+
+const saved=load(), qs=new URLSearchParams(location.search), urlName=qs.get("s")||qs.get("student");
+if(saved){ S.name=saved.name||""; if(saved.essay) $("essay").value=saved.essay; }
+if(urlName) S.name=urlName;
+$("studentName").value=S.name;
+function begin(){ $("nameCard").classList.add("hidden"); $("main").classList.remove("hidden"); init(); after(); }
+$("startBtn").onclick=()=>{ const v=$("studentName").value.trim(); if(!v){ $("studentName").focus(); return; } S.name=v; save(); begin(); };
+$("studentName").addEventListener("keydown",e=>{ if(e.key==="Enter") $("startBtn").click(); });
+if(S.name) begin();
+</script>
+</body>
+</html>

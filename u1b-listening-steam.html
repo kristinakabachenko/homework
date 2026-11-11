@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening: Full STEAM ahead</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --body:#4a4a4a; --muted:#8a8580;
+  --paper:#ffffff; --desk:#f7f4ee; --cream:#fbf9f0; --line:#e8e2d6;
+  --pink:#f6dce5; --pink-d:#693751; --pink-m:#c97b9c;
+  --blue:#d2e4f8; --blue-d:#274d71; --blue-m:#7f98b3;
+  --peach:#f5ddd1;
+  --ok:#2f8a57; --ok-bg:#e3f4ea; --bad:#b33a3a; --bad-bg:#fbe5e5;
+  --hl-y:#fff0a3; --hl-g:#c8efd4; --hl-p:#f9cfdc;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 100px;transition:margin .35s}
+header{margin-bottom:18px}
+.pills{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px}
+.pill.unit{background:var(--blue);color:var(--blue-d)}
+.pill.lis{background:var(--blue-d);color:#fff}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(28px,6vw,40px);margin:0 0 4px;line-height:1.1}
+.sub{color:var(--body);margin:0}
+.road{display:flex;gap:6px;margin:22px 0 20px;flex-wrap:wrap}
+.step{flex:1 1 0;min-width:0;white-space:nowrap;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 6px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:5px;overflow:hidden}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--body);font-size:12px;flex:none}
+.step.active{border-color:var(--blue-m);color:var(--ink)}
+.step.active b{background:var(--blue-d);color:#fff}
+.step.done{color:var(--ok)} .step.done b{background:var(--ok);color:#fff}
+.step.locked{opacity:.55}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+@media (max-width:480px){.card{padding:18px 16px}}
+.card h2{font-size:20px;margin:0 0 4px}
+.card .hint{color:var(--body);margin:0 0 18px;font-size:15px}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:600}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.blue{background:var(--blue-d)}
+.btn.small{padding:6px 14px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.right{justify-content:flex-end}
+input[type=text],textarea{font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;background:#fff;color:var(--ink)}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--blue-m)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px}
+.feedback.ok{background:var(--ok-bg);color:var(--ok)}
+.feedback.bad{background:var(--bad-bg);color:var(--bad)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--blue);color:var(--blue-d);margin-bottom:10px}
+.tag.free{background:var(--pink);color:var(--pink-d)}
+.tag.script{background:var(--blue-d);color:#fff}
+.small{font-size:13px;color:var(--muted)}
+
+/* audio */
+.player{background:var(--blue-d);color:#fff;border-radius:var(--radius);padding:16px 18px;margin-bottom:18px}
+.player b{font-family:"Fraunces",Georgia,serif;font-size:19px}
+.player p{margin:4px 0 0;font-size:14px;opacity:.85}
+.player iframe{width:100%;height:100px;border:0;border-radius:12px;margin-top:10px;background:#fff}
+.player audio{width:100%;margin-top:10px}
+.player a{color:#cfe2f7;font-size:14px}
+
+/* lists */
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:12px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list .n{font-weight:700;color:var(--muted);margin-right:6px}
+.tick{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;background:#fff}
+.tick input{margin-top:5px;accent-color:var(--blue-d);width:17px;height:17px;flex:none}
+.tick.ok{border-color:var(--ok);background:var(--ok-bg)} .tick.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;font-size:15px;color:var(--ink)}
+.opt.on{border-color:var(--blue-d);background:var(--blue);font-weight:600}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.q{font-weight:600}
+
+/* dictation */
+.dict{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:var(--cream)}
+.dict .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.dict .play{background:var(--blue-d);color:#fff;border:0;border-radius:99px;padding:6px 14px;font-size:14px;font-weight:600}
+.dict .play:disabled{opacity:.4}
+.dict .left{font-size:13px;color:var(--muted)}
+.diff{margin-top:8px;font-size:15px;line-height:1.8}
+.diff .miss{background:var(--bad-bg);color:var(--bad);border-radius:5px;padding:0 4px;text-decoration:underline dotted}
+.diff .hit{color:var(--ok)}
+
+/* gaps */
+.gapin{display:inline-block;width:auto;min-width:150px;max-width:240px;padding:2px 8px!important;border-radius:8px!important;font-size:15px!important;vertical-align:baseline}
+.gapin.short{min-width:90px;max-width:130px}
+.gapin.ok{border-color:var(--ok)!important;background:var(--ok-bg)!important;color:var(--ok)}
+.gapin.bad{border-color:var(--bad)!important;background:var(--bad-bg)!important;color:var(--bad)}
+.key{font-size:13px;color:var(--ok);margin-left:6px;font-weight:600}
+.lineh{line-height:2.1}
+.hl-hint{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 8px;margin-left:4px}
+.hl-hint.y{background:var(--hl-y)} .hl-hint.g{background:var(--hl-g)} .hl-hint.p{background:var(--hl-p)}
+
+/* gate */
+.gate{text-align:center;padding:36px 24px;border:2px dashed var(--line);background:transparent}
+.gate .lock{font-size:36px}
+.gate p{color:var(--muted);margin:6px 0 0}
+
+/* writing */
+.brief{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:15px}
+.brief p{margin:0 0 8px}.brief p:last-child{margin:0}
+.msg{background:#fff;border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 12px;margin:8px 0;max-width:90%}
+.msg .who{font-weight:700;font-size:13px;display:block;color:var(--pink-d)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.chip{font-size:13px;border:1.5px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted);background:#fff}
+.chip.on{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:600}
+.meterline{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--body);margin-top:10px}
+.meterline b{color:var(--ink)}
+.lbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:14px}
+
+/* results */
+.score{font-family:"Fraunces",Georgia,serif;font-size:54px;line-height:1;margin:6px 0}
+table.sum{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+table.sum td{padding:8px 4px;border-bottom:1px solid var(--line)}
+table.sum td:last-child{text-align:right;font-weight:600}
+
+/* ===== SCRIPT DRAWER ===== */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:430px;max-width:100%;background:#fff;border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(39,77,113,.15);z-index:30;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.drawer.open{transform:none}
+.dhead{background:var(--blue-d);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.dhead b{font-family:"Fraunces",Georgia,serif;font-size:19px;flex:1}
+.dhead button{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:99px;width:32px;height:32px;font-size:18px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--cream);align-items:center}
+.tool{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:4px 11px;font-size:13px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:5px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.tool i{display:inline-block;width:14px;height:14px;border-radius:4px}
+.tool.edit.on{background:var(--blue-d);color:#fff;border-color:var(--blue-d)}
+.tools .sep{flex:1}
+.dtip{font-size:12.5px;color:var(--muted);padding:6px 14px 0}
+.stext{flex:1;overflow:auto;padding:12px 18px 40px;font-size:15.5px;line-height:1.75;outline:none}
+.stext p{margin:0 0 12px}
+.stext b{color:var(--blue-d)}
+.stext[contenteditable=true]{background:#fffdf5;box-shadow:inset 0 0 0 2px var(--hl-y)}
+.fab{position:fixed;right:18px;bottom:18px;z-index:25;background:var(--blue-d);color:#fff;border:0;border-radius:99px;padding:12px 18px;font-weight:700;box-shadow:0 8px 24px rgba(39,77,113,.35)}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:40;opacity:0;transition:opacity .3s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+@keyframes glow{0%{box-shadow:-12px 0 40px rgba(39,77,113,.15)}50%{box-shadow:-12px 0 60px rgba(201,123,156,.6)}100%{box-shadow:-12px 0 40px rgba(39,77,113,.15)}}
+.drawer.glow{animation:glow 1.4s 2}
+@media (min-width:1220px){
+  body.script-open .wrap{margin-left:max(16px,calc((100vw - 430px - 760px)/2))}
+  body.script-open .fab{display:none}
+}
+@media (max-width:700px){
+  .drawer{top:auto;width:100%;height:52vh;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(105%)}
+  .dhead{border-radius:20px 20px 0 0}
+}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="pills"><span class="pill unit">Unit 1</span><span class="pill lis">listening</span></div>
+    <h1>Full STEAM ahead</h1>
+    <p class="sub">Homework. Listen to a radio programme about STEM education, then dig into the script and steal its best phrases.</p>
+  </header>
+
+  <section class="card" id="nameCard">
+    <h2>Hi! What's your name?</h2>
+    <p class="hint">Your teacher will see your results.</p>
+    <div class="row">
+      <input type="text" id="studentName" placeholder="Your name" style="flex:1;min-width:180px">
+      <button class="btn" id="startBtn">Start</button>
+    </div>
+  </section>
+
+  <nav class="road hidden" id="road"></nav>
+
+  <div id="main" class="hidden">
+    <div class="player" id="player">
+      <b>🎧 Audio 1.03</b>
+      <p>A radio programme: Terry Howell talks to Kendra Lewis, an expert in STEM education.</p>
+      <div id="audioBox"></div>
+    </div>
+
+    <!-- Ex1 -->
+    <section class="card" id="ex1">
+      <span class="tag">Task 1 · Gist</span>
+      <h2>Which topics are discussed?</h2>
+      <p class="hint">Listen to the first part of the programme. Tick <b>all</b> the topics (a–h) that Terry and Kendra talk about.</p>
+      <div id="t1List"></div>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t1Check">Check</button></div>
+      <div class="feedback hidden" id="t1Fb"></div>
+    </section>
+
+    <!-- Ex2 -->
+    <section class="card" id="ex2">
+      <span class="tag">Task 2 · Detail</span>
+      <h2>Listen again and choose the correct option</h2>
+      <p class="hint">Careful: the wrong options often use words you hear in the recording.</p>
+      <ol class="list" id="t2List"></ol>
+      <div class="row right" style="margin-top:14px"><button class="btn" id="t2Check">Check</button></div>
+      <div class="feedback hidden" id="t2Fb"></div>
+    </section>
+
+    <!-- Ex3 -->
+    <section class="card" id="ex3">
+      <span class="tag">Task 3 · Dictation</span>
+      <h2>Write what you hear</h2>
+      <p class="hint">Press ▶ and type the sentence. You can listen to each sentence <b>only twice</b>, so get ready before you press play! Punctuation and capital letters don't matter.</p>
+      <div id="t3List"></div>
+      <div class="row right" style="margin-top:6px"><button class="btn" id="t3Check">Check</button></div>
+      <div class="feedback hidden" id="t3Fb"></div>
+    </section>
+
+    <section class="card gate" id="gate">
+      <div class="lock">📜</div>
+      <b>The script is locked</b>
+      <p>Check Tasks 1–3 to open the script and the next tasks.</p>
+    </section>
+
+    <div id="scriptPart" class="hidden">
+      <!-- Ex4 -->
+      <section class="card" id="ex4">
+        <span class="tag script">Task 4 · Script work</span>
+        <h2>Phrase hunt</h2>
+        <p class="hint">The script is open 📜 (tap the 📜 Script button if you closed it). Find the words and phrases that mean the things below. Type them as they are in the script, and <b>highlight each one in yellow</b> <span class="hl-hint y">like this</span> in the script.</p>
+        <ol class="list lineh" id="t4List"></ol>
+        <div class="row right" style="margin-top:14px"><button class="btn" id="t4Check">Check</button></div>
+        <div class="feedback hidden" id="t4Fb"></div>
+      </section>
+
+      <!-- Ex5 -->
+      <section class="card" id="ex5">
+        <span class="tag script">Task 5 · Script work</span>
+        <h2>Old friends in the script</h2>
+        <p class="hint">Kendra uses <b>four collocations</b> from our lesson <i>Collocations: education</i>. Find them, <b>highlight them in green</b> <span class="hl-hint g">like this</span> and type them here (any order, as they appear in the script).</p>
+        <div class="row" style="gap:8px" id="t5Ins"></div>
+        <div class="row right" style="margin-top:14px"><button class="btn" id="t5Check">Check</button></div>
+        <div class="feedback hidden" id="t5Fb"></div>
+      </section>
+
+      <!-- Ex6 -->
+      <section class="card" id="ex6">
+        <span class="tag script">Task 6 · Script work</span>
+        <h2>Spot the grammar: nominal relative clauses</h2>
+        <p class="hint">Remember <i>what, whoever, whatever</i> from our grammar lesson? They're all over the script. Complete the sentences, then <b>highlight the clauses in pink</b> <span class="hl-hint p">like this</span>. In sentence 5, rewrite Kendra's words with <i>what</i>.</p>
+        <ol class="list lineh" id="t6List"></ol>
+        <div class="row right" style="margin-top:14px"><button class="btn" id="t6Check">Check</button></div>
+        <div class="feedback hidden" id="t6Fb"></div>
+      </section>
+
+      <!-- Ex7 -->
+      <section class="card" id="ex7">
+        <span class="tag">Task 7 · Use it</span>
+        <h2>Steal the phrases</h2>
+        <p class="hint">Complete the real-life sentences with phrases from Task 4. Change the form if you need to. The first letters are given.</p>
+        <ol class="list lineh" id="t7List"></ol>
+        <div class="row right" style="margin-top:14px"><button class="btn" id="t7Check">Check</button></div>
+        <div class="feedback hidden" id="t7Fb"></div>
+      </section>
+
+      <!-- Ex8 -->
+      <section class="card" id="ex8">
+        <span class="tag free">Task 8 · Your turn</span>
+        <h2>Reply to your cousin</h2>
+        <div class="brief">
+          <p>A new <b>STEAM school</b> has just opened near your cousin Olya. It's private and quite expensive. Her son is 10. She texts you:</p>
+          <div class="msg"><span class="who">Olya</span>Hey! Everyone's talking about this new STEAM school 🤖🎨 Is it really worth the money or is it just a trendy name? You know about education stuff, help! 🙏</div>
+          <p>Write her a reply (<b>80–130 words</b>). Explain what STEAM is, what's good about it and what she should ask the school. Use <b>at least 4 phrases</b> from the script.</p>
+        </div>
+        <textarea id="essay" rows="8" placeholder="Hi Olya! Honestly, …"></textarea>
+        <div class="meterline"><span>Words: <b id="wc">0</b></span><span>Phrases from the script: <b id="phc">0</b> / 4</span></div>
+        <div class="lbl">Phrases you've used</div>
+        <div class="chips" id="phChips"></div>
+      </section>
+
+      <section class="card" id="sendCard">
+        <span class="tag">Finish</span>
+        <h2>Send your homework</h2>
+        <p class="small" id="submitHint">Check all the tasks and write at least 80 words in Task 8 first.</p>
+        <div class="row right" style="margin-top:10px"><button class="btn blue" id="submitBtn" disabled>Finish &amp; send to my teacher</button></div>
+      </section>
+
+      <section class="card hidden" id="results">
+        <span class="tag">Done</span>
+        <h2>Your results</h2>
+        <div class="score" id="bigScore"></div>
+        <table class="sum" id="sumTable"></table>
+        <p class="small" id="sendStatus"></p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPT DRAWER -->
+<aside class="drawer" id="drawer" aria-label="Audioscript">
+  <div class="dhead"><b>📜 Audioscript 1.03</b><button type="button" id="closeDrawer" aria-label="Close">×</button></div>
+  <div class="tools" id="tools">
+    <button type="button" class="tool" data-hl="y"><i style="background:var(--hl-y)"></i>Yellow</button>
+    <button type="button" class="tool" data-hl="g"><i style="background:var(--hl-g)"></i>Green</button>
+    <button type="button" class="tool" data-hl="p"><i style="background:var(--hl-p)"></i>Pink</button>
+    <button type="button" class="tool" data-hl="x">🧽 Erase</button>
+    <span class="sep"></span>
+    <button type="button" class="tool edit" id="editBtn">✏️ Edit text</button>
+    <button type="button" class="tool" id="resetBtn">↺</button>
+  </div>
+  <div class="dtip" id="dtip">Select words, then tap a colour. Turn on ✏️ to write your own notes in the text.</div>
+  <div class="stext" id="scriptText" spellcheck="false"></div>
+</aside>
+<button class="fab hidden" id="fab" type="button">📜 Script</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 1 · Listening: Full STEAM ahead',
+  storage: 'hw-u1b-listening-steam-v1',
+  minWords: 80, minPhrases: 4,
+  audioDrive: '',            // Google Drive file id of audio 1.03 (e.g. 1lM23f…). Leave '' if you use audioFile.
+  audioFile: ''              // or a file in the repo, e.g. 'u1b-audio-1-03.mp3'
+};
+const HL = {y:'#fff0a3', g:'#c8efd4', p:'#f9cfdc'};
+/* ==================================================== */
+
+/* ===================== DATA ===================== */
+const SCRIPT = `
+<p><b>Terry:</b> Good afternoon, I'm Terry Howell and I'm joined on the programme today by Kendra Lewis, an education professional who specialises in S-T-E-M – or STEM – education. In case you don't know what that is, it's a new way of thinking in curriculum development that strives for excellence in the way our children learn and develop the skills they need for the world of work. Kendra, tell us more about STEM education, and why it's important.</p>
+<p><b>Kendra:</b> Good afternoon, Terry, and thanks for having me on the show. So, this is all borne out of a mismatch between the skills and knowledge traditionally taught at school and those needed right across the board in a number of key industries. It's worth bearing in mind that we're trying to prepare children for jobs that don't yet exist. And with advances in technology lurching forward and unprecedented challenges in the world, this is becoming more of an issue at an increasingly fast rate. But with STEM learning, we can get to the heart of the issue and teach those skills which will be universally useful to people in the future, whatever profession they work in.</p>
+<p><b>Terry:</b> I see. So what is 'STEM learning', exactly, then?</p>
+<p><b>Kendra:</b> It involves the merger of four main educational disciplines: science, technology, engineering and mathematics (S, T, E, M). It's essentially an integrated curriculum that allows for the development of core skills that are useful, such as critical thinking and creativity in problem solving. But, in fact, delivering a quality curriculum involves more than that, and STEM education is now moving more towards a STEAM model. That's S-T-E-A-M.</p>
+<p><b>Terry:</b> STEAM? Let me guess – involving the arts?</p>
+<p><b>Kendra:</b> That's precisely what it is, that's spot on! It's essential that we embrace the fact that a lot of work in the future will be automated. So, whoever serves your burger or sells your cinema tickets will be replaced by technology. And that's a good thing in the long term, as companies can pass on savings to customers. But there are still a lot of areas that can't be fully automated, even with the use of AI (or artificial intelligence). You see, the thing that sets us humans apart is our creativity, especially in terms of creative solutions to problems. By adding the arts to the mix, we can further integrate existing curriculums into STEAM education. And by developing a nurturing environment across a range of disciplines, there are further possibilities for students to find their own path in the real world.</p>
+<p><b>Terry:</b> Fascinating. And so how do you see the way forward? Do you think schools will implement this approach to learning? What changes will need to be made?</p>
+<p><b>Kendra:</b> The starting point is to remember that it's an integrated approach. We as educators need to stop thinking of education as the transfer of knowledge within the distinct frameworks of school subjects. So the approach to education will need to establish clear connections between standards, assessments and teaching. Key skills to nurture are a sense of inquiry – which children are naturally equipped with – collaboration and a focus on process-based learning, not knowledge and facts.</p>
+<p><b>Terry:</b> I see, but what does that mean in more practical, day-to-day terms?</p>
+<p><b>Kendra:</b> Well, as I said …</p>`;
+
+const T1 = [
+  {t:"the number of hours children spend at school", a:false},
+  {t:"the world of work", a:true},
+  {t:"skills that children need to develop at school", a:true},
+  {t:"the amount of homework students should have", a:false},
+  {t:"the integration of school subjects", a:true},
+  {t:"the use of technology in jobs", a:true},
+  {t:"children with special educational needs", a:false},
+  {t:"implementing this type of learning in schools", a:true}
+];
+const T2 = [
+  {q:"Kendra says that STEM learning began because children", o:["weren't learning what they later needed in life.","didn't learn enough about technology.","were learning about jobs which don't exist."], a:0},
+  {q:"STEM learning can teach skills which will be useful in", o:["some jobs.","all jobs.","technical jobs."], a:1},
+  {q:"The key idea that Kendra expresses about STEAM learning is that", o:["it only focuses on part of the traditional curriculum.","it's a mixed curriculum.","it's different from other types of curriculum."], a:1},
+  {q:"According to Kendra, adding the arts to STEM education to create the 'STEAM' model allows for a greater focus on", o:["developing critical thinking.","communication skills.","developing creativity."], a:2},
+  {q:"In order to implement STEAM education, educators need to", o:["change their mindset.","focus more on knowledge.","work together more closely."], a:0},
+  {q:"Key skills to develop in children include ones that", o:["they wouldn't use in traditional education.","they don't yet have.","they already possess."], a:2}
+];
+const T3 = [
+  "We're trying to prepare children for jobs that don't yet exist.",
+  "It's essentially an integrated curriculum.",
+  "The thing that sets us humans apart is our creativity.",
+  "Key skills to nurture are a sense of inquiry, collaboration and a focus on process-based learning."
+];
+const T4 = [
+  {m:"the result of; started because of (formal)", h:"b____ o__ o_", a:["borne out of","born out of"]},
+  {m:"a situation where two things don't match", h:"m_______", a:["mismatch","a mismatch"]},
+  {m:"in every area or field, everywhere", h:"r____ a_____ t__ b____", a:["right across the board","across the board"]},
+  {m:"it's important to remember that…", h:"it's w____ b______ i_ m___", a:["it's worth bearing in mind","worth bearing in mind","it is worth bearing in mind"]},
+  {m:"moving forward suddenly, in an uncontrolled way", h:"l_______ f______", a:["lurching forward","lurch forward"]},
+  {m:"never seen or experienced before", h:"u___________", a:["unprecedented"]},
+  {m:"deal with the most basic, important part of a problem", h:"g__ t_ t__ h____ o_", a:["get to the heart of","get to the heart of the issue"]},
+  {m:"the joining of two or more things into one", h:"m_____", a:["merger","the merger","a merger"]},
+  {m:"exactly right", h:"s___ o_", a:["spot on"]},
+  {m:"makes someone different from others", h:"s___ … a____", a:["sets us apart","sets us humans apart","sets apart","set apart","set us apart"]}
+];
+const T5 = [
+  {n:"strive for excellence", rx:/^striv(e|es|ing)\s+for\s+excellence$/},
+  {n:"deliver a quality curriculum", rx:/^deliver(s|ing|ed)?\s+a\s+quality\s+curriculum$/},
+  {n:"develop a nurturing environment", rx:/^develop(s|ing|ed)?\s+a\s+nurturing\s+environment$/},
+  {n:"find your own path", rx:/^find(s|ing)?\s+(their|your|my|his|her|our)\s+own\s+path$/}
+];
+const T6 = [
+  {b:"In case you don't know", a:["what that"], after:"is, it's a new way of thinking in curriculum development…", cls:""},
+  {b:"…skills which will be universally useful to people in the future,", a:["whatever"], after:"profession they work in.", cls:"short"},
+  {b:"Terry: STEAM? Let me guess – involving the arts? Kendra: That's precisely", a:["what it is","what it is that's spot on"], after:", that's spot on!", cls:""},
+  {b:"So,", a:["whoever"], after:"serves your burger or sells your cinema tickets will be replaced by technology.", cls:"short"},
+  {b:"<i>“The thing that sets us humans apart is our creativity.”</i> →", a:["what sets us humans apart","what sets us apart"], after:"is our creativity.", cls:""}
+];
+const T7 = [
+  {b:"Your summary is", h:"s___ o_", a:["spot on"], after:"– that's exactly what the author meant."},
+  {b:"", h:"It's w____ b______ i_ m___", a:["it's worth bearing in mind","it is worth bearing in mind"], after:"that most universities close applications in January.", cap:true},
+  {b:"Employers complain about a", h:"m_______", a:["mismatch"], after:"between what graduates know and what the job really needs."},
+  {b:"The pandemic created", h:"u___________", a:["unprecedented"], after:"challenges for schools all over the world."},
+  {b:"Prices have gone up", h:"r____ a_____ t__ b____", a:["right across the board","across the board"], after:"– food, rent, transport, everything."},
+  {b:"Instead of fixing the symptoms, a good therapist tries to", h:"g__ t_ t__ h____ o_", a:["get to the heart of"], after:"the problem."},
+  {b:"It's her sense of humour that really", h:"s___ h__ a____", a:["sets her apart"], after:"from the other candidates."}
+];
+const PH_RX = [
+  ["borne out of", /\bborne?\s+out\s+of\b/i],
+  ["mismatch", /\bmismatch/i],
+  ["across the board", /\bacross\s+the\s+board\b/i],
+  ["worth bearing in mind", /\bworth\s+bearing\s+in\s+mind\b/i],
+  ["lurch forward", /\blurch(es|ed|ing)?\s+forward/i],
+  ["unprecedented", /\bunprecedented\b/i],
+  ["get to the heart of", /\b(get|gets|got|getting)\s+to\s+the\s+heart\s+of\b/i],
+  ["merger", /\bmerger\b/i],
+  ["spot on", /\bspot\s+on\b/i],
+  ["set … apart", /\bset(s|ting)?\s+(\w+\s+){0,3}apart\b/i],
+  ["strive for excellence", /\bstriv(e|es|ing)\s+for\s+excellence\b/i],
+  ["quality curriculum", /\bquality\s+curricul/i],
+  ["nurturing environment", /\bnurturing\s+environment/i],
+  ["find your own path", /\bfind(s|ing)?\s+(their|your|his|her|my|our)\s+own\s+path\b/i],
+  ["naturally equipped with", /\bnaturally\s+equipped\b/i],
+  ["integrated curriculum / approach", /\bintegrated\s+(curricul|approach)/i]
+];
+
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[–—-]/g," ").replace(/[.,!?;:"()…]/g,"").replace(/\s+/g," ").trim();
+const words = s => norm(s).replace(/'/g,"").split(" ").filter(Boolean);
+function fb(id,cls,msg){ const f=$(id); f.className="feedback "+cls; f.innerHTML=msg; }
+let toastT; function toast(m){ const t=$("toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"),2600); }
+
+/* ===================== STATE ===================== */
+const scores = {};   // read by hw-report.js
+const S = {name:"", r:{}, sent:false};
+function save(){ try{ localStorage.setItem(CFG.storage, JSON.stringify({name:S.name, essay:$("essay").value, script:$("scriptText").innerHTML, unlocked:S.unlocked})); }catch(e){} }
+function load(){ try{ return JSON.parse(localStorage.getItem(CFG.storage)||"null"); }catch(e){ return null; } }
+function first(id, s, max, wrong){
+  if(!scores[id]){ scores[id]={s,max}; S.r[id]={score:s,total:max,wrong}; if(window.HWR) HWR.snap(id); }
+}
+
+/* ===================== ROAD ===================== */
+const STEPS = ["Listen","Script","Use it","Write","Send"];
+function stageNow(){
+  if(S.sent) return 5;
+  if(!(scores.ex1&&scores.ex2&&scores.ex3)) return 0;
+  if(!(scores.ex4&&scores.ex5&&scores.ex6)) return 1;
+  if(!scores.ex7) return 2;
+  if(wordCount()<CFG.minWords) return 3;
+  return 4;
+}
+function renderRoad(){
+  const r=$("road"); r.classList.remove("hidden"); const cur=stageNow();
+  r.innerHTML = STEPS.map((t,i)=>`<div class="step ${i<cur?"done":i===cur?"active":"locked"}"><b>${i<cur?"✓":i+1}</b>${t}</div>`).join("");
+}
+
+/* ===================== AUDIO ===================== */
+function renderAudio(){
+  const b=$("audioBox");
+  if(CFG.audioFile) b.innerHTML=`<audio controls preload="none" src="${esc(CFG.audioFile)}"></audio>`;
+  else if(CFG.audioDrive) b.innerHTML=`<iframe src="https://drive.google.com/file/d/${esc(CFG.audioDrive)}/preview" allow="autoplay"></iframe><a href="https://drive.google.com/file/d/${esc(CFG.audioDrive)}/view" target="_blank" rel="noopener">Audio not playing? Open it here</a>`;
+  else b.innerHTML=`<p style="opacity:.9">Your teacher will send you the audio. Play it in another tab and do Tasks 1–2 here.</p>`;
+}
+
+/* ===================== TASKS 1–3 ===================== */
+function initListen(){
+  /* T1 */
+  $("t1List").innerHTML = T1.map((it,i)=>`<label class="tick" data-i="${i}"><input type="checkbox"><span><b>${"abcdefgh"[i]}</b>&nbsp; ${esc(it.t)}</span></label>`).join("");
+  $("t1List").querySelectorAll("input").forEach(c=>c.onchange=()=>c.closest(".tick").classList.remove("ok","bad"));
+  $("t1Check").onclick=()=>{
+    const L=[...$("t1List").querySelectorAll(".tick")];
+    if(!L.some(l=>l.querySelector("input").checked)){ fb("t1Fb","bad","Tick the topics you heard first."); return; }
+    let sc=0; const wrong=[];
+    L.forEach((l,i)=>{ const on=l.querySelector("input").checked, ok=on===T1[i].a; if(ok) sc++; else wrong.push("abcdefgh"[i]+(on?" (ticked, not discussed)":" (missed)")); l.classList.add(ok?"ok":"bad"); });
+    first("ex1",sc,L.length,wrong);
+    fb("t1Fb", sc===L.length?"ok":"bad", `${sc} / ${L.length}. ${sc===L.length?"Perfect! Five topics are discussed.":"Red = wrong. Listen again, fix them and check again (your first score is saved)."}`);
+    after();
+  };
+
+  /* T2 */
+  $("t2List").innerHTML = T2.map((it,i)=>`<li><span class="q"><span class="n">${i+1}</span>${esc(it.q)} …</span><div class="opts" data-i="${i}">${it.o.map((o,j)=>`<button type="button" class="opt" data-j="${j}"><b>${"abc"[j]}</b>&nbsp; ${esc(o)}</button>`).join("")}</div></li>`).join("");
+  $("t2List").querySelectorAll(".opts").forEach(g=>g.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ g.querySelectorAll(".opt").forEach(x=>x.classList.remove("on","ok","bad")); b.classList.add("on"); }));
+  $("t2Check").onclick=()=>{
+    const G=[...$("t2List").querySelectorAll(".opts")];
+    if(G.some(g=>!g.querySelector(".on"))){ fb("t2Fb","bad","Choose an option in every question first."); return; }
+    let sc=0; const wrong=[];
+    G.forEach((g,i)=>{ const b=g.querySelector(".on"), j=+b.dataset.j, ok=j===T2[i].a; if(ok) sc++; else wrong.push(`${i+1}${"abc"[j]} (✓ ${"abc"[T2[i].a]})`); b.classList.remove("on"); b.classList.add(ok?"ok":"bad"); if(!ok) b.classList.add("on"); });
+    first("ex2",sc,G.length,wrong);
+    fb("t2Fb", sc===G.length?"ok":"bad", `${sc} / ${G.length}. ${sc===G.length?"Excellent!":"Red = wrong. Try again (your first score is saved). Tip: after Task 3 you can check in the script."}`);
+    after();
+  };
+
+  /* T3: dictation with speech synthesis */
+  $("t3List").innerHTML = T3.map((s,i)=>`<div class="dict"><div class="top"><button type="button" class="play" data-i="${i}">▶ Sentence ${i+1}</button><span class="left" id="left${i}">2 plays left</span></div><textarea rows="2" id="d${i}" placeholder="Type what you hear…" spellcheck="false"></textarea><div class="diff hidden" id="diff${i}"></div></div>`).join("");
+  const plays=[2,2,2,2];
+  $("t3List").querySelectorAll(".play").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i; if(plays[i]<=0) return;
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(T3[i]); u.lang="en-GB"; u.rate=.92;
+      const v=speechSynthesis.getVoices().find(v=>/en-GB/i.test(v.lang)); if(v) u.voice=v;
+      speechSynthesis.speak(u);
+    }catch(e){ toast("Your browser can't play this sentence. Try Chrome or Safari."); return; }
+    plays[i]--; $("left"+i).textContent = plays[i] ? "1 play left" : "no plays left";
+    if(!plays[i]) b.disabled=true;
+  });
+  $("t3Check").onclick=()=>{
+    if(T3.some((_,i)=>!$("d"+i).value.trim())){ fb("t3Fb","bad","Write all four sentences first."); return; }
+    let sc=0; const wrong=[];
+    T3.forEach((s,i)=>{
+      const exp=words(s), got=words($("d"+i).value);
+      const hit=lcsMark(exp,got), acc=hit.filter(Boolean).length/Math.max(exp.length,got.length);
+      const ok=acc>=.9; if(ok) sc++; else wrong.push(`${i+1}. “${$("d"+i).value.trim()}”`);
+      const raw=s.split(" ");
+      const d=$("diff"+i); d.classList.remove("hidden");
+      d.innerHTML=(ok?"✅ ":"❌ ")+raw.map((w,k)=>`<span class="${hit[k]?"hit":"miss"}">${esc(w)}</span>`).join(" ");
+    });
+    first("ex3",sc,T3.length,wrong);
+    fb("t3Fb", sc===T3.length?"ok":"bad", `${sc} / ${T3.length}. ${sc===T3.length?"Brilliant ear!":"Red words = the ones you missed or got wrong. Small words like <i>a, the, are</i> are the hardest to hear – notice them!"}`);
+    after();
+  };
+}
+// marks which expected words appear (in order) in the student's words
+function lcsMark(a,b){
+  const n=a.length,m=b.length,dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--) for(let j=m-1;j>=0;j--) dp[i][j]= a[i]===b[j] ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j],dp[i][j+1]);
+  const hit=new Array(n).fill(false); let i=0,j=0;
+  while(i<n&&j<m){ if(a[i]===b[j]){hit[i]=true;i++;j++;} else if(dp[i+1][j]>=dp[i][j+1]) i++; else j++; }
+  return hit;
+}
+
+/* ===================== SCRIPT DRAWER ===================== */
+let savedRange=null;
+function openDrawer(glow){
+  $("drawer").classList.add("open"); document.body.classList.add("script-open");
+  if(glow){ $("drawer").classList.remove("glow"); void $("drawer").offsetWidth; $("drawer").classList.add("glow"); }
+}
+function closeDrawer(){ $("drawer").classList.remove("open"); document.body.classList.remove("script-open"); }
+function initScript(savedHtml){
+  const st=$("scriptText");
+  st.innerHTML = savedHtml || SCRIPT;
+  document.addEventListener("selectionchange",()=>{
+    const s=getSelection(); if(s.rangeCount && !s.isCollapsed && st.contains(s.anchorNode)) savedRange=s.getRangeAt(0).cloneRange();
+  });
+  $("tools").querySelectorAll("[data-hl]").forEach(b=>{
+    b.addEventListener("pointerdown",e=>e.preventDefault());
+    b.addEventListener("mousedown",e=>e.preventDefault());
+    b.addEventListener("click",()=>paint(b.dataset.hl));
+  });
+  $("editBtn").addEventListener("pointerdown",e=>e.preventDefault());
+  $("editBtn").onclick=()=>{
+    const on=st.getAttribute("contenteditable")!=="true";
+    st.setAttribute("contenteditable", on?"true":"false"); $("editBtn").classList.toggle("on",on);
+    toast(on?"Edit mode on: type your notes right in the text.":"Edit mode off.");
+    if(on) st.focus();
+  };
+  $("resetBtn").onclick=()=>{ if(confirm("Remove all your highlights and notes and get the original script back?")){ st.innerHTML=SCRIPT; save(); } };
+  st.addEventListener("input",()=>save());
+  $("closeDrawer").onclick=closeDrawer;
+  $("fab").onclick=()=> $("drawer").classList.contains("open") ? closeDrawer() : openDrawer();
+}
+function paint(c){
+  const st=$("scriptText"), s=getSelection();
+  if(savedRange){ s.removeAllRanges(); s.addRange(savedRange); }
+  if(!s.rangeCount || s.isCollapsed || !st.contains(s.anchorNode)){ toast("First select some words in the script."); return; }
+  const wasEdit=st.getAttribute("contenteditable")==="true";
+  st.setAttribute("contenteditable","true");
+  try{
+    document.execCommand("styleWithCSS",false,true);
+    const col = c==="x" ? "transparent" : HL[c];
+    if(!document.execCommand("hiliteColor",false,col)) document.execCommand("backColor",false,col);
+  }catch(e){}
+  if(!wasEdit) st.setAttribute("contenteditable","false");
+  s.removeAllRanges(); savedRange=null; save();
+}
+// returns {y:[...], g:[...], p:[...]} of highlighted text
+function highlights(){
+  const out={y:[],g:[],p:[]}, tgt={y:[255,240,163], g:[200,239,212], p:[249,207,220]};
+  const probe=document.createElement("div"); document.body.appendChild(probe);
+  $("scriptText").querySelectorAll("[style]").forEach(el=>{
+    const bg=el.style.backgroundColor; if(!bg||bg==="transparent") return;
+    probe.style.color=bg; const m=getComputedStyle(probe).color.match(/\d+/g); if(!m) return;
+    const rgb=m.slice(0,3).map(Number); if(m.length>3 && +m[3]===0) return;
+    let best=null,bd=1e9; for(const k in tgt){ const d=tgt[k].reduce((s,v,i)=>s+Math.abs(v-rgb[i]),0); if(d<bd){bd=d;best=k;} }
+    const t=el.textContent.replace(/\s+/g," ").trim(); if(t && bd<60) out[best].push(t);
+  });
+  probe.remove();
+  for(const k in out) out[k]=[...new Set(out[k])];
+  return out;
+}
+
+/* ===================== TASKS 4–8 ===================== */
+let scriptReady=false;
+function unlockScript(auto){
+  $("gate").classList.add("hidden"); $("scriptPart").classList.remove("hidden"); $("fab").classList.remove("hidden");
+  if(!scriptReady){ scriptReady=true; initScriptTasks(); }
+  if(!S.unlocked){ S.unlocked=true; save(); }
+  if(auto){ openDrawer(true); toast("📜 The script is open! Highlight phrases and add notes."); setTimeout(()=>$("ex4").scrollIntoView({behavior:"smooth"}),300); }
+}
+function gapTask(listId, data, btn, fbId, exId, label){
+  $(listId).innerHTML = data.map((it,i)=>{
+    const lead = it.m ? `<i>${esc(it.m)}</i> → ` : (it.b ? it.b+" " : "");
+    return `<li><span class="n">${i+1}</span>${lead}<input type="text" class="gapin ${it.cls||""}" data-i="${i}" placeholder="${esc(it.h||"")}" autocomplete="off" autocapitalize="off" spellcheck="false"> ${it.after||""}<span class="key" id="${listId}k${i}"></span></li>`;
+  }).join("");
+  const ins=[...$(listId).querySelectorAll(".gapin")];
+  ins.forEach(inp=>inp.addEventListener("input",()=>{ inp.classList.remove("ok","bad"); $(listId+"k"+inp.dataset.i).textContent=""; }));
+  let tries=0;
+  $(btn).onclick=()=>{
+    if(ins.some(x=>!x.value.trim())){ fb(fbId,"bad","Fill every gap first."); return; }
+    tries++; let sc=0; const wrong=[];
+    ins.forEach((inp,i)=>{
+      const ok=data[i].a.some(a=>norm(a)===norm(inp.value));
+      if(ok) sc++; else wrong.push(`${i+1}. ${inp.value.trim()} (✓ ${data[i].a[0]})`);
+      inp.classList.add(ok?"ok":"bad");
+      $(listId+"k"+i).textContent = (!ok && tries>=2) ? "→ "+data[i].a[0] : "";
+    });
+    first(exId,sc,ins.length,wrong);
+    fb(fbId, sc===ins.length?"ok":"bad", `${sc} / ${ins.length}. ${sc===ins.length?"Perfect!":(tries>=2?"The answers are shown in green: copy them in and remember them!":"Red = not quite. "+label+" Try again (your first score is saved).")}`);
+    after();
+  };
+}
+function initScriptTasks(){
+  gapTask("t4List", T4, "t4Check", "t4Fb", "ex4", "Look in the script again – type the words exactly as Kendra says them.");
+  /* T5 */
+  $("t5Ins").innerHTML = T5.map((_,i)=>`<input type="text" class="gapin" id="c5-${i}" placeholder="collocation ${i+1}" autocomplete="off" autocapitalize="off" spellcheck="false" style="flex:1 1 220px;max-width:none">`).join("");
+  let t5tries=0;
+  $("t5Check").onclick=()=>{
+    const ins=T5.map((_,i)=>$("c5-"+i));
+    if(ins.some(x=>!x.value.trim())){ fb("t5Fb","bad","Find all four first."); return; }
+    t5tries++; const found=new Set(); let sc=0; const wrong=[];
+    ins.forEach(inp=>{
+      const v=norm(inp.value).replace(/^(the|to)\s+/,"");
+      const k=T5.findIndex((c,j)=>!found.has(j)&&c.rx.test(v));
+      inp.classList.remove("ok","bad");
+      if(k>=0){ found.add(k); sc++; inp.classList.add("ok"); } else { inp.classList.add("bad"); wrong.push(inp.value.trim()); }
+    });
+    first("ex5",sc,4,wrong);
+    const missing=T5.filter((_,j)=>!found.has(j)).map(c=>c.n);
+    fb("t5Fb", sc===4?"ok":"bad", `${sc} / 4. ${sc===4?"Yes! The vocabulary from our lesson in a real interview. 💚":(t5tries>=2?"Missing: <b>"+missing.join(", ")+"</b>. Find them in the script and highlight them.":"Tip: look for the verbs <i>strive, deliver, develop, find</i>.")}`);
+    after();
+  };
+  gapTask("t6List", T6, "t6Check", "t6Fb", "ex6", "Check the script.");
+  gapTask("t7List", T7, "t7Check", "t7Fb", "ex7", "Check the form (verb tense? pronoun?).");
+  /* T8 */
+  $("phChips").innerHTML = PH_RX.map(([n])=>`<span class="chip" data-n="${esc(n)}">${esc(n)}</span>`).join("");
+  $("essay").addEventListener("input",()=>{ track(); save(); });
+  track();
+  $("submitBtn").onclick=submit;
+}
+function wordCount(){ const t=($("essay")?$("essay").value:"").trim(); return t?t.split(/\s+/).length:0; }
+function usedPh(){ const t=$("essay").value; return PH_RX.filter(([,rx])=>rx.test(t)).map(([n])=>n); }
+function track(){
+  const u=usedPh(); $("wc").textContent=wordCount(); $("phc").textContent=u.length;
+  $("phChips").querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",u.includes(c.dataset.n)));
+  after();
+}
+const REQ=["ex1","ex2","ex3","ex4","ex5","ex6","ex7"];
+function after(){
+  if(scores.ex1&&scores.ex2&&scores.ex3 && $("scriptPart").classList.contains("hidden")) unlockScript(true);
+  if(scriptReady){
+    const missing=REQ.filter(k=>!scores[k]).map(k=>"Task "+k.slice(2));
+    const okW=wordCount()>=CFG.minWords, okP=usedPh().length>=CFG.minPhrases;
+    const ready=!missing.length && okW && okP && !S.sent;
+    $("submitBtn").disabled=!ready;
+    $("submitHint").textContent = S.sent ? "Sent." : ready ? "Ready when you are." :
+      (missing.length?"Check "+missing.join(", ")+" first. ":"") + (okW?"":`Task 8: write at least ${CFG.minWords} words (now ${wordCount()}). `) + (okP?"":`Use at least ${CFG.minPhrases} phrases from the script.`);
+  }
+  renderRoad();
+}
+
+/* ===================== SUBMIT ===================== */
+function submit(){
+  let score=0,max=0; REQ.forEach(k=>{score+=scores[k].s; max+=scores[k].max;});
+  const pct=Math.round(score/max*100), essay=$("essay").value.trim(), ph=usedPh(), hl=highlights();
+  S.sent=true; after();
+  $("results").classList.remove("hidden"); $("bigScore").textContent=pct+"%";
+  const names={ex1:"Topics",ex2:"Detail",ex3:"Dictation",ex4:"Phrase hunt",ex5:"Collocations",ex6:"Grammar in the script",ex7:"Use the phrases"};
+  $("sumTable").innerHTML = REQ.map(k=>`<tr><td>Task ${k.slice(2)} · ${names[k]}</td><td>${scores[k].s} / ${scores[k].max}</td></tr>`).join("") +
+    `<tr><td>Task 8 · Reply to Olya</td><td>${wordCount()} words · ${ph.length} phrases</td></tr>` +
+    `<tr><td>Highlights in the script</td><td>🟨 ${hl.y.length} · 🟩 ${hl.g.length} · 🩷 ${hl.p.length}</td></tr>`;
+  $("submitBtn").textContent="Sent"; $("results").scrollIntoView({behavior:"smooth"});
+  const breakdown = REQ.map(k=>`Ex${k.slice(2)} ${scores[k].s}/${scores[k].max}`).join(" · ") + ` · Ex8 ${wordCount()} words, ${ph.length} phrases`;
+  const mistakes = REQ.filter(k=>S.r[k]&&S.r[k].wrong.length).map(k=>`Ex${k.slice(2)}: ${S.r[k].wrong.join("; ")}`).join("\n");
+  const open = `Ex8 (reply to Olya):\n${essay}\n\nScript phrases used: ${ph.join(", ")||"—"}\n\nHighlighted in the script:\nYellow: ${hl.y.join(" | ")||"—"}\nGreen: ${hl.g.join(" | ")||"—"}\nPink: ${hl.p.join(" | ")||"—"}` + (mistakes?`\n\nMistakes (first try):\n${mistakes}`:"");
+  $("sendStatus").textContent="Sending to your teacher…";
+  const p = window.HWR ? HWR.send({homework:CFG.homework, student:S.name, score, max, breakdown, open}) : Promise.reject();
+  p.then(()=>{ $("sendStatus").textContent="✓ Sent to your teacher. Well done!"; })
+   .catch(()=>{ S.sent=false; after(); $("submitBtn").textContent="Finish & send to my teacher"; $("sendStatus").textContent="Couldn't send. Check your internet and try again, or take a screenshot of this page."; });
+}
+
+/* ===================== START ===================== */
+const saved=load(), qs=new URLSearchParams(location.search), urlName=qs.get("s")||qs.get("student");
+if(saved){ S.name=saved.name||""; if(saved.essay) $("essay").value=saved.essay; }
+if(urlName) S.name=urlName;
+$("studentName").value=S.name;
+renderAudio(); initScript(saved&&saved.script);
+function begin(){
+  $("nameCard").classList.add("hidden"); $("main").classList.remove("hidden");
+  initListen();
+  if(saved&&saved.unlocked){ S.unlocked=true; unlockScript(false); }
+  after();
+}
+$("startBtn").onclick=()=>{ const v=$("studentName").value.trim(); if(!v){ $("studentName").focus(); return; } S.name=v; save(); begin(); };
+$("studentName").addEventListener("keydown",e=>{ if(e.key==="Enter") $("startBtn").click(); });
+if(S.name) begin();
+</script>
+</body>
+</html>
