@@ -4,38 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 4 Vocabulary 4C · Homework</title>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbf8f3;--card:#fff;--ink:#3b2e14;--muted:#6e6248;--brand:#8c2e3e;--olive:#867b18;--gold:#c9be78;--sun:#e9c46a;--ok:#2f8a4e;--okbg:#e8f4ec;--bad:#c0392b;--badbg:#fbe9e6;--line:#eae3d8;--soft:#f1efd9;--rose:#f4e4e6}
+:root{--bg:#f1f8f3;--card:#fff;--ink:#1f2d24;--muted:#5f7266;--brand:#1f9d55;--brand2:#13795b;--olive:#1f9d55;--gold:#adf0c7;--sun:#ffc23d;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#dcebe1;--soft:#e9f7ef;--rose:#e9f7ef}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
-.hero{text-align:center;padding:34px 10px 18px}
-.hero small{display:block;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--olive);font-size:13px}
-.hero h1{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:42px;line-height:1.05;margin:10px 0 8px;color:var(--brand)}
-.hero p{margin:0;color:var(--muted)}
-.rule2{width:220px;margin:16px auto 0;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);height:6px}
-.goal{background:var(--soft);border-radius:99px;padding:12px 22px;margin:18px 0;text-align:center}
-.goal b{color:var(--brand)}
+.hero{background:linear-gradient(135deg,#1f9d55 0%,#13795b 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F951";position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.goal{background:#eaf9ef;border:2px solid #9fe0b8;border-radius:18px;padding:14px 18px;margin:18px 0}
+.goal b{font-family:'Baloo 2',sans-serif;font-size:19px}
+.goal p{margin:4px 0 0}
 .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
-.track{height:10px;background:#ece4d6;border-radius:99px;overflow:hidden}
-.fill{height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--brand));border-radius:99px;transition:width .4s}
+.track{height:12px;background:#d3e6da;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
 .bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
-.card{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px 18px;margin-bottom:18px;transition:border-color .3s}
-.card.done{border-color:#a9d8b8}
-.course{text-align:center;margin-bottom:14px}
-.course .lab{font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--olive)}
-.course h2{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:26px;color:var(--brand);margin:4px 0 6px;line-height:1.15}
-.course p{margin:0;color:var(--muted);font-size:15px}
-.course .tick{display:none;color:var(--ok);font-weight:800;font-size:14px}
-.card.done .course .tick{display:block}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
 .name,.inp{font:inherit;width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff;color:var(--ink)}
 .name:focus,.inp:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand)}
-.btn{font:inherit;font-weight:800;font-size:17px;background:var(--brand);color:#fff;border:none;border-radius:14px;padding:11px 24px;cursor:pointer;margin-top:12px}
-.btn.big{width:100%;padding:15px;font-size:19px}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:var(--ink);border:none;border-radius:14px;padding:11px 24px;cursor:pointer;margin-top:12px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
 .btn:disabled{opacity:.45;cursor:default}
-.center{text-align:center}
-.fb{font-weight:800;margin-top:10px;min-height:1px;text-align:center}
+.center{text-align:left}
+.fb{font-weight:800;margin-top:10px;min-height:1px}
 .fb.good{color:var(--ok)}.fb.warn{color:#b45309}
 .ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
 .bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
@@ -49,9 +48,9 @@ body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color
 .flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
 .flip.turned .flip-in{transform:rotateY(180deg)}
 .side{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.front{background:#fffaf0;border:1.5px solid var(--gold)}
+.front{background:#f3fbf6;border:1.5px solid var(--gold)}
 .front .em{font-size:44px;line-height:1}
-.front .w{font-family:'Abril Fatface',Georgia,serif;font-size:38px;line-height:1.1;color:var(--brand);margin-top:6px}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:36px;line-height:1.1;color:var(--brand);margin-top:6px}
 .front .hint{font-size:14px;color:var(--muted);margin-top:8px}
 .back{background:#fff;border:1.5px solid var(--brand);transform:rotateY(180deg)}
 .back .ua{font-weight:800;font-size:22px;color:var(--brand)}
@@ -74,11 +73,11 @@ body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color
 .sort p{margin:0;flex:1;min-width:110px;font-weight:800;font-size:18px;border-radius:8px;padding:2px 8px}
 .tog{display:flex;gap:5px;flex-wrap:wrap}
 .tog button{font:inherit;font-weight:700;font-size:13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:5px 10px;cursor:pointer;color:var(--muted)}
-.tog button.on{background:var(--olive);border-color:var(--olive);color:#fff}
+.tog button.on{background:var(--brand);border-color:var(--brand);color:#fff}
 
 /* EX3 riddles */
-.rid{border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;background:#fffdf8}
-.rid .n{font-family:'Abril Fatface',Georgia,serif;color:var(--brand);font-size:20px}
+.rid{border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;background:#f8fdf9}
+.rid .n{font-weight:800;color:var(--brand);font-size:18px}
 .rid .t{line-height:2.1;margin:4px 0 8px}
 .rid select{font:inherit;font-weight:800;color:var(--brand);border:none;border-bottom:2px dashed var(--brand);background:transparent;padding:0 2px;border-radius:6px 6px 0 0;cursor:pointer}
 .rid select.ok,.rid select.bad{border-bottom-style:solid}
@@ -96,7 +95,7 @@ body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color
 .odd.show .why{display:block}
 
 /* EX5 kitchen riddles */
-.recipe{background:#fffaf0;border:1.5px solid var(--gold);border-radius:18px;padding:12px 16px;margin-bottom:14px}
+.recipe{background:#f3fbf6;border:1.5px solid var(--gold);border-radius:18px;padding:12px 16px;margin-bottom:14px}
 .recipe b{color:var(--brand)}
 .recipe ol{margin:6px 0 0;padding-left:22px}
 .recipe li{margin:2px 0;font-size:15px}
@@ -107,9 +106,10 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 .need li.y{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
 .bonus{background:var(--rose);border-radius:14px;padding:10px 14px;font-size:15px;margin-top:14px}
 
-.final h2{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:28px;color:var(--brand);margin:0 0 4px;text-align:center}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
 .checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
-.checklist i{font-style:normal;width:34px;height:34px;border-radius:50%;background:#ece4d6;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e1ece5;color:var(--muted);font-weight:800;display:grid;place-items:center}
 .checklist i.y{background:var(--ok);color:#fff}
 </style>
 <script src="assets/hw-report.js"></script>
@@ -118,13 +118,15 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 <div class="wrap">
 
 <header class="hero">
-  <small>Unit 4 · Eat · Vocabulary 4C</small>
+  <small>Unit 4 · Eat · Vocabulary homework</small>
   <h1>What are you having?</h1>
   <p>Describing food: how it's cooked, how it tastes, what it looks like</p>
-  <div class="rule2"></div>
 </header>
 
-<div class="goal"><b>Your goal:</b> describe a food so well that someone can guess it.</div>
+<div class="goal">
+  <b>Your goal</b>
+  <p>Describe a food so well that someone can guess it.</p>
+</div>
 
 <div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 5 tasks done</span></div>
 
@@ -135,7 +137,7 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 
 <!-- EX 1 -->
 <section class="card" id="ex1">
-  <div class="course"><div class="lab">1 · Aperitif</div><h2>Learn the words</h2><p>Flip the cards, then test yourself.</p><div class="tick">✓ done</div></div>
+  <div class="head"><div class="num">1</div><h2>Learn the words. First flip the cards, then test yourself.</h2></div>
   <div class="modes"><button id="mLearn" class="on" onclick="mode('learn')">1 · Learn</button><button id="mTest" onclick="mode('test')">2 · Test yourself</button></div>
   <div id="learnBox">
     <div class="stat"><span id="lCount"></span><span>tap the card to flip</span></div>
@@ -162,7 +164,7 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 
 <!-- EX 2 -->
 <section class="card" id="ex2">
-  <div class="course"><div class="lab">2 · Starter</div><h2>Which column?</h2><p>Is each word about how it's eaten, taste and texture, a part of food or a kind of food?</p><div class="tick">✓ done</div></div>
+  <div class="head"><div class="num">2</div><h2>Which column? Is each word about how it&#39;s eaten, taste and texture, a part of food or a kind of food?</h2></div>
   <div id="list2"></div>
   <div class="center"><button class="btn" onclick="check2()">Check</button></div>
   <div class="fb" id="fb2"></div>
@@ -170,7 +172,7 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 
 <!-- EX 3 -->
 <section class="card" id="ex3">
-  <div class="course"><div class="lab">3 · Main course</div><h2>Guess the food</h2><p>Choose the missing words. Then tap the food it describes.</p><div class="tick">✓ done</div></div>
+  <div class="head"><div class="num">3</div><h2>Guess the food. Choose the missing words, then tap the food it describes.</h2></div>
   <div id="list3"></div>
   <div class="center"><button class="btn" onclick="check3()">Check</button></div>
   <div class="fb" id="fb3"></div>
@@ -178,7 +180,7 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 
 <!-- EX 4 -->
 <section class="card" id="ex4">
-  <div class="course"><div class="lab">4 · Side dish</div><h2>Odd one out</h2><p>Tap the word that doesn't belong in each group.</p><div class="tick">✓ done</div></div>
+  <div class="head"><div class="num">4</div><h2>Odd one out. Tap the word that doesn&#39;t belong in each group.</h2></div>
   <div id="list4"></div>
   <div class="center"><button class="btn" onclick="check4()">Check</button></div>
   <div class="fb" id="fb4"></div>
@@ -186,8 +188,9 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 
 <!-- EX 5 -->
 <section class="card" id="ex5">
-  <div class="course"><div class="lab">5 · Chef's special</div><h2>Riddles from your kitchen</h2><p>Open your fridge or your kitchen cupboard. Choose two real foods and describe them, but don't say their names! Your teacher will guess.</p><div class="tick">✓ done</div></div>
-  <div class="recipe"><b>The description recipe</b>
+  <div class="head"><div class="num">5</div><h2>Riddles from your kitchen 🧺</h2></div>
+  <p style="margin:0 0 12px">Open your fridge or kitchen cupboard. Choose two <b>real</b> foods and describe them, but don't say their names! Your teacher will guess.</p>
+  <div class="recipe"><b>How to describe food</b>
     <ol>
       <li><b>Kind:</b> It's a kind of fruit / vegetable / seafood…</li>
       <li><b>Look:</b> It's green / long and thin / the size of my hand.</li>
@@ -210,8 +213,8 @@ textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line)
 </section>
 
 <section class="card final">
-  <h2>Ready to send?</h2>
-  <p style="margin:0;color:var(--muted);text-align:center">Complete all 5 courses, then send your homework to your teacher.</p>
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted);text-align:center">Complete all 5 tasks, then send your homework to your teacher.</p>
   <div class="checklist" id="cl"></div>
   <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
   <div class="fb" id="fbS"></div>
@@ -425,7 +428,7 @@ function send(){
   const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
   fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
     body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
-  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Bon appétit! 🎉','good'); btn.textContent='Sent ✓'; })
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
   .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
 }
 
