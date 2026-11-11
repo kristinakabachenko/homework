@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 Vocabulary 4C · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf8f3;--card:#fff;--ink:#3b2e14;--muted:#6e6248;--brand:#8c2e3e;--olive:#867b18;--gold:#c9be78;--sun:#e9c46a;--ok:#2f8a4e;--okbg:#e8f4ec;--bad:#c0392b;--badbg:#fbe9e6;--line:#eae3d8;--soft:#f1efd9;--rose:#f4e4e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{text-align:center;padding:34px 10px 18px}
+.hero small{display:block;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--olive);font-size:13px}
+.hero h1{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:42px;line-height:1.05;margin:10px 0 8px;color:var(--brand)}
+.hero p{margin:0;color:var(--muted)}
+.rule2{width:220px;margin:16px auto 0;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);height:6px}
+.goal{background:var(--soft);border-radius:99px;padding:12px 22px;margin:18px 0;text-align:center}
+.goal b{color:var(--brand)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:10px;background:#ece4d6;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--brand));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#a9d8b8}
+.course{text-align:center;margin-bottom:14px}
+.course .lab{font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--olive)}
+.course h2{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:26px;color:var(--brand);margin:4px 0 6px;line-height:1.15}
+.course p{margin:0;color:var(--muted);font-size:15px}
+.course .tick{display:none;color:var(--ok);font-weight:800;font-size:14px}
+.card.done .course .tick{display:block}
+.name,.inp{font:inherit;width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff;color:var(--ink)}
+.name:focus,.inp:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand)}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--brand);color:#fff;border:none;border-radius:14px;padding:11px 24px;cursor:pointer;margin-top:12px}
+.btn.big{width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.center{text-align:center}
+.fb{font-weight:800;margin-top:10px;min-height:1px;text-align:center}
+.fb.good{color:var(--ok)}.fb.warn{color:#b45309}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.small{font-size:14px;color:var(--muted);margin:4px 0 0}
+
+/* EX1 flashcards */
+.modes{display:flex;gap:8px;margin-bottom:12px}
+.modes button{flex:1;font:inherit;font-weight:800;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px;cursor:pointer;color:var(--muted)}
+.modes button.on{border-color:var(--brand);color:var(--brand);background:var(--rose)}
+.flip{perspective:1200px;height:250px;cursor:pointer;margin-bottom:12px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.turned .flip-in{transform:rotateY(180deg)}
+.side{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.front{background:#fffaf0;border:1.5px solid var(--gold)}
+.front .em{font-size:44px;line-height:1}
+.front .w{font-family:'Abril Fatface',Georgia,serif;font-size:38px;line-height:1.1;color:var(--brand);margin-top:6px}
+.front .hint{font-size:14px;color:var(--muted);margin-top:8px}
+.back{background:#fff;border:1.5px solid var(--brand);transform:rotateY(180deg)}
+.back .ua{font-weight:800;font-size:22px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted)}
+.decks{display:flex;gap:8px}
+.decks .btn{flex:1;margin-top:0}
+.btn.again{background:var(--badbg);color:var(--bad)}
+.btn.know{background:var(--okbg);color:var(--ok)}
+.stat{display:flex;justify-content:space-between;font-weight:800;font-size:14px;color:var(--muted);margin-bottom:8px}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;justify-content:center}
+.dots i{width:14px;height:14px;border-radius:50%;background:#ece4d6}
+.dots i.y{background:var(--ok)}
+.typebox{display:flex;gap:8px}
+.typebox .inp{margin-top:0}
+.typebox .btn{margin-top:0;flex:none}
+
+/* EX2 sort */
+.sort{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sort p{margin:0;flex:1;min-width:110px;font-weight:800;font-size:18px;border-radius:8px;padding:2px 8px}
+.tog{display:flex;gap:5px;flex-wrap:wrap}
+.tog button{font:inherit;font-weight:700;font-size:13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:5px 10px;cursor:pointer;color:var(--muted)}
+.tog button.on{background:var(--olive);border-color:var(--olive);color:#fff}
+
+/* EX3 riddles */
+.rid{border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;background:#fffdf8}
+.rid .n{font-family:'Abril Fatface',Georgia,serif;color:var(--brand);font-size:20px}
+.rid .t{line-height:2.1;margin:4px 0 8px}
+.rid select{font:inherit;font-weight:800;color:var(--brand);border:none;border-bottom:2px dashed var(--brand);background:transparent;padding:0 2px;border-radius:6px 6px 0 0;cursor:pointer}
+.rid select.ok,.rid select.bad{border-bottom-style:solid}
+.emo{display:flex;flex-wrap:wrap;gap:6px}
+.emo button{font-size:28px;width:52px;height:52px;border:1.5px solid var(--line);background:#fff;border-radius:14px;cursor:pointer;line-height:1}
+.emo button.on{border-color:var(--brand);background:var(--rose)}
+.emo .q{font-size:14px;color:var(--muted);font-weight:700;align-self:center;margin-right:4px}
+
+/* EX4 odd one out */
+.odd{padding:10px 0;border-bottom:1px solid var(--line)}
+.odd .row{display:flex;flex-wrap:wrap;gap:8px}
+.odd button{font:inherit;font-weight:700;border:1.5px solid var(--gold);background:#fff;border-radius:99px;padding:6px 14px;cursor:pointer;color:var(--ink)}
+.odd button.on{background:var(--rose);border-color:var(--brand);color:var(--brand)}
+.odd .why{font-size:14px;color:var(--ok);font-weight:700;margin-top:6px;display:none}
+.odd.show .why{display:block}
+
+/* EX5 kitchen riddles */
+.recipe{background:#fffaf0;border:1.5px solid var(--gold);border-radius:18px;padding:12px 16px;margin-bottom:14px}
+.recipe b{color:var(--brand)}
+.recipe ol{margin:6px 0 0;padding-left:22px}
+.recipe li{margin:2px 0;font-size:15px}
+.lbl{font-weight:800;font-size:15px;margin-top:14px;display:block}
+textarea{font:inherit;width:100%;min-height:120px;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+.need{list-style:none;padding:0;margin:6px 0 4px;display:flex;flex-wrap:wrap;gap:6px}
+.need li{font-size:13px;font-weight:700;border:1.5px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.need li.y{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+.bonus{background:var(--rose);border-radius:14px;padding:10px 14px;font-size:15px;margin-top:14px}
+
+.final h2{font-family:'Abril Fatface',Georgia,serif;font-weight:400;font-size:28px;color:var(--brand);margin:0 0 4px;text-align:center}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:50%;background:#ece4d6;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 4 · Eat · Vocabulary 4C</small>
+  <h1>What are you having?</h1>
+  <p>Describing food: how it's cooked, how it tastes, what it looks like</p>
+  <div class="rule2"></div>
+</header>
+
+<div class="goal"><b>Your goal:</b> describe a food so well that someone can guess it.</div>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 5 tasks done</span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<!-- EX 1 -->
+<section class="card" id="ex1">
+  <div class="course"><div class="lab">1 · Aperitif</div><h2>Learn the words</h2><p>Flip the cards, then test yourself.</p><div class="tick">✓ done</div></div>
+  <div class="modes"><button id="mLearn" class="on" onclick="mode('learn')">1 · Learn</button><button id="mTest" onclick="mode('test')">2 · Test yourself</button></div>
+  <div id="learnBox">
+    <div class="stat"><span id="lCount"></span><span>tap the card to flip</span></div>
+    <div class="flip" id="flip" onclick="this.classList.toggle('turned')">
+      <div class="flip-in">
+        <div class="side front"><div class="em" id="fE"></div><div class="w" id="fW"></div><div class="hint">What does it mean?</div></div>
+        <div class="side back"><div class="ua" id="bUa"></div><div class="def" id="bDef"></div><div class="ex" id="bEx"></div></div>
+      </div>
+    </div>
+    <div class="decks"><button class="btn again" onclick="rate(false)">↻ Again</button><button class="btn know" onclick="rate(true)">✓ I know it</button></div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div id="testBox" style="display:none">
+    <div class="stat"><span id="tCount"></span><span id="tScore"></span></div>
+    <div class="side front" style="position:relative;height:auto;min-height:140px;margin-bottom:12px">
+      <div id="tUa" style="font-weight:800;font-size:22px;color:var(--brand)"></div>
+      <div id="tEx" style="margin-top:8px;font-style:italic"></div>
+    </div>
+    <div class="typebox"><input class="inp" id="tIn" placeholder="Type the word" autocomplete="off" autocapitalize="off"><button class="btn" onclick="checkT()">Check</button></div>
+    <div class="fb" id="fbT"></div>
+  </div>
+  <div class="fb" id="fb1"></div>
+</section>
+
+<!-- EX 2 -->
+<section class="card" id="ex2">
+  <div class="course"><div class="lab">2 · Starter</div><h2>Which column?</h2><p>Is each word about how it's eaten, taste and texture, a part of food or a kind of food?</p><div class="tick">✓ done</div></div>
+  <div id="list2"></div>
+  <div class="center"><button class="btn" onclick="check2()">Check</button></div>
+  <div class="fb" id="fb2"></div>
+</section>
+
+<!-- EX 3 -->
+<section class="card" id="ex3">
+  <div class="course"><div class="lab">3 · Main course</div><h2>Guess the food</h2><p>Choose the missing words. Then tap the food it describes.</p><div class="tick">✓ done</div></div>
+  <div id="list3"></div>
+  <div class="center"><button class="btn" onclick="check3()">Check</button></div>
+  <div class="fb" id="fb3"></div>
+</section>
+
+<!-- EX 4 -->
+<section class="card" id="ex4">
+  <div class="course"><div class="lab">4 · Side dish</div><h2>Odd one out</h2><p>Tap the word that doesn't belong in each group.</p><div class="tick">✓ done</div></div>
+  <div id="list4"></div>
+  <div class="center"><button class="btn" onclick="check4()">Check</button></div>
+  <div class="fb" id="fb4"></div>
+</section>
+
+<!-- EX 5 -->
+<section class="card" id="ex5">
+  <div class="course"><div class="lab">5 · Chef's special</div><h2>Riddles from your kitchen</h2><p>Open your fridge or your kitchen cupboard. Choose two real foods and describe them, but don't say their names! Your teacher will guess.</p><div class="tick">✓ done</div></div>
+  <div class="recipe"><b>The description recipe</b>
+    <ol>
+      <li><b>Kind:</b> It's a kind of fruit / vegetable / seafood…</li>
+      <li><b>Look:</b> It's green / long and thin / the size of my hand.</li>
+      <li><b>Parts:</b> It has a thick skin / a stone / lots of seeds.</li>
+      <li><b>Taste:</b> It's sweet / bitter / mild. It's soft / hard.</li>
+      <li><b>Eat:</b> You usually eat it raw / grilled / roast / in a salad.</li>
+    </ol>
+  </div>
+  <label class="lbl">Riddle 1</label>
+  <textarea id="r1" placeholder="It's a kind of..."></textarea>
+  <ul class="need" id="need1"></ul>
+  <input class="inp" id="a1" placeholder="The answer (only your teacher sees it)">
+  <label class="lbl">Riddle 2</label>
+  <textarea id="r2" placeholder="It's a kind of..."></textarea>
+  <ul class="need" id="need2"></ul>
+  <input class="inp" id="a2" placeholder="The answer (only your teacher sees it)">
+  <div class="bonus">🎙 <b>Bonus:</b> record one riddle as a voice message on Telegram. Can your teacher guess it without reading?</div>
+  <div class="center"><button class="btn" onclick="save5()">Save my riddles</button></div>
+  <div class="fb" id="fb5"></div>
+</section>
+
+<section class="card final">
+  <h2>Ready to send?</h2>
+  <p style="margin:0;color:var(--muted);text-align:center">Complete all 5 courses, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: 'Unit 4 Vocabulary 4C · Describing food',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+const done = {ex1:false, ex2:false, ex3:false, ex4:false, ex5:false};
+const scores = {}, notes = {};
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+
+/* ---------- EX 1: flashcards ---------- */
+const CARDS = [
+  {w:'raw', e:'🥕', ua:'сирий (не приготований)', def:'not cooked', ex:'I love ___ carrots. They\'re so crunchy!'},
+  {w:'grilled', e:'🔥', ua:'приготований на грилі', def:'cooked over fire or very hot heat', ex:'We had ___ fish and salad on the beach.'},
+  {w:'roast', e:'🍗', ua:'запечений (в духовці)', def:'cooked in the oven, often meat or potatoes', ex:'On Sundays my mum makes ___ chicken with potatoes.'},
+  {w:'bitter', e:'☕', ua:'гіркий', def:'with a strong taste, not sweet (like black coffee)', ex:'Dark chocolate is a bit ___, but I love it.'},
+  {w:'mild', e:'🥒', ua:'м\'який на смак, не гострий', def:'not strong or spicy', ex:'This curry is ___, so children can eat it too.'},
+  {w:'soft', e:'🍑', ua:'м\'який (на дотик)', def:'not hard; easy to press', ex:'The peaches are very ___ and juicy.'},
+  {w:'skin', e:'🍌', ua:'шкірка', def:'the outside part of a fruit or vegetable', ex:'You don\'t eat the ___ of a banana.'},
+  {w:'shell', e:'🦪', ua:'панцир, мушля, шкаралупа', def:'the hard outside part of seafood, eggs or nuts', ex:'Mussels are cooked in their ___.'},
+  {w:'stone', e:'🍒', ua:'кісточка', def:'the big hard seed in the middle of a fruit', ex:'Be careful, cherries have a ___ in the middle.'},
+  {w:'seed', e:'🍉', ua:'насінина', def:'a small part inside a fruit that can grow a new plant', ex:'Watermelons have lots of black ___s.'},
+  {w:'herb', e:'🌿', ua:'(пряна) зелень, трава', def:'a plant you add to food for taste, like dill or basil', ex:'Dill is a ___ that Ukrainians use in almost everything!'},
+  {w:'seafood', e:'🦐', ua:'морепродукти', def:'animals from the sea that you eat, like prawns', ex:'I don\'t eat ___. I don\'t like the smell.'}
+];
+const NC = CARDS.length;
+const ANS1 = c => c.w==='seed' ? ['seeds','seed'] : [c.w];
+function fillEx(c){ return c.ex.replace('___', c.w==='seed' ? 'seed' : c.w); }
+let queue = CARDS.map((_,i)=>i), known = new Set(), repeats = 0;
+function showCard(){
+  $('flip').classList.remove('turned');
+  if (!queue.length){ $('lCount').textContent='All '+NC+' learned! Now test yourself →'; $('fW').textContent='Bravo!'; $('fE').textContent='🎉'; return; }
+  const c=CARDS[queue[0]];
+  setTimeout(()=>{ $('fE').textContent=c.e; $('fW').textContent=c.w; $('bUa').textContent=c.ua; $('bDef').textContent=c.def; $('bEx').textContent=fillEx(c); },150);
+  $('lCount').textContent=known.size+' / '+NC+' learned';
+  $('dots').innerHTML=CARDS.map((_,i)=>'<i class="'+(known.has(i)?'y':'')+'"></i>').join('');
+}
+function rate(k){
+  if (!queue.length) return;
+  const i=queue.shift();
+  if (k) known.add(i); else { repeats++; queue.splice(Math.min(3,queue.length),0,i); }
+  showCard();
+  if (!queue.length) { $('dots').innerHTML=CARDS.map(()=>'<i class="y"></i>').join(''); setTimeout(()=>mode('test'),700); }
+}
+function mode(m){
+  $('mLearn').classList.toggle('on',m==='learn'); $('mTest').classList.toggle('on',m==='test');
+  $('learnBox').style.display=m==='learn'?'block':'none'; $('testBox').style.display=m==='test'?'block':'none';
+  if (m==='test') showT();
+}
+let tOrder = shuffle(CARDS.map((_,i)=>i)), tPos = 0, tFirst = 0, tTried = false, tWrong = [];
+function showT(){
+  if (tPos>=tOrder.length){ $('tUa').textContent='Done! 🎉'; $('tEx').textContent=''; $('tCount').textContent=NC+' / '+NC; return; }
+  const c=CARDS[tOrder[tPos]];
+  $('tUa').textContent=c.ua; $('tEx').textContent=c.ex;
+  $('tCount').textContent=(tPos+1)+' / '+NC; $('tScore').textContent='first try: '+tFirst;
+  $('tIn').value=''; $('tIn').classList.remove('ok','bad'); fb('fbT','');
+}
+function checkT(){
+  if (tPos>=tOrder.length) return;
+  const c=CARDS[tOrder[tPos]], v=norm($('tIn').value);
+  if (!v) return;
+  if (ANS1(c).includes(v)){
+    $('tIn').classList.add('ok'); if(!tTried) tFirst++; else tWrong.push(c.w);
+    fb('fbT','Yes! '+fillEx(c),'good'); tTried=false; tPos++;
+    setTimeout(()=>{ showT(); if(tPos>=tOrder.length) finish1(); },1200);
+  } else {
+    $('tIn').classList.add('bad'); tTried=true;
+    fb('fbT','Not quite. It starts with "'+c.w.slice(0,2)+'…". Try again!','warn');
+  }
+}
+$('tIn').addEventListener('keydown',e=>{ if(e.key==='Enter') checkT(); });
+function finish1(){
+  scores.ex1={s:tFirst,max:NC}; if(window.HWR) HWR.snap('ex1');
+  notes.ex1='EX 1 (flashcards): '+repeats+' cards repeated in Learn mode. Test first try: '+tFirst+'/'+NC+(tWrong.length?'. Difficult: '+tWrong.join(', '):'');
+  fb('fb1','Great! Test score (first try): '+tFirst+'/'+NC+'.', tFirst===NC?'good':'warn'); markDone('ex1');
+}
+
+/* ---------- EX 2: which column ---------- */
+const COLS = ['How it\'s eaten','Taste & texture','Part of food','Kind of food'];
+const E2 = [['boiled',0],['bitter',1],['shell',2],['herb',3],['raw',0],['soft',1],['seafood',3],['stone',2],['roast',0],['sweet',1],['skin',2],['grilled',0],['mild',1],['fruit',3]];
+let order2 = shuffle(E2.map((_,i)=>i)), a2 = E2.map(()=>null), m2 = E2.map(()=>'');
+function r2(){
+  $('list2').innerHTML = order2.map(i=>'<div class="sort"><p class="'+m2[i]+'">'+esc(E2[i][0])+'</p><div class="tog">'+
+    COLS.map((c,k)=>'<button class="'+(a2[i]===k?'on':'')+'" onclick="p2('+i+','+k+')">'+esc(c)+'</button>').join('')+'</div></div>').join('');
+}
+function p2(i,k){ a2[i]=k; m2[i]=''; r2(); }
+function check2(){
+  if (a2.some(x=>x===null)) return fb('fb2','Choose a column for every word first.','warn');
+  let s=0; a2.forEach((x,i)=>{ const ok=x===E2[i][1]; m2[i]=ok?'ok':'bad'; if(ok)s++; }); r2();
+  const [m,c]=score('ex2',s,E2.length); fb('fb2',m,c); markDone('ex2');
+}
+
+/* ---------- EX 3: riddles ---------- */
+const BANK3 = ['bitter','grilled','herb','mild','raw','roast','seafood','seeds','shell','skin','soft','stone'];
+const FOODS = {kiwi:'🥝', squid:'🦑', aubergine:'🍆', cherries:'🍒', oyster:'🦪', garlic:'🧄', mango:'🥭', avocado:'🥑'};
+const E3 = [
+  {t:'It\'s a kind of fruit. It\'s small and brown, with a thin, hairy {skin}. Inside it\'s green, with lots of tiny black {seeds}. It\'s sweet but a little sour.', f:'kiwi'},
+  {t:'It\'s a kind of {seafood}. It\'s white and soft, and it has a lot of long legs. People often eat it {grilled} or fried, with lemon.', f:'squid'},
+  {t:'It\'s a vegetable. It\'s long and purple, with a shiny skin. You don\'t eat it {raw}. It\'s delicious {roast} in the oven with cheese.', f:'aubergine'},
+  {t:'It\'s a small, dark red fruit. It\'s sweet and {soft}, and there\'s a hard {stone} in the middle. In Ukraine we put it in varenyky.', f:'cherries'},
+  {t:'It\'s a kind of seafood. It lives in a hard grey {shell}. Some people eat it raw with lemon. It tastes of the sea: salty, not {bitter} or sweet.', f:'oyster'},
+  {t:'It\'s small and white, with a thin {skin} that you don\'t eat. Its taste isn\'t {mild} at all: it\'s very strong! You put a little in borshch.', f:'garlic'}
+];
+const G3 = []; E3.forEach((r,i)=>{ r.t.replace(/\{(.+?)\}/g,(m,w)=>{ G3.push({r:i,a:w}); return m; }); });
+let pick3 = E3.map(()=>null), mf3 = E3.map(()=>'');
+function r3(){
+  let g=0;
+  $('list3').innerHTML = E3.map((r,i)=>{
+    const t = esc(r.t).replace(/\{(.+?)\}/g,()=>{ const k=g++; return '<select id="s3_'+k+'"><option value="">……</option>'+BANK3.map(b=>'<option>'+b+'</option>').join('')+'</select>'; });
+    return '<div class="rid"><span class="n">'+(i+1)+'</span><div class="t">'+t+'</div><div class="emo"><span class="q">It\'s a…</span>'+
+      Object.keys(FOODS).map(f=>'<button id="e3_'+i+'_'+f+'" title="'+f+'" onclick="p3('+i+',\''+f+'\')">'+FOODS[f]+'</button>').join('')+'</div></div>';
+  }).join('');
+}
+function p3(i,f){ pick3[i]=f; Object.keys(FOODS).forEach(k=>{ const b=$('e3_'+i+'_'+k); b.className = k===f ? 'on' : ''; }); }
+function check3(){
+  const v = G3.map((_,k)=>$('s3_'+k).value);
+  if (v.some(x=>!x) || pick3.some(x=>!x)) return fb('fb3','Choose every missing word and a food for every riddle.','warn');
+  let s=0;
+  v.forEach((x,k)=>{ const el=$('s3_'+k), ok=x===G3[k].a; el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  pick3.forEach((f,i)=>{ const ok=f===E3[i].f; $('e3_'+i+'_'+f).className = 'on '+(ok?'ok':'bad'); if(ok)s++; });
+  const [m,c]=score('ex3',s,G3.length+E3.length); fb('fb3',m,c); markDone('ex3');
+}
+
+/* ---------- EX 4: odd one out ---------- */
+const E4 = [
+  [['grilled','roast','raw','fried'],'raw','raw is not cooked; the others are ways of cooking.'],
+  [['bitter','sweet','mild','stone'],'stone','stone is a part of a fruit; the others are tastes.'],
+  [['skin','shell','herb','seed'],'herb','herb is a kind of food; the others are parts of food.'],
+  [['squid','oyster','aubergine','prawns'],'aubergine','aubergine is a vegetable; the others are seafood.'],
+  [['mango','cherry','avocado','courgette'],'courgette','courgette is a vegetable with no stone; the others have a stone.']
+];
+let a4 = E4.map(()=>null), m4 = E4.map(()=>''), show4 = false;
+function r4(){
+  $('list4').innerHTML = E4.map((x,i)=>'<div class="odd '+(show4&&m4[i]?'show':'')+'"><div class="row"><b style="align-self:center;margin-right:4px">'+(i+1)+'.</b>'+
+    x[0].map(w=>'<button class="'+(a4[i]===w?'on '+m4[i]:'')+'" onclick="p4('+i+',\''+w+'\')">'+esc(w)+'</button>').join('')+'</div><div class="why">✓ '+esc(x[2])+'</div></div>').join('');
+}
+function p4(i,w){ a4[i]=w; m4[i]=''; r4(); }
+function check4(){
+  if (a4.some(x=>!x)) return fb('fb4','Choose one word in every group.','warn');
+  let s=0; a4.forEach((x,i)=>{ const ok=x===E4[i][1]; m4[i]=ok?'ok':'bad'; if(ok)s++; }); show4=true; r4();
+  const [m,c]=score('ex4',s,E4.length); fb('fb4',m,c); markDone('ex4');
+}
+
+/* ---------- EX 5: kitchen riddles ---------- */
+const STEPS = [
+  ['kind', /kind of/],
+  ['look', /\b(green|red|yellow|orange|purple|white|brown|black|pink|big|small|long|thin|round|size)\b/],
+  ['parts', /\b(skin|shell|stone|seeds?|leaves|legs?)\b/],
+  ['taste', /\b(sweet|bitter|mild|salty|sour|spicy|soft|hard|crunchy|juicy)\b/],
+  ['how you eat it', /\b(raw|grilled|roast|fried|boiled|baked|salad|soup|eat it|cook)\b/]
+];
+function live5(n){
+  const t=norm($('r'+n).value);
+  $('need'+n).innerHTML = STEPS.map(s=>'<li class="'+(s[1].test(t)?'y':'')+'">'+s[0]+'</li>').join('');
+}
+[1,2].forEach(n=>{ $('r'+n).addEventListener('input',()=>live5(n)); live5(n); });
+function save5(){
+  for (const n of [1,2]){
+    if (words($('r'+n).value)<15) return fb('fb5','Riddle '+n+' is too short. Write at least 15 words.','warn');
+    if (!$('a'+n).value.trim()) return fb('fb5','Write the answer for riddle '+n+' (your teacher won\'t see it until after guessing).','warn');
+  }
+  const miss = [1,2].map(n=>{ const t=norm($('r'+n).value); return STEPS.filter(s=>!s[1].test(t)).map(s=>s[0]); });
+  const named = [1,2].filter(n=>{ const a=norm($('a'+n).value); return a && a.length>2 && norm($('r'+n).value).includes(a); });
+  if (named.length) return fb('fb5','Oops! Riddle '+named.join(' and ')+' says the answer. Hide the name!','warn');
+  notes.ex5='EX 5 (kitchen riddles)\nRiddle 1: '+$('r1').value.trim()+'\n(answer: '+$('a1').value.trim()+')\n\nRiddle 2: '+$('r2').value.trim()+'\n(answer: '+$('a2').value.trim()+')'+
+    (miss[0].length||miss[1].length ? '\nRecipe steps not found: R1 '+(miss[0].join(', ')||'none')+' · R2 '+(miss[1].join(', ')||'none') : '');
+  if(window.HWR) HWR.snap('ex5');
+  const all = !miss[0].length && !miss[1].length;
+  fb('fb5', all ? 'Saved! Two perfect riddles 👨‍🍳' : 'Saved! Tip: add the grey steps to make your riddles even better, then save again.', all?'good':'warn');
+  markDone('ex5');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Bon appétit! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+showCard(); r2(); r3(); r4(); progress();
+</script>
+</body>
+</html>
