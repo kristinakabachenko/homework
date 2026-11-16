@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: On the road · Transport collocations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f3f2ec; --paper:#ffffff; --ink:#23262b; --soft:#5e636b; --line:#e2e0d6;
+    --road:#2f3338; --yellow:#fff3a6; --yellowd:#e9c400; --green:#d8efb4; --greend:#5c9a1f;
+    --ok:#1f8f5f; --okbg:#e3f6ec; --bad:#d9482b; --badbg:#fde8e2; --mark:#ffd23f;
+    --r-lg:22px; --r-md:14px;
+    --head:'Bricolage Grotesque', Arial, sans-serif; --body:'Figtree', Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--body)}
+  button,input,textarea,select{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 80px}
+
+  .bar{position:sticky;top:0;z-index:5;background:rgba(243,242,236,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar .in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;gap:6px;align-items:center}
+  .step{flex:1;display:flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;font-weight:600;color:var(--soft);min-width:0}
+  .step b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);background:var(--paper);font-size:13px}
+  .step span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .step.y b{background:var(--ok);border-color:var(--ok);color:#fff}
+  .step.y{color:var(--ink)}
+  @media (max-width:520px){ .step span{display:none} .step{flex:none} .bar .in{justify-content:space-between} .step::after{content:"";flex:1} }
+
+  /* hero: a little road */
+  .hero{padding:30px 0 24px}
+  .hero small{display:block;font-weight:700;color:var(--greend);font-size:14px;margin-bottom:6px}
+  .hero h1{font:800 clamp(34px,8vw,54px)/1 var(--head);letter-spacing:-.02em;margin:0 0 14px}
+  .hero p{margin:0;color:var(--soft);max-width:54ch}
+  .road{height:14px;border-radius:99px;margin:20px 0 0;background:var(--road) repeating-linear-gradient(90deg,transparent 0 18px,#fff 18px 40px) center/100% 3px no-repeat}
+  .name{margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .name label{font-weight:700}
+  .name input{flex:1;min-width:200px;padding:11px 14px;border:2px solid var(--line);border-radius:var(--r-md);background:var(--paper)}
+
+  .task{background:var(--paper);border-radius:var(--r-lg);padding:24px 22px 22px;margin-bottom:22px;border:2px solid transparent;scroll-margin-top:70px;transition:border-color .3s}
+  .task.done{border-color:var(--ok)}
+  .th{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+  .num{flex:none;width:44px;height:44px;border-radius:14px;background:var(--yellow);color:var(--ink);font:800 24px/44px var(--head);text-align:center}
+  .task.done .num{background:var(--ok);color:#fff}
+  .th h2{font:800 22px/1.15 var(--head);margin:2px 0 4px;letter-spacing:-.01em}
+  .th p{margin:0;color:var(--soft);font-size:15px}
+
+  /* Task 1 — sticky notes */
+  .bank{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#f7f6f1;border-radius:var(--r-md);margin-bottom:14px}
+  .note{border:0;cursor:pointer;padding:8px 14px;font-weight:700;font-size:16px;box-shadow:0 2px 0 rgba(0,0,0,.08);border-radius:3px}
+  .note.g{background:var(--green)}
+  .note.y{background:var(--yellow)}
+  .note.used{opacity:.25;cursor:default}
+  .pairs1{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:520px){ .pairs1{grid-template-columns:1fr} }
+  .pair{display:flex;align-items:stretch;border-radius:6px;overflow:hidden;border:2px solid transparent}
+  .pair .note{cursor:default;border-radius:0;flex:1;text-align:center;box-shadow:none}
+  .slot{flex:1;border:2px dashed #b9c9a3;background:#fbfdf7;border-radius:0 4px 4px 0;font-weight:700;cursor:pointer;min-height:42px;color:var(--greend)}
+  .slot.filled{border-style:solid;border-color:transparent;background:var(--green);color:var(--ink)}
+  .slot.active{border-color:var(--yellowd);background:#fffbe0}
+  .pair.ok{border-color:var(--ok)} .pair.ok .slot{background:var(--okbg);color:var(--ok)}
+  .pair.bad{border-color:var(--bad)} .pair.bad .slot{background:var(--badbg);color:var(--bad)}
+  .key{font-size:14px;color:var(--ok);font-weight:600}
+
+  /* Task 2 + 3 — sentences */
+  ol.items{margin:0;padding-left:24px}
+  ol.items li{margin:0 0 14px;line-height:2.1}
+  select.pick{padding:3px 8px;border:0;border-bottom:3px solid var(--yellowd);background:#fffbe0;border-radius:6px 6px 0 0;font-weight:700;max-width:100%}
+  select.pick.ok,.gap.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+  select.pick.bad,.gap.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+  .fixk{display:block;font-size:14px;line-height:1.4;color:var(--ok);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+  .chips span{background:#f7f6f1;border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:15px;font-weight:700}
+  .story{background:#fbfaf6;border:2px solid var(--line);border-radius:var(--r-md);padding:16px 18px;line-height:2.3}
+  .story h3{font:800 18px/1.2 var(--head);margin:0 0 6px}
+  .gap{width:120px;padding:2px 6px;border:0;border-bottom:3px solid var(--yellowd);background:#fffbe0;border-radius:6px 6px 0 0;text-align:center;font-weight:700}
+  .gap.bad::placeholder{color:var(--bad);opacity:.6}
+  .base{font-size:14px;color:var(--soft)}
+
+  /* Task 4 — chat with a tourist */
+  .chat{background:#eef1e6;border-radius:var(--r-md);padding:14px}
+  .msg{display:flex;gap:10px;align-items:flex-end;margin-bottom:6px}
+  .ava{flex:none;width:36px;height:36px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:19px}
+  .bubble{background:#fff;border-radius:14px 14px 14px 4px;padding:9px 13px;max-width:86%;font-size:16px}
+  .bubble b{font-weight:700}
+  .reply{margin:0 0 16px 46px}
+  .reply textarea{display:block;width:100%;min-height:86px;border:2px solid #cfdcbc;border-radius:14px 14px 4px 14px;padding:10px 13px;background:#f8fdf1;resize:vertical;line-height:1.5}
+  .reply textarea:focus{outline:none;border-color:var(--greend);background:#fff}
+  .hint{font-size:13px;color:var(--soft);margin-top:3px}
+  .meters{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  @media (max-width:520px){ .meters{grid-template-columns:1fr} }
+  .meter{background:#f7f6f1;border-radius:var(--r-md);padding:12px 14px}
+  .meter small{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--soft)}
+  .meter small b{color:var(--ink)}
+  .found{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:24px}
+  .found span{font-size:13px;font-weight:700;background:var(--okbg);color:var(--ok);border-radius:99px;padding:2px 10px}
+  .found em{font-size:13px;color:var(--soft)}
+  .meter.full{outline:2px solid var(--ok)}
+  details.help{margin:0 0 14px;background:#fffbe0;border-radius:var(--r-md);padding:10px 14px}
+  details.help summary{cursor:pointer;font-weight:700}
+  details.help .chips{margin:10px 0 0}
+
+  .act{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+  .btn{border:0;border-radius:var(--r-md);padding:12px 20px;font-weight:700;background:var(--ink);color:#fff;cursor:pointer}
+  .btn:hover{background:var(--greend)}
+  .btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+  .btn.ghost:hover{background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink)}
+  .btn:disabled{opacity:.45;cursor:default;background:var(--ink)}
+  .fb{font-size:15px;font-weight:700}
+  .fb.good{color:var(--ok)} .fb.warn{color:var(--bad)}
+
+  .send{background:var(--road);color:#fff;border-radius:var(--r-lg);padding:26px 22px}
+  .send h2{font:800 28px/1.1 var(--head);margin:0 0 6px}
+  .send p{margin:0;opacity:.8}
+  .send .list{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .send .list span{border:2px solid rgba(255,255,255,.25);border-radius:99px;padding:3px 12px;font-size:14px;font-weight:700}
+  .send .list span.y{background:var(--ok);border-color:var(--ok)}
+  .send .btn{background:var(--mark);color:var(--ink);font-size:18px;padding:14px 26px}
+  .send .btn:disabled{background:var(--mark)}
+  .send .fb.good{color:#8ff0bf} .send .fb.warn{color:#ffb4a3}
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+
+<nav class="bar" aria-label="Your progress"><div class="in" id="steps"></div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <small>English File B1 · Unit 3 · Vocabulary</small>
+    <h1>On the road</h1>
+    <p>Transport collocations, the verbs that go with them, and four phrasal verbs. At the end, a tourist in Kyiv needs your help! Your first answer in Tasks 1–3 is the one that counts.</p>
+    <div class="road" aria-hidden="true"></div>
+    <div class="name" id="nameCard"><label for="student">Your name</label><input id="student" placeholder="Type your name"></div>
+  </header>
+
+  <section class="task" id="ex1">
+    <div class="th"><div class="num">1</div><div><h2>Make the collocations</h2><p>Tap a green note to put it next to the yellow one. Tap a filled note to take it back.</p></div></div>
+    <div class="bank" id="bank1"></div>
+    <div class="pairs1" id="pairs1"></div>
+    <div class="act" data-check></div>
+  </section>
+
+  <section class="task" id="ex2">
+    <div class="th"><div class="num">2</div><div><h2>Which verb?</h2><p>Choose the verb that goes with each collocation. Use each one once.</p></div></div>
+    <ol class="items" id="list2"></ol>
+    <div class="act" data-check></div>
+  </section>
+
+  <section class="task" id="ex3">
+    <div class="th"><div class="num">3</div><div><h2>A day out with Taras</h2><p>Complete the story with the phrasal verbs in the correct form.</p></div></div>
+    <div class="chips"><span>set off</span><span>pick up</span><span>end up</span><span>run out of</span></div>
+    <div class="story"><h3>🚗 My first trip around Kyiv</h3><div id="text3"></div></div>
+    <div class="act" data-check></div>
+  </section>
+
+  <section class="task" id="ex4">
+    <div class="th"><div class="num">4</div><div><h2>Help a tourist in Kyiv</h2><p>Sam has just arrived at the station in Kyiv. Answer his questions. Use <b>4+ words from Task 1</b> and <b>at least one phrasal verb</b>: set off, pick up, end up, run out of.</p></div></div>
+    <details class="help"><summary>💡 Need ideas? Words you can use</summary>
+      <div class="chips"><span>get stuck in a traffic jam</span><span>avoid the rush hour</span><span>get caught by a speed camera</span><span>put on your seat belt</span><span>wait at a zebra crossing</span><span>ride in a cycle lane</span><span>fill up at a petrol station</span><span>get / pay a parking fine</span></div>
+    </details>
+    <div class="chat" id="chat4"></div>
+    <div class="meters">
+      <div class="meter" id="m4a"><small>Words from Task 1 <b id="n4a">0 / 4</b></small><div class="found" id="f4a"><em>They will appear here.</em></div></div>
+      <div class="meter" id="m4b"><small>Phrasal verbs <b id="n4b">0 / 1</b></small><div class="found" id="f4b"><em>They will appear here.</em></div></div>
+    </div>
+    <div class="act"><button class="btn" id="save4">Send my answers to Sam</button><span class="fb" id="fb4"></span></div>
+  </section>
+
+  <div class="send final">
+    <h2>Ready to send?</h2>
+    <p>Finish all four tasks, then send your homework to your teacher.</p>
+    <div class="list" id="cl"></div>
+    <button class="btn" id="sendBtn" disabled>Send to my teacher</button>
+    <div class="fb" id="sendMsg" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+const CFG = { homework: 'English File B1 · Unit 3 Vocabulary · On the road: transport collocations (homework)' };
+const TASKS = ['ex1','ex2','ex3','ex4'];
+const NAMES = {ex1:'Collocations', ex2:'Verbs', ex3:'Phrasal verbs', ex4:'Tourist'};
+const scores = {}, done = {}, notes = {};
+const $ = id => document.getElementById(id);
+const norm = s => String(s||'').toLowerCase().replace(/[’‘`]/g, "'").replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fb(id, t, c){ $(id).textContent = t; $(id).className = 'fb ' + (c||''); }
+function markDone(id){ done[id] = true; $(id).classList.add('done'); progress(); }
+function progress(){
+  $('steps').innerHTML = TASKS.map((k,i) => '<a class="step' + (done[k] ? ' y' : '') + '" href="#' + k + '"><b>' + (done[k] ? '✓' : i+1) + '</b><span>' + NAMES[k] + '</span></a>').join('');
+  $('cl').innerHTML = TASKS.map(k => '<span class="' + (done[k] ? 'y' : '') + '">' + (done[k] ? '✓ ' : '') + NAMES[k] + '</span>').join('');
+  $('sendBtn').disabled = TASKS.some(k => !done[k]) || sent;
+}
+function record(id, s, max){
+  const first = !scores[id];
+  if (first){ scores[id] = {s, max}; if (window.HWR) HWR.snap(id); }
+  fb(id + '_fb', s === max ? 'Perfect! ' + s + '/' + max + (first ? '' : ' · first try ' + scores[id].s + '/' + max + ' saved')
+    : (first ? 'First try saved: ' + s + '/' + max + '.' : 'Your first try (' + scores[id].s + '/' + max + ') is saved.') + ' Fix the red ones and check again.',
+    s === max ? 'good' : 'warn');
+  markDone(id);
+}
+const CHECKS = {};
+function addButtons(card, checkFn, resetFn){
+  CHECKS[card.id] = checkFn;
+  const b = card.querySelector('[data-check]');
+  b.innerHTML = '<button class="btn">Check</button><button class="btn ghost">Try again</button><span class="fb" id="' + card.id + '_fb"></span>';
+  b.children[0].onclick = () => { const [s, max] = checkFn(); record(card.id, s, max); save(); };
+  b.children[1].onclick = () => { resetFn(); fb(card.id + '_fb', ''); save(); };
+}
+
+/* ---------- Task 1: sticky-note collocations ---------- */
+const PAIRS1 = [['traffic','jam'],['rush','hour'],['speed','camera'],['seat','belt'],['zebra','crossing'],['cycle','lane'],['petrol','station'],['parking','fine']];
+const BANK1 = ['station','belt','hour','fine','crossing','jam','lane','camera'];   // mixed order
+const fill1 = PAIRS1.map(() => null);
+let active1 = 0;
+function paint1(){
+  $('bank1').innerHTML = BANK1.map(w => '<button class="note g' + (fill1.includes(w) ? ' used' : '') + '" data-w="' + w + '"' + (fill1.includes(w) ? ' disabled' : '') + '>' + w + '</button>').join('');
+  $('pairs1').querySelectorAll('.slot').forEach((s, k) => {
+    s.textContent = fill1[k] || '?';
+    s.classList.toggle('filled', !!fill1[k]);
+    s.classList.toggle('active', k === active1);
+  });
+  $('bank1').querySelectorAll('.note').forEach(b => b.onclick = () => {
+    if (active1 < 0) active1 = fill1.indexOf(null);
+    if (active1 < 0) return;
+    fill1[active1] = b.dataset.w; clear1();
+    const next = fill1.indexOf(null, active1); active1 = next >= 0 ? next : fill1.indexOf(null);
+    paint1(); save();
+  });
+}
+function clear1(){ $('pairs1').querySelectorAll('.pair').forEach(p => { p.classList.remove('ok','bad'); p.parentNode.querySelector('.key').textContent = ''; }); }
+(function(){
+  $('pairs1').innerHTML = PAIRS1.map(([a], k) => '<div><div class="pair" id="p1_' + k + '"><span class="note y">' + a + '</span><button class="slot" aria-label="Second word for ' + a + '"></button></div><div class="key"></div></div>').join('');
+  $('pairs1').querySelectorAll('.slot').forEach((s, k) => s.onclick = () => {
+    if (fill1[k]) fill1[k] = null;
+    active1 = k; clear1(); paint1(); save();
+  });
+  paint1();
+  addButtons($('ex1'), () => {
+    let n = 0;
+    PAIRS1.forEach(([a, b], k) => {
+      const ok = fill1[k] === b, p = $('p1_' + k);
+      p.classList.remove('ok','bad'); p.classList.add(ok ? 'ok' : 'bad');
+      p.parentNode.querySelector('.key').textContent = ok ? '' : '✓ ' + a + ' ' + b;
+      if (ok) n++;
+    });
+    return [n, PAIRS1.length];
+  }, () => { fill1.fill(null); active1 = 0; clear1(); paint1(); });
+})();
+
+/* ---------- Task 2: which verb? ---------- */
+const VERBS = ['got stuck in','avoid','get caught by','put on','wait at','ride in','fill up at','pay'];
+const EX2 = [
+  ["Sorry I'm late! I", 'got stuck in', "a traffic jam on the bridge for 40 minutes."],
+  ["I leave home at 7 to", 'avoid', "the rush hour."],
+  ["Slow down! You don't want to", 'get caught by', "a speed camera."],
+  ["Before we set off, please", 'put on', "your seat belt."],
+  ["When the light is red, you must", 'wait at', "the zebra crossing."],
+  ["It's much safer to", 'ride in', "the cycle lane than on the road."],
+  ["We're running out of petrol. Let's", 'fill up at', "the next petrol station."],
+  ["I parked in the wrong place, so now I have to", 'pay', "a 500-hryvnia parking fine."]
+];
+(function(){
+  const opts = '<option value="">— choose —</option>' + [...VERBS].sort().map(v => '<option>' + v + '</option>').join('');
+  $('list2').innerHTML = EX2.map(([a, , c], k) => '<li>' + esc(a) + ' <select class="pick" id="s2_' + k + '" aria-label="Verb for sentence ' + (k+1) + '">' + opts + '</select> ' + esc(c) + '<span class="fixk" id="k2_' + k + '"></span></li>').join('');
+  const sels = EX2.map((_, k) => $('s2_' + k));
+  sels.forEach((s, k) => s.addEventListener('change', () => { s.classList.remove('ok','bad'); $('k2_' + k).textContent = ''; }));
+  addButtons($('ex2'), () => {
+    let n = 0;
+    EX2.forEach(([a, v, c], k) => {
+      const ok = sels[k].value === v;
+      sels[k].classList.remove('ok','bad'); sels[k].classList.add(ok ? 'ok' : 'bad');
+      $('k2_' + k).textContent = ok ? '' : '✓ ' + a + ' ' + v + ' ' + c;
+      if (ok) n++;
+    });
+    return [n, EX2.length];
+  }, () => sels.forEach((s, k) => { s.value = ''; s.classList.remove('ok','bad'); $('k2_' + k).textContent = ''; }));
+})();
+
+/* ---------- Task 3: phrasal verbs in a story ---------- */
+const TEXT3 = "Last Saturday my friend Taras offered to show me Kyiv by car. \"Let's {set off|set off} early to avoid the rush hour,\" he said. On the way we stopped to {pick up|pick up} his sister Olia. Then Taras drove past a petrol station without stopping — he didn't want to get stuck in a traffic jam. Big mistake! Twenty minutes later we {ran out of|run out of} petrol on a busy bridge. We left the car there, walked for an hour and {ended up|end up} in a lovely little café by the river. Now Taras always {sets off|set off} with a full tank. Have you ever {run out of|run out of} petrol?";
+(function(){
+  let n = 0;
+  $('text3').innerHTML = esc(TEXT3).replace(/\{([^|}]+)\|([^}]+)\}/g, (_, a, base) => '<input type="text" class="gap" data-a="' + a + '" aria-label="Gap ' + (++n) + ' (' + base + ')" autocomplete="off" autocapitalize="off" spellcheck="false"> <span class="base">(' + base + ')</span>');
+  const inputs = [...$('text3').querySelectorAll('input')];
+  inputs.forEach(i => i.addEventListener('input', () => i.classList.remove('ok','bad')));
+  addButtons($('ex3'), () => {
+    let n = 0;
+    inputs.forEach(i => { const ok = norm(i.value) === i.dataset.a; i.classList.remove('ok','bad'); i.classList.add(ok ? 'ok' : 'bad'); if (!ok) i.placeholder = i.dataset.a; if (ok) n++; });
+    return [n, inputs.length];
+  }, () => inputs.forEach(i => { i.value = ''; i.placeholder = ''; i.classList.remove('ok','bad'); }));
+})();
+
+/* ---------- Task 4: chat with Sam the tourist ---------- */
+const QS = [
+  "Hi! 👋 I've just arrived at the station. I need to get to my hotel in the city centre. Is it a good idea to take a taxi now?",
+  "Tomorrow I want to rent a car and drive around Kyiv. Have you got any tips for driving here?",
+  "I love cycling. Can I ride a bike around the city? Is it safe?",
+  "On Saturday I want to visit a castle outside Kyiv. What time should I leave, and what should I remember?"
+];
+const COLL = [['traffic jam',/traffic ?jams?\b/],['rush hour',/rush[ -]hours?\b/],['speed camera',/speed ?cameras?\b/],['seat belt',/seat ?belts?\b/],
+  ['zebra crossing',/zebra ?crossings?\b/],['cycle lane',/(cycle|bike) ?lanes?\b/],['petrol station',/(petrol|gas) ?stations?\b/],['parking fine',/parking ?(fines?|tickets?)\b/]];
+const PHR = [['set off',/\bset(s|ting)? (\w+ )?off\b/],['pick up',/\bpick(s|ed|ing)? (\w+ )?up\b/],['end up',/\bend(s|ed|ing)? up\b/],['run out of',/\b(run|runs|ran|running) out of\b/]];
+(function(){
+  $('chat4').innerHTML = QS.map((q, k) => '<div class="msg"><div class="ava" aria-hidden="true">🧳</div><div class="bubble"><b>Sam:</b> ' + esc(q) + '</div></div>' +
+    '<div class="reply"><textarea id="a4_' + k + '" aria-label="Your answer to question ' + (k+1) + '" placeholder="Your answer…"></textarea></div>').join('');
+})();
+const answers4 = () => QS.map((_, k) => $('a4_' + k).value.trim());
+function scan4(){
+  const t = norm(answers4().join(' \n '));
+  return { c: COLL.filter(([, re]) => re.test(t)).map(([n]) => n), p: PHR.filter(([, re]) => re.test(t)).map(([n]) => n) };
+}
+function meter4(){
+  const f = scan4();
+  $('n4a').textContent = f.c.length + ' / 4'; $('m4a').classList.toggle('full', f.c.length >= 4);
+  $('n4b').textContent = f.p.length + ' / 1'; $('m4b').classList.toggle('full', f.p.length >= 1);
+  $('f4a').innerHTML = f.c.length ? f.c.map(w => '<span>' + w + '</span>').join('') : '<em>They will appear here.</em>';
+  $('f4b').innerHTML = f.p.length ? f.p.map(w => '<span>' + w + '</span>').join('') : '<em>They will appear here.</em>';
+}
+$('chat4').addEventListener('input', meter4);
+const wc = s => s.split(/\s+/).filter(Boolean).length;
+$('save4').onclick = () => {
+  const a = answers4(), f = scan4();
+  const short = a.findIndex(x => wc(x) < 8);
+  if (short >= 0) { $('a4_' + short).focus(); return fb('fb4', 'Answer every question in at least one full sentence (8+ words). Look at question ' + (short+1) + '.', 'warn'); }
+  if (f.c.length < 4) return fb('fb4', 'Use at least 4 words from Task 1. You have ' + f.c.length + '. Open "Need ideas?" for help.', 'warn');
+  if (!f.p.length) return fb('fb4', 'Use at least one phrasal verb: set off, pick up, end up or run out of.', 'warn');
+  notes.ex4 = 'TASK 4 (tourist in Kyiv · words: ' + f.c.join(', ') + ' · phrasal verbs: ' + f.p.join(', ') + ')\n' +
+    QS.map((q, k) => 'Q' + (k+1) + ': ' + q + '\nA: ' + a[k]).join('\n\n');
+  fb('fb4', 'Great answers! Sam says thank you 🙌 Your teacher will read them.', 'good');
+  markDone('ex4'); save();
+};
+
+/* ---------- SEND ---------- */
+let sent = false;
+const fromLink = new URLSearchParams(location.search).get('s');
+if (fromLink){ $('student').value = fromLink; $('nameCard').style.display = 'none'; }
+$('sendBtn').onclick = () => {
+  const student = $('student').value.trim();
+  if (!student){ $('nameCard').style.display = 'flex'; $('student').focus(); window.scrollTo(0, 0); return fb('sendMsg', 'Type your name at the top first.', 'warn'); }
+  let s = 0, max = 0; const parts = [];
+  ['ex1','ex2','ex3'].forEach(k => { s += scores[k].s; max += scores[k].max; parts.push('Ex' + k.slice(2) + ' ' + scores[k].s + '/' + scores[k].max); });
+  $('sendBtn').disabled = true; fb('sendMsg', 'Sending…');
+  HWR.send({homework: CFG.homework, student, score: s, max, breakdown: parts.join(' · '), open: notes.ex4 || ''})
+    .then(() => { sent = true; fb('sendMsg', 'Sent! Your score: ' + s + '/' + max + '. Well done! 🎉', 'good'); $('sendBtn').textContent = 'Sent ✓'; save(); })
+    .catch(() => { $('sendBtn').disabled = false; fb('sendMsg', 'Not sent. Check your internet and try again.', 'warn'); });
+};
+
+/* ---------- AUTOSAVE ---------- */
+const STORE = 'hw:' + location.pathname + ':' + (fromLink || '');
+const fields = () => [...document.querySelectorAll('#list2 select, #text3 input, #chat4 textarea, #student')];
+function save(){
+  try { localStorage.setItem(STORE, JSON.stringify({ v2: 2, v: fields().map(f => f.value), fill1, scores, done, notes, sent,
+    snaps: window.HWR ? HWR.snaps : {} })); } catch(e){}
+}
+function restore(){
+  let d; try { d = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){}
+  if (!d || !d.v2) return;
+  fields().forEach((f, i) => { if (d.v[i] != null && !(f.id === 'student' && fromLink)) f.value = d.v[i]; });
+  (d.fill1 || []).forEach((w, k) => { if (k < fill1.length) fill1[k] = w; });
+  active1 = fill1.indexOf(null); paint1();
+  Object.assign(scores, d.scores || {}); Object.assign(notes, d.notes || {});
+  if (window.HWR && d.snaps) Object.assign(HWR.snaps, d.snaps);
+  ['ex1','ex2','ex3'].forEach(k => { if (scores[k]) { CHECKS[k](); fb(k + '_fb', 'Your first try (' + scores[k].s + '/' + scores[k].max + ') is saved.', scores[k].s === scores[k].max ? 'good' : 'warn'); } });
+  if (d.done && d.done.ex4) fb('fb4', 'Great answers! Sam says thank you 🙌 Your teacher will read them.', 'good');
+  Object.keys(d.done || {}).forEach(k => d.done[k] && markDone(k));
+}
+document.addEventListener('input', save);
+document.addEventListener('change', save);
+restore();
+meter4();
+progress();
+</script>
+</body>
+</html>
