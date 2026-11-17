@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detective Academy: Case #814 · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&family=Special+Elite&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#b98a5c;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#24201b;--brand2:#c51f2e;--sun:#ffd21f;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e2cf9c;--soft:#fdf9ef;--chipb:#c9b98f;--trk:#8d623a;--emoji:"🔎"}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:var(--emoji);position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px;position:relative}
+.hero p{margin:0;opacity:.95;position:relative}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.prog{display:flex;gap:10px;align-items:center}
+.track{flex:1;height:12px;background:var(--trk);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s;position:relative}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid var(--chipb);color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:130px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:150px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap.wide{width:100%;display:block;margin-top:4px}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+input.gap::placeholder{color:#b9b3c9;font-weight:600}
+.key{display:none;font-size:14px;color:var(--ok);font-weight:700;margin-top:2px}
+.key.on{display:block}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px;background:#fff;color:var(--ink)}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:16px;padding:14px 14px 10px;margin:0 0 14px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:18px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:800;font-size:14px;padding:6px 11px;border:2px solid var(--line);border-radius:99px;background:#fff;cursor:pointer;color:var(--ink)}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+.strategy ul{margin:6px 0 0;padding-left:20px}
+u{text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--brand2)}
+.counter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;font-weight:800;color:var(--muted);margin-top:6px}
+.counter .good{color:var(--ok)}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:#eef1f6;color:#9aa3b2}
+.found span.on{background:var(--okbg);color:var(--ok)}
+.locked>*:not(.lockmsg){filter:blur(3px);pointer-events:none;user-select:none;opacity:.5}
+.lockmsg{display:none}
+.locked .lockmsg{display:grid;place-items:center;position:absolute;inset:0;z-index:3;font-weight:800;color:var(--ink);text-align:center;padding:20px}
+.locked .lockmsg span{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;box-shadow:0 10px 24px -14px rgba(0,0,0,.4)}
+.para{line-height:2.2;margin:0 0 10px}
+.dlg{background:var(--soft);border-radius:16px;padding:12px;line-height:2.1}
+.dlg p{margin:4px 0}
+.dlg b.sp{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;text-align:center;line-height:26px;font-size:13px;margin-right:6px}
+.dlg b.sp.b{background:var(--brand2)}
+.orig{color:var(--muted);font-size:14px}
+.grid2{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.formrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.formrow .t{flex:1 1 240px;font-weight:600}
+.formrow select,.formrow input[type=text]{font:inherit;border:2px solid var(--line);border-radius:10px;padding:5px 8px;background:#fff;color:var(--ink)}
+.formrow input[type=text]{flex:1 1 160px}
+.checks label{display:flex;gap:10px;align-items:flex-start;margin:6px 0;font-weight:600}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none}
+.hint{font-size:14px;color:var(--muted)}
+
+
+body{background-color:#b98a5c;background-image:radial-gradient(circle at 20% 30%,rgba(0,0,0,.08) 1px,transparent 2px),radial-gradient(circle at 70% 60%,rgba(255,255,255,.1) 1px,transparent 2px);background-size:23px 23px,31px 31px}
+.hero{background:#24201b!important;border-bottom:6px solid #ffd21f}
+.hero:after{opacity:.35}
+.hero h1{font-family:'Special Elite',monospace;letter-spacing:.02em}
+.tape{background:#ffd21f;color:#24201b;font-family:'Special Elite',monospace;font-size:15px;letter-spacing:.12em;white-space:nowrap;overflow:hidden;padding:6px 0;margin:0 -16px 14px;transform:rotate(-1deg);border-top:3px solid #24201b;border-bottom:3px solid #24201b;text-align:center}
+.bar{background:#b98a5c}
+.bar span{color:#2e2116}
+.card{background:#f3e0ae;border:none;border-radius:4px 14px 14px 14px;box-shadow:0 8px 18px rgba(0,0,0,.25);margin-top:34px}
+.card:before{content:attr(data-tab);position:absolute;top:-26px;left:0;background:#f3e0ae;font-family:'Special Elite',monospace;font-size:14px;padding:4px 14px 2px;border-radius:8px 8px 0 0}
+.card.done{outline:3px solid #16a34a}
+#nameCard:before,.final:before{display:none}
+#nameCard{margin-top:10px;background:#e9eef7;border:3px solid #21408f;border-radius:14px}
+.num{background:#24201b;border-radius:50%;font-family:'Special Elite',monospace}
+.head h2{font-family:'Special Elite',monospace;font-size:19px;font-weight:400}
+.pick{background:#fdf9ef;border-color:#c9b98f}
+.chips{background:#fdf9ef}
+.chip{border-color:#c9b98f;color:#24201b}
+.case{background:#fdf9ef;border:2px solid #24201b;padding:14px 16px;margin:0 0 12px;position:relative}
+.case .stamp{position:absolute;right:10px;top:8px;font-family:'Special Elite',monospace;color:#c51f2e;border:3px solid #c51f2e;padding:2px 8px;transform:rotate(8deg);opacity:.8}
+.case h3{font-family:'Special Elite',monospace;margin:0 0 6px;font-size:19px}
+.case p{margin:0 0 6px}
+.sus{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+.sus div{background:#fff;padding:8px 8px 10px;box-shadow:0 4px 10px rgba(0,0,0,.2);font-size:14px}
+.sus div:nth-child(1){transform:rotate(-1.5deg)}.sus div:nth-child(3){transform:rotate(1.5deg)}
+.sus b{display:block;font-family:'Permanent Marker',cursive;font-weight:400;font-size:18px}
+.sus .ph{height:60px;border-radius:4px;margin-bottom:6px;display:grid;place-items:center;font-size:34px}
+@media(max-width:520px){.sus{grid-template-columns:1fr}}
+.clues{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 12px}
+.clue{background:#d7b878;border:none;border-radius:6px;padding:10px 12px;text-align:left;font:inherit;cursor:pointer;min-height:84px}
+.clue b{font-family:'Special Elite',monospace;font-weight:400;display:block}
+.clue span{display:none}
+.clue.open{background:#fdf9ef}
+.clue.open span{display:block}
+.clue.open i{display:none}
+@media(max-width:520px){.clues{grid-template-columns:1fr}}
+.accuse{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+.accuse .pick.on{background:#c51f2e;border-color:#c51f2e;color:#fff}
+.confess{display:none;background:#fdf9ef;border:3px solid #c51f2e;padding:12px 14px;margin-top:10px;font-family:'Special Elite',monospace}
+.confess.on{display:block}
+.clip{background:#fdf9ef;border:1px solid #c9b98f;padding:12px 14px;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.clip-h{font-family:'Special Elite',monospace;font-size:13px;border-bottom:2px solid #24201b;padding-bottom:4px;margin-bottom:6px}
+.clip h3{font-family:'Special Elite',monospace;font-size:22px;margin:0 0 4px}
+.wanted{background:#fdf9ef;border:3px double #24201b;padding:12px}
+.wanted .w{font-family:'Special Elite',monospace;font-size:26px;text-align:center;letter-spacing:.2em}
+.wanted textarea{background:#fffdf5}
+.final{background:#fdf9ef}
+
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 8 · Speaking follow-up</small>
+  <h1>Detective Academy: Case #814</h1>
+  <p>Agent, a new case is waiting for you. Ask the right questions, read the clues and make an arrest.</p>
+</header>
+
+<div class="bar"><div class="prog"><div class="track"><div class="fill" id="fill"></div></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<div class="tape">CRIME SCENE · DO NOT CROSS · CRIME SCENE · DO NOT CROSS</div><section data-tab="FILE 1" class="card" id="ex1"><div class="head"><div class="num">1</div><h2>Interrogation room. The suspects gave these answers. Which question did the detective ask?</h2></div><div id="ex1_body"></div><button class="btn" onclick="checkPick('ex1')">Check</button><div class="fb" id="ex1_fb"></div></section><section data-tab="FILE 2" class="card" id="ex2"><div class="head"><div class="num">2</div><h2>New case! Read the case file, open the evidence and decide: true, false or not given?</h2></div><div class="case"><span class="stamp">CASE #814</span><h3>The Bake Sale Mystery</h3><p><b>Place:</b> Kyiv School No. 12, the school bake sale · <b>Time:</b> Saturday, between 11:00 and 11:30</p><p><b>What happened:</b> The money box with 2,350 hryvnias disappeared from the cake table.</p></div><div class="sus"><div><div class="ph" style="background:#fde68a">🍋</div><b>Dan, 15</b>sells lemonade at the next table<br><i>“I was at my lemonade table the whole time.”</i></div><div><div class="ph" style="background:#fbcfe8">🧁</div><b>Olga, 13</b>baked the cupcakes<br><i>“I went home at 11:00 to get more cupcakes.”</i></div><div><div class="ph" style="background:#c7d2fe">📋</div><b>Mrs Kovalenko</b>the teacher in charge<br><i>“I was counting tickets in the staff room.”</i></div></div><p class="tip" style="margin:0 0 6px">Tap each envelope to open the evidence.</p><div class="clues"><button class="clue" type="button" onclick="this.classList.add('open')"><b>Clue A</b><i>A witness…</i><span>A witness saw Dan’s lemonade table empty at 11:15, with a sign: “Back in 5 minutes”.</span></button><button class="clue" type="button" onclick="this.classList.add('open')"><b>Clue B</b><i>A photo…</i><span>Olga’s mum sent a photo at 11:10: Olga is in her kitchen with a tray of cupcakes.</span></button><button class="clue" type="button" onclick="this.classList.add('open')"><b>Clue C</b><i>The door…</i><span>The staff room has a code lock. Mrs Kovalenko went in at 10:55 and came out at 11:40.</span></button><button class="clue" type="button" onclick="this.classList.add('open')"><b>Clue D</b><i>The box…</i><span>There are sticky, lemony fingerprints on the money box.</span></button></div><div id="ex2_body"></div><button class="btn" onclick="checkPick('ex2')">Check</button><div class="fb" id="ex2_fb"></div></section><section data-tab="FILE 3" class="card locked" id="ex3" data-after="ex2"><div class="lockmsg"><span>🔒 Finish Task 2 first – you need the clues!</span></div><div class="head"><div class="num">3</div><h2>Make the arrest! Who took the money box? Choose a suspect and explain why.</h2></div><p class="tip">Use the clues from Task 2. Start with <i>I think … committed the crime because…</i></p><div class="accuse" id="acc"><button class="pick" type="button" onclick="accuse(0)" id="acc0">Dan</button><button class="pick" type="button" onclick="accuse(1)" id="acc1">Olga</button><button class="pick" type="button" onclick="accuse(2)" id="acc2">Mrs Kovalenko</button></div><textarea id="why" placeholder="I think … committed the crime because… First,… Also,…"></textarea><div class="confess" id="conf"></div><button class="btn" onclick="checkAccuse()">Arrest!</button><div class="fb" id="ex3_fb"></div></section><section data-tab="FILE 4" class="card" id="ex4"><div class="head"><div class="num">4</div><h2>The school newspaper wrote about Case #814. Complete the article.</h2></div><p class="tip">Tap a gap, then tap a word.</p><div class="chips sticky" id="ex4_bank"></div><div id="ex4_body"></div><button class="btn" onclick="checkFill('ex4')">Check</button><div class="fb" id="ex4_fb"></div></section><section data-tab="FILE 5" class="card" id="ex5"><div class="head"><div class="num">5</div><h2>Breaking news! Write a news report about Case #813 (the missing trophy) or Case #814 (the bake sale) – OR make a WANTED poster for the thief (70–120 words).</h2></div><p class="tip">Use at least 5 crime words from our lessons. They turn green when you use them.</p><div class="wanted"><div class="w">BREAKING NEWS</div><textarea id="ex5_t" placeholder="Good evening! This is Agent … from Channel 8 News…"></textarea></div><div class="counter"><span id="ex5_wc">0 words</span><span id="ex5_wk"></span></div><div class="found" id="ex5_found"></div><button class="btn" onclick="saveOpen('ex5')">File my report</button><div class="fb" id="ex5_fb"></div></section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script src="assets/back-home.js"></script>
+<script>
+const CFG = { homework: "Detective Academy: Case #814", scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec', key: 'moody-hw-2026', bye: "Case closed, Inspector! \ud83d\udd75\ufe0f" };
+const TASKS = ["ex1", "ex2", "ex3", "ex4", "ex5"];
+
+const done={}, scores={}, notes={};
+TASKS.forEach(k=>done[k]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’‘`]/g,"'").replace(/[“”]/g,'"').replace(/\s+/g,' ').trim(); }
+function loose(v){ return norm(v).replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+let sent=false;
+function markDone(id){ done[id]=true; $(id).classList.add('done');
+  document.querySelectorAll('[data-after="'+id+'"]').forEach(s=>s.classList.remove('locked')); progress(); }
+function progress(){
+  const n=TASKS.filter(x=>done[x]).length;
+  $('fill').style.width=(n/TASKS.length*100)+'%'; $('ptext').textContent=n+' of '+TASKS.length+' tasks done';
+  $('cl').innerHTML=TASKS.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<TASKS.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+/* FILL: tap a gap, then a word */
+const FILL={};
+function setupFill(id,ex){ FILL[id]={...ex,fill:Array(ex.answers.length).fill(-1),mark:Array(ex.answers.length).fill(''),act:0}; renderFill(id); }
+function renderFill(id){ const t=FILL[id];
+  $(id+'_bank').innerHTML=t.bank.map((w,k)=>'<button class="chip '+(t.fill.includes(k)?'used':'')+'" onclick="fillChip(\''+id+'\','+k+')">'+w+'</button>').join('');
+  $(id+'_body').innerHTML=t.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>{ n=+n; const v=t.fill[n];
+    return '<span class="slot '+(n===t.act?'active ':'')+t.mark[n]+'" onclick="fillSlot(\''+id+'\','+n+')">'+(v>=0?t.bank[v]:'&nbsp;')+'</span>'; }); }
+function fillSlot(id,i){ const t=FILL[id]; if(t.fill[i]>=0){ t.fill[i]=-1; t.mark[i]=''; } t.act=i; renderFill(id); }
+function fillChip(id,k){ const t=FILL[id]; if(t.fill.includes(k)) return; if(t.act<0) t.act=t.fill.indexOf(-1); if(t.act<0) return;
+  t.fill[t.act]=k; t.mark[t.act]=''; t.act=t.fill.indexOf(-1); renderFill(id); }
+function checkFill(id){ const t=FILL[id];
+  if(t.fill.includes(-1)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((a,i)=>{ const ok=t.fill[i]===a; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderFill(id); record(id,s,t.answers.length); }
+/* PICK: choose one option per item */
+const PICK={};
+function setupPick(id,ex){ PICK[id]={...ex,pick:Array(ex.items.length).fill(-1)};
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>{ const opts=it[2]||ex.opts;
+    return '<div class="sortrow"><span class="txt">'+(ex.nonum?'':(i+1)+'. ')+it[0]+'</span><span class="btns">'+
+    opts.map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickIt(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>'; }).join(''); }
+function pickIt(id,i,k){ const t=PICK[id]; t.pick[i]=k; const opts=t.items[i][2]||t.opts;
+  opts.forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkPick(id){ const t=PICK[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on');
+    const good=[].concat(it[1]); const ok=good.includes(t.pick[i]); b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); if(t.after) t.after(); }
+/* TYPED: write the answer */
+const TYPED={};
+function setupTyped(id,ex){ TYPED[id]=ex; let g=0;
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>{ let n=0;
+    const body=it.t.replace(/\[\[([^\]]*)\]\]/g,(m,inner)=>{ const p=inner.split('|'); const gid=id+'_'+i+'_'+(n++);
+      return '<input class="gap'+(p[2]?' wide':'')+'" id="'+gid+'" autocomplete="off" spellcheck="false" placeholder="'+(p[0]||'')+'" value="'+(p[1]||'').replace(/"/g,'&quot;')+'">'; });
+    return (ex.wrap?'<p class="para">':'<li>')+body+'<span class="key" id="'+id+'_k'+i+'"></span>'+(ex.wrap?'</p>':'</li>'); }).join('');
+  if(!ex.wrap) $(id+'_body').innerHTML='<ol class="items">'+$(id+'_body').innerHTML+'</ol>'; }
+function checkTyped(id){ const ex=TYPED[id]; let s=0,max=0,empty=false;
+  ex.items.forEach((it,i)=>it.a.forEach((_,j)=>{ if(!$(id+'_'+i+'_'+j).value.trim()) empty=true; }));
+  if(empty) return fb(id+'_fb','Write all the answers first.','warn');
+  ex.items.forEach((it,i)=>{ const miss=[];
+    it.a.forEach((acc,j)=>{ const inp=$(id+'_'+i+'_'+j); max++;
+      const v=ex.loose?loose(inp.value):norm(inp.value).replace(/[.!?,]+$/,'');
+      const ok=[].concat(acc).some(a=>(ex.loose?loose(a):norm(a))===v);
+      inp.classList.remove('ok','bad'); inp.classList.add(ok?'ok':'bad'); if(ok)s++; else miss.push([].concat(acc)[0]); });
+    const k=$(id+'_k'+i); if(miss.length){ k.textContent=(ex.keyLabel||'Answer: ')+miss.join(' / '); k.classList.add('on'); } else k.classList.remove('on'); });
+  record(id,s,max); }
+/* OPEN: free writing */
+const OPEN={};
+function setupOpen(id,ex){ OPEN[id]=ex; const ta=$(id+'_t'); if(!ta) return; ta.addEventListener('input',()=>liveOpen(id)); liveOpen(id); }
+function usedW(id,t){ const n=' '+loose(t)+' '; return (OPEN[id].track||[]).filter(w=>n.includes(' '+loose(w)+' ')||n.includes(' '+loose(w))); }
+function liveOpen(id){ const ex=OPEN[id], t=$(id+'_t').value, w=words(t), u=usedW(id,t);
+  if($(id+'_wc')){ $(id+'_wc').textContent=w+' words'; $(id+'_wc').className=(w>=ex.min&&(!ex.max||w<=ex.max))?'good':''; }
+  if($(id+'_wk')){ $(id+'_wk').textContent=u.length+' / '+(ex.need||0)+' words from the lesson'; $(id+'_wk').className=u.length>=(ex.need||0)?'good':''; }
+  if($(id+'_found')) $(id+'_found').innerHTML=(ex.track||[]).map(x=>'<span class="'+(u.includes(x)?'on':'')+'">'+x+'</span>').join(''); }
+function saveOpen(id){ const ex=OPEN[id], t=$(id+'_t').value.trim(), w=words(t);
+  if(w<ex.min) return fb(id+'_fb','Write a bit more ('+w+' words). Aim for '+ex.min+(ex.max?'–'+ex.max:'+')+'.','warn');
+  if(ex.need && usedW(id,t).length<ex.need) return fb(id+'_fb','Use at least '+ex.need+' words from the lesson (they turn green).','warn');
+  notes[id]=ex.label+' ('+w+' words; lesson words: '+(usedW(id,t).join(', ')||'none')+')\n\n'+t;
+  fb(id+'_fb',ex.saved||'Saved! ✔','good'); if(window.HWR) HWR.snap(id); markDone(id); }
+/* FORM: several answers the teacher checks */
+function saveForm(id,label){ const sec=$(id); const lines=[]; let empty=false;
+  sec.querySelectorAll('[data-q]').forEach(el=>{ let v='';
+    if(el.type==='checkbox'){ if(el.checked) lines.push('✔ '+el.dataset.q); return; }
+    v=el.value.trim(); if(!v){ empty=true; return; } lines.push(el.dataset.q+': '+v); });
+  if(empty) return fb(id+'_fb','Answer all of them first.','warn');
+  if(!lines.length) return fb(id+'_fb','Choose at least one.','warn');
+  notes[id]=label+'\n'+lines.join('\n'); fb(id+'_fb','Saved! Your teacher will check these answers. ✔','good'); if(window.HWR) HWR.snap(id); markDone(id); }
+/* SEND */
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=TASKS.filter(k=>notes[k]).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. '+CFG.bye,'good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+
+setupPick('ex1',{items:[["<i>\u201cI was at the cinema from 6 to 8.\u201d</i>", 0, ["Where were you from 6 to 8?", "What were you doing at 9?", "Who were you with?"]], ["<i>\u201cI was reading a comic in my room.\u201d</i>", 1, ["Where were you?", "What were you doing?", "Why were you there?"]], ["<i>\u201cYes, my brother. He saw me there.\u201d</i>", 0, ["Can anyone confirm that?", "Did you see anyone?", "Do you have a brother?"]], ["<i>\u201cSize 41.\u201d</i>", 1, ["How old are you?", "What size shoes do you wear?", "How much was it?"]], ["<i>\u201cBecause I wanted to buy a drink.\u201d</i>", 0, ["Why did you leave the hall?", "When did you leave the hall?", "Where did you go?"]], ["<i>\u201cNo, I didn\u2019t see anybody near the table.\u201d</i>", 0, ["Did you see anyone near the table?", "Who did you see at the table?", "Is the table near the door?"]]]});
+setupPick('ex2',{opts:['True','False','Not given'],items:[["The money box disappeared in the afternoon.", 1], ["Olga was at home at 11:10.", 0], ["Dan left his lemonade table for a short time.", 0], ["Mrs Kovalenko left the staff room at 11:20.", 1], ["Dan has an older sister.", 2], ["There were sticky fingerprints on the money box.", 0]]});
+let accused=-1;
+function accuse(i){ accused=i; [0,1,2].forEach(j=>$('acc'+j).classList.toggle('on',j===i)); }
+const ALIBI=['','Olga was in her kitchen at 11:10 – look at Clue B!','Mrs Kovalenko was in the staff room from 10:55 to 11:40 – look at Clue C!'];
+function checkAccuse(){
+  if(accused<0) return fb('ex3_fb','Choose a suspect first.','warn');
+  const w=words($('why').value); if(w<12) return fb('ex3_fb','Give your reasons in at least 12 words (First,… Also,…).','warn');
+  const ok=accused===0, first=!scores.ex3;
+  if(first){ scores.ex3={s:ok?1:0,max:1}; notes.ex3='EX 3 · ARREST: '+['Dan','Olga','Mrs Kovalenko'][accused]+(ok?' ✔':' ✘ (answer: Dan)')+'\n'+$('why').value.trim(); if(window.HWR) HWR.snap('ex3'); }
+  else notes.ex3=notes.ex3.split('\n')[0]+'\n'+$('why').value.trim();
+  const c=$('conf');
+  if(ok){ c.innerHTML='Dan: “OK, OK, I confess! I only wanted to buy a new phone case… I’m sorry!”<br><b style="color:#c51f2e">CASE CLOSED ✔</b>'; c.classList.add('on'); fb('ex3_fb','Brilliant, detective! 1/1','good'); }
+  else { c.innerHTML='Not so fast! '+ALIBI[accused]+(first?' Your first answer is saved, but you can try again.':''); c.classList.add('on'); fb('ex3_fb','Score saved: 0/1. Look at the clues again.','warn'); }
+  markDone('ex3');
+}
+setupFill('ex4',{bank:["arrested", "committed", "confessed", "launched", "stole", "suspects", "theft", "witness"],html:"<div class=\"clip\"><div class=\"clip-h\">KYIV SCHOOL NEWS \u00b7 Monday</div><h3>Bake sale mystery solved!</h3><p class=\"para\">On Saturday a [[0]] was [[1]] at Kyiv School No. 12. Someone [[2]] the money box from the bake sale. The school [[3]] an investigation, and a young detective interviewed three [[4]]. A [[5]] said that one table was empty at 11:15. The detective found sticky fingerprints on the box, and Dan finally [[6]] to the crime. Luckily, nobody was [[7]]: Dan said sorry and gave all the money back.</p></div>",answers:[6, 1, 4, 3, 5, 7, 2, 0]});
+setupOpen('ex5',{min:70,max:120,need:5,label:'EX 5 · BREAKING NEWS / WANTED',saved:'Report filed! Inspector, your work is done 🕵️',
+  track:['commit','crime','investigation','suspect','witness','solve the mystery','confess','arrest','thief','theft','steal','stole','break the law','burglar','evidence']});
+
+progress();
+</script>
+</body>
+</html>
