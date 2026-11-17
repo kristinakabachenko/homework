@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Polite but firm</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const POD = { link: "https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2026/ep-260702", label: "🎧 Open the podcast: BBC 6 Minute English · Rude emails", note: "6 minutes · British English. The player and the transcript are on the BBC page. Or search “6 Minute English rude emails” in any podcast app." };
+const MARK = '<div class="text"><p class="by">📩 New email from Mark Taylor</p><p>Dear Sir or Madam,</p><p>I booked a cleaning for 10 a.m. on Monday, but your cleaner arrived at 12 and did not call me. She also forgot to clean the kitchen.</p><p>I would like a discount on this cleaning.</p><p>Yours faithfully,<br>Mark Taylor</p></div>';
+window.HW = {
+  homework: "English File B1 · 4A Writing · Polite but firm: an email of complaint (homework)",
+  kicker: "English File B1 · Unit 4A · Writing",
+  title: "Polite but firm",
+  intro: "Listen to a BBC podcast about rude emails, then write your own email of complaint, and answer a complaint as the owner of your company.",
+  tasks: [
+    { type: "pick", short: "Formal", title: "Formal or not?", sub: "Choose the option for a formal email.",
+      items: [
+        "{Dear Sir or Madam*|Hi guys}, I am writing to complain about my order.",
+        "The food was {extremely disappointing*|really awful}.",
+        "I {would like*|want} a full refund.",
+        "{Could you*|You must} reply by Friday, please?",
+        "I look {forward*|ahead} to hearing from you.",
+        "{Yours faithfully*|Bye!}"
+      ] },
+    { type: "choice", short: "Podcast", title: "Listen: what's rude in an email?", sub: "Listen to the podcast once or twice.",
+      media: POD,
+      items: [
+        { q: "One listener finds it rude when an email…", opts: ["starts with just a name, with no “Hi”", "has too many emojis", "is very long"], a: 0 },
+        { q: "Another listener was annoyed when someone replied with…", opts: ["a single emoji", "a voice message", "a phone call"], a: 0 },
+        { q: "“Frazzled” means…", opts: ["tired or anxious because you have too much to do", "very angry", "bored"], a: 0 },
+        { q: "You copy your boss into an email to embarrass a colleague. That's a ______ response.", opts: ["fight", "flight"], a: 0 },
+        { q: "You don't reply, or you answer only some of the points. That's a ______ response.", opts: ["fight", "flight"], a: 1 },
+        { q: "The tip: if you feel angry while you're writing an email…", opts: ["pause before you send it", "write in capital letters", "send it quickly"], a: 0 }
+      ] },
+    { type: "choice", short: "Polite", title: "Make it polite", sub: "Choose the polite version for an email to a company.",
+      items: [
+        { q: "😠 Where is my money??", opts: ["Could you tell me when I will receive my refund?", "Give me my money now."], a: 0 },
+        { q: "😠 Your cleaner was rude.", opts: ["Your cleaner is terrible.", "I was disappointed with the way the cleaner spoke to me."], a: 1 },
+        { q: "😠 Answer me today!", opts: ["I would be grateful for a reply by Friday.", "Answer me today or I will call the police."], a: 0 },
+        { q: "😠 You broke my vase!", opts: ["You broke my vase and you have to pay!", "Unfortunately, a vase was broken during the cleaning."], a: 1 }
+      ] },
+    { type: "write", short: "Complaint", title: "Write an email of complaint", sub: "120–150 words, 3 paragraphs: why you're writing → what went wrong → what you want. Choose a real bad experience (a restaurant, a taxi, a hotel, a delivery…).",
+      minWords: 100, need: 4, formal: true, keysLabel: "Formal phrases",
+      help: { label: "💡 Formal phrases you can use", html: '<div class="chips"><span>Dear Sir or Madam,</span><span>I am writing to complain about…</span><span>Unfortunately,…</span><span>I was very disappointed…</span><span>I would like…</span><span>Could you…?</span><span>I look forward to hearing from you.</span><span>Yours faithfully,</span></div>' },
+      keys: [["Dear Sir or Madam / Dear Mr…", "dear (sir|mr|ms|mrs)"], ["I am writing to complain", "writing to complain"], ["Unfortunately", "unfortunately"], ["disappointed / disappointing", "disappoint"], ["I would like", "would like"], ["Could you", "could you"], ["I look forward to hearing from you", "look forward to hearing"], ["Yours faithfully / sincerely", "yours (faithfully|sincerely)"]],
+      prompts: [{ q: "Your email", ph: "Dear Sir or Madam,\n\nI am writing to complain about…", big: true }] },
+    { type: "write", short: "Reply", title: "Now you're the owner", sub: "A client has complained about your cleaning company. Write a polite reply (60–90 words).",
+      html: MARK, minWords: 50, need: 3, formal: true, keysLabel: "Polite reply phrases",
+      keys: [["Dear Mr Taylor", "dear mr taylor"], ["Thank you for your email", "thank you for (your|the) (email|message)"], ["We are sorry / apologise", "(sorry|apologi[sz]e)"], ["Unfortunately", "unfortunately"], ["We would like to offer", "would like to offer"], ["discount / free cleaning", "(discount|free|refund)"], ["Yours sincerely", "yours sincerely"]],
+      prompts: [{ q: "Your reply", ph: "Dear Mr Taylor,\n\nThank you for your email…", big: true }] }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

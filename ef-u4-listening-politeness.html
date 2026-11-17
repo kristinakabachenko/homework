@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: How important is politeness?</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const EP = { link: "https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2025/ep-250605", label: "🎧 Open the podcast: BBC 6 Minute English", note: "“How important is politeness?” · 6 minutes · British English. The player, the transcript and a quiz are on the BBC page. You can also find it in any podcast app: search “6 Minute English politeness”." };
+window.HW = {
+  homework: "English File B1 · 4A Listening · How important is politeness? BBC podcast (homework)",
+  kicker: "English File B1 · Unit 4A · Listening",
+  title: "How important is politeness?",
+  intro: "A real BBC podcast, 6 minutes long. You will listen three times: for the main idea, for details, and with the transcript. Don't worry if you don't understand every word.",
+  tasks: [
+    { type: "gaps", short: "Remember", title: "Chunks from the phone-in", sub: "Complete Olena's story with the chunks from our radio phone-in. Type one word in each gap.", story: true,
+      items: [
+        "I get on well with my mother-in-law on the {whole}.",
+        "From {time} to time she criticises my cooking, but I try to stay {calm}.",
+        "Don't get me {wrong}, I love her!",
+        "When she starts talking about my weight, I just change the {subject}.",
+        "I've reached the {point} where I don't take it personally.",
+        "In the long {run}, a good relationship is more important."
+      ] },
+    { type: "match", short: "Before", title: "Before you listen: 6 words from the podcast", sub: "Match the words to their meanings. You will hear them all.",
+      pairs: [
+        ["thingy", "a word for someone or something when you can't remember the name"],
+        ["innit", "an informal short form of “isn't it”"],
+        ["insulting", "rude and offensive"],
+        ["be well disposed to someone", "feel positive about someone"],
+        ["make excuses for someone", "give reasons for someone's bad behaviour so it seems OK"],
+        ["this and that", "different things, it isn't important what exactly"]
+      ] },
+    { type: "choice", short: "Listen 1", title: "Listen 1: the main idea", sub: "Listen to the whole podcast once. No transcript yet!",
+      media: EP,
+      items: [
+        { q: "What is the programme about?", opts: ["why people are rude on the internet", "what politeness is and why we teach it", "how to write polite emails"], a: 1 },
+        { q: "The quiz: which idiom reminds you to be polite? Mind your…", opts: ["As and Bs", "Ps and Qs", "Xs and Ys"], a: 1 }
+      ] },
+    { type: "choice", short: "Listen 2", title: "Listen 2: the details", sub: "Listen again. Pause after each speaker.",
+      items: [
+        { q: "What did a boy shout to the writer Michael Rosen in the street?", opts: ["“Hey! You're thingy, innit!”", "“Can I have your autograph?”", "“I saw you on TV!”"], a: 0 },
+        { q: "Did Michael Rosen think the boy was rude?", opts: ["Yes, very rude.", "No, it was just informal.", "He didn't hear him."], a: 1 },
+        { q: "Professor Louise Mullany says politeness depends a lot on…", opts: ["the speaker's age", "how the listener understands the words", "the country you live in"], a: 1 },
+        { q: "What did Louise's two-year-old daughter do at nursery?", opts: ["She shouted at the cook.", "She didn't say hello to the cook.", "She didn't eat her lunch."], a: 1 },
+        { q: "How did Louise feel, and what did she do?", opts: ["She laughed about it.", "She was embarrassed and made excuses for her daughter.", "She told her daughter off."], a: 1 },
+        { q: "Why do we teach children to be polite, according to Louise?", opts: ["so they are accepted in society", "so they do better at school", "so they speak better English"], a: 0 }
+      ] },
+    { type: "write", short: "Transcript", title: "Listen 3: with the transcript", sub: "Open the transcript on the BBC page. Listen and read at the same time.", minWords: 20,
+      media: EP,
+      prompts: [
+        { q: "Copy 3 phrases from the transcript that you want to use. Write your own sentence with each one.", ph: "1 well disposed to: I'm always well disposed to clients who…" },
+        { q: "In Ukraine, is it rude if a child doesn't say hello to an adult? What do parents usually do?", ph: "I think in Ukraine…" }
+      ] },
+    { type: "shadow", short: "Shadow", count: 3, title: "Shadow Neil and Beth", note: "Play the first minute of the podcast. Speak <b>together with</b> Neil and Beth: copy their speed and intonation. Do it 3 times, then tap +1 after each time." }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Manners, UK vs Ukraine</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const VID = { yt: "8hV7lJyC3Eg", title: "English Culture: Manners & How to be polite (engVid, Jade)", note: "Jade is British. She talks about manners in England. Turn on English subtitles (CC) if you need them." };
+window.HW = {
+  homework: "English File B1 · 4A Speaking · Manners: the UK vs Ukraine (homework)",
+  kicker: "English File B1 · Unit 4A · Speaking",
+  title: "Manners: the UK vs Ukraine",
+  intro: "Watch a British teacher explain English manners. Then compare them with Ukraine and send me a voice message.",
+  tasks: [
+    { type: "gaps", short: "Phrases", title: "Saying what you think is right", sub: "Complete the phrases from our lesson. Then say each sentence aloud with strong stress.",
+      items: [
+        "I don't think people {should} talk on the phone in a restaurant.",
+        "I think it's bad {manners} to arrive late without a message.",
+        "I think it's really {rude} to push in a queue.",
+        "I don't think you {have|need} to bring a present every time.",
+        "I {hate} it when people don't say thank you.",
+        "I don't {mind} it when guests are a bit late.",
+        "It really {annoys} me when people leave rubbish on the bus."
+      ] },
+    { type: "choice", short: "Watch 1", title: "Watch 1: what does Jade talk about?", sub: "Watch the whole video once. Does she talk about these things?",
+      media: VID,
+      items: [
+        { q: "queuing (standing in a line)", opts: ["Yes", "No"], a: 0 },
+        { q: "bringing something to a dinner party", opts: ["Yes", "No"], a: 0 },
+        { q: "answering an invitation (RSVP)", opts: ["Yes", "No"], a: 0 },
+        { q: "being on time", opts: ["Yes", "No"], a: 0 },
+        { q: "table manners", opts: ["Yes", "No"], a: 0 },
+        { q: "driving rules in the UK", opts: ["Yes", "No"], a: 1 }
+      ] },
+    { type: "choice", short: "Watch 2", title: "Watch 2: the details", sub: "Watch again. Pause when you hear the answer.",
+      items: [
+        { q: "What should you bring to a dinner party?", opts: ["a bottle, usually wine", "nothing", "money for the food"], a: 0, why: "Or dessert, flowers or chocolates." },
+        { q: "You said yes to a wedding invitation. What is very impolite?", opts: ["to bring a present", "to not go", "to arrive early"], a: 1 },
+        { q: "When does Jade usually arrive?", opts: ["about 10 minutes early", "exactly on time", "about 10 minutes late"], a: 0 },
+        { q: "At the table, it's impolite to…", opts: ["say “Cheers”", "drink before someone says “Cheers”", "drink water"], a: 1 },
+        { q: "Elbows on the table are…", opts: ["always rude", "OK in relaxed situations", "OK only in restaurants"], a: 1 },
+        { q: "Using your phone during a meal is…", opts: ["rude", "polite", "normal for everybody"], a: 0 }
+      ] },
+    { type: "shadow", short: "Shadow", count: 3, title: "Shadow Jade", note: "Choose 30 seconds of the video you like. Play it and speak <b>together with</b> Jade: copy her speed and intonation. Do it 3 times, tap +1 after each time.", media: VID },
+    { type: "write", short: "Plan", title: "Plan your voice message", sub: "Notes only, not a perfect text. Use <b>at least 3 phrases</b> from Task 1. They turn green when you use them.",
+      minWords: 15, need: 3, keysLabel: "Phrases from the lesson",
+      keys: [["I think it's rude to", "it's (really |very )?rude to"], ["bad manners", "bad manners"], ["I hate it when", "hate it when"], ["It annoys me", "annoys me"], ["I don't mind", "(don't|do not) mind"], ["should", "\\bshould"], ["don't have to", "(don't|do not) have to"], ["mustn't", "mustn't|must not"]],
+      prompts: [
+        { q: "🇬🇧 2–3 things from the video that are the same in Ukraine", ph: "In both countries you should…" },
+        { q: "🇺🇦 2–3 things that are different in Ukraine", ph: "In Ukraine you don't have to… but…" }
+      ] },
+    { type: "voice", short: "Voice", title: "Send me a voice message", sub: "About 2 minutes, on Telegram. Use your notes, but don't read them!",
+      points: [
+        "Compare manners in the UK and in Ukraine: what is the same, what is different?",
+        "Use at least <b>4 phrases</b> from Task 1 (I think it's rude to…, I don't mind it when…).",
+        "Use at least <b>2 modals</b>: should, don't have to, mustn't.",
+        "Finish with: “The thing that annoys me most is…”"
+      ] }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

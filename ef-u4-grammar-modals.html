@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: 5 rules, no stress</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const RULES = '<div class="rules">' +
+  '<div class="rule"><span class="em">🔒</span><div class="rl">A · must / have to</div><div class="rr">= it\'s necessary</div><div class="ru">обов\'язково. <b>have to</b> = a rule from outside (boss, law) · <b>must</b> = I decide / strong advice</div><div class="re">Every new cleaner has to sign a contract.</div></div>' +
+  '<div class="rule"><span class="em">⛔</span><div class="rl">B · mustn\'t</div><div class="rr">= it\'s not allowed</div><div class="ru">не можна</div><div class="re">Cleaners mustn\'t use the client\'s phone.</div></div>' +
+  '<div class="rule"><span class="em">🆓</span><div class="rl">C · don\'t have to</div><div class="rr">= it isn\'t necessary</div><div class="ru">не обов\'язково, you can choose</div><div class="re">Clients don\'t have to be at home.</div></div>' +
+  '<div class="rule"><span class="em">💡</span><div class="rl">D · should / shouldn\'t</div><div class="rr">= a good / bad idea</div><div class="ru">advice, порада</div><div class="re">You should check the address first.</div></div>' +
+  '<div class="rule"><span class="em">⏳</span><div class="rl">E · have to in all tenses</div><div class="rr">had to · will have to · Do you have to…?</div><div class="ru"><b>must</b> = present only</div><div class="re">Last winter we had to close for a week.</div></div>' +
+  '<div class="rule"><span class="em">🚫</span><div class="rl">Traps</div><div class="rr">must / should + verb</div><div class="ru">NOT must <s>to</s> · NOT <s>musted</s> → had to · NOT <s>Do you must…?</s> → Do you have to…?</div></div>' +
+  '</div>';
+window.HW = {
+  homework: "English File B1 · 4A Grammar · 5 rules, no stress: have to, must, should (homework)",
+  kicker: "English File B1 · Unit 4A · Grammar",
+  title: "5 rules, no stress",
+  intro: "No long theory: just 5 short rule cards. You see them once, then your memory does the work. At the end you check that you really know them.",
+  tasks: [
+    { type: "match", short: "Rule cards", tag: "Rules open", title: "Meet the 5 rules", sub: "Read the cards (30 seconds!). Then choose the rule for each sentence.",
+      html: RULES,
+      pairs: [
+        ["You don't have to bring your own products. We have everything.", "C · not necessary"],
+        ["Workers mustn't smoke in the client's flat.", "B · not allowed"],
+        ["Every new cleaner has to sign a contract.", "A · necessary"],
+        ["You should open the windows after you clean the oven.", "D · good / bad idea"],
+        ["Last winter we had to close the office for a week.", "E · other tenses"]
+      ] },
+    { type: "flip", short: "From memory", tag: "No peeking!", title: "Rules from memory", sub: "Don't scroll up! Type the answer from memory, then check. Your brain learns the rule when it has to remember it.",
+      items: [
+        { q: "mustn't = it's ______", a: "not allowed (не можна)", accept: ["not allowed", "forbidden", "prohibited", "не можна", "not permitted", "can't", "cannot", "no allowed"] },
+        { q: "don't have to = it's ______", a: "not necessary (не обов'язково), you can choose", accept: ["not necessary", "unnecessary", "не обов", "no need", "optional", "choose", "not obligatory", "don't need", "dont need"] },
+        { q: "should = it's a good ______", a: "idea (advice)", accept: ["idea", "advice", "порада"] },
+        { q: "Past of must / have to: Yesterday I ______ work late.", a: "had to", accept: ["had to"] },
+        { q: "Correct it: She must to call the client.", a: "She must call the client.", accept: ["she must call the client", "must call"] },
+        { q: "Correct it: Do you must wear a uniform?", a: "Do you have to wear a uniform?", accept: ["do you have to wear", "have to wear"] }
+      ] },
+    { type: "pick", short: "My company", title: "Rules in your company", sub: "Choose the correct option. Think: which rule card is it?",
+      items: [
+        "Clients {don't have to*|mustn't} be at home when we clean. They can give us the key.",
+        "Cleaners {mustn't*|don't have to} take photos in clients' homes. It's against our rules.",
+        "You {should*|have to} try this new eco spray. It's great for windows.",
+        "Last month I {had to*|must} hire two new cleaners.",
+        "{Do you have to*|Must you to} work at weekends?",
+        "Tomorrow we {will have to*|will must} start at 7 a.m.",
+        "You {shouldn't*|don't have to} use bleach on a wooden table. It can damage it.",
+        "I {must*|must to} remember to pay the bills today!"
+      ] },
+    { type: "choice", short: "Team chat", title: "Fix the team chat", sub: "Each message has <b>one mistake</b>. Tap the wrong part. You'll see the correction.",
+      items: [
+        { q: "💬 Tomorrow you <u>mustn't come</u> early. <u>The client says</u> 11 is fine, so <u>you can choose</u>.", opts: ["mustn't come", "The client says", "you can choose"], a: 0, why: "don't have to come (not necessary, she can choose) → rule C" },
+        { q: "💬 <u>Sorry I was late</u> yesterday. I <u>musted take</u> my son <u>to school</u>.", opts: ["Sorry I was late", "musted take", "to school"], a: 1, why: "had to take (past) → rule E" },
+        { q: "💬 <u>Do you must</u> <u>bring your own</u> <u>vacuum cleaner</u>?", opts: ["Do you must", "bring your own", "vacuum cleaner"], a: 0, why: "Do you have to bring…? → rule E" },
+        { q: "💬 <u>New cleaners</u> <u>must to wear</u> <u>the company T-shirt</u>.", opts: ["New cleaners", "must to wear", "the company T-shirt"], a: 1, why: "must wear (no “to”) → traps" },
+        { q: "💬 You <u>don't have to touch</u> <u>the client's documents</u>. <u>It's not allowed!</u>", opts: ["don't have to touch", "the client's documents", "It's not allowed!"], a: 0, why: "mustn't touch (not allowed) → rule B" },
+        { q: "💬 <u>I think</u> you <u>should to check</u> the address <u>before you leave</u>.", opts: ["I think", "should to check", "before you leave"], a: 1, why: "should check (no “to”) → traps" }
+      ] },
+    { type: "choice", short: "Rule check", tag: "Final check", perfect: true, title: "Rule check: get 8/8", sub: "No looking! This task is done only when everything is green. If something is red, try again: your first score is saved anyway.",
+      items: [
+        { q: "Which one means “не можна”?", opts: ["don't have to", "mustn't", "shouldn't"], a: 1 },
+        { q: "Which one means “не обов'язково”?", opts: ["don't have to", "mustn't", "must"], a: 0 },
+        { q: "“It's a bad idea” =", opts: ["mustn't", "don't have to", "shouldn't"], a: 2 },
+        { q: "The past of must:", opts: ["musted", "had to", "must have"], a: 1 },
+        { q: "Next year we ______ hire more people.", opts: ["will have to", "will must", "must to"], a: 0 },
+        { q: "The correct question:", opts: ["Must you to…?", "Do you have to…?", "Do you must…?"], a: 1 },
+        { q: "After must and should we use…", opts: ["the verb with “to”", "the verb without “to”", "the verb + -ing"], a: 1 },
+        { q: "A rule from your boss or the law. Usually:", opts: ["have to", "must"], a: 0, why: "have to = a rule from outside; must = your own decision or strong advice." }
+      ] },
+    { type: "voice", short: "Teach it", title: "Teach it to a new cleaner", sub: "The best way to remember a rule is to explain it. Send me a voice message on Telegram (about 1 minute).",
+      points: [
+        "Explain the difference between <b>mustn't</b> and <b>don't have to</b>, with an example from your company for each.",
+        "Say one thing a new cleaner <b>has to</b> do on the first day.",
+        "Say one thing you <b>had to</b> do when you started your business.",
+        "Give one piece of advice with <b>should</b> or <b>shouldn't</b>."
+      ] }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

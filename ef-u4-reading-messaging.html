@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Polite messaging</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const TEXT = '<div class="text"><h3>Seven new rules of polite messaging</h3>' +
+  '<p>We send more messages than ever, but nobody taught us the rules. We asked communication coach Anna Hart what annoys people most, and what we should do instead.</p>' +
+  '<p><b>1 One message, not ten.</b> “Hi.” “Are you there?” “I have a question.” Every message makes the other person\'s phone go off. Put everything in one message.</p>' +
+  '<p><b>2 Voice messages are not always a gift.</b> A two-minute voice message is quick for you, but the other person has to stop and listen. If it\'s important, write it. If it\'s long, call.</p>' +
+  '<p><b>3 Reply within a day,</b> even if it\'s only “Got it, I\'ll answer tomorrow.” Leaving someone on read for a week is the modern way of hanging up on them.</p>' +
+  '<p><b>4 Think before you press “Reply all”.</b> Your whole team doesn\'t need to know that you\'re coming to the meeting.</p>' +
+  '<p><b>5 Respect people\'s time.</b> A work message at 11 p.m. is not urgent, it\'s rude. If you write late, schedule the message for the morning.</p>' +
+  '<p><b>6 One emoji is not an answer.</b> When someone writes a careful message, a single 👍 can feel cold. Add a few words.</p>' +
+  '<p><b>7 Don\'t write in capital letters.</b> IT LOOKS LIKE YOU ARE SHOUTING.</p>' +
+  '<p>“The golden rule is simple,” says Anna. “Put yourself in the other person\'s shoes. Would you like to receive this message?”</p></div>';
+window.HW = {
+  homework: "English File B1 · 4A Reading · Seven new rules of polite messaging (homework)",
+  kicker: "English File B1 · Unit 4A · Reading",
+  title: "Polite messaging",
+  intro: "First, remember the chunks from our lesson. Then read a short article about manners in messages and decide: do you follow these rules?",
+  tasks: [
+    { type: "gaps", short: "Remember", title: "Chunks from our lesson", sub: "Complete the chunks from the “15 steps to modern manners” text from memory.",
+      items: [
+        "Before you criticise someone, try to put yourself in their {shoes}.",
+        "After a party, guests should tidy up {after} themselves.",
+        "It's cruel to make fun {of} people.",
+        "A good host is sensitive {to} the guests' needs.",
+        "Don't argue about everything. Choose your {battles}.",
+        "If you book a table, you should honour the {reservation|booking}."
+      ] },
+    { type: "choice", short: "Main idea", title: "Read quickly: what's it about?", sub: "Read the article in 2 minutes. Don't stop on new words.",
+      html: TEXT,
+      items: [
+        { q: "What is the article mainly about?", opts: ["why people send fewer messages now", "simple rules to make messages polite", "how to write a business email"], a: 1 },
+        { q: "Who gives the advice?", opts: ["a communication coach", "a phone company", "a teacher"], a: 0 }
+      ] },
+    { type: "choice", short: "True / False", title: "True, false or not given?", sub: "Read again. NG = the text doesn't say. The text is in Task 2.",
+      items: [
+        { q: "Anna thinks one message is better than many short ones.", opts: ["True", "False", "Not given"], a: 0 },
+        { q: "Anna says voice messages are always rude.", opts: ["True", "False", "Not given"], a: 1, why: "She says they are “not always a gift”: write if it's important, call if it's long." },
+        { q: "Anna sends about 100 messages a day.", opts: ["True", "False", "Not given"], a: 2 },
+        { q: "You should answer within a day, even with a short reply.", opts: ["True", "False", "Not given"], a: 0 },
+        { q: "Anna thinks late-night work messages are OK if they are urgent.", opts: ["True", "False", "Not given"], a: 1, why: "A work message at 11 p.m. “is not urgent, it's rude”." },
+        { q: "Most people in Anna's team write in capital letters.", opts: ["True", "False", "Not given"], a: 2 }
+      ] },
+    { type: "match", short: "Chunks", title: "New chunks from the article", sub: "Match each chunk to its meaning. Then find it in the text.",
+      pairs: [
+        ["make someone's phone go off", "make it ring or buzz"],
+        ["leave someone on read", "see a message but not answer it"],
+        ["press “Reply all”", "answer everybody who got the email"],
+        ["schedule a message", "choose a later time to send it"],
+        ["it can feel cold", "it can seem unfriendly"],
+        ["the golden rule", "the most important rule"]
+      ] },
+    { type: "write", short: "Your rules", title: "Your messaging rules", sub: "Use <b>at least 3 different modals</b>. They turn green when you use them.",
+      minWords: 12, need: 3, keysLabel: "Modals",
+      help: { label: "💡 Modals you can use", html: '<div class="chips"><span>have to</span><span>don\'t have to</span><span>must</span><span>mustn\'t</span><span>should</span><span>shouldn\'t</span></div>' },
+      keys: [["have to", "\\b(have|has) to\\b"], ["don't have to", "(don't|doesn't|do not|does not) have to"], ["must", "\\bmust\\b(?!n)"], ["mustn't", "mustn't|must not"], ["should", "\\bshould\\b(?!n)"], ["shouldn't", "shouldn't|should not"]],
+      prompts: [
+        { q: "Write 2–3 rules for your cleaners: how should they message clients?", ph: "Cleaners should…" },
+        { q: "Write 2–3 rules for clients: how should they message your company?", ph: "Clients don't have to…" },
+        { q: "Which rule from the article do you break most often? Why?", ph: "To be honest, I…" }
+      ] }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>
