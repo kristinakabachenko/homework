@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8.5 Plans that went wrong · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8f1;--card:#fff;--ink:#22213a;--muted:#6f6b86;--brand:#ea7a0c;--brand2:#1e3a8a;--sun:#fbbf24;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#f6e1cc;--soft:#fff0e0;--chipb:#f9c999;--trk:#f3dfca;--emoji:"⏳"}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:var(--emoji);position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px;position:relative}
+.hero p{margin:0;opacity:.95;position:relative}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.prog{display:flex;gap:10px;align-items:center}
+.track{flex:1;height:12px;background:var(--trk);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s;position:relative}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(40,20,90,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid var(--chipb);color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3;cursor:default}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.slot{display:inline-block;min-width:130px;border-bottom:2px dashed var(--brand);color:var(--brand);font-weight:800;text-align:center;padding:0 6px;cursor:pointer;border-radius:6px 6px 0 0}
+.slot.active{background:#fff6dc;border-bottom-color:var(--sun)}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:150px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap.wide{width:100%;display:block;margin-top:4px}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+input.gap::placeholder{color:#b9b3c9;font-weight:600}
+.key{display:none;font-size:14px;color:var(--ok);font-weight:700;margin-top:2px}
+.key.on{display:block}
+textarea{font:inherit;width:100%;min-height:76px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px;background:#fff;color:var(--ink)}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#22213a;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#e8e3f3;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.player{background:linear-gradient(135deg,#1f2a44,#2b3d66);color:#fff;border-radius:16px;padding:14px 14px 10px;margin:0 0 14px}
+.player b{font-family:'Baloo 2',sans-serif;font-size:18px}
+.player iframe{width:100%;height:110px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player a{color:#9fd9ff;font-size:14px}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sortrow .txt{flex:1 1 260px;font-weight:600}
+.sortrow .btns{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font:inherit;font-weight:800;font-size:14px;padding:6px 11px;border:2px solid var(--line);border-radius:99px;background:#fff;cursor:pointer;color:var(--ink)}
+.pick.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+.strategy ul{margin:6px 0 0;padding-left:20px}
+u{text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--brand2)}
+.counter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;font-weight:800;color:var(--muted);margin-top:6px}
+.counter .good{color:var(--ok)}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:#eef1f6;color:#9aa3b2}
+.found span.on{background:var(--okbg);color:var(--ok)}
+.locked>*:not(.lockmsg){filter:blur(3px);pointer-events:none;user-select:none;opacity:.5}
+.lockmsg{display:none}
+.locked .lockmsg{display:grid;place-items:center;position:absolute;inset:0;z-index:3;font-weight:800;color:var(--ink);text-align:center;padding:20px}
+.locked .lockmsg span{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;box-shadow:0 10px 24px -14px rgba(0,0,0,.4)}
+.para{line-height:2.2;margin:0 0 10px}
+.dlg{background:var(--soft);border-radius:16px;padding:12px;line-height:2.1}
+.dlg p{margin:4px 0}
+.dlg b.sp{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;text-align:center;line-height:26px;font-size:13px;margin-right:6px}
+.dlg b.sp.b{background:var(--brand2)}
+.orig{color:var(--muted);font-size:14px}
+.grid2{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center}
+.formrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.formrow .t{flex:1 1 240px;font-weight:600}
+.formrow select,.formrow input[type=text]{font:inherit;border:2px solid var(--line);border-radius:10px;padding:5px 8px;background:#fff;color:var(--ink)}
+.formrow input[type=text]{flex:1 1 160px}
+.checks label{display:flex;gap:10px;align-items:flex-start;margin:6px 0;font-weight:600}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none}
+.hint{font-size:14px;color:var(--muted)}
+
+
+.rule{background:var(--soft);border-radius:16px;padding:12px 14px;margin:0 0 12px;font-size:15px}
+.rule b.h{display:block;font-family:'Baloo 2',sans-serif;font-size:18px;color:#c2410c}
+.rule .line{display:flex;align-items:center;gap:8px;margin:10px 0 6px;font-weight:800;font-size:13px;color:var(--brand2)}
+.rule .line i{flex:1;height:4px;background:var(--brand2);border-radius:4px}
+.rule .line span.f{color:#c2410c}
+.forms{display:flex;flex-wrap:wrap;gap:6px}
+.forms span{background:var(--brand2);color:#fff;border-radius:10px;padding:3px 10px;font-weight:800;font-size:14px}
+.mess{background:#f1f2f6;border-radius:14px;padding:10px 14px;margin:0 0 12px;font-weight:700;color:var(--muted)}
+.tl{display:grid;gap:12px}
+.tlrow{display:flex;gap:12px}
+.tlrow .dot{flex:none;width:34px;height:34px;border-radius:50%;background:var(--brand2);color:#fff;font-weight:800;display:grid;place-items:center}
+.tlbody{flex:1}
+
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 8 · 8.5 Grammar</small>
+  <h1>Plans that went wrong</h1>
+  <p>Future in the past: <i>was going to, was about to, would, was to have</i> and the past continuous</p>
+</header>
+
+<div class="bar"><div class="prog"><div class="track"><div class="fill" id="fill"></div></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex1"><div class="head"><div class="num">1</div><h2>Choose the correct alternative.</h2></div><div class="rule"><b class="h">Future in the past</b>We talk about the past and mention things which we thought at that time would happen in the future.<div class="line">past events <i></i> <span class="f">future in the past</span> <i></i> now</div><div class="forms"><span>would</span><span>was / were going to</span><span>past continuous</span><span>was / were about to</span><span>was / were to have + past participle</span></div></div><div id="ex1_body"></div><button class="btn" onclick="checkPick('ex1')">Check</button><div class="fb" id="ex1_fb"></div></section><section class="card" id="ex2"><div class="head"><div class="num">2</div><h2>Complete the sentences with the words.</h2></div><p class="tip">Tap a gap, then tap a word. Each word is used once.</p><div class="chips sticky" id="ex2_bank"></div><div id="ex2_body"></div><button class="btn" onclick="checkFill('ex2')">Check</button><div class="fb" id="ex2_fb"></div></section><section class="card" id="ex3"><div class="head"><div class="num">3</div><h2>Complete the second sentence so that it has a similar meaning to the first sentence. Use the words in brackets.</h2></div><p class="tip">Write only the missing words.</p><div id="ex3_body"></div><button class="btn" onclick="checkTyped('ex3')">Check</button><div class="fb" id="ex3_fb"></div></section><section class="card" id="ex4"><div class="head"><div class="num">4</div><h2>Complete the dialogues with the future in the past and the verbs in brackets.</h2></div><p class="tip">More than one answer may be possible.</p><div id="ex4_body"></div><button class="btn" onclick="checkTyped('ex4')">Check</button><div class="fb" id="ex4_fb"></div></section><section class="card" id="ex5"><div class="head"><div class="num">5</div><h2>Write three sentences that are true for you.</h2></div><p class="tip">Use future in the past in each one: <i>I was going to…, I was about to…, I thought I would…</i></p><div class="tl"><div class="tlrow"><div class="dot">1</div><div class="tlbody"><b>Something you promised to do for someone (a friend, your mum, a teacher), but didn’t do.</b><textarea data-q="Something you promised to do for someone (a friend, your mum, a teacher), but didn’t do." placeholder="I was going to help my mum with the shopping, but…"></textarea></div></div><div class="tlrow"><div class="dot">2</div><div class="tlbody"><b>An event (a party, a trip) that had to be cancelled because of the weather.</b><textarea data-q="An event (a party, a trip) that had to be cancelled because of the weather." placeholder="We were going to have a picnic in the park, but…"></textarea></div></div><div class="tlrow"><div class="dot">3</div><div class="tlbody"><b>Something important to you that you lost, but then found later.</b><textarea data-q="Something important to you that you lost, but then found later." placeholder="I lost my phone at the station. I thought I would never see it again, but…"></textarea></div></div></div><button class="btn" onclick="saveForm('ex5',&quot;EX 5 \u00b7 TRUE FOR ME&quot;)">Save my answers</button><div class="fb" id="ex5_fb"></div></section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script src="assets/back-home.js"></script>
+<script>
+const CFG = { homework: "8.5 Plans that went wrong (future in the past)", scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec', key: 'moody-hw-2026', bye: "Well done! \ud83c\udf89" };
+const TASKS = ["ex1", "ex2", "ex3", "ex4", "ex5"];
+
+const done={}, scores={}, notes={};
+TASKS.forEach(k=>done[k]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’‘`]/g,"'").replace(/[“”]/g,'"').replace(/\s+/g,' ').trim(); }
+function loose(v){ return norm(v).replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+let sent=false;
+function markDone(id){ done[id]=true; $(id).classList.add('done');
+  document.querySelectorAll('[data-after="'+id+'"]').forEach(s=>s.classList.remove('locked')); progress(); }
+function progress(){
+  const n=TASKS.filter(x=>done[x]).length;
+  $('fill').style.width=(n/TASKS.length*100)+'%'; $('ptext').textContent=n+' of '+TASKS.length+' tasks done';
+  $('cl').innerHTML=TASKS.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<TASKS.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+/* FILL: tap a gap, then a word */
+const FILL={};
+function setupFill(id,ex){ FILL[id]={...ex,fill:Array(ex.answers.length).fill(-1),mark:Array(ex.answers.length).fill(''),act:0}; renderFill(id); }
+function renderFill(id){ const t=FILL[id];
+  $(id+'_bank').innerHTML=t.bank.map((w,k)=>'<button class="chip '+(t.fill.includes(k)?'used':'')+'" onclick="fillChip(\''+id+'\','+k+')">'+w+'</button>').join('');
+  $(id+'_body').innerHTML=t.html.replace(/\[\[(\d+)\]\]/g,(m,n)=>{ n=+n; const v=t.fill[n];
+    return '<span class="slot '+(n===t.act?'active ':'')+t.mark[n]+'" onclick="fillSlot(\''+id+'\','+n+')">'+(v>=0?t.bank[v]:'&nbsp;')+'</span>'; }); }
+function fillSlot(id,i){ const t=FILL[id]; if(t.fill[i]>=0){ t.fill[i]=-1; t.mark[i]=''; } t.act=i; renderFill(id); }
+function fillChip(id,k){ const t=FILL[id]; if(t.fill.includes(k)) return; if(t.act<0) t.act=t.fill.indexOf(-1); if(t.act<0) return;
+  t.fill[t.act]=k; t.mark[t.act]=''; t.act=t.fill.indexOf(-1); renderFill(id); }
+function checkFill(id){ const t=FILL[id];
+  if(t.fill.includes(-1)) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((a,i)=>{ const ok=t.fill[i]===a; t.mark[i]=ok?'ok':'bad'; if(ok)s++; });
+  t.act=-1; renderFill(id); record(id,s,t.answers.length); }
+/* PICK: choose one option per item */
+const PICK={};
+function setupPick(id,ex){ PICK[id]={...ex,pick:Array(ex.items.length).fill(-1)};
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>{ const opts=it[2]||ex.opts;
+    return '<div class="sortrow"><span class="txt">'+(ex.nonum?'':(i+1)+'. ')+it[0]+'</span><span class="btns">'+
+    opts.map((o,k)=>'<button class="pick" id="'+id+'_'+i+'_'+k+'" onclick="pickIt(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</span></div>'; }).join(''); }
+function pickIt(id,i,k){ const t=PICK[id]; t.pick[i]=k; const opts=t.items[i][2]||t.opts;
+  opts.forEach((_,j)=>{ const b=$(id+'_'+i+'_'+j); b.classList.remove('on','ok','bad'); if(j===k) b.classList.add('on'); }); }
+function checkPick(id){ const t=PICK[id];
+  if(t.pick.includes(-1)) return fb(id+'_fb','Answer all of them first.','warn');
+  let s=0; t.items.forEach((it,i)=>{ const b=$(id+'_'+i+'_'+t.pick[i]); b.classList.remove('on');
+    const good=[].concat(it[1]); const ok=good.includes(t.pick[i]); b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,t.items.length); if(t.after) t.after(); }
+/* TYPED: write the answer */
+const TYPED={};
+function setupTyped(id,ex){ TYPED[id]=ex; let g=0;
+  $(id+'_body').innerHTML=ex.items.map((it,i)=>{ let n=0;
+    const body=it.t.replace(/\[\[([^\]]*)\]\]/g,(m,inner)=>{ const p=inner.split('|'); const gid=id+'_'+i+'_'+(n++);
+      return '<input class="gap'+(p[2]?' wide':'')+'" id="'+gid+'" autocomplete="off" spellcheck="false" placeholder="'+(p[0]||'')+'" value="'+(p[1]||'').replace(/"/g,'&quot;')+'">'; });
+    return (ex.wrap?'<p class="para">':'<li>')+body+'<span class="key" id="'+id+'_k'+i+'"></span>'+(ex.wrap?'</p>':'</li>'); }).join('');
+  if(!ex.wrap) $(id+'_body').innerHTML='<ol class="items">'+$(id+'_body').innerHTML+'</ol>'; }
+function checkTyped(id){ const ex=TYPED[id]; let s=0,max=0,empty=false;
+  ex.items.forEach((it,i)=>it.a.forEach((_,j)=>{ if(!$(id+'_'+i+'_'+j).value.trim()) empty=true; }));
+  if(empty) return fb(id+'_fb','Write all the answers first.','warn');
+  ex.items.forEach((it,i)=>{ const miss=[];
+    it.a.forEach((acc,j)=>{ const inp=$(id+'_'+i+'_'+j); max++;
+      const v=ex.loose?loose(inp.value):norm(inp.value).replace(/[.!?,]+$/,'');
+      const ok=[].concat(acc).some(a=>(ex.loose?loose(a):norm(a))===v);
+      inp.classList.remove('ok','bad'); inp.classList.add(ok?'ok':'bad'); if(ok)s++; else miss.push([].concat(acc)[0]); });
+    const k=$(id+'_k'+i); if(miss.length){ k.textContent=(ex.keyLabel||'Answer: ')+miss.join(' / '); k.classList.add('on'); } else k.classList.remove('on'); });
+  record(id,s,max); }
+/* OPEN: free writing */
+const OPEN={};
+function setupOpen(id,ex){ OPEN[id]=ex; const ta=$(id+'_t'); if(!ta) return; ta.addEventListener('input',()=>liveOpen(id)); liveOpen(id); }
+function usedW(id,t){ const n=' '+loose(t)+' '; return (OPEN[id].track||[]).filter(w=>n.includes(' '+loose(w)+' ')||n.includes(' '+loose(w))); }
+function liveOpen(id){ const ex=OPEN[id], t=$(id+'_t').value, w=words(t), u=usedW(id,t);
+  if($(id+'_wc')){ $(id+'_wc').textContent=w+' words'; $(id+'_wc').className=(w>=ex.min&&(!ex.max||w<=ex.max))?'good':''; }
+  if($(id+'_wk')){ $(id+'_wk').textContent=u.length+' / '+(ex.need||0)+' words from the lesson'; $(id+'_wk').className=u.length>=(ex.need||0)?'good':''; }
+  if($(id+'_found')) $(id+'_found').innerHTML=(ex.track||[]).map(x=>'<span class="'+(u.includes(x)?'on':'')+'">'+x+'</span>').join(''); }
+function saveOpen(id){ const ex=OPEN[id], t=$(id+'_t').value.trim(), w=words(t);
+  if(w<ex.min) return fb(id+'_fb','Write a bit more ('+w+' words). Aim for '+ex.min+(ex.max?'–'+ex.max:'+')+'.','warn');
+  if(ex.need && usedW(id,t).length<ex.need) return fb(id+'_fb','Use at least '+ex.need+' words from the lesson (they turn green).','warn');
+  notes[id]=ex.label+' ('+w+' words; lesson words: '+(usedW(id,t).join(', ')||'none')+')\n\n'+t;
+  fb(id+'_fb',ex.saved||'Saved! ✔','good'); if(window.HWR) HWR.snap(id); markDone(id); }
+/* FORM: several answers the teacher checks */
+function saveForm(id,label){ const sec=$(id); const lines=[]; let empty=false;
+  sec.querySelectorAll('[data-q]').forEach(el=>{ let v='';
+    if(el.type==='checkbox'){ if(el.checked) lines.push('✔ '+el.dataset.q); return; }
+    v=el.value.trim(); if(!v){ empty=true; return; } lines.push(el.dataset.q+': '+v); });
+  if(empty) return fb(id+'_fb','Answer all of them first.','warn');
+  if(!lines.length) return fb(id+'_fb','Choose at least one.','warn');
+  notes[id]=label+'\n'+lines.join('\n'); fb(id+'_fb','Saved! Your teacher will check these answers. ✔','good'); if(window.HWR) HWR.snap(id); markDone(id); }
+/* SEND */
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=TASKS.filter(k=>notes[k]).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. '+CFG.bye,'good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+
+setupPick('ex1',{items:[["We ___ you to the party, but we thought you were away.", 0, ["were going to invite", "were inviting"]], ["Tomas thought someone had stolen his bike and ___ the police when he remembered a friend had borrowed it.", 1, ["would call", "was about to call"]], ["Going into the exam, I hoped I ___ everything I had revised.", 1, ["wasn\u2019t forgetting", "wouldn\u2019t forget"]], ["The detective ___ us that evening, but he never came.", 0, ["was to have interviewed", "was about to interview"]], ["The police ___ an investigation into a number of robberies when someone confessed to the crimes.", 0, ["were about to launch", "were launching"]], ["I\u2019m sorry you couldn\u2019t be here when Ade and Mia were visiting \u2013 they ___ you before they left.", 0, ["were hoping to see", "were going to see"]]]});
+setupFill('ex2',{bank:["about", "going", "have", "was", "wasn\u2019t", "were", "would", "wouldn\u2019t"],html:"<div class=\"mess\">\ud83e\udde6 \ud83d\udce6 \ud83d\udc55 The burglars left a mess\u2026</div><ol class=\"items\"><li>I [[0]] going to clear up the house after the burglary, but the police said they needed to collect some more evidence.</li><li>We [[1]] hoping to have lunch in the garden, but unfortunately it started to rain.</li><li>As soon as his car was stolen, Omar\u2019s dad reported it to the police \u2013 however, the car [[2]] be found for several weeks.</li><li>Mina was [[3]] to get into the taxi when she realised someone had stolen her purse.</li><li>We were really nervous until the police said they weren\u2019t [[4]] to interview us about the accident.</li><li>Alice was to [[5]] studied law at university, but she decided to join the police service instead.</li><li>At first, the suspect refused to admit doing anything wrong, but later he [[6]] confess to the robbery.</li><li>We didn\u2019t go to the airport until late afternoon because our flight [[7]] leaving until the evening.</li></ol>",answers:[3, 5, 7, 0, 1, 2, 6, 4]});
+setupTyped('ex3',{items:[{"t": "I meant to ask you about the shoplifters you saw in the supermarket, but I forgot. <b>(was)</b><br>I [[\u2026]] about the shoplifters you saw in the supermarket, but I forgot.", "a": [["was going to ask you"]]}, {"t": "The police arrived and stopped the robbers from breaking into the bank. <b>(about)</b><br>The police arrived when the robbers [[\u2026]] the bank.", "a": [["were about to break into"]]}, {"t": "We expected to arrest the suspect at 6.00 a.m., but we were delayed due to heavy traffic. <b>(have)</b><br>We [[\u2026]] the suspect at 6.00 a.m., but we were delayed due to heavy traffic.", "a": [["were to have arrested"]]}, {"t": "Was it the detective\u2019s intention to interview all of the witnesses before she arrested the suspect? <b>(planning)</b><br>Was the detective [[\u2026]] all of the witnesses before she arrested the suspect?", "a": [["planning to interview"]]}, {"t": "My parents hadn\u2019t intended to move house, but my dad was transferred to an office in Glasgow. <b>(going)</b><br>My parents [[\u2026]] house, but my dad was transferred to an office in Glasgow.", "a": [["weren't going to move", "were not going to move"]]}, {"t": "In 1998, thieves stole some jewellery from a museum in London \u2013 years later, it appeared in a shop in Amsterdam. <b>(would)</b><br>In 1998, thieves stole some jewellery from a museum in London \u2013 years later, it [[\u2026]] in a shop in Amsterdam.", "a": [["would appear"]]}],loose:true,keyLabel:'Answer: '});
+setupTyped('ex4',{items:[{"t": "<b>A</b> Your mum just told me that you\u2019ve got an interview at the university to study maths. I didn\u2019t even know you had applied.<br><b>B</b> I\u2019m sorry, I [[\u2026]] (tell) you, but then I decided to wait until I won a place.", "a": [["was going to tell", "was about to tell"]]}, {"t": "<b>A</b> Is it true that your sister was a witness to a robbery at the museum?<br><b>B</b> That\u2019s right. She said that she [[\u2026]] (forget) the thieves running away with the paintings under their arms.", "a": [["wouldn't forget", "would never forget", "would not forget"]]}, {"t": "<b>A</b> Why have you still got that book? I thought it was a leaving present for Senyo?<br><b>B</b> It is. We [[\u2026]] (give) to him on his last day at work, but he didn\u2019t show up because he was ill.", "a": [["were going to give it", "were to have given it", "were about to give it"]]}, {"t": "<b>A</b> Where\u2019s Ethan? He\u2019s usually home by now.<br><b>B</b> He texted me to say he\u2019s still at the police station. The police [[\u2026]] (not / interview) him about the burglary he witnessed, but now they\u2019ve decided they will.", "a": [["weren't going to interview", "were not going to interview"]]}, {"t": "<b>A</b> It\u2019s a shame you couldn\u2019t come to the party last Saturday.<br><b>B</b> I know, but one of my cousins [[\u2026]] (leave town) the next day, and it was my last chance to see her.", "a": [["was leaving town", "was going to leave town"]]}, {"t": "<b>A</b> Why did you release the suspect?<br><b>B</b> I [[\u2026]] (interview) him when I got a call to say that someone else had confessed to the crime.", "a": [["was about to interview", "was going to interview"]]}],loose:true,keyLabel:'Possible answer: '});
+
+progress();
+</script>
+</body>
+</html>
