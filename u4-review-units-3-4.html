@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review 2 · Units 3 + 4 · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f3fd;--card:#fff;--ink:#1f2a2d;--muted:#5f6f72;--brand:#6a4fcf;--brand2:#9a7ff0;--soft:#efebfd;--gold:#cfc3f8;--sun:#ffc23d;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#e3def6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px;position:relative;overflow:hidden}
+.hero:after{content:"\1F5FA";position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0}
+.hero p{margin:0;opacity:.92}
+.goal{background:var(--soft);border:2px solid var(--gold);border-radius:18px;padding:14px 18px;margin:18px 0}
+.goal b{font-family:'Baloo 2',sans-serif;font-size:19px}.goal p{margin:4px 0 0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.track{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.intro{margin:0 0 12px}
+.name,.inp{font:inherit;width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff;color:var(--ink)}
+.name:focus,.inp:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand)}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:var(--ink);border:none;border-radius:14px;padding:11px 24px;cursor:pointer;margin-top:12px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px;min-height:1px}.fb.good{color:var(--ok)}.fb.warn{color:#b45309}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+.n{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:8px;background:var(--soft);color:var(--brand);font-weight:800;font-size:14px;margin-right:8px;flex:none}
+.line{display:flex;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);line-height:2.1}
+.line select,.match select{font:inherit;font-weight:800;color:var(--brand);border:none;border-bottom:2px dashed var(--brand);background:transparent;padding:0 2px;border-radius:6px 6px 0 0;cursor:pointer;max-width:100%}
+.sort{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sort p{margin:0;flex:1;min-width:150px;font-weight:700;border-radius:8px;padding:2px 8px}
+.tog{display:flex;gap:5px;flex-wrap:wrap}
+.tog button{font:inherit;font-weight:700;font-size:13px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;cursor:pointer;color:var(--muted)}
+.tog button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.ab{padding:10px 0;border-bottom:1px solid var(--line)}
+.ab .q{margin:0 0 8px;font-weight:700;display:flex;align-items:baseline}
+.ab button{display:block;width:100%;text-align:left;font:inherit;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:9px 12px;margin-top:6px;cursor:pointer;color:var(--ink)}
+.ab button.on{border-color:var(--brand);background:var(--soft)}
+.ab button b{color:var(--brand);margin-right:4px}
+.build{padding:10px 0;border-bottom:1px solid var(--line)}
+.ans{display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-height:46px;border:1.5px dashed var(--gold);border-radius:14px;padding:6px 10px;font-weight:700;background:var(--soft)}
+.ph{color:var(--muted);font-weight:600;font-size:15px}
+.undo{font:inherit;margin-left:auto;border:none;background:#fff;border-radius:10px;padding:3px 10px;cursor:pointer;color:var(--muted);font-weight:800}
+.chips,.pool{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips button,.pool button{font:inherit;font-weight:700;border:1.5px solid var(--gold);background:#fff;border-radius:99px;padding:5px 13px;cursor:pointer;color:var(--ink)}
+.pool button{border-radius:14px;text-align:left;width:100%;padding:9px 12px;font-weight:600}
+.chips button:disabled{opacity:.25;cursor:default}
+.match{padding:9px 0;border-bottom:1px solid var(--line)}.match p{margin:0 0 4px;font-weight:700;display:flex;align-items:baseline}
+.match select{border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;width:100%;font-weight:700}
+.seq{border:1.5px dashed var(--gold);border-radius:16px;padding:10px;background:var(--soft)}
+.sq{display:flex;align-items:baseline;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:6px}
+.fix{padding:10px 0;border-bottom:1px solid var(--line)}.fix .q{margin:0;font-weight:700;display:flex;align-items:baseline}
+.model{margin:6px 0 0;font-size:14px;color:var(--brand);font-weight:700}
+.lbl{font-weight:800;font-size:15px;margin-top:14px;display:block}
+textarea{font:inherit;width:100%;min-height:130px;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px}
+.wc{font-size:13px;color:var(--muted);margin:2px 0 0}
+.need{list-style:none;padding:0;margin:6px 0 4px;display:flex;flex-wrap:wrap;gap:6px}
+.need li{font-size:13px;font-weight:700;border:1.5px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.need li.y{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+.cb{display:flex;gap:8px;align-items:center;margin-top:12px;font-weight:700}.cb input{width:18px;height:18px;accent-color:var(--brand)}
+.bonus,.box{background:var(--soft);border-radius:14px;padding:10px 14px;font-size:15px;margin-top:14px}
+.box{margin:0 0 12px;border:1.5px solid var(--gold)}.box b{color:var(--brand)}.box ul{margin:6px 0 0;padding-left:20px}
+.pick .pk{font-weight:800;color:var(--brand);margin:8px 0 0}
+.stars{display:flex;gap:6px}.stars button{font-size:30px;line-height:1;border:none;background:none;cursor:pointer;color:#d8d8d8;padding:0}.stars button.on{color:#ffb400}
+.player{background:var(--brand);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.player iframe{width:100%;height:100px;border:0;border-radius:12px;margin-top:8px;background:#fff}
+.player audio{width:100%;margin-top:8px}.player a{color:#fff;font-size:14px}.player p{margin:6px 0 0;font-size:14px}
+.final{text-align:center}.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:var(--line);color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Units 3 + 4 · Review homework</small>
+  <h1>On the road, at the table</h1>
+  <p>Words, grammar and a travel story from Units 3 and 4</p>
+</header>
+
+<div class="goal"><b>Your goal</b><p>Use the language from Units 3 and 4 to tell a travel story.</p></div>
+
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><span id="ptext">0 of 5 tasks done</span></div>
+
+<div class="card" id="nameCard"><b>Your name</b><input class="name" id="student" placeholder="Type your name"></div>
+
+<section class="card" id="ex1">
+  <div class="head"><div class="num">1</div><h2>Town, getting around or food?</h2></div>
+  <div id="b1"></div>
+  <div><button class="btn" onclick="check(0)">Check</button></div>
+  <div class="fb" id="fb1"></div>
+</section>
+<section class="card" id="ex2">
+  <div class="head"><div class="num">2</div><h2>Choose the right form.</h2></div>
+  <div id="b2"></div>
+  <div><button class="btn" onclick="check(1)">Check</button></div>
+  <div class="fb" id="fb2"></div>
+</section>
+<section class="card" id="ex3">
+  <div class="head"><div class="num">3</div><h2>Each sentence has one mistake. Write it correctly.</h2></div>
+  <div id="b3"></div>
+  <div><button class="btn" onclick="check(2)">Check</button></div>
+  <div class="fb" id="fb3"></div>
+</section>
+<section class="card" id="ex4">
+  <div class="head"><div class="num">4</div><h2>Put Marta&#x27;s travel story in order.</h2></div>
+  <div id="b4"></div>
+  <div><button class="btn" onclick="check(3)">Check</button></div>
+  <div class="fb" id="fb4"></div>
+</section>
+<section class="card" id="ex5">
+  <div class="head"><div class="num">5</div><h2>My trip that went wrong 🧳</h2></div>
+  <div id="b5"></div>
+  
+  <div class="fb" id="fb5"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all 5 tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script>
+/* ===================== SETTINGS ===================== */
+window.__CFG = {
+ "homework": "Review 2 · Units 3 + 4",
+ "scriptUrl": "https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec",
+ "key": "moody-hw-2026"
+};
+/* ==================================================== */
+window.__TASKS = [{"type": "sort", "cats": ["Town", "Getting around", "Food"], "items": [["roundabout", 0], ["subway", 0], ["town hall", 0], ["monument", 0], ["playground", 0], ["traffic jam", 1], ["motorway", 1], ["cycle lane", 1], ["hire a car", 1], ["break down", 1], ["grilled", 2], ["raw", 2], ["mild", 2], ["seafood", 2], ["served with", 2]]}, {"type": "select", "items": ["I {'ve never tried|never tried|didn't ever try} squid.", "We {went|have been|have gone} to Odesa last summer.", "While we {were driving|drove|have driven} to the airport, the car broke down.", "I {was waiting|waited|have waited} for the bus when I saw my old teacher.", "The soup was {too salty|too much salty|salty enough}, so I sent it back.", "There {aren't enough|isn't enough|aren't much} chairs for everyone.", "There's {too much|too many|enough of} traffic in the city centre.", "How {about going|about go|about to go} to that little place round the corner?", "{Have you ever|Did you ever|Were you ever} eaten oysters?", "We didn't have {much|many|a few} time, so we took a taxi."]}, {"type": "type", "ph": "Write the correct sentence", "items": [{"q": "I've been to Kyiv last year.", "a": ["I went to Kyiv last year.", "I was in Kyiv last year."], "model": "I went to Kyiv last year."}, {"q": "During we were eating, the lights went off.", "a": ["While we were eating, the lights went off.", "When we were eating, the lights went off."], "model": "While we were eating, the lights went off."}, {"q": "The coffee is too much hot.", "a": ["The coffee is too hot."], "model": "The coffee is too hot."}, {"q": "My car broke down while I drove to work.", "a": ["My car broke down while I was driving to work."], "model": "My car broke down while I was driving to work."}, {"q": "Could you to bring us the bill, please?", "a": ["Could you bring us the bill, please?"], "model": "Could you bring us the bill, please?"}]}, {"type": "order", "items": ["Last summer my friend and I hired a car in Georgia.", "We were driving to the mountains and it was raining a lot.", "Suddenly we took a wrong turning and got lost.", "Then the car broke down at a small crossroads.", "A farmer stopped and helped us get to the next village.", "In the end, we had the best dinner of the whole trip there!"]}, {"type": "free", "short": "travel story", "intro": "<div class=\"box\"><b>Write about a real trip that went wrong</b> (60-100 words). Follow the map from the lesson:<ul><li>Set the scene: when, where, who with?</li><li>Background: we were driving / it was raining...</li><li>The problem: suddenly ... broke down / missed / got lost</li><li>What you did, and the end: in the end ...</li></ul></div>", "fields": [{"label": "My story", "ph": "Last year I was travelling to ...", "min": 60, "checks": [["was / were + -ing", "\\b(was|were) \\w+ing\\b"], ["a problem word", "\\b(broke down|break down|missed|miss|wrong turning|delayed|lost|cancelled|traffic jam)\\b"], ["while / when", "\\b(while|when)\\b"], ["suddenly", "\\bsuddenly\\b"], ["in the end", "\\bin the end\\b"]]}], "bonus": "🎙 <b>Bonus:</b> tell the story in a voice message on Telegram (90 seconds). Try not to read!"}];
+</script>
+<script>
+const CFG = window.__CFG;
+const TASKS = window.__TASKS;
+const done = {}, scores = {}, notes = {};
+TASKS.forEach((t,i)=>done['ex'+(i+1)]=false);
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;:"]/g,'').replace(/\s+/g,' ').trim(); }
+function words(v){ return norm(v).split(' ').filter(Boolean).length; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+function fb(id, text, cls){ const el=$(id); el.textContent=text; el.className='fb '+(cls||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const keys=Object.keys(done), n=keys.filter(k=>done[k]).length;
+  $('fill').style.width=(n/keys.length*100)+'%';
+  $('ptext').textContent=n+' of '+keys.length+' tasks done';
+  $('cl').innerHTML=keys.map((k,i)=>'<i class="'+(done[k]?'y':'')+'">'+(i+1)+'</i>').join('');
+  $('sendBtn').disabled = n<keys.length || sent;
+}
+function score(id, s, max, wrong){
+  const first=!scores[id];
+  if(first){ scores[id]={s,max}; if(wrong && wrong.length) notes[id]='EX '+id.slice(2)+' first try, wrong: '+wrong.join(' | '); if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (first score '+scores[id].s+'/'+max+' saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Fix the red ones and check again.';
+  return [msg, s===max?'good':'warn'];
+}
+function mark(el, ok){ el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); }
+
+const P = {};
+/* ---------- select gaps: {answer|wrong|wrong} ---------- */
+function rSelect(t,ti){
+  t._ans=[]; const id='ex'+(ti+1);
+  return t.items.map((it,i)=>'<div class="line"><span class="n">'+(i+1)+'</span><span>'+esc(it).replace(/\{(.+?)\}/g,(m,g)=>{
+    const o=g.split('|'); t._ans.push(o[0]); const k=t._ans.length-1;
+    return '<select id="'+id+'_s'+k+'"><option value="">……</option>'+shuffle(o).map(x=>'<option>'+x+'</option>').join('')+'</select>'; })+'</span></div>').join('');
+}
+function cSelect(t,ti){
+  const id='ex'+(ti+1), v=t._ans.map((_,k)=>$(id+'_s'+k).value);
+  if(v.some(x=>!x)) return fb('fb'+(ti+1),'Choose an answer for every gap first.','warn');
+  let s=0; const w=[]; v.forEach((x,k)=>{ const ok=x===t._ans[k]; mark($(id+'_s'+k),ok); if(ok)s++; else w.push(x+' → '+t._ans[k]); });
+  const [m,c]=score(id,s,t._ans.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- sort into categories ---------- */
+function rSort(t,ti){
+  if(!t._a){ t._a=t.items.map(()=>null); t._m=t.items.map(()=>''); t._o=shuffle(t.items.map((_,i)=>i)); }
+  return t._o.map(i=>'<div class="sort"><p class="'+t._m[i]+'">'+esc(t.items[i][0])+'</p><div class="tog">'+
+    t.cats.map((c,k)=>'<button class="'+(t._a[i]===k?'on':'')+'" onclick="P.sort('+ti+','+i+','+k+')">'+esc(c)+'</button>').join('')+'</div></div>').join('');
+}
+P.sort=(ti,i,k)=>{ const t=TASKS[ti]; t._a[i]=k; t._m[i]=''; draw(ti); };
+function cSort(t,ti){
+  if(t._a.some(x=>x===null)) return fb('fb'+(ti+1),'Choose an answer for every line first.','warn');
+  let s=0; const w=[]; t._a.forEach((x,i)=>{ const ok=x===t.items[i][1]; t._m[i]=ok?'ok':'bad'; if(ok)s++; else w.push(t.items[i][0]); }); draw(ti);
+  const id='ex'+(ti+1), [m,c]=score(id,s,t.items.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- A or B ---------- */
+function rAB(t,ti){
+  if(!t._a){ t._a=t.items.map(()=>null); t._m=t.items.map(()=>''); }
+  return t.items.map((it,i)=>'<div class="ab"><p class="q"><span class="n">'+(i+1)+'</span>'+esc(it.q)+'</p>'+
+    it.opts.map((o,k)=>'<button class="'+(t._a[i]===k?'on '+t._m[i]:'')+'" onclick="P.ab('+ti+','+i+','+k+')"><b>'+'AB'[k]+'</b> '+esc(o)+'</button>').join('')+'</div>').join('');
+}
+P.ab=(ti,i,k)=>{ const t=TASKS[ti]; t._a[i]=k; t._m[i]=''; draw(ti); };
+function cAB(t,ti){
+  if(t._a.some(x=>x===null)) return fb('fb'+(ti+1),'Choose A or B every time first.','warn');
+  let s=0; const w=[]; t._a.forEach((x,i)=>{ const ok=x===t.items[i].a; t._m[i]=ok?'ok':'bad'; if(ok)s++; else w.push(t.items[i].q); }); draw(ti);
+  const id='ex'+(ti+1), [m,c]=score(id,s,t.items.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- build a sentence from word chips ---------- */
+function rBuild(t,ti){
+  if(!t._w){ t._w=t.items.map(s=>s.split(' ')); t._sh=t._w.map(w=>shuffle(w.map((_,i)=>i))); t._b=t.items.map(()=>[]); t._m=t.items.map(()=>''); }
+  return t.items.map((s,i)=>'<div class="build"><div class="ans '+t._m[i]+'"><span class="n">'+(i+1)+'</span>'+
+    (t._b[i].length ? t._b[i].map(k=>esc(t._w[i][k])).join(' ') : '<span class="ph">tap the words in order</span>')+
+    (t._b[i].length ? '<button class="undo" onclick="P.undo('+ti+','+i+')" title="Start again">↺</button>' : '')+'</div><div class="chips">'+
+    t._sh[i].map(k=>'<button '+(t._b[i].includes(k)?'disabled':'')+' onclick="P.chip('+ti+','+i+','+k+')">'+esc(t._w[i][k])+'</button>').join('')+'</div></div>').join('');
+}
+P.chip=(ti,i,k)=>{ const t=TASKS[ti]; t._b[i].push(k); t._m[i]=''; draw(ti); };
+P.undo=(ti,i)=>{ const t=TASKS[ti]; t._b[i]=[]; t._m[i]=''; draw(ti); };
+function cBuild(t,ti){
+  if(t._b.some((b,i)=>b.length<t._w[i].length)) return fb('fb'+(ti+1),'Use all the words in every sentence first.','warn');
+  let s=0; const w=[]; t._b.forEach((b,i)=>{ const got=b.map(k=>t._w[i][k]).join(' '); const ok=norm(got)===norm(t.items[i]); t._m[i]=ok?'ok':'bad'; if(ok)s++; else w.push(got); }); draw(ti);
+  const id='ex'+(ti+1), [m,c]=score(id,s,t.items.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- match left to right ---------- */
+function rMatch(t,ti){
+  const id='ex'+(ti+1); if(!t._r) t._r=shuffle(t.items.map(x=>x[1]));
+  return t.items.map((x,i)=>'<div class="match"><p><span class="n">'+(i+1)+'</span>'+esc(x[0])+'</p><select id="'+id+'_m'+i+'"><option value="">choose the answer…</option>'+
+    t._r.map(r=>'<option>'+esc(r)+'</option>').join('')+'</select></div>').join('');
+}
+function cMatch(t,ti){
+  const id='ex'+(ti+1), v=t.items.map((_,i)=>$(id+'_m'+i).value);
+  if(v.some(x=>!x)) return fb('fb'+(ti+1),'Choose an answer for every question first.','warn');
+  let s=0; const w=[]; v.forEach((x,i)=>{ const ok=x===t.items[i][1]; mark($(id+'_m'+i),ok); if(ok)s++; else w.push(t.items[i][0]); });
+  const [m,c]=score(id,s,t.items.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- put in order ---------- */
+function rOrder(t,ti){
+  if(!t._o){ t._o=shuffle(t.items.map((_,i)=>i)); t._seq=[]; t._m={}; }
+  return '<div class="seq">'+(t._seq.length? t._seq.map((k,p)=>'<div class="sq '+(t._m[p]||'')+'"><span class="n">'+(p+1)+'</span>'+esc(t.items[k])+'</div>').join('') : '<p class="ph">Tap the parts below in the right order.</p>')+
+    (t._seq.length?'<button class="undo" onclick="P.oreset('+ti+')">↺ Start again</button>':'')+'</div><div class="pool">'+
+    t._o.filter(k=>!t._seq.includes(k)).map(k=>'<button onclick="P.opick('+ti+','+k+')">'+esc(t.items[k])+'</button>').join('')+'</div>';
+}
+P.opick=(ti,k)=>{ const t=TASKS[ti]; t._seq.push(k); t._m={}; draw(ti); };
+P.oreset=(ti)=>{ const t=TASKS[ti]; t._seq=[]; t._m={}; draw(ti); };
+function cOrder(t,ti){
+  if(t._seq.length<t.items.length) return fb('fb'+(ti+1),'Put all the parts in order first.','warn');
+  let s=0; t._seq.forEach((k,p)=>{ const ok=k===p; t._m[p]=ok?'ok':'bad'; if(ok)s++; }); draw(ti);
+  const id='ex'+(ti+1), [m,c]=score(id,s,t.items.length,s<t.items.length?['order: '+t._seq.map(k=>k+1).join('-')]:[]); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- type the correct / polite sentence ---------- */
+function rType(t,ti){
+  const id='ex'+(ti+1);
+  return t.items.map((it,i)=>'<div class="fix"><p class="q"><span class="n">'+(i+1)+'</span>'+esc(it.q)+'</p><input class="inp" id="'+id+'_t'+i+'" placeholder="'+esc(t.ph||'Write the better sentence')+'" autocomplete="off"><p class="model" id="'+id+'_md'+i+'"></p></div>').join('');
+}
+function cType(t,ti){
+  const id='ex'+(ti+1), v=t.items.map((_,i)=>$(id+'_t'+i).value);
+  if(v.some(x=>!x.trim())) return fb('fb'+(ti+1),'Write every sentence first.','warn');
+  let s=0; const w=[];
+  v.forEach((x,i)=>{ const it=t.items[i], n=norm(x);
+    const ok = it.re ? new RegExp(it.re).test(n) : it.a.some(a=>norm(a)===n);
+    mark($(id+'_t'+i),ok); if(ok)s++; else w.push(x);
+    $(id+'_md'+i).textContent = ok ? '' : 'Example: '+it.model; });
+  const [m,c]=score(id,s,t.items.length,w); fb('fb'+(ti+1),m,c); markDone(id);
+}
+/* ---------- free writing ---------- */
+function rFree(t,ti){
+  const id='ex'+(ti+1);
+  let h=t.intro||'';
+  if(t.pick) h+='<div class="pick"><button class="btn" onclick="P.pick('+ti+')">'+esc(t.pick.btn)+'</button><p id="'+id+'_pk" class="pk"></p></div>';
+  if(t.stars) h+='<p class="lbl">How many stars?</p><div class="stars" id="'+id+'_st">'+[1,2,3,4,5].map(n=>'<button onclick="P.star('+ti+','+n+')">★</button>').join('')+'</div>';
+  h+=t.fields.map((f,k)=>'<label class="lbl">'+esc(f.label)+'</label><textarea id="'+id+'_f'+k+'" placeholder="'+esc(f.ph||'')+'" oninput="P.live('+ti+','+k+')"></textarea><p class="wc" id="'+id+'_wc'+k+'"></p>'+
+    (f.checks?'<ul class="need" id="'+id+'_n'+k+'"></ul>':'')).join('');
+  if(t.boxes) h+=t.boxes.map((b,k)=>'<label class="cb"><input type="checkbox" id="'+id+'_b'+k+'"> '+esc(b)+'</label>').join('');
+  if(t.link) h+='<input class="inp" id="'+id+'_ln" placeholder="'+esc(t.link)+'">';
+  if(t.bonus) h+='<div class="bonus">'+t.bonus+'</div>';
+  return h+'<div><button class="btn" onclick="P.save('+ti+')">Save</button></div>';
+}
+P.pick=(ti)=>{ const t=TASKS[ti]; t._pk=t.pick.items[Math.floor(Math.random()*t.pick.items.length)]; $('ex'+(ti+1)+'_pk').textContent='Your problem: '+t._pk; };
+P.star=(ti,n)=>{ const t=TASKS[ti]; t._st=n; $('ex'+(ti+1)+'_st').querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k<n)); };
+P.live=(ti,k)=>{ const t=TASKS[ti], f=t.fields[k], id='ex'+(ti+1), v=$(id+'_f'+k).value, n=norm(v);
+  $(id+'_wc'+k).textContent=words(v)+' words'+(f.min?' (at least '+f.min+')':'');
+  if(f.checks) $(id+'_n'+k).innerHTML=f.checks.map(c=>'<li class="'+(new RegExp(c[1]).test(n)?'y':'')+'">'+esc(c[0])+'</li>').join(''); };
+P.save=(ti)=>{ const t=TASKS[ti], id='ex'+(ti+1);
+  if(t.pick && !t._pk) return fb('fb'+(ti+1),'Get your problem first.','warn');
+  if(t.stars && !t._st) return fb('fb'+(ti+1),'Choose the number of stars.','warn');
+  for(let k=0;k<t.fields.length;k++){ const f=t.fields[k]; if(words($(id+'_f'+k).value)<(f.min||1)) return fb('fb'+(ti+1),'"'+f.label+'" is too short. Write at least '+(f.min||1)+' words.','warn'); }
+  if(t.boxes && t.mustBox && !$(id+'_b0').checked) return fb('fb'+(ti+1),'Tick the box when you have done it.','warn');
+  const miss=[]; let txt='EX '+(ti+1)+' ('+t.short+')'+(t._pk?'\nProblem: '+t._pk:'')+(t._st?'\nStars: '+t._st:'');
+  t.fields.forEach((f,k)=>{ const v=$(id+'_f'+k).value.trim(); txt+='\n'+f.label+': '+v; if(f.checks) f.checks.forEach(c=>{ if(!new RegExp(c[1]).test(norm(v))) miss.push(c[0]); }); });
+  if(t.boxes) t.boxes.forEach((b,k)=>{ txt+='\n['+($(id+'_b'+k).checked?'x':' ')+'] '+b; });
+  if(t.link && $(id+'_ln').value.trim()) txt+='\nLink: '+$(id+'_ln').value.trim();
+  if(miss.length) txt+='\nNot found: '+miss.join(', ');
+  notes[id]=txt; if(window.HWR) HWR.snap(id);
+  fb('fb'+(ti+1), miss.length ? 'Saved! Tip: add the grey ones ('+miss.join(', ')+') and save again.' : 'Saved! Great work 🎉', miss.length?'warn':'good');
+  markDone(id); };
+
+const R={select:rSelect,sort:rSort,ab:rAB,build:rBuild,match:rMatch,order:rOrder,type:rType,free:rFree};
+const C={select:cSelect,sort:cSort,ab:cAB,build:cBuild,match:cMatch,order:cOrder,type:cType};
+function draw(ti){ $('b'+(ti+1)).innerHTML=R[TASKS[ti].type](TASKS[ti],ti); }
+function check(ti){ C[TASKS[ti].type](TASKS[ti],ti); }
+
+/* ---------- audio ---------- */
+function renderAudio(){
+  const b=$('audioBox'); if(!b) return;
+  if(CFG.audioFile) b.innerHTML='<audio controls preload="none" src="'+esc(CFG.audioFile)+'"></audio>';
+  else if(CFG.audioDrive) b.innerHTML='<iframe src="https://drive.google.com/file/d/'+esc(CFG.audioDrive)+'/preview" allow="autoplay"></iframe><a href="https://drive.google.com/file/d/'+esc(CFG.audioDrive)+'/view" target="_blank" rel="noopener">Audio not playing? Open it here</a>';
+  else b.innerHTML='<p>Your teacher will send you the audio. Play it in another tab and do the task here.</p>';
+}
+
+/* ---------- send ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if (fromLink) { $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if (!student) { $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  Object.keys(scores).forEach(k=>{ s+=scores[k].s; max+=scores[k].max; parts.push('Ex'+k.slice(2)+' '+scores[k].s+'/'+scores[k].max); });
+  const open=Object.keys(notes).sort().map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+TASKS.forEach((t,i)=>{ draw(i); t.fields && t.fields.forEach((_,k)=>P.live(i,k)); });
+renderAudio(); progress();
+
+</script>
+</body>
+</html>
