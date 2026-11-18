@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Sum it up</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<style>
+/* Speakout C1–C2 · Writing: coral, as on the Miro board */
+:root{ --bg:#FBF8F5; --ink:#2A1A17; --soft:#6B5752; --line:#EFE3DE;
+  --brand:#B4453C; --accent:#D9625B; --tint:#FBE1DD; --tint2:#FDF2EF; }
+.lead{background:var(--tint2);border-radius:var(--r-md);padding:12px 14px;margin:0 0 14px;font-size:15.5px}
+.lead p{margin:0 0 6px}.lead p:last-child{margin:0}
+.notebtn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:99px;padding:5px 13px;font-weight:700;font-size:14px;cursor:pointer;margin:2px 0}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+window.NOTES = {
+  title: 'Lesson notes · Summary writing',
+  tabs: [
+    { label: '✏️ My notes', edit: 'u1b_w_notes', send: 'Student\'s notes from the lesson (Ex 9A)',
+      tip: 'Copy your notes from the lesson here (Miro → <b>Writing 1B</b> → Task 8: <i>Main points</i> and <i>Examples and reasons</i>). Keep them in symbols, the way you wrote them. They save automatically.',
+      ph: 'MAIN POINTS\n→ \n→ \n→ \n\nEXAMPLES AND REASONS\n• \n• \n\nIN ONE LINE: the extract is about…' },
+    { label: 'Reporting verbs', html:
+      '<h3>The patterns from our lesson</h3>' +
+      '<table><tr><th>Verb</th><th>Pattern</th></tr>' +
+      '<tr><td><b>begin</b></td><td>begins <b>by</b> + -ing<span class="ex">She begins by outlining how schools have changed.</span></td></tr>' +
+      '<tr><td><b>go on</b></td><td>goes on <b>to</b> + infinitive (= the next point)<span class="ex">He goes on to suggest that…</span><span class="ex no">✗ goes on suggesting = keeps suggesting</span></td></tr>' +
+      '<tr><td><b>compare</b></td><td>compares X <b>with</b> Y<span class="ex">She compares classrooms in the past with today.</span></td></tr>' +
+      '<tr><td><b>accept</b></td><td>accepts <b>that</b> + clause (she admits it)<span class="ex">…but accepts that not all countries are the same.</span></td></tr>' +
+      '<tr><td><b>focus</b></td><td>focuses <b>on</b> + noun / -ing</td></tr>' +
+      '<tr><td><b>cite</b> /saɪt/</td><td>cites X <b>as</b> an example / evidence</td></tr>' +
+      '<tr><td><b>point out</b></td><td>points out <b>that</b> + clause (= draws attention to)</td></tr>' +
+      '<tr><td><b>give</b></td><td>gives <b>his / her</b> views <b>on</b> sth</td></tr></table>' +
+      '<h3>Level up (C1+)</h3>' +
+      '<ul><li><b>argues that</b> · <b>stresses / emphasises that</b> · <b>outlines</b> sth</li>' +
+      '<li><b>claims that</b>: the writer isn\'t sure it\'s true</li>' +
+      '<li><b>suggests that… may</b>: the speaker isn\'t sure (your note had ??)</li>' +
+      '<li><b>concludes by</b> + -ing · <b>raises the question of</b> sth</li></ul>' },
+    { label: 'Checklist', html:
+      '<h3>A good summary…</h3>' +
+      '<ul><li>is <b>one paragraph</b></li>' +
+      '<li><b>links ideas</b> in one sentence (<i>but, while, which, in order to, -ing</i>)</li>' +
+      '<li>has <b>no direct quotes</b>: say it in your own words</li>' +
+      '<li>is <b>objective</b>: no <i>I think, personally, in my opinion</i></li>' +
+      '<li>uses <b>reporting verbs</b> to guide the reader</li>' +
+      '<li>is in the <b>present tense</b> (<i>she argues</i>, not <i>she argued</i>)</li>' +
+      '<li>has <b>no extra details or long examples</b>: ideas, not illustrations</li></ul>' +
+      '<div class="box"><b>Length:</b> about a fifth of the original. For this extract: 120–150 words.</div>' },
+    { label: 'Skeleton', html:
+      '<h3>The shape of your paragraph</h3>' +
+      '<p><b>1. Opening:</b> who + what + the first point.<span class="ex">In this extract from a radio programme about the future of learning, [name] begins by…</span></p>' +
+      '<p><b>2. Point 1</b> + reporting verb, linked to the next idea.<span class="ex">She compares… with…, but accepts that…</span></p>' +
+      '<p><b>3. Point 2</b> + reporting verb.<span class="ex">Her guest focuses on…, explaining why…</span></p>' +
+      '<p><b>4. Final point.</b><span class="ex">He goes on to suggest that… / Both speakers point out that…</span></p>' +
+      '<h3>Note symbols</h3>' +
+      '<table><tr><td>→</td><td>leads to / then</td><td>✗</td><td>not</td></tr><tr><td>=</td><td>means</td><td>↑ ↓</td><td>more / less</td></tr><tr><td>e.g.</td><td>example</td><td>b/c</td><td>because</td></tr><tr><td>vs</td><td>compared with</td><td>??</td><td>the speaker isn\'t sure</td></tr></table>' }
+  ]
+};
+
+window.HW = {
+  homework: 'Speakout C1–C2 · 1B Writing · Sum it up: summary writing (homework)',
+  kicker: 'Speakout C1–C2 · Unit 1B · Writing',
+  title: 'Sum it up',
+  intro: 'Turn your notes from the lesson into a summary paragraph. Your notes, the reporting verbs and the checklist are always one tap away: press <b>📒 Notes</b> in the corner.',
+  tasks: [
+    { type: 'pick', short: 'Patterns', tag: 'Warm up', title: 'Which pattern is right?', sub: 'Choose the correct form. Stuck? 📒 Notes → <i>Reporting verbs</i>.',
+      items: [
+        'The presenter begins {by describing*|with describing|to describe} her own school days.',
+        'Later, she goes on {to suggest*|suggesting|for suggesting} that exams are out of date.',
+        'He compares schools in Finland {with*|than|between} schools in the UK.',
+        'The second guest focuses {on*|at|in} the changing role of the teacher.',
+        'She cites Singapore {as*|like|for} an example of a successful system.',
+        'Both experts {point out that*|point that out|point out to} technology will keep changing classrooms.',
+        'The presenter {accepts that*|accepts to|accepts on} not every country is moving in the same direction.',
+        'The guests take it in turns {to give*|giving|for giving} their views on the subject.'
+      ] },
+
+    { type: 'choice', short: 'Summary?', tag: 'Notice', title: 'Which sentence belongs in a summary?',
+      sub: 'Remember Dr Ortiz from the lesson (her son\'s rocket, schools and creativity)? Choose the sentence a good summary of her talk would have.',
+      items: [
+        { q: '<b>The opening</b>', opts: ['In this talk, Dr Ortiz begins by describing how her young son built a rocket out of boxes.', 'Dr Ortiz began her talk with a really sweet story about her son, which I loved.', '“My son is five and he built a rocket!” says Dr Ortiz.'], a: 0, why: 'Present tense, a reporting verb, no quote and no opinion.' },
+        { q: '<b>Her point about school subjects</b>', opts: ['She says: “Schools educate people out of creativity.”', 'She suggests that schools may actually discourage creativity.', 'She said that schools discouraged creativity.'], a: 1, why: 'A paraphrase, not a quote. <i>suggests… may</i> shows she wasn\'t 100% sure.' },
+        { q: '<b>Her solution</b>', opts: ['She recommends more project work and peer assessment.', 'She recommends more project work and peer assessment, like the six-week robot project in a school in Tampere where Year 9 students built and tested…', 'I think she is right that we need more project work.'], a: 0, why: 'Ideas, not long examples. And no <i>I think</i>.' },
+        { q: '<b>Linking two ideas</b>', opts: ['She points out that children are not afraid of mistakes. Adults are afraid of mistakes.', 'She points out that, unlike adults, children are not afraid of making mistakes.'], a: 1, why: 'Two ideas in one sentence: shorter and smoother.' },
+        { q: '<b>The tense</b>', opts: ['Finally, Dr Ortiz argued that teachers needed more freedom.', 'Finally, Dr Ortiz argues that teachers need more freedom.'], a: 1, why: 'Summaries are in the present tense.' }
+      ] },
+
+    { type: 'choice', short: 'Spot it', tag: 'Trap detector', title: 'What\'s wrong with each sentence?',
+      sub: 'These come from a weak summary of our radio programme. Choose the problem.',
+      items: [
+        { q: 'Rob said that knowledge was becoming less important.', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 3, why: '→ Rob <b>says</b> that knowledge <b>is becoming</b> less important.' },
+        { q: 'Rob says, “We\'re offloading facts big time.”', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 0, why: '→ Rob points out that we increasingly rely on technology to remember facts.' },
+        { q: 'Personally, I find Rob\'s ideas a bit too optimistic.', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 1, why: 'A summary is objective. Keep your opinion for an essay.' },
+        { q: 'He mentions GPS, recipes, phone numbers, birthdays, maps and bus timetables as things we no longer remember.', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 2, why: '→ He points out that we no longer need to remember many everyday facts.' },
+        { q: 'Sarah begins with outlining how education has changed.', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 4, why: '→ Sarah begins <b>by</b> outlining…' },
+        { q: 'Next, Sarah goes on talking about the classroom of the future.', opts: ['Direct quote', 'Writer\'s opinion', 'Too much detail', 'Past tense', 'Wrong pattern'], a: 4, why: '→ Sarah goes on <b>to talk</b> about… (a new point). <i>Goes on talking</i> = keeps talking.' }
+      ] },
+
+    { type: 'write', short: 'Plan', tag: 'Plan', title: 'Plan your summary of extract 1.04',
+      html: '<div class="lead"><p><b>First:</b> open <button type="button" class="notebtn" data-notes="0">📒 My notes</button> and copy your notes from the lesson there.</p><p>Then plan: short notes only, no full sentences. Choose a reporting verb for every point (<button type="button" class="notebtn" data-notes="1">Reporting verbs</button>).</p></div>',
+      minWords: 3, saveLabel: 'Save my plan', savedMsg: 'Plan saved. Now write!',
+      prompts: [
+        { q: '1. Opening: who + topic + <i>begins by…</i>', ph: 'Sarah Butler + guest · future of learning · begins by…' },
+        { q: '2. Point 1 + reporting verb', ph: 'compares… with… / focuses on…' },
+        { q: '3. Point 2 + reporting verb', ph: 'points out that… / cites… as…' },
+        { q: '4. Final point: <i>goes on to… / points out…</i>', ph: 'goes on to suggest…' }
+      ] },
+
+    { type: 'write', short: 'Summary', tag: 'Write', title: 'Write your summary paragraph',
+      sub: '120–150 words, one paragraph. Use your notes and your plan, not the script.',
+      help: { label: '💡 Stuck on the first sentence?', html: '<p><i>In this extract from a radio programme about the future of learning, … begins by …-ing …</i></p><p>Then follow your plan: one or two sentences per point.</p>' },
+      minWords: 110, need: 4, keysLabel: 'Reporting verbs',
+      keys: [['begins by', 'begins? by'], ['goes on to', 'goes on to'], ['compares… with', 'compares?\\b.*\\bwith'], ['accepts that', 'accepts? that'], ['focuses on', 'focus(es)? on'], ['cites… as', 'cites?\\b.*\\bas\\b'], ['points out', 'points? out'], ['gives… views', 'gives? (his|her|their) views'], ['argues / claims', '(argues|claims)'], ['suggests', 'suggests'], ['stresses / emphasises', '(stresses|emphasi[sz]es)'], ['concludes', 'concludes']],
+      warnLabel: 'Check these before you save',
+      warn: [['quote marks “…”', '["“”]'], ['your opinion (I think / personally…)', '\\b(i think|i believe|personally|in my opinion|i agree|i feel)\\b'], ['past tense reporting verb', '\\b(said|began|went on|pointed out|argued|suggested|claimed|explained|mentioned|focused|compared|cited|accepted|talked)\\b'], ['more than one paragraph', '\\S\\s*\\n\\s*\\n\\s*\\S']],
+      prompts: [{ q: 'Your summary', ph: 'In this extract from a radio programme about the future of learning, …', big: true }] },
+
+    { type: 'checklist', short: 'Check', tag: 'Self-check', title: 'Read it again like a teacher',
+      sub: 'Go back to Task 5, fix what you need to, then tick each box. (📒 Notes → <i>Checklist</i>.)',
+      saveLabel: 'All checked',
+      items: [
+        'It\'s <b>one paragraph</b>.',
+        'At least two sentences <b>link two ideas</b> (<i>but, while, which, -ing</i>).',
+        'There are <b>no direct quotes</b>.',
+        'It\'s <b>objective</b>: none of my own opinions.',
+        'I used <b>at least 4 reporting verbs</b>, with the right patterns.',
+        'Everything is in the <b>present tense</b>.',
+        'I cut <b>examples and small details</b>.',
+        'It\'s <b>120–150 words</b>.'
+      ] },
+
+    { type: 'write', short: 'Future', tag: 'Future skills', title: 'Will note-taking matter in your future?',
+      sub: 'Answer in three sentences. Start them with the words given (our nominal relatives!).',
+      minWords: 7, mustLabel: 'Starts', must: [['What…', '(^|\\s)what\\b'], ['Whatever…', 'whatever'], ['Whenever…', 'whenever']],
+      prompts: [
+        { q: '<b>What…</b>', ph: 'What I\'ll need most in my job is…' },
+        { q: '<b>Whatever…</b>', ph: 'Whatever technology we use, …' },
+        { q: '<b>Whenever…</b>', ph: 'Whenever I have to…, I…' }
+      ] }
+  ]
+};
+</script>
+<script src="assets/notes-drawer.js"></script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

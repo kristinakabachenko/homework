@@ -2,7 +2,7 @@
    A page sets window.HW = { homework, kicker, title, intro, tasks:[...] } and loads this file after assets/hw-report.js.
    Task: { title, sub, type, media, html, help:{label,html}, cover:{label,html}, perfect:true, ...type data }
    Types:
-     pick   items:["text {wrong|right*|wrong} text", ...]          (one or more dropdowns per sentence)
+     pick   items:["text {wrong|right*|wrong} text", ...]          (one or more dropdowns per sentence; raw:true = items are HTML)
      gaps   items:["text {answer|alt::hint} text", ...]  bank:[...]  (typed gaps)
      choice items:[{q, opts:[...], a:index, why}]
      match  pairs:[[left,right],...]  pool:[extra rights]
@@ -10,6 +10,9 @@
      write  prompts:[{q, ph, big}] minWords, keys:[[label,regex]], need, formal:true
      voice  points:[...], tick                                    (Telegram voice message + record yourself)
      shadow count, note                                           (counter)
+     checklist items:[...], tick label                            (every box must be ticked)
+   write extras: must:[[label,regex]] (all required) · warn:[[label,regex]] (red flags, checked on the raw text)
+   Any field with data-send="Label" (e.g. a notes drawer) is sent to the teacher too.
    media: {yt:'id', start, end, title}  or  {link:url, label, note} */
 (function(){
 const C = window.HW, $ = id => document.getElementById(id);
@@ -57,7 +60,7 @@ function wrapSec(t, body, checkable){
 const B = {
   pick(t){
     let k = 0;
-    const lis = t.items.map((s, i) => '<li>' + esc(s).replace(/\{([^}]+)\}/g, (_, g) => {
+    const lis = t.items.map((s, i) => '<li>' + (t.raw ? s : esc(s)).replace(/\{([^}]+)\}/g, (_, g) => {
       const opts = g.split('|'), right = opts.find(o => /\*$/.test(o)).replace(/\*$/,'');
       const sh = shuffle(opts.map(o => o.replace(/\*$/,'')), i*31+k+3);
       return '<select class="pick" data-k="' + t.id + '_s' + (k++) + '" data-a="' + esc(right) + '"><option value="">…</option>' + sh.map(o => '<option>' + esc(o) + '</option>').join('') + '</select>';
@@ -90,8 +93,10 @@ const B = {
   write(t){
     const ps = t.prompts.map((p, i) => '<div class="wq"><label for="' + t.id + '_w' + i + '">' + p.q + '</label><textarea id="' + t.id + '_w' + i + '" data-k="' + t.id + '_w' + i + '"' + (p.big ? ' class="big"' : '') + ' placeholder="' + esc(p.ph||'') + '"></textarea><div class="wc" id="' + t.id + '_wc' + i + '"></div></div>');
     const meter = t.keys ? '<div class="meter" id="' + t.id + '_m"><small>' + (t.keysLabel || 'Phrases from the lesson') + ' <b id="' + t.id + '_n">0 / ' + t.need + '</b></small><div class="found" id="' + t.id + '_f"><em>They will appear here.</em></div></div>' : '';
+    const must = t.must ? '<div class="meter" id="' + t.id + '_mu"><small>' + (t.mustLabel || 'Must have') + ' <b id="' + t.id + '_mun">0 / ' + t.must.length + '</b></small><div class="found" id="' + t.id + '_muf"></div></div>' : '';
+    const warn = t.warn ? '<div class="meter full" id="' + t.id + '_wa"><small>' + (t.warnLabel || 'Watch out') + ' <b id="' + t.id + '_wan">0</b></small><div class="found" id="' + t.id + '_waf"><em>Nothing to fix. Good!</em></div></div>' : '';
     const formal = t.formal ? '<div class="meter" id="' + t.id + '_fm"><small>Contractions (not OK in a formal email) <b id="' + t.id + '_fn">0</b></small><div class="found" id="' + t.id + '_ff"><em>None. Good!</em></div></div>' : '';
-    return wrapSec(t, ps.join('') + meter + formal + '<div class="act"><button class="btn" id="' + t.id + '_save">' + (t.saveLabel || 'Save my answer') + '</button><span class="fb" id="' + t.id + '_fb"></span></div>', false);
+    return wrapSec(t, ps.join('') + meter + must + warn + formal + '<div class="act"><button class="btn" id="' + t.id + '_save">' + (t.saveLabel || 'Save my answer') + '</button><span class="fb" id="' + t.id + '_fb"></span></div>', false);
   },
   voice(t){
     return wrapSec(t, '<div class="voice"><ul>' + t.points.map(p => '<li>' + p + '</li>').join('') + '</ul>' +
@@ -99,6 +104,10 @@ const B = {
       '<div class="wq" style="margin-top:12px"><label for="' + t.id + '_note">My plan or notes (optional)</label><textarea id="' + t.id + '_note" data-k="' + t.id + '_note" placeholder="Key words for your message…"></textarea></div>' +
       '<label class="tick"><input type="checkbox" data-k="' + t.id + '_tick"> ' + (t.tick || 'I sent my voice message to my teacher on Telegram') + '</label>' +
       '<div class="act"><button class="btn" id="' + t.id + '_save">Done</button><span class="fb" id="' + t.id + '_fb"></span></div></div>', false);
+  },
+  checklist(t){
+    return wrapSec(t, '<div class="checks">' + t.items.map((it, i) => '<label class="tick"><input type="checkbox" data-k="' + t.id + '_t' + i + '"> ' + it + '</label>').join('') + '</div>' +
+      '<div class="act"><button class="btn" id="' + t.id + '_save">' + (t.saveLabel || 'Done') + '</button><span class="fb" id="' + t.id + '_fb"></span></div>', false);
   },
   shadow(t){
     const n = t.count || 3;
@@ -196,21 +205,34 @@ T.forEach(t => {
         $(t.id + '_n').textContent = found.length + ' / ' + t.need; $(t.id + '_m').classList.toggle('full', found.length >= t.need);
         $(t.id + '_f').innerHTML = found.length ? found.map(w => '<span>' + esc(w) + '</span>').join('') : '<em>They will appear here.</em>';
       }
+      let miss = [], flags = [];
+      if (t.must){
+        const low = norm(all);
+        miss = t.must.filter(([, re]) => !new RegExp(re, 'i').test(low));
+        $(t.id + '_mun').textContent = (t.must.length - miss.length) + ' / ' + t.must.length; $(t.id + '_mu').classList.toggle('full', !miss.length);
+        $(t.id + '_muf').innerHTML = t.must.map(([l, re]) => '<span' + (miss.some(m => m[0] === l) ? ' class="no"' : '') + '>' + (miss.some(m => m[0] === l) ? '' : '✓ ') + esc(l) + '</span>').join('');
+      }
+      if (t.warn){
+        flags = t.warn.filter(([, re]) => new RegExp(re, 'i').test(all)).map(([l]) => l);
+        $(t.id + '_wan').textContent = flags.length; $(t.id + '_wa').classList.toggle('full', !flags.length);
+        $(t.id + '_waf').innerHTML = flags.length ? flags.map(w => '<span class="no">' + esc(w) + '</span>').join('') : '<em>Nothing to fix. Good!</em>';
+      }
       let con = [];
       if (t.formal){
         con = (all.match(/\b(i'm|i've|i'd|i'll|don't|doesn't|didn't|can't|won't|isn't|aren't|wasn't|weren't|it's|we're|you're|they're|couldn't|wouldn't|shouldn't|haven't|hasn't)\b/gi) || []);
         $(t.id + '_fn').textContent = con.length; $(t.id + '_fm').classList.toggle('full', !con.length);
         $(t.id + '_ff').innerHTML = con.length ? con.map(c => '<span class="no">' + esc(c) + '</span>').join('') : '<em>None. Good!</em>';
       }
-      return {found, con};
+      return {found, con, miss, flags};
     };
     sec.addEventListener('input', scan); AFTER.push(scan);
     $(t.id + '_save').onclick = () => {
       const r = scan(), short = tas.findIndex(x => words(x.value) < (t.minWords || 5));
       if (short >= 0){ tas[short].focus(); return fb(t.id + '_fb', 'Write a bit more: at least ' + (t.minWords || 5) + ' words' + (tas.length > 1 ? ' in each answer.' : '.'), 'warn'); }
       if (t.keys && r.found.length < t.need) return fb(t.id + '_fb', 'Use at least ' + t.need + ' of the phrases. You have ' + r.found.length + '.' + (t.help ? ' Open the yellow box for ideas.' : ''), 'warn');
+      if (t.must && r.miss.length) return fb(t.id + '_fb', 'Don\'t forget: ' + r.miss.map(m => m[0]).join(', ') + '.', 'warn');
       if (t.formal && r.con.length) return fb(t.id + '_fb', 'Formal email: write ' + r.con[0] + ' in full (e.g. I am, do not).', 'warn');
-      notes[t.id] = 'TASK ' + t.n + ' · ' + t.title.replace(/<[^>]+>/g,'') + (r.found.length ? ' (used: ' + r.found.join(', ') + ')' : '') + '\n' + t.prompts.map((p, i) => (t.prompts.length > 1 ? 'Q: ' + p.q.replace(/<[^>]+>/g,'') + '\nA: ' : '') + tas[i].value.trim()).join('\n\n');
+      notes[t.id] = 'TASK ' + t.n + ' · ' + t.title.replace(/<[^>]+>/g,'') + (r.found.length ? ' (used: ' + r.found.join(', ') + ')' : '') + (r.flags && r.flags.length ? ' [check: ' + r.flags.join(', ') + ']' : '') + '\n' + t.prompts.map((p, i) => (t.prompts.length > 1 ? 'Q: ' + p.q.replace(/<[^>]+>/g,'') + '\nA: ' : '') + tas[i].value.trim()).join('\n\n');
       fb(t.id + '_fb', t.savedMsg || 'Saved! Your teacher will read it.', 'good'); markDone(t.id); save();
     };
   }
@@ -233,6 +255,14 @@ T.forEach(t => {
       } catch(e){ $(t.id + '_rs').textContent = 'The microphone is not available here. Just record in Telegram.'; }
     };
   }
+  if (t.type === 'checklist'){
+    $(t.id + '_save').onclick = () => {
+      const bx = [...sec.querySelectorAll('input[type=checkbox]')], left = bx.filter(b => !b.checked).length;
+      if (left) return fb(t.id + '_fb', left + (left > 1 ? ' boxes are' : ' box is') + ' not ticked yet. Fix your text first, then tick.', 'warn');
+      notes[t.id] = 'TASK ' + t.n + ' · ' + t.title.replace(/<[^>]+>/g,'') + ': all ticked ✓';
+      fb(t.id + '_fb', t.savedMsg || 'Great, all checked!', 'good'); markDone(t.id); save();
+    };
+  }
   if (t.type === 'shadow'){
     const n = t.count || 3, hid = sec.querySelector('[data-k$="_cnt"]');
     const paint = () => { const c = +hid.value || 0; [...$(t.id + '_dots').children].forEach((d, i) => d.classList.toggle('on', i < c));
@@ -253,7 +283,7 @@ $('sendBtn').onclick = () => {
   let s = 0, max = 0; const parts = [];
   T.filter(t => scores[t.id]).forEach(t => { s += scores[t.id].s; max += scores[t.id].max; parts.push('Ex' + t.n + ' ' + scores[t.id].s + '/' + scores[t.id].max); });
   $('sendBtn').disabled = true; fb('sendMsg', 'Sending…');
-  HWR.send({homework: C.homework, student, score: s, max, breakdown: parts.join(' · '), open: T.filter(t => notes[t.id]).map(t => notes[t.id]).join('\n\n')})
+  HWR.send({homework: C.homework, student, score: s, max, breakdown: parts.join(' · '), open: T.filter(t => notes[t.id]).map(t => notes[t.id]).concat([...document.querySelectorAll('[data-send]')].filter(e => e.value.trim()).map(e => e.dataset.send.toUpperCase() + '\n' + e.value.trim())).join('\n\n')})
     .then(() => { sent = true; fb('sendMsg', 'Sent! Your score: ' + s + '/' + max + '. Well done! 🎉', 'good'); $('sendBtn').textContent = 'Sent ✓'; save(); })
     .catch(() => { $('sendBtn').disabled = false; fb('sendMsg', 'Not sent. Check your internet and try again.', 'warn'); });
 };

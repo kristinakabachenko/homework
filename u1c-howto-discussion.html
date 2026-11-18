@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Can I just come in here?</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<style>
+/* Speakout C1–C2 · 1C: teal, as on the Miro board */
+:root{ --bg:#F7FAF8; --ink:#16231F; --soft:#56655F; --line:#DDEAE4;
+  --brand:#1F6F61; --accent:#2E8B7A; --tint:#D7ECE5; --tint2:#EAF5F1; }
+.items li .who{font-weight:800;color:var(--brand)}
+.items li .who.k{color:#9b4a08}.items li .who.j{color:#6631d7}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+const CATS = ['Starting the discussion', 'Interrupting', 'Going back to a point', 'Bringing someone in', 'Holding the floor'];
+window.NOTES = {
+  title: 'Lesson notes · Managing a discussion',
+  tabs: [
+    { label: 'Phrases', html:
+      '<h3>Starting</h3><ul><li>To get the <b>ball rolling</b>, let\'s start with…</li></ul>' +
+      '<h3>Interrupting</h3><ul><li>If I can just <b>come in</b> here,…</li><li>Sorry to <b>jump in</b>, but…</li><li>Can I just <b>add</b> something here?</li><li>Hang on, can I come in here? <span class="ex">the most direct: friends, equals</span></li><li>Let me just <b>pick up on</b> that.</li></ul>' +
+      '<h3>Going back to a point</h3><ul><li>Going back to what I was saying <b>earlier</b>,…</li><li>To go back to my earlier <b>point</b>,…</li><li>Earlier you <b>made</b> an important point about…</li><li>What I <b>meant</b> to say was…</li><li>As we <b>said</b> before,…</li><li>Coming back to what Jake said earlier,…</li></ul>' +
+      '<h3>Bringing someone in</h3><ul><li>I\'d like to hear Jake\'s <b>views</b> on this.</li><li>What\'s your <b>take</b> on this, Jake?</li><li>…if I can just <b>bring</b> Jake <b>back in</b> here.</li><li>Sorry, Kelly, you were <b>saying</b>…?</li><li>Sorry, I didn\'t mean to <b>cut</b> you <b>off</b>.</li></ul>' +
+      '<h3>Holding the floor</h3><ul><li>Let me just <b>finish</b> my point, if I may.</li><li>Sorry, can I just finish?</li></ul>' },
+    { label: 'Sound polite', html:
+      '<h3>Softeners make it polite</h3><p><b>just · sorry · if I can / may · could · actually</b></p>' +
+      '<table><tr><td class="no">I want to say something.</td><td>→ Can I <b>just</b> say something?</td></tr>' +
+      '<tr><td class="no">Wait, I\'m talking.</td><td>→ <b>Sorry</b>, could I just finish my point?</td></tr>' +
+      '<tr><td class="no">That\'s wrong.</td><td>→ But don\'t you think that\'s a bit of an exaggeration?</td></tr></table>' +
+      '<h3>Intonation</h3><ul><li><b>Polite:</b> a wide voice range, a fall-rise at the end.</li><li><b>Rude:</b> flat, fast, falling.</li></ul>' +
+      '<div class="box">In Ukrainian we often sound flatter. In English, flat = bored or annoyed, even when you aren\'t! Exaggerate the melody a little.</div>' },
+    { label: 'Chair\'s job', html:
+      '<h3>When you chair a meeting</h3><ol><li><b>Start</b> it: the topic and the goal.</li><li>Stop the person who <b>dominates</b>, politely.</li><li><b>Bring in</b> the quiet person.</li><li><b>Go back</b> to a good point that got lost.</li><li>Get back <b>on track</b> if you go off topic.</li><li><b>Decide</b> and sum up.</li></ol>' +
+      '<h3>Words from our unit you can use</h3><p>spark ideas · novel ideas · think outside the box · critical thinking · peer assessment · blended learning · What we need is… · Whatever we choose,…</p>' },
+    { label: '✏️ My notes', edit: 'u1c_h_notes', ph: 'Your own notes from the lesson…' }
+  ]
+};
+
+window.HW = {
+  homework: 'Speakout C1–C2 · 1C How to · Can I just come in here? Managing a discussion (homework)',
+  kicker: 'Speakout C1–C2 · Unit 1C · How to…',
+  title: 'Can I just come in here?',
+  intro: 'Phrases for managing a discussion: interrupting politely, going back to a point and bringing people in. The phrases are in <b>📒 Notes</b> whenever you need them. Plus: <b>Grammar Bank p. 114</b> in your book.',
+  tasks: [
+    { type: 'choice', short: 'Sort', tag: 'Remember', title: 'What does each phrase do?', sub: 'Choose the job of each phrase.',
+      items: [
+        { q: '<b>To get the ball rolling</b>, let\'s start with your ideas.', opts: CATS, a: 0 },
+        { q: '<b>If I can just come in here</b>, I\'d like to add something.', opts: CATS, a: 1 },
+        { q: '<b>Going back to what I was saying earlier</b>, budget matters too.', opts: CATS, a: 2 },
+        { q: '<b>What\'s your take on this</b>, Jake?', opts: CATS, a: 3 },
+        { q: '<b>Let me just finish my point</b>, if I may.', opts: CATS, a: 4 },
+        { q: '<b>Sorry to jump in</b>, but that\'s not quite true.', opts: CATS, a: 1 },
+        { q: '<b>Earlier you made an important point</b> about free time.', opts: CATS, a: 2 },
+        { q: '<b>Sorry, I didn\'t mean to cut you off.</b> You were saying…?', opts: CATS, a: 3, why: 'You give the turn back to the other person.' }
+      ] },
+
+    { type: 'gaps', short: 'Phrases', tag: 'From memory', title: 'Complete the phrases', sub: 'One word in each gap. Try without notes first.',
+      items: [
+        'To get the {ball::b___} rolling, let\'s start with…',
+        'If I can just {come::c___} in here,…',
+        'Sorry, I didn\'t mean to {cut::c__} you off.',
+        'Sorry, Kelly, you were {saying::s_____}…?',
+        'I\'d like to hear Jake\'s {views|thoughts::v____} on this.',
+        'To go back to my {earlier::e______} point,…',
+        'Let me just {pick::p___} up on that.',
+        '…if I can just {bring::b____} Jake back in here.',
+        'Let me just {finish::f_____} my point, if I may.'
+      ] },
+
+    { type: 'choice', short: 'Polite', tag: 'Tone', title: 'Which one is more polite?', sub: 'Then say both versions aloud: the polite one with a lot of melody.',
+      items: [
+        { q: 'Someone keeps interrupting you.', opts: ['Wait, I\'m talking.', 'Sorry, could I just finish my point?'], a: 1, why: '<i>sorry, could, just</i> = three softeners.' },
+        { q: 'You want to add an idea.', opts: ['Can I just add something here?', 'I want to say something.'], a: 0 },
+        { q: 'A colleague hasn\'t said a word.', opts: ['Jake, you haven\'t said anything. Talk.', 'Jake, what\'s your take on this?'], a: 1 },
+        { q: 'You disagree strongly.', opts: ['That\'s wrong.', 'But don\'t you think that\'s a bit of an exaggeration?'], a: 1, why: 'A question sounds softer than a statement.' },
+        { q: 'A good point got lost.', opts: ['Going back to what you were saying earlier, I think…', 'Stop. Back to the first thing.'], a: 0 }
+      ] },
+
+    { type: 'pick', raw: true, short: 'Meeting', tag: 'In context', title: 'You\'re the chair', sub: 'A meeting about developing creativity at work. Choose the correct phrase each time you speak.',
+      items: [
+        '<span class="who">You:</span> {To get the ball rolling*|To roll the ball|To start the rolling}, let\'s hear some ideas for making our team more creative.',
+        '<span class="who k">Kelly:</span> Team-building days! Everyone loves them. And we could also… and another thing…',
+        '<span class="who">You:</span> Sorry, Kelly, {if I can just come in here*|if I can come here in|if I may come inside} for a second.',
+        '<span class="who">You:</span> Jake, {I\'d like to hear your views*|I\'d like hearing your views|I want your views} on this.',
+        '<span class="who j">Jake:</span> Well, maybe one free afternoon a week for our own projects?',
+        '<span class="who k">Kelly:</span> Yes, but team-building days are much more—',
+        '<span class="who">You:</span> Kelly, {let me just bring Jake back in*|let me just bring back Jake in|let me bring Jake in back}. Jake, you were saying…?',
+        '<span class="who k">Kelly:</span> Oh, sorry, I didn\'t mean to {cut him off*|cut off him|cut him out}.',
+        '<span class="who">You:</span> {Going back to what Jake said*|Going back to what said Jake|Going back on what Jake said}, a free afternoon could really spark some novel ideas.',
+        '<span class="who">You:</span> So, {whatever we choose*|whichever we choose of|what we choose ever}, let\'s try it for a month.'
+      ] },
+
+    { type: 'write', short: 'Chair', tag: 'Your turn', title: 'What would you say?', sub: 'Write what you\'d really say. Use a <b>different phrase</b> each time.',
+      minWords: 4, need: 5, keysLabel: 'Discussion phrases',
+      keys: [['get the ball rolling', 'ball rolling'], ['come in here', 'come in'], ['jump in', 'jump in'], ['add something', 'add something'], ['pick up on', 'pick up on'], ['going back to', '(going|coming|to go) back to'], ['earlier point', 'earlier'], ['views / take on', '(views|take on|thoughts)'], ['bring … in', 'bring\\b.*\\bin\\b'], ['you were saying', 'you were saying'], ['cut you off', 'cut (you|him|her) off'], ['finish my point', 'finish'], ['back on track', 'on track']],
+      prompts: [
+        { q: '1. You\'re starting a meeting about a new project.', ph: 'To get the ball rolling,…' },
+        { q: '2. A colleague has been talking for five minutes. Stop him politely.', ph: '' },
+        { q: '3. Your quiet colleague Anna hasn\'t said anything yet.', ph: '' },
+        { q: '4. Someone interrupts you in the middle of your point.', ph: '' },
+        { q: '5. You remember a great point Anna made ten minutes ago.', ph: '' },
+        { q: '6. You cut someone off by mistake.', ph: '' }
+      ] },
+
+    { type: 'write', short: 'Real life', tag: 'Real life', title: 'Try it for real',
+      sub: 'This week, use <b>two phrases</b> in a real discussion: a work meeting, a team chat, a family dinner. Then tell me: where was it, which phrases did you use, and what happened?',
+      minWords: 30, need: 2, keysLabel: 'Phrases you used',
+      keys: [['come in', 'come in'], ['jump in', 'jump in'], ['add something', 'add something'], ['pick up on', 'pick up on'], ['going back to', '(going|coming|to go) back to'], ['views / take on', '(views|take on)'], ['bring … in', 'bring\\b.*\\bin\\b'], ['you were saying', 'you were saying'], ['cut … off', 'cut (you|him|her|them) off'], ['finish my point', 'finish my point'], ['ball rolling', 'ball rolling']],
+      prompts: [{ q: 'What happened?', ph: 'On Tuesday we had a team meeting about… I said “…” when…', big: true }] },
+
+    { type: 'checklist', short: 'Book', tag: 'Grammar Bank', title: 'Grammar Bank 1C', sub: 'In your book.', saveLabel: 'Done',
+      items: ['I did the Grammar Bank exercises on <b>page 114</b> and checked my answers.'] }
+  ]
+};
+</script>
+<script src="assets/notes-drawer.js"></script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: A flash of inspiration</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<style>
+/* Speakout C1–C2 · 1C: teal, as on the Miro board */
+:root{ --bg:#F7FAF8; --ink:#16231F; --soft:#56655F; --line:#DDEAE4;
+  --brand:#1F6F61; --accent:#2E8B7A; --tint:#D7ECE5; --tint2:#EAF5F1; }
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+window.NOTES = {
+  title: 'Lesson notes · Creativity',
+  tabs: [
+    { label: 'Chunks', html:
+      '<table><tr><th>Chunk</th><th>Meaning</th></tr>' +
+      '<tr><td><b>have a FERtile imaGInation</b></td><td>your mind produces lots of ideas<span class="ex">She can make up a story about anything.</span></td></tr>' +
+      '<tr><td><b>a FLASH of inspiRAtion</b></td><td>a sudden brilliant idea<span class="ex">I had a flash of inspiration in the shower.</span></td></tr>' +
+      '<tr><td><b>out of the BLUE</b></td><td>completely unexpectedly<span class="ex">The idea came (completely) out of the blue.</span></td></tr>' +
+      '<tr><td><b>NOVel iDEas</b></td><td>new, original ideas<span class="ex">come up with novel ideas</span></td></tr>' +
+      '<tr><td><b>think outside the BOX</b></td><td>think in an original, unusual way</td></tr>' +
+      '<tr><td><b>inNATE talent</b></td><td>ability you are born with</td></tr>' +
+      '<tr><td><b>RAW talent</b></td><td>natural ability that isn\'t trained yet</td></tr>' +
+      '<tr><td><b>be SPARKED by</b></td><td>a small thing starts something bigger<span class="ex">The design was sparked by a trip to Japan.</span></td></tr>' +
+      '<tr><td><b>INsight</b> (into)</td><td>a sudden, clear understanding</td></tr>' +
+      '<tr><td><b>inTUitive</b> / rely on <b>INstinct</b></td><td>use feelings rather than facts</td></tr>' +
+      '<tr><td><b>a creative GEnius</b></td><td>an exceptionally creative person</td></tr></table>' },
+    { label: 'Partners', html:
+      '<h3>Which verb goes with it?</h3>' +
+      '<ul><li><b>come up with / have / get</b> an idea · <b>spark</b> an idea / a debate / interest</li>' +
+      '<li><b>rely on</b> instinct / intuition / your gut</li>' +
+      '<li><b>have / show</b> raw talent · <b>develop</b> a talent</li>' +
+      '<li><b>gain / give</b> an insight <b>into</b> sth</li>' +
+      '<li>a flash of <b>inspiration / insight / genius</b></li>' +
+      '<li>a fertile <b>imagination / mind / ground</b> (for)</li></ul>' +
+      '<h3>Traps</h3>' +
+      '<ul><li><b>novel</b> (adj) = new, original. Not <i>роман</i> here!</li>' +
+      '<li class="no">✗ do an idea · ✗ make an idea</li>' +
+      '<li class="no">✗ think out of box → think outside the box</li></ul>' },
+    { label: 'Reacting (1A)', html:
+      '<h3>Describing attitudes</h3>' +
+      '<table><tr><td><b>That\'s spot on.</b></td><td>completely right</td></tr>' +
+      '<tr><td><b>There\'s an element of truth in that.</b></td><td>partly right</td></tr>' +
+      '<tr><td><b>That rings true (for me).</b></td><td>it matches my experience</td></tr>' +
+      '<tr><td><b>That strikes a chord.</b></td><td>it touches me personally</td></tr>' +
+      '<tr><td><b>That\'s a sweeping statement.</b></td><td>far too general</td></tr>' +
+      '<tr><td><b>That\'s a bit oversimplistic.</b></td><td>too simple</td></tr>' +
+      '<tr><td><b>That\'s patently not true.</b></td><td>obviously wrong</td></tr>' +
+      '<tr><td><b>That\'s a complete fallacy.</b></td><td>a false belief</td></tr>' +
+      '<tr><td><b>a trite phrase</b></td><td>overused, empty</td></tr></table>' +
+      '<h3>Idioms: setbacks and progress</h3>' +
+      '<p>throw in the towel · change tack · make (huge) strides · (not) be cut out for · knock sb\'s confidence · give it a good go</p>' },
+    { label: '✏️ My notes', edit: 'u1c_v_notes', ph: 'Your own notes, new words, examples…' }
+  ]
+};
+
+window.HW = {
+  homework: 'Speakout C1–C2 · 1C Vocabulary · A flash of inspiration: creativity (homework)',
+  kicker: 'Speakout C1–C2 · Unit 1C · Vocabulary',
+  title: 'A flash of inspiration',
+  intro: 'Creativity chunks: from meaning to memory to your own story. Try each task from memory first. If you\'re stuck, press <b>📒 Notes</b>.',
+  tasks: [
+    { type: 'match', short: 'Meaning', tag: 'Remember', title: 'Match the chunk with its meaning', sub: 'One meaning is extra.',
+      pairs: [
+        ['a fertile imagination', 'a mind that easily produces lots of ideas'],
+        ['a flash of inspiration', 'a sudden brilliant idea'],
+        ['out of the blue', 'completely unexpectedly'],
+        ['novel ideas', 'new and original ideas'],
+        ['think outside the box', 'think in an original, unusual way'],
+        ['raw talent', 'natural ability that hasn\'t been trained yet'],
+        ['innate talent', 'ability you are born with'],
+        ['insight', 'a sudden, clear understanding of something'],
+        ['intuitive', 'relying on feelings rather than facts']
+      ],
+      pool: ['a skill you learn through years of hard work'] },
+
+    { type: 'flip', short: 'Recall', tag: 'From memory', title: 'Say it with a chunk', sub: 'Type the chunk that replaces the words in bold. No notes this time!',
+      items: [
+        { q: 'The job offer came <b>completely unexpectedly</b>.', a: 'out of the blue', accept: ['out of the blue'] },
+        { q: 'My nephew <b>has so many ideas</b>: he invents a new game every day. → He has a…', a: 'a fertile imagination', accept: ['fertile imagination', 'fertile mind'] },
+        { q: 'The idea <b>was started by</b> an old photo.', a: 'was sparked by', accept: ['sparked by', 'sparked off by'] },
+        { q: 'Our job is to <b>think in original ways</b>.', a: 'think outside the box', accept: ['outside the box'] },
+        { q: 'She <b>was born with</b> musical ability. → She has … talent.', a: 'innate talent', accept: ['innate'] },
+        { q: 'He doesn\'t analyse data, he just <b>follows his feelings</b>. → He relies on…', a: 'relies on instinct / intuition', accept: ['instinct', 'intuition', 'his gut'] },
+        { q: 'Then I suddenly had <b>a brilliant idea</b>. → a … of inspiration', a: 'a flash of inspiration', accept: ['flash of inspiration', 'flash'] }
+      ] },
+
+    { type: 'pick', short: 'Partners', tag: 'Collocations', title: 'Choose the natural word', sub: 'Only one option sounds natural.',
+      items: [
+        'She {came up with*|did|took} a brilliant idea for the campaign.',
+        'The whole project was {sparked*|lit up|fired} by a conversation in a café.',
+        'Some people {rely on*|count with|trust to} instinct rather than facts.',
+        'He\'s got a lot of {raw*|crude|wild} talent, but he needs proper training.',
+        'I had a sudden {flash*|beam|shot} of inspiration in the shower.',
+        'Big cities are fertile {ground*|soil|land} for new start-ups.',
+        'Good managers encourage people to think {outside*|out of|beyond} the box.',
+        'The book gives a real {insight*|inside|inlook} into the life of an artist.'
+      ] },
+
+    { type: 'gaps', short: 'Story', tag: 'Recycling', title: 'Olena\'s novel', sub: 'Complete the story. There are words from today <i>and</i> from Unit 1A. The first letters help.', story: true,
+      items: [
+        'For years my friend Olena tried to write a novel, and more than once she nearly {threw::t____} in the towel.',
+        'Then, completely out of the {blue::b___}, she had a {flash::f____} of inspiration:',
+        'the idea was {sparked::s______} by an old photo of her grandmother.',
+        'She decided to change {tack::t___}: she stopped planning every chapter and started relying on {instinct|intuition::i_______}.',
+        'Everyone always said she had a {fertile::f______} imagination, and now she was finally using it.',
+        'In six months she made huge {strides::s______}.',
+        'If she hadn\'t found that photo, she {wouldn\'t have|would not have::w______ h___} finished the book.'
+      ] },
+
+    { type: 'choice', short: 'React', tag: 'Recycling', title: 'React like a C1 speaker', sub: 'Choose the reaction that fits what you think.',
+      items: [
+        { q: '“Creative people are just born that way.” <i>(You partly agree.)</i>', opts: ['There\'s an element of truth in that.', 'That\'s spot on.', 'That\'s patently not true.'], a: 0 },
+        { q: '“Anyone can learn to think outside the box.” <i>(You completely agree.)</i>', opts: ['That\'s a sweeping statement.', 'That\'s spot on.', 'That\'s a complete fallacy.'], a: 1 },
+        { q: '“All artists are bad at maths.” <i>(It\'s far too general.)</i>', opts: ['That rings true.', 'That\'s a sweeping statement.', 'That strikes a chord.'], a: 1 },
+        { q: '“The best ideas come when you stop trying.” <i>(It matches your experience.)</i>', opts: ['That rings true for me.', 'That\'s oversimplistic.', 'That\'s a trite phrase.'], a: 0 },
+        { q: '“Left-brained people can\'t be creative.” <i>(The article proved it\'s a myth.)</i>', opts: ['There\'s an element of truth in that.', 'That\'s a complete fallacy.', 'That strikes a chord.'], a: 1, why: 'The study found both sides of the brain work in tandem.' }
+      ] },
+
+    { type: 'write', short: 'Post', tag: 'Real life', title: 'Write an Instagram post',
+      sub: 'Something creative you made or saw this week: a meal, a photo, a lesson idea, a song, a shop window… 60–80 words. Use <b>4 chunks</b> from today and start one sentence with <b>What sparked it was…</b>',
+      minWords: 55, need: 4, keysLabel: 'Creativity chunks',
+      keys: [['fertile imagination', 'fertile (imagination|mind)'], ['flash of inspiration', 'flash of (inspiration|insight|genius)'], ['out of the blue', 'out of the blue'], ['sparked (by)', 'spark'], ['think outside the box', 'outside the box'], ['novel ideas', 'novel'], ['raw / innate talent', '(raw|innate) talent'], ['insight', 'insight'], ['intuitive / instinct', '(intuiti|instinct)'], ['come up with', 'c[oa]me up with']],
+      mustLabel: 'Must have', must: [['What sparked it was…', 'what sparked it was']],
+      prompts: [{ q: 'Your post', ph: '✨ This week I…\n\nWhat sparked it was…', big: true }] }
+  ]
+};
+</script>
+<script src="assets/notes-drawer.js"></script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>
