@@ -13,7 +13,9 @@
      checklist items:[...], tick label                            (every box must be ticked)
    write extras: must:[[label,regex]] (all required) · warn:[[label,regex]] (red flags, checked on the raw text)
    Any field with data-send="Label" (e.g. a notes drawer) is sent to the teacher too.
-   media: {yt:'id', start, end, title}  or  {link:url, label, note} */
+   media: {yt:'id', start, end, title}  or  {link:url, label, note}
+   Extra types: a page can load a file that sets window.HW_EXT[type] = {build(t, kit), init(t, sec, kit)} before this kit
+   (e.g. assets/degree-shift.js adds type "shift"). */
 (function(){
 const C = window.HW, $ = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -114,7 +116,8 @@ const B = {
     return wrapSec(t, (t.note ? '<p>' + t.note + '</p>' : '') + '<div class="counter"><button class="btn small" id="' + t.id + '_plus">+1 time</button><div class="dots" id="' + t.id + '_dots">' + '<i></i>'.repeat(n) + '</div><button class="btn small ghost" id="' + t.id + '_zero">reset</button><input type="hidden" data-k="' + t.id + '_cnt" value="0"></div><div class="act"><span class="fb" id="' + t.id + '_fb"></span></div>', false);
   }
 };
-$('tasks').innerHTML = T.map(t => B[t.type](t)).join('');
+const EXT = window.HW_EXT || {};
+$('tasks').innerHTML = T.map(t => B[t.type] ? B[t.type](t) : EXT[t.type].build(t, {wrapSec, esc, mediaHtml})).join('');
 
 /* ---------- progress + scoring ---------- */
 const fb = (id, txt, c) => { const e = $(id); if (e){ e.textContent = txt; e.className = 'fb ' + (c||''); } };
@@ -187,6 +190,7 @@ T.forEach(t => {
     };
     RESET[t.id] = () => ins.forEach(i => { i.value = ''; i.classList.remove('ok','bad'); i.parentNode.querySelector('.fa').textContent = ''; });
   }
+  if (EXT[t.type] && !B[t.type]) EXT[t.type].init(t, sec, {record, markDone, save: () => save(), notes, fb, AFTER, done, scores, esc, $});
   const chk = sec.querySelector('[data-chk]');
   if (chk){
     chk.onclick = () => { const [s, max] = CHECK[t.id](); record(t, s, max); save(); };

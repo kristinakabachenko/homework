@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Degree shift</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<script src="assets/hw-report.js"></script>
+<script src="assets/degree-check.js"></script>
+<script src="assets/degree-shift.js"></script>
+</head>
+<body>
+<script>
+const RULES = '<div class="rules">' +
+  '<div class="rule"><span class="em">🤏</span><div class="rl">Small difference</div><div class="rr">almost as … as<br>nearly as … as</div><div class="ru">майже такий самий · also <b>slightly more … than</b></div><div class="re">The metro is almost as fast as a taxi.</div></div>' +
+  '<div class="rule"><span class="em">✋</span><div class="rl">Medium difference</div><div class="rr">a bit more … than<br>a little more … than</div><div class="ru">трохи · also <b>slightly more … than</b></div><div class="re">A taxi is a bit more comfortable than the metro.</div></div>' +
+  '<div class="rule"><span class="em">🙌</span><div class="rl">Big difference</div><div class="rr">much more … than<br>far / a lot more … than</div><div class="ru">набагато</div><div class="re">A taxi is much more expensive than the metro.</div></div>' +
+  '<div class="rule"><span class="em">🚫</span><div class="rl">Traps</div><div class="rr">short adjective → -er</div><div class="ru">a bit <b>cheaper</b> (NOT <s>more cheap</s>) · much <b>better</b> (NOT <s>more better</s>) · NOT <s>very more</s> → <b>much more</b> · NOT <s>as cheap than</s> → <b>as cheap as</b></div></div>' +
+  '</div>';
+const PHRASES = '<p><b>🤏 Small:</b> almost as … as · nearly as … as · slightly more / less … than<br><b>✋ Medium:</b> a bit more / less … than · a little more / less … than · slightly more … than<br><b>🙌 Big:</b> much more / less … than · far more / less … than · a lot more / less … than</p>' +
+  '<p><b>Short adjectives:</b> cheap → a bit cheaper · easy → much easier · big → a lot bigger · good → far better · bad → much worse</p>' +
+  '<p><b>Example card</b> (working from home vs the office):<br>Working from home is <b>almost as</b> productive <b>as</b> working from the office.<br>Working from home is <b>a bit more</b> flexible <b>than</b> working from the office.<br>Working from home is <b>much more</b> comfortable <b>than</b> working from the office.</p>';
+const IDEAS = {
+  money: ['cheap', 'expensive', 'convenient', 'healthy', 'relaxing', 'stressful', 'fun'],
+  social: ['social', 'lonely', 'honest', 'exciting', 'romantic', 'safe', 'natural', 'easy'],
+  work: ['flexible', 'stable', 'stressful', 'satisfying', 'tiring', 'interesting', 'useful', 'safe']
+};
+window.HW = {
+  homework: "English File B1 · 3A Grammar · Degree shift: modifying comparatives (homework)",
+  kicker: "English File B1 · Unit 3A · Grammar",
+  title: "Degree shift",
+  intro: "How big is the difference: small, medium or big? Four short rule cards, then the cards from our lesson. You write, the page checks every sentence and explains your mistakes. Rewrite until it's green ✓",
+  tasks: [
+    { type: "choice", short: "Rule cards", tag: "Rules open", title: "Small, medium or big?", sub: "Read the cards (1 minute). Then decide: how big is the difference in each sentence?",
+      html: RULES,
+      items: [
+        { q: "Taking the metro is <u>much cheaper than</u> taking a taxi.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 2, why: "much + -er = набагато" },
+        { q: "Online shopping is <u>almost as fun as</u> shopping in a store.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 0, why: "almost as … as = майже такий самий" },
+        { q: "My new cleaner is <u>a bit faster than</u> my old one.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 1, why: "a bit = трохи" },
+        { q: "Living in a city is <u>far more stressful than</u> living in the countryside.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 2, why: "far more = набагато" },
+        { q: "Watching films at home is <u>nearly as exciting as</u> going to the cinema.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 0, why: "nearly as … as = майже такий самий" },
+        { q: "Cooking at home is <u>a little healthier than</u> eating out.", opts: ["🤏 small", "✋ medium", "🙌 big"], a: 1, why: "a little = трохи" }
+      ] },
+    { type: "pick", short: "Traps", title: "Don't fall into the trap", sub: "Choose the correct option. Think: which rule card is it?",
+      items: [
+        "The metro is almost as fast {as*|than} a taxi.",
+        "Online shopping is {much*|very} more convenient than going to a store.",
+        "Cooking at home is a bit {cheaper*|more cheap} than eating out.",
+        "Living with friends is far {better*|more better} than living alone.",
+        "Watching a series is {nearly*|much} as relaxing as reading a book.",
+        "This year my company is {a lot*|a lot of} busier than last year.",
+        "Waking up early is a little {easier*|more easy} in summer than in winter.",
+        "Eating out is much less healthy {than*|then} cooking at home."
+      ] },
+    { type: "flip", short: "From memory", tag: "No peeking!", title: "Rules from memory", sub: "Don't scroll up! Type the answer from memory, then check. When your brain has to remember the rule, it keeps it.",
+      items: [
+        { q: "🤏 Small: The metro is ______ as fast as a taxi.", a: "almost / nearly", accept: ["almost", "nearly"] },
+        { q: "✋ Medium: Cooking is ______ cheaper than eating out.", a: "a bit / a little / slightly", accept: ["a bit", "a little", "slightly", "bit", "little"] },
+        { q: "🙌 Big: A taxi is ______ more expensive than the metro.", a: "much / far / a lot", accept: ["much", "far", "a lot", "lot"] },
+        { q: "Correct it: Online shopping is very more convenient.", a: "much (far / a lot) more convenient", accept: ["much more", "far more", "a lot more"] },
+        { q: "Correct it: The bus is almost as cheap than the metro.", a: "almost as cheap as the metro", accept: ["as cheap as"] },
+        { q: "Correct it: My flat is a bit more big than yours.", a: "a bit bigger than yours", accept: ["bit bigger", "little bigger", "slightly bigger"] }
+      ] },
+    { type: "shift", short: "Cards", tag: "Main task", choose: true, need: 5, title: "Degree shift: the cards from our lesson", sub: "Choose <b>5 cards</b> (or more!). For each card write <b>3 sentences</b>: a small, a medium and a big difference. Press <b>Check</b>: you'll see what's wrong and how to fix it. A card is finished when all 3 sentences are green.",
+      help: { label: "😩 Stuck? Open the phrases", html: PHRASES },
+      cards: [
+        { a: "living in a city", b: "living in the countryside", emoji: "🏙️", adj: "exciting", ideas: ["exciting", "noisy", "expensive", "convenient", "relaxing", "healthy", "boring"] },
+        { a: "travelling alone", b: "travelling with friends", emoji: "🎒", adj: "relaxing", ideas: ["relaxing", "fun", "safe", "cheap", "flexible", "lonely", "interesting"] },
+        { a: "watching films at home", b: "going to the cinema", emoji: "🎬", adj: "comfortable", ideas: ["comfortable", "cheap", "exciting", "romantic", "convenient", "loud"] },
+        { a: "cooking at home", b: "eating out", emoji: "🍳", adj: "healthy", ideas: IDEAS.money.concat(['tasty']) },
+        { a: "reading a book", b: "watching a TV series", emoji: "📚", adj: "relaxing", ideas: ["relaxing", "useful", "interesting", "addictive", "tiring", "easy"] },
+        { a: "shopping in a store", b: "shopping online", emoji: "🛍️", adj: "convenient", ideas: ["convenient", "fast", "cheap", "safe", "fun", "risky", "tiring"] },
+        { a: "waking up early", b: "staying up late", emoji: "⏰", adj: "productive", ideas: ["productive", "healthy", "easy", "fun", "tiring", "quiet", "natural"] },
+        { a: "living with family", b: "living with friends", emoji: "🏠", adj: "comfortable", ideas: ["comfortable", "cheap", "fun", "stressful", "noisy", "easy", "tidy"] },
+        { a: "chatting on social media", b: "meeting people in real life", emoji: "💬", adj: "real", ideas: IDEAS.social },
+        { a: "using AI to study", b: "studying without AI", emoji: "🤖", adj: "effective", ideas: ["effective", "fast", "easy", "useful", "boring", "honest", "interesting"] },
+        { a: "posting stories every day", b: "keeping your life private", emoji: "📱", adj: "safe", ideas: ["safe", "fun", "stressful", "honest", "popular", "tiring", "relaxing"] },
+        { a: "travelling with a plan", b: "travelling without a plan", emoji: "🗺️", adj: "stressful", ideas: ["stressful", "exciting", "safe", "cheap", "relaxing", "risky", "fun"] },
+        { a: "buying experiences", b: "buying expensive things", emoji: "🪂", adj: "memorable", ideas: ["memorable", "exciting", "useful", "expensive", "satisfying", "practical"] },
+        { a: "living abroad", b: "living in your home country", emoji: "✈️", adj: "interesting", ideas: ["interesting", "difficult", "lonely", "comfortable", "exciting", "safe"] },
+        { a: "having one close friend", b: "having many friends", emoji: "🤝", adj: "important", ideas: ["important", "fun", "stressful", "easy", "honest", "tiring", "useful"] },
+        { a: "online dating", b: "meeting someone through friends", emoji: "💘", adj: "romantic", ideas: IDEAS.social.concat(['risky']) },
+        { a: "working for money", b: "working for satisfaction", emoji: "💸", adj: "satisfying", ideas: IDEAS.work.concat(['important']) },
+        { a: "working without fixed hours", b: "working a 9-5 job", emoji: "🕘", adj: "flexible", ideas: IDEAS.work },
+        { a: "learning many skills", b: "specialising in one skill", emoji: "🧰", adj: "useful", ideas: ["useful", "interesting", "difficult", "practical", "boring", "valuable"] },
+        { a: "following daily routines", b: "living spontaneously", emoji: "📅", adj: "exciting", ideas: ["exciting", "stressful", "healthy", "productive", "boring", "relaxing", "easy"] }
+      ] },
+    { type: "gaps", short: "Questions", title: "Ask the right question", sub: "Complete the questions. The words in brackets tell you how big the difference is. Remember: in a question, <b>Is</b> comes first.",
+      items: [
+        "{Is} cleaning an office {much|far|a lot::🙌 big} easier {than} cleaning a flat?",
+        "{Is} online shopping {almost|nearly::🤏 small} {as} cheap {as} shopping in a store?",
+        "{Which|What} is more convenient for you: cooking at home or eating out?",
+        "{Is} the metro {a bit|a little|slightly::✋ medium} {cheaper::cheap} than a taxi?",
+        "Why is working from home {much|far|a lot::🙌 big} {more} comfortable than working from the office?",
+        "{Are} new cleaners {almost|nearly::🤏 small} {as} careful {as} experienced ones?"
+      ] },
+    { type: "shift", short: "My company", tag: "Your business", choose: false, ask: "Ask a client or a colleague a question", title: "Now it's about your company", sub: "Two last cards. Write 3 sentences (small, medium, big difference) and <b>one question</b> with the same grammar. Use your real experience!",
+      help: { label: "🚗 Ideas from Unit 3: transport", html: "<p>get stuck in a traffic jam · find a parking space · rush hour · a parking fine · a speed camera · take the metro · be late for a client</p><p>Question: <b>Is</b> + the activity + much / a bit / almost as … ? e.g. <i>Is cleaning a house much more tiring than cleaning an office?</i></p>" },
+      cards: [
+        { a: "cleaning homes", b: "cleaning offices", emoji: "🧽", adj: "tiring", ideas: ["tiring", "difficult", "well-paid", "interesting", "stressful", "dirty", "quick"], qph: "Is cleaning homes … than cleaning offices?" },
+        { a: "driving to a client", b: "taking the metro", emoji: "🚗", adj: "stressful", ideas: ["stressful", "fast", "convenient", "cheap", "comfortable", "reliable"], qph: "Is driving to a client … than taking the metro?" }
+      ] }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>
