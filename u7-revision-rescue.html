@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7 Revision rescue · Homework</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf8f3;--card:#fff;--ink:#2b1d0e;--muted:#6e5a42;--brand:#a4530c;--brand2:#5e7a63;--sun:#f6c445;--ok:#16a34a;--okbg:#e7f8ee;--bad:#e5484d;--badbg:#fdecec;--line:#eadfce;--soft:#fbefe3;--chipb:#e8c29f;--trk:#efe3d3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Nunito,system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 90px}
+.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);color:#fff;border-radius:0 0 28px 28px;padding:30px 22px 26px;margin:0 -16px 0;position:relative;overflow:hidden}
+.hero:after{content:"\1F393";position:absolute;right:14px;top:-6px;font-size:120px;line-height:1;opacity:.22}
+.hero small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.hero h1{font-family:'Baloo 2',sans-serif;font-size:34px;line-height:1.1;margin:6px 0 6px;position:relative}
+.hero p{margin:0;opacity:.95;position:relative}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;margin-bottom:6px}
+.prog{display:flex;gap:10px;align-items:center}
+.track{flex:1;height:12px;background:var(--trk);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .4s}
+.bar span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:5px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px;transition:border-color .3s;position:relative}
+.card.done{border-color:#9fe0b8}
+.head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.num{flex:none;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center}
+.card.done .num{background:var(--ok)}
+.head h2{font-size:18px;margin:4px 0 0;line-height:1.35}
+.tip{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;padding:12px;background:var(--soft);border-radius:14px}
+.chips.sticky{position:sticky;top:44px;z-index:4;box-shadow:0 6px 14px -10px rgba(60,30,0,.35)}
+.chip{font:inherit;font-weight:700;font-size:15px;background:#fff;border:2px solid var(--chipb);color:var(--brand);border-radius:99px;padding:5px 13px;cursor:pointer}
+.chip.used{opacity:.3}
+ol.items{margin:0;padding-left:22px}
+ol.items li{margin:0 0 14px;padding-left:4px}
+.ok{color:var(--ok)!important;border-color:var(--ok)!important;background:var(--okbg)!important}
+.bad{color:var(--bad)!important;border-color:var(--bad)!important;background:var(--badbg)!important}
+input.gap{font:inherit;font-weight:800;width:150px;max-width:100%;border:none;border-bottom:2px dashed var(--brand);color:var(--brand);background:transparent;padding:0 4px;outline:none;border-radius:6px 6px 0 0}
+input.gap.mid{width:210px}
+input.gap.wide{width:100%;display:block;margin-top:4px}
+input.gap:focus{background:#fff6dc;border-bottom-color:var(--sun)}
+input.gap::placeholder{color:#c2b6a5;font-weight:600}
+.key{display:none;font-size:14px;color:var(--ok);font-weight:800;margin-top:2px}
+.key.on{display:inline-block;margin:0 6px}
+.ua-line .key.on,li .key.on{display:block;margin:2px 0 0}
+textarea{font:inherit;width:100%;min-height:150px;border:2px solid var(--line);border-radius:14px;padding:10px 12px;resize:vertical;margin-top:6px;background:#fff;color:var(--ink)}
+textarea:focus,.name:focus{outline:none;border-color:var(--brand)}
+.name{font:inherit;width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px;background:#fff}
+.btn{font:inherit;font-weight:800;font-size:17px;background:var(--sun);color:#2b1d0e;border:none;border-radius:14px;padding:11px 22px;cursor:pointer;margin-top:6px}
+.btn.big{background:var(--brand);color:#fff;width:100%;padding:15px;font-size:19px}
+.btn:disabled{opacity:.45;cursor:default}
+.fb{font-weight:800;margin-top:10px}
+.fb.good{color:var(--ok)}.fb.warn{color:#c2410c}
+.final{text-align:center}
+.final h2{font-family:'Baloo 2',sans-serif;font-size:26px;margin:0 0 4px}
+.checklist{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.checklist i{font-style:normal;width:34px;height:34px;border-radius:10px;background:#ece5da;color:var(--muted);font-weight:800;display:grid;place-items:center}
+.checklist i.y{background:var(--ok);color:#fff}
+.strategy{background:#fff6dc;border-radius:14px;padding:10px 14px;font-size:15px;margin:0 0 12px}
+/* learn */
+.stages{display:flex;gap:6px;margin:0 0 14px}
+.stages span{flex:1;text-align:center;font-weight:800;font-size:13px;padding:7px 4px;border-radius:10px;background:#f1eadf;color:var(--muted)}
+.stages span.on{background:var(--brand);color:#fff}
+.stages span.ok{background:var(--ok);color:#fff}
+.fc{perspective:1000px;height:250px;cursor:pointer;margin-bottom:12px}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center}
+.front{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.front .w{font-family:'Baloo 2',sans-serif;font-size:32px;line-height:1.1}
+.front small{opacity:.85;font-weight:700}
+.back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg)}
+.back .ua{font-family:'Baloo 2',sans-serif;font-size:26px;color:var(--brand)}
+.back .def{margin:6px 0}
+.back .ex{font-style:italic;color:var(--muted);font-size:15px}
+.say{font:inherit;font-size:20px;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;margin-top:12px;background:rgba(255,255,255,.25);color:#fff}
+.row2{display:flex;gap:10px}
+.row2 .btn{flex:1;margin:0}
+.btn.grey{background:#efe8dd}
+.btn.green{background:var(--ok);color:#fff}
+.meta{font-size:14px;font-weight:700;color:var(--muted);text-align:center;margin:10px 0 0}
+.qbox{background:var(--soft);border-radius:16px;padding:16px;margin-bottom:12px;text-align:center}
+.qbox .ua{font-family:'Baloo 2',sans-serif;font-size:24px;color:var(--brand)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{font:inherit;font-weight:800;padding:12px 8px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;color:var(--ink)}
+.spell{font:inherit;font-weight:800;font-size:20px;width:100%;text-align:center;border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.spell:focus{outline:none;border-color:var(--brand)}
+.hint{color:var(--bad);font-weight:800;text-align:center;margin:0 0 8px}
+/* mcq inline */
+.mq{margin:0 0 16px}
+.mq p{margin:0 0 6px;font-weight:700}
+.mq .opts{grid-template-columns:repeat(3,1fr)}
+.mq .opt{font-weight:700;padding:9px 6px;font-size:15px}
+.mq .opt.pick{border-color:var(--brand);background:var(--soft)}
+/* chat */
+.dlg{background:var(--soft);border-radius:16px;padding:12px;line-height:2.2}
+.dlg p{margin:6px 0}
+.dlg b.sp{display:inline-block;min-width:26px;height:26px;border-radius:13px;background:var(--brand);color:#fff;text-align:center;line-height:26px;font-size:13px;margin-right:6px;padding:0 8px}
+.dlg b.sp.b{background:var(--brand2)}
+.ua-line{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.ua-line .u{font-weight:800;min-width:210px}
+.counter{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;font-weight:800;color:var(--muted);margin-top:6px}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{font-size:13px;font-weight:800;padding:3px 10px;border-radius:99px;background:#f1ece4;color:#a99a86}
+.found span.on{background:var(--okbg);color:var(--ok)}
+.locked>*:not(.lockmsg){filter:blur(3px);pointer-events:none;user-select:none;opacity:.5}
+.lockmsg{display:none}
+.locked .lockmsg{display:grid;place-items:center;position:absolute;inset:0;z-index:3;font-weight:800;text-align:center;padding:20px}
+.locked .lockmsg span{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;box-shadow:0 10px 24px -14px rgba(0,0,0,.4)}
+@media (max-width:480px){ .mq .opts{grid-template-columns:1fr} }
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <small>Unit 7 · Vocabulary revision</small>
+  <h1>Revision rescue</h1>
+  <p>University words, study habits, idioms and phrases for a discussion: meaning and spelling</p>
+</header>
+
+<div class="bar"><div class="prog"><div class="track"><div class="fill" id="fill"></div></div></div><span id="ptext"></span></div>
+
+<div class="card" id="nameCard">
+  <b>Your name</b>
+  <input class="name" id="student" placeholder="Type your name">
+</div>
+
+<section class="card" id="ex0">
+  <div class="head"><div class="num">0</div><h2>Learn the words first! Go through all three steps, then the tasks will open.</h2></div>
+  <p class="strategy">Last time some words were tricky. Don't rush: say each word out loud and pay attention to the <b>spelling</b>.</p>
+  <div class="stages"><span id="st1">1 Cards</span><span id="st2">2 Choose</span><span id="st3">3 Spell it</span></div>
+  <div id="learn"></div>
+  <div class="fb" id="ex0_fb"></div>
+</section>
+
+<section class="card locked" id="ex1">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">1</div><h2>Choose the word that goes with the rest of the phrase.</h2></div>
+  <div id="ex1_body"></div>
+  <button class="btn" onclick="checkMcq('ex1')">Check</button>
+  <div class="fb" id="ex1_fb"></div>
+</section>
+
+<section class="card locked" id="ex2">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">2</div><h2>Complete the sentences with compound adjectives.</h2></div>
+  <p class="tip">The first letters help you. Don't forget the hyphen ( - )!</p>
+  <ol class="items" id="ex2_body"></ol>
+  <button class="btn" onclick="checkTyped('ex2')">Check</button>
+  <div class="fb" id="ex2_fb"></div>
+</section>
+
+<section class="card locked" id="ex3">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">3</div><h2>Complete the chat with Sofia, who wants to go to university.</h2></div>
+  <p class="tip">Tap a gap, then tap a word, or type it yourself. Two words are extra.</p>
+  <div class="chips sticky" id="ex3_bank"></div>
+  <div class="dlg" id="ex3_body"></div>
+  <button class="btn" onclick="checkTyped('ex3')">Check</button>
+  <div class="fb" id="ex3_fb"></div>
+</section>
+
+<section class="card locked" id="ex4">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">4</div><h2>Ann and you are discussing online school. Complete the phrases.</h2></div>
+  <p class="tip">The first letters help you.</p>
+  <div class="dlg" id="ex4_body"></div>
+  <button class="btn" onclick="checkTyped('ex4')">Check</button>
+  <div class="fb" id="ex4_fb"></div>
+</section>
+
+<section class="card locked" id="ex5">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">5</div><h2>Spelling sprint! Write the English words. No help this time.</h2></div>
+  <div id="ex5_body"></div>
+  <button class="btn" onclick="checkTyped('ex5')">Check</button>
+  <div class="fb" id="ex5_fb"></div>
+</section>
+
+<section class="card locked" id="ex6">
+  <div class="lockmsg"><span>🔒 Learn the words in Task 0 first</span></div>
+  <div class="head"><div class="num">6</div><h2>Would you like to go to university one day? Why or why not? Write 50–100 words.</h2></div>
+  <p class="strategy">Use <b>at least 2 phrases</b> from Task 4 (for example <i>In addition, However, To sum up</i>) and <b>at least 5 words</b> from today. The words you use will turn green.</p>
+  <textarea id="ex6_t" placeholder="I'm absolutely convinced that…"></textarea>
+  <div class="counter"><span id="ex6_wc">0 words</span><span id="ex6_wk">0 words from today</span></div>
+  <div class="found" id="ex6_found"></div>
+  <button class="btn" onclick="saveOpen()">Save my answer</button>
+  <div class="fb" id="ex6_fb"></div>
+</section>
+
+<section class="card final">
+  <h2>Finished?</h2>
+  <p style="margin:0;color:var(--muted)">Complete all the tasks, then send your homework to your teacher.</p>
+  <div class="checklist" id="cl"></div>
+  <button class="btn big" id="sendBtn" onclick="send()" disabled>Send to my teacher</button>
+  <div class="fb" id="fbS"></div>
+</section>
+
+</div>
+<script src="assets/back-home.js"></script>
+<script>
+/* ===================== SETTINGS ===================== */
+const CFG = {
+  homework: '7 Revision rescue (university, study habits, idioms, discussion phrases)',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbz9M44yRHLZ5xiXLyQcyrWBYO5WEhRme9-e77Xzqjegq-1ARSMgm1clq07-2F_-dqgu/exec',
+  key: 'moody-hw-2026'
+};
+/* ==================================================== */
+
+/* ---------- STEP 0 WORDS: gap = what is shown in "Spell it", keys = accepted answers ---------- */
+const WORDS = [
+  {w:'lecturer', gap:'Our psychology _____ gives a lecture every Monday.', keys:['lecturer'], ua:'викладач в університеті', def:'a person who gives lectures at a university', ex:'Our psychology lecturer is really funny.'},
+  {w:'tutor', gap:'I have a maths _____ twice a week.', keys:['tutor'], ua:'репетитор', def:'a teacher who teaches one student or a very small group', ex:'I have a maths tutor twice a week.'},
+  {w:"a Bachelor's degree", gap:"a _____ degree (the first university degree)", keys:["bachelor's"], ua:'ступінь бакалавра', def:'the first university degree, usually after 3–4 years', ex:"She has a Bachelor's degree in law."},
+  {w:"a Master's degree", gap:"a _____ degree (after a Bachelor's)", keys:["master's"], ua:'ступінь магістра', def:"a higher degree you can get after a Bachelor's", ex:"He's doing a Master's degree in engineering."},
+  {w:'get a degree', gap:'_____ a degree', keys:['get'], ua:'отримати ступінь, диплом', def:'to finish university successfully', ex:'My sister got a degree in economics.'},
+  {w:'tuition fees', gap:'_____ fees', keys:['tuition'], ua:'плата за навчання', def:'the money you pay to study at a university', ex:'Tuition fees in the UK are very high.'},
+  {w:'a student loan', gap:'a student _____', keys:['loan'], ua:'студентський кредит', def:'money you borrow to pay for university', ex:'Many students take out a student loan.'},
+  {w:'a graduate', gap:'a _____ (a person who has finished university)', keys:['graduate'], ua:'випускник університету', def:'a person who has finished university', ex:'She is a graduate of Kyiv University.'},
+  {w:'apply to university', gap:'_____ to university', keys:['apply'], ua:'вступати, подавати документи до університету', def:'to officially ask to become a student at a university', ex:'I want to apply to university abroad.'},
+  {w:'deliver education', gap:'_____ education', keys:['deliver'], ua:'давати освіту, навчати', def:'to provide teaching', ex:'Online schools deliver education all over the world.'},
+  {w:'psychology', gap:'_____ (the study of the mind)', keys:['psychology'], ua:'психологія', def:'the study of the mind and how people behave', ex:"I'd love to study psychology."},
+  {w:'philosophy', gap:'_____ (the study of big questions about life)', keys:['philosophy'], ua:'філософія', def:'the study of big questions about life and the world', ex:'Philosophy asks: what is a good life?'},
+  {w:'medicine', gap:'_____ (you study it to become a doctor)', keys:['medicine'], ua:'медицина', def:'the subject you study to become a doctor', ex:'Medicine takes six years to study.'},
+  {w:'economics', gap:'_____ (the study of money and business)', keys:['economics'], ua:'економіка (предмет)', def:'the study of money, trade and business', ex:'He wants to study economics in London.'},
+  {w:'take notes', gap:'_____ notes', keys:['take'], ua:'конспектувати, записувати', def:'to write down important information in a lesson', ex:'I always take notes during the lecture.'},
+  {w:'avoid checking your phone', gap:'avoid _____ your phone', keys:['checking'], ua:'не перевіряти телефон', def:'to stay away from your phone while you study', ex:'Try to avoid checking your phone while you study.'},
+  {w:'keep reviewing new information', gap:'keep _____ new information', keys:['reviewing'], ua:'постійно повторювати нове', def:'to go back to new information again and again', ex:'Keep reviewing new words every few days.'},
+  {w:'learn something by heart', gap:'learn something by _____', keys:['heart'], ua:'вчити напам’ять', def:'to learn something so you can say it without looking', ex:'Actors learn their lines by heart.'},
+  {w:'hit the books', gap:'_____ the books', keys:['hit'], ua:'засісти за книжки', def:'to start studying hard', ex:'The exam is tomorrow, so I need to hit the books.'},
+  {w:'pass with flying colours', gap:'pass with flying _____', keys:['colours','colors'], ua:'скласти блискуче', def:'to pass an exam very easily and with a high score', ex:'She passed her exam with flying colours.'},
+  {w:'a piece of cake', gap:'a _____ of cake', keys:['piece'], ua:'простіше простого', def:'very easy', ex:'The test was a piece of cake.'},
+  {w:'burn the midnight oil', gap:'burn the _____ oil', keys:['midnight'], ua:'сидіти до ночі за навчанням', def:'to study or work until late at night', ex:'I burnt the midnight oil before the exam.'},
+  {w:'cost an arm and a leg', gap:'cost an _____ and a leg', keys:['arm'], ua:'коштувати шалених грошей', def:'to be very expensive', ex:'This laptop cost an arm and a leg.'},
+  {w:'well-paid', gap:'a _____ job (you earn a lot)', keys:['well-paid'], ua:'добре оплачуваний', def:'earning a lot of money', ex:'Doctors usually have well-paid jobs.'},
+  {w:'self-confident', gap:'She isn’t shy at all. She’s very _____.', keys:['self-confident'], ua:'впевнений у собі', def:'sure of yourself and your abilities', ex:'He’s self-confident when he speaks in public.'},
+  {w:'life-changing', gap:'a _____ moment', keys:['life-changing'], ua:'який змінює життя', def:'very important; it changes your life', ex:'Moving abroad was a life-changing moment.'},
+  {w:'hard-working', gap:'a _____ student (who works a lot)', keys:['hard-working'], ua:'працьовитий', def:'putting a lot of effort into your work', ex:'She is the most hard-working student in our class.'},
+  {w:'well-known', gap:'a _____ actor (everybody knows him)', keys:['well-known'], ua:'відомий', def:'known by many people', ex:'Oxford is a well-known university.'},
+  {w:'part-time / full-time', gap:'a _____ job (only 20 hours a week)', keys:['part-time'], ua:'неповний / повний робочий день', def:'working only some / all of the usual hours', ex:'I have a part-time job at a café.'},
+  {w:'long-term', gap:'a _____ plan (for many years)', keys:['long-term'], ua:'довгостроковий', def:'lasting or planned for a long time', ex:'My long-term plan is to study abroad.'},
+  {w:'badly-organised', gap:'a _____ trip (nobody knew what to do)', keys:['badly-organised','badly-organized'], ua:'погано організований', def:'planned in a bad way', ex:'The concert was so badly-organised!'},
+  {w:"I'm absolutely convinced that…", gap:"I'm absolutely _____ that…", keys:['convinced'], ua:'я абсолютно переконаний, що…', def:'you are 100% sure', ex:"I'm absolutely convinced that exams are useful."},
+  {w:"That's a good point, but…", gap:"That's a good _____, but…", keys:['point'], ua:'слушна думка, але…', def:'you agree a little, then disagree', ex:"That's a good point, but it's too expensive."},
+  {w:'What do you mean?', gap:'What do you _____?', keys:['mean'], ua:'що ти маєш на увазі?', def:'you ask somebody to explain', ex:'What do you mean? I don’t understand.'},
+  {w:"I'm not with you.", gap:"Sorry, I'm not _____ you.", keys:['with'], ua:'я з тобою не згоден', def:'you don’t agree', ex:"Sorry, I'm not with you on this one."},
+  {w:'In addition', gap:'In _____, … (= and also)', keys:['addition'], ua:'крім того', def:'you add one more idea', ex:'It’s cheap. In addition, it’s close to home.'},
+  {w:'However', gap:'_____, … (= but)', keys:['however'], ua:'однак', def:'you show a different idea', ex:'It’s fun. However, it takes a lot of time.'},
+  {w:'To sum up / Overall / On the whole', gap:'To _____ up, … (at the end)', keys:['sum'], ua:'підсумовуючи', def:'you give the main idea at the end', ex:'To sum up, university is worth it.'}
+];
+
+/* ---------- TASK 1: choose ---------- */
+const EX1 = [
+  { q:'1. During the lecture I always ______ notes.', o:['make','take','write'], a:1 },
+  { q:'2. She studied a lot and ______ the exam with flying colours.', o:['completed','did','passed'], a:2 },
+  { q:'3. I’m going to ______ to university in Lviv.', o:['apply','give documents','send'], a:0 },
+  { q:'4. It takes four years to ______ a Bachelor’s degree.', o:['make','get','give'], a:1 },
+  { q:'5. The exam is tomorrow, so tonight I have to ______ the books.', o:['get into','beat','hit'], a:2 },
+  { q:'6. Actors have to learn their lines ______.', o:['by heart','by memory','with heart'], a:0 },
+  { q:'7. I was so stressed that I ______ the midnight oil all week.', o:['lit','burnt','used'], a:1 },
+  { q:'8. To remember new words, ______ them every few days.', o:['continue recalling','keep reviewing','keep reminding'], a:1 },
+  { q:'9. While you study, avoid ______ your phone.', o:['checking','to check','check'], a:0 },
+  { q:'10. Online schools ______ education to students all over the world.', o:['give','make','deliver'], a:2 },
+  { q:'11. A good laptop can ______ an arm and a leg.', o:['cost','pay','take'], a:0 }
+];
+
+/* ---------- TYPED tasks: html with [[n|placeholder|class]]; answers[n] = accepted answers ---------- */
+const EX2 = { list:true, html:[
+  'My aunt is a surgeon and she earns a lot. It’s a very [[0|w___-p___]] job.',
+  'J.K. Rowling is a [[1|w___-k____]] writer. Everybody knows her books.',
+  'Max studies every day and never gives up. He’s really [[2|h___-w______]].',
+  'Mia isn’t nervous when she speaks in public. She’s very [[3|s___-c________]].',
+  'I work 15 hours a week at a café. It’s a [[4|p___-t___]] job.',
+  'Winning that competition was a [[5|l___-c_______]] moment. My life was never the same!',
+  'Saving money for university is a [[6|l___-t___]] plan. It takes years.',
+  'Nobody knew where to go and the trip started two hours late. It was so [[7|b_____-o________|mid]]!'
+], answers:[['well-paid'],['well-known'],['hard-working'],['self-confident'],['part-time'],['life-changing'],['long-term'],['badly-organised','badly-organized']], showKey:true };
+
+const EX3 = { bank:['apply','psychology',"Bachelor's","Master's",'tuition','loan','lecturer','notes','tutor','graduate','diploma','credit'], html:
+  '<p><b class="sp b">Sofia</b>Guess what? I’m going to [[0]] to university next year!</p>'+
+  '<p><b class="sp">You</b>Cool! What do you want to study?</p>'+
+  '<p><b class="sp b">Sofia</b>[[1]]. I’m really interested in how people think and behave.</p>'+
+  '<p><b class="sp">You</b>How long does it take to get a [[2]] degree?</p>'+
+  '<p><b class="sp b">Sofia</b>Four years. After that, maybe I’ll do a [[3]] degree.</p>'+
+  '<p><b class="sp">You</b>Is it expensive?</p>'+
+  '<p><b class="sp b">Sofia</b>Yes, the [[4]] fees are really high, so I’ll probably take out a student [[5]].</p>'+
+  '<p><b class="sp">You</b>Will the lessons be like at school?</p>'+
+  '<p><b class="sp b">Sofia</b>Not really. A [[6]] gives a lecture to 100 students and you have to take [[7]].</p>'+
+  '<p><b class="sp">You</b>And what if you don’t understand something?</p>'+
+  '<p><b class="sp b">Sofia</b>Then I can pay a [[8]] for extra lessons.</p>'+
+  '<p><b class="sp">You</b>And in four years you’ll be a [[9]]! 🎓</p>',
+  answers:[['apply'],['psychology'],["Bachelor's"],["Master's"],['tuition'],['loan'],['lecturer'],['notes'],['tutor'],['graduate']] };
+
+const EX4 = { html:
+  '<p><b class="sp b">Ann</b>School should be online. [[0|I’m a_______ c________|mid]] that it’s better for everybody.</p>'+
+  '<p><b class="sp">You</b>[[1|That’s a g___ p____|mid]], but we need to see our friends too.</p>'+
+  '<p><b class="sp b">Ann</b>[[2|W___ do you m___|mid]]? You can chat with friends online.</p>'+
+  '<p><b class="sp">You</b>Sorry, [[3|I’m n__ w___ you|mid]]. Chatting isn’t the same as meeting in real life.</p>'+
+  '<p><b class="sp b">Ann</b>But online school saves time. [[4|I_ a_______]], it’s cheaper for parents.</p>'+
+  '<p><b class="sp">You</b>[[5|H______]], lots of students can’t concentrate at home.</p>'+
+  '<p><b class="sp b">Ann</b>Hmm. [[6|T_ s__ u_|mid]], online school has good and bad sides.</p>',
+  answers:[["I'm absolutely convinced","I am absolutely convinced"],["That's a good point","That is a good point"],['What do you mean'],["I'm not with you","I am not with you"],['In addition'],['However'],['To sum up','Overall','On the whole']], showKey:true };
+
+const EX5_ITEMS = [
+  ['психологія',['psychology']], ['філософія',['philosophy']], ['медицина',['medicine']], ['право (предмет)',['law']],
+  ['інженерія',['engineering']], ['економіка (предмет)',['economics']], ['випускник університету',['graduate','a graduate']],
+  ['плата за навчання',['tuition fees','tuition fee']], ['студентський кредит',['student loan','a student loan']],
+  ['простіше простого',['a piece of cake','piece of cake']], ['вчити напам’ять',['learn by heart','to learn by heart']],
+  ['скласти екзамен блискуче',['pass with flying colours','pass with flying colors','to pass with flying colours','to pass with flying colors']],
+  ['засісти за книжки',['hit the books','to hit the books']], ['сидіти до ночі за навчанням',['burn the midnight oil','to burn the midnight oil']],
+  ['коштувати шалених грошей',['cost an arm and a leg','to cost an arm and a leg']]
+];
+const EX5 = { html: EX5_ITEMS.map((it,i)=>'<div class="ua-line" style="padding:6px 0;border-bottom:1px solid var(--line)"><span class="u">'+(i+1)+'. '+it[0]+'</span><span style="flex:1 1 220px">[['+i+'||wide]]</span></div>').join(''),
+  answers: EX5_ITEMS.map(it=>it[1]), showKey:true };
+
+/* ---------- TASK 6: words to look for in the writing ---------- */
+const FIND = [
+  ['tuition fees',/tuition/],['student loan',/loan/],['degree',/degree/],['graduate',/graduat/],['apply',/appl(y|ied|ying)/],
+  ['lecturer',/lectur/],['tutor',/tutor/],['psychology',/psychology/],['philosophy',/philosophy/],['medicine',/medicine/],
+  ['economics',/economics/],['law',/\blaw\b/],['engineering',/engineering/],['take notes',/(take|took|taking) notes/],
+  ['hit the books',/hit the books/],['by heart',/by heart/],['flying colours',/flying colou?rs/],['piece of cake',/piece of cake/],
+  ['midnight oil',/midnight oil/],['an arm and a leg',/arm and a leg/],['well-paid',/well-paid/],['well-known',/well-known/],
+  ['hard-working',/hard-working/],['self-confident',/self-confident/],['life-changing',/life-changing/],['part-time',/part-time/],
+  ['full-time',/full-time/],['long-term',/long-term/],['badly-organised',/badly-organi[sz]ed/]
+];
+const PHRASES = [
+  ['absolutely convinced',/absolutely convinced/],['good point',/good point/],['In addition',/in addition/],
+  ['However',/however/],['To sum up',/to sum up/],['Overall',/overall/],['On the whole',/on the whole/]
+];
+/* ------------------------------------------------- */
+
+const TASKS = ['ex0','ex1','ex2','ex3','ex4','ex5','ex6'];
+const done = {}; const scores = {}; const notes = {};
+TASKS.forEach(k=>done[k]=false);
+
+function $(id){ return document.getElementById(id); }
+function norm(v){ return String(v||'').toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,…]+$/,'').replace(/\s*-\s*/g,'-').replace(/\s+/g,' ').trim(); }
+function words(v){ return String(v||'').trim().split(/\s+/).filter(Boolean).length; }
+function fb(id,t,c){ const e=$(id); e.textContent=t; e.className='fb '+(c||''); }
+function markDone(id){ done[id]=true; $(id).classList.add('done'); progress(); }
+function progress(){
+  const n=TASKS.filter(x=>done[x]).length;
+  $('fill').style.width=(n/TASKS.length*100)+'%'; $('ptext').textContent=n+' of '+TASKS.length+' tasks done';
+  $('cl').innerHTML=TASKS.map(x=>'<i class="'+(done[x]?'y':'')+'">'+x.slice(2)+'</i>').join('');
+  $('sendBtn').disabled = n<TASKS.length || sent;
+}
+function record(id,s,max){
+  const first=!scores[id]; if(first){ scores[id]={s,max}; if(window.HWR) HWR.snap(id); }
+  const msg = s===max ? 'Perfect! '+s+'/'+max+(first?'':' (your first score '+scores[id].s+'/'+max+' is saved)')
+    : (first?'Score saved: '+s+'/'+max+'.':'Your first score ('+scores[id].s+'/'+max+') is already saved.')+' Look at the green answers, fix the red ones and check again.';
+  fb(id+'_fb', msg, s===max?'good':'warn'); markDone(id);
+}
+
+/* ---------- MCQ engine ---------- */
+const MCQ = {};
+function setupMcq(id, qs){ MCQ[id]={qs, pick:Array(qs.length).fill(-1)};
+  $(id+'_body').innerHTML = qs.map((q,i)=>'<div class="mq"><p>'+q.q+'</p><div class="opts">'+
+    q.o.map((o,k)=>'<button class="opt" id="'+id+'_q'+i+'_'+k+'" onclick="pickMcq(\''+id+'\','+i+','+k+')">'+o+'</button>').join('')+'</div></div>').join(''); }
+function pickMcq(id,i,k){ const m=MCQ[id]; m.pick[i]=k;
+  m.qs[i].o.forEach((_,j)=>{ const b=$(id+'_q'+i+'_'+j); b.classList.remove('pick','ok','bad'); if(j===k) b.classList.add('pick'); }); }
+function checkMcq(id){ const m=MCQ[id];
+  if(m.pick.some(p=>p<0)) return fb(id+'_fb','Answer all the questions first.','warn');
+  let s=0; m.qs.forEach((q,i)=>{ const b=$(id+'_q'+i+'_'+m.pick[i]); b.classList.remove('pick'); const ok=m.pick[i]===q.a; b.classList.add(ok?'ok':'bad'); if(ok)s++; });
+  record(id,s,m.qs.length); }
+
+/* ---------- TYPED engine (optional word bank) ---------- */
+const TYPE = {};
+function gapHtml(id,n,ph,cls){ return '<input class="gap '+(cls||'')+'" id="'+id+'_g'+n+'" placeholder="'+(ph||'')+'" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="key" id="'+id+'_k'+n+'"></span>'; }
+function setupType(id, ex){
+  TYPE[id]={...ex, last:null};
+  const fill = s => s.replace(/\[\[(\d+)\|?([^|\]]*)\|?([^\]]*)\]\]/g,(m,n,ph,cls)=>gapHtml(id,n,ph,cls));
+  $(id+'_body').innerHTML = ex.list ? ex.html.map(h=>'<li>'+fill(h)+'</li>').join('') : fill(ex.html);
+  if(ex.bank) $(id+'_bank').innerHTML = ex.bank.map(w=>'<button class="chip" onmousedown="event.preventDefault()" onclick="typeChip(\''+id+'\',this)">'+w+'</button>').join('');
+  ex.answers.forEach((_,i)=>{ const el=$(id+'_g'+i);
+    el.addEventListener('focus',()=>{ TYPE[id].last=el; });
+    el.addEventListener('input',()=>{ el.classList.remove('ok','bad'); markChips(id); });
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const nx=$(id+'_g'+(i+1)); if(nx) nx.focus(); } }); });
+}
+function markChips(id){ const t=TYPE[id]; if(!t.bank) return;
+  const vals=t.answers.map((_,i)=>norm($(id+'_g'+i).value));
+  document.querySelectorAll('#'+id+'_bank .chip').forEach(c=>c.classList.toggle('used', vals.includes(norm(c.textContent)))); }
+function typeChip(id,btn){ const t=TYPE[id], w=btn.textContent; let el=t.last;
+  if(!el || el.value.trim()){ const i=t.answers.findIndex((_,i)=>!$(id+'_g'+i).value.trim()); if(i<0 && !el) return; if(i>=0) el=$(id+'_g'+i); }
+  el.value=w; el.classList.remove('ok','bad'); markChips(id);
+  const next=t.answers.findIndex((_,i)=>!$(id+'_g'+i).value.trim()); t.last = next>=0 ? $(id+'_g'+next) : null; }
+function checkTyped(id){ const t=TYPE[id];
+  const vals=t.answers.map((_,i)=>$(id+'_g'+i).value);
+  if(vals.some(v=>!v.trim())) return fb(id+'_fb','Fill all the gaps first.','warn');
+  let s=0; t.answers.forEach((acc,i)=>{ const ok=acc.map(norm).includes(norm(vals[i])); const el=$(id+'_g'+i);
+    el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad'); if(ok)s++;
+    if(t.showKey){ const k=$(id+'_k'+i); k.textContent = ok ? '' : '✓ '+acc[0]; k.classList.toggle('on',!ok); } });
+  if(!scores[id]){ const miss=t.answers.map((acc,i)=>acc.map(norm).includes(norm(vals[i]))?null:'"'+vals[i].trim()+'" → '+acc[0]).filter(Boolean);
+    if(miss.length) notes[id]='Ex'+id.slice(2)+' first-try mistakes: '+miss.join('; '); }
+  record(id,s,t.answers.length); }
+
+/* ---------- TASK 6: open writing ---------- */
+function liveWriting(){
+  const v=$('ex6_t').value, low=v.toLowerCase();
+  const w=FIND.filter(f=>f[1].test(low)), p=PHRASES.filter(f=>f[1].test(low));
+  $('ex6_wc').textContent=words(v)+' words';
+  $('ex6_wk').textContent=w.length+' words from today · '+p.length+' phrases';
+  $('ex6_found').innerHTML=PHRASES.concat(FIND).map(f=>'<span class="'+(f[1].test(low)?'on':'')+'">'+f[0]+'</span>').join('');
+}
+function saveOpen(){
+  const v=$('ex6_t').value.trim(), low=v.toLowerCase();
+  const w=FIND.filter(f=>f[1].test(low)).length, p=PHRASES.filter(f=>f[1].test(low)).length;
+  if(words(v)<50) return fb('ex6_fb','Write a bit more: at least 50 words (now '+words(v)+').','warn');
+  if(p<2) return fb('ex6_fb','Use at least 2 phrases from Task 4 (now '+p+').','warn');
+  if(w<5) return fb('ex6_fb','Use at least 5 words from today (now '+w+').','warn');
+  notes.ex6='Ex6 Would you like to go to university?\n→ '+v;
+  fb('ex6_fb','Saved! Your teacher will read your answer. ✔','good'); if(window.HWR) HWR.snap('ex6'); markDone('ex6');
+}
+$('ex6_t').addEventListener('input',liveWriting);
+
+/* ---------- STEP 0: LEARN (cards -> choose -> spell it) ---------- */
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function speak(t){ try{ const u=new SpeechSynthesisUtterance(t.replace(/…/g,'').replace(/\s\/\s/g,', ')); u.lang='en-GB'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function stageUI(n){ [1,2,3].forEach(i=>{ $('st'+i).className = i<n?'ok':(i===n?'on':''); }); }
+const LR = { q1:[], known:0, q2:[], q3:[], first:{}, wrongNow:false };
+
+function startCards(){ stageUI(1); LR.q1=shuffle(WORDS.map((_,i)=>i)); LR.known=0; renderCard(); }
+function renderCard(){
+  const i=LR.q1[0], c=WORDS[i];
+  $('learn').innerHTML =
+    '<div class="fc" id="fc" onclick="this.classList.toggle(\'flip\')"><div class="fc-in">'+
+      '<div class="face front"><small>word / phrase</small><div class="w">'+c.w+'</div><small style="margin-top:8px">tap to flip</small>'+
+      '<button class="say" onclick="event.stopPropagation();speak(WORDS['+i+'].w)">🔊</button></div>'+
+      '<div class="face back"><div class="ua">'+c.ua+'</div><div class="def">'+c.def+'</div><div class="ex">“'+c.ex+'”</div></div>'+
+    '</div></div>'+
+    '<div class="row2"><button class="btn grey" onclick="cardAgain()">↺ Still learning</button><button class="btn green" onclick="cardKnow()">✓ I know it</button></div>'+
+    '<p class="meta">Known: '+LR.known+' / '+WORDS.length+'</p>';
+}
+function cardKnow(){ if(!$('fc').classList.contains('flip')){ $('fc').classList.add('flip'); return; } LR.q1.shift(); LR.known++; LR.q1.length ? renderCard() : startChoose(); }
+function cardAgain(){ if(!$('fc').classList.contains('flip')){ $('fc').classList.add('flip'); return; } LR.q1.push(LR.q1.shift()); renderCard(); }
+
+function startChoose(){ stageUI(2); LR.q2=shuffle(WORDS.map((_,i)=>i)); renderChoose(); }
+function renderChoose(){
+  const i=LR.q2[0], c=WORDS[i], useUa=Math.random()<.5;
+  const opts=shuffle([i].concat(shuffle(WORDS.map((_,k)=>k).filter(k=>k!==i)).slice(0,3)));
+  $('learn').innerHTML='<div class="qbox">'+(useUa?'<div class="ua">'+c.ua+'</div>':'<div style="font-weight:700">'+c.def+'</div>')+'</div>'+
+    '<div class="opts">'+opts.map(k=>'<button class="opt" id="o'+k+'" onclick="pickChoose('+k+')">'+WORDS[k].w+'</button>').join('')+'</div>'+
+    '<p class="meta">Left: '+LR.q2.length+'</p>';
+}
+function pickChoose(k){
+  const i=LR.q2[0]; document.querySelectorAll('#learn .opt').forEach(b=>b.disabled=true);
+  $('o'+i).classList.add('ok');
+  if(k===i){ LR.q2.shift(); speak(WORDS[i].w); setTimeout(()=>{ LR.q2.length?renderChoose():startSpell(); },700); }
+  else { $('o'+k).classList.add('bad'); LR.q2.push(LR.q2.shift()); setTimeout(renderChoose,1500); }
+}
+
+function startSpell(){ stageUI(3); LR.q3=shuffle(WORDS.map((_,i)=>i)); LR.first={}; renderSpell(); }
+function renderSpell(){
+  const i=LR.q3[0], c=WORDS[i]; LR.wrongNow=false;
+  $('learn').innerHTML='<div class="qbox"><div class="ua" style="font-size:21px">'+c.gap+'</div><div style="margin-top:6px;font-weight:700">'+c.ua+'</div></div>'+
+    '<div class="hint" id="hint"></div>'+
+    '<input class="spell" id="sp" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type the missing word">'+
+    '<button class="btn" style="width:100%" onclick="checkSpell()">Check</button>'+
+    '<p class="meta">Left: '+LR.q3.length+' · First-try correct: '+Object.values(LR.first).filter(Boolean).length+'</p>';
+  const sp=$('sp'); sp.focus(); sp.addEventListener('keydown',e=>{ if(e.key==='Enter') checkSpell(); });
+}
+function checkSpell(){
+  const i=LR.q3[0], c=WORDS[i], v=norm($('sp').value); if(!v) return;
+  if(c.keys.map(norm).includes(v)){
+    if(!(i in LR.first)) LR.first[i]=true;
+    $('sp').classList.add('ok'); speak(c.w);
+    if(LR.wrongNow) LR.q3.push(LR.q3.shift()); else LR.q3.shift();
+    setTimeout(()=>{ LR.q3.length ? renderSpell() : finishLearn(); },700);
+  } else {
+    if(!(i in LR.first)) LR.first[i]=false;
+    LR.wrongNow=true; $('sp').classList.add('bad');
+    $('hint').textContent='Correct: '+c.keys[0]+'  →  type it to continue';
+    setTimeout(()=>{ $('sp').classList.remove('bad'); $('sp').value=''; $('sp').focus(); },900);
+  }
+}
+function finishLearn(){
+  stageUI(4);
+  const s=Object.values(LR.first).filter(Boolean).length;
+  const missed=Object.keys(LR.first).filter(k=>!LR.first[k]).map(k=>WORDS[k].w);
+  $('learn').innerHTML='<div class="qbox"><div class="ua">🎓 Well done!</div><div>You practised all '+WORDS.length+' words. The tasks are open now.</div>'+
+    (missed.length?'<div style="margin-top:8px;font-size:15px">Practise these again later: <b>'+missed.join(', ')+'</b></div>':'')+'</div>'+
+    '<button class="btn grey" onclick="startCards()">Practise the cards again</button>';
+  if(!scores.ex0){ scores.ex0={s,max:WORDS.length}; if(missed.length) notes.ex0='Spell it, missed first try: '+missed.join(', '); }
+  fb('ex0_fb','Score saved: '+scores.ex0.s+'/'+WORDS.length+' first try.','good');
+  TASKS.slice(1).forEach(k=>$(k).classList.remove('locked'));
+  markDone('ex0');
+}
+
+/* ---------- SEND ---------- */
+let sent=false;
+const fromLink=new URLSearchParams(location.search).get('s');
+if(fromLink){ $('student').value=fromLink; $('nameCard').style.display='none'; }
+function send(){
+  const student=$('student').value.trim();
+  if(!student){ $('nameCard').style.display='block'; $('student').focus(); return fb('fbS','Please type your name at the top first.','warn'); }
+  let s=0,max=0; const parts=[];
+  TASKS.forEach(k=>{ if(scores[k]){ s+=scores[k].s; max+=scores[k].max; parts.push((k==='ex0'?'Spell it':'Ex'+k.slice(2))+' '+scores[k].s+'/'+scores[k].max); } });
+  const open=TASKS.filter(k=>notes[k]).map(k=>notes[k]).join('\n\n');
+  const btn=$('sendBtn'); btn.disabled=true; fb('fbS','Sending...','');
+  fetch(CFG.scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({key:CFG.key,homework:CFG.homework,student,score:s,max,breakdown:parts.join(' · '),open,page:location.href.split('?')[0]})})
+  .then(()=>{ sent=true; fb('fbS','Sent! Your score: '+s+'/'+max+'. Well done! 🎉','good'); btn.textContent='Sent ✓'; })
+  .catch(()=>{ btn.disabled=false; fb('fbS','Not sent. Check your internet and try again.','warn'); });
+}
+
+setupMcq('ex1', EX1);
+setupType('ex2', EX2);
+setupType('ex3', EX3);
+setupType('ex4', EX4);
+setupType('ex5', EX5);
+liveWriting();
+startCards();
+progress();
+</script>
+</body>
+</html>
