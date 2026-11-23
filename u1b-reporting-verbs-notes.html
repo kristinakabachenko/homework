@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Report it, don't quote it</title>
+<link rel="stylesheet" href="assets/ef-kit.css">
+<style>
+/* Speakout C1–C2 · 1B Writing (part 1): coral, as on the Miro board */
+:root{ --bg:#FBF8F5; --ink:#2A1A17; --soft:#6B5752; --line:#EFE3DE;
+  --brand:#B4453C; --accent:#D9625B; --tint:#FBE1DD; --tint2:#FDF2EF; }
+.lead{background:var(--tint2);border-radius:var(--r-md);padding:12px 14px;margin:0 0 14px;font-size:15.5px}
+.lead p{margin:0 0 6px}.lead p:last-child{margin:0}
+.doc{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin:0 0 14px;font-size:15.5px;line-height:1.65}
+.doc p{margin:0 0 10px}.doc p:last-child{margin:0}
+.doc b.s{display:inline-block;min-width:22px;text-align:center;background:var(--brand);color:#fff;border-radius:99px;font-size:12px;padding:0 6px;margin-right:4px}
+.doc small{display:block;color:var(--soft);margin-bottom:6px;font-weight:700;letter-spacing:.02em}
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 14px}
+.vcard{display:block;text-decoration:none;color:inherit;background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:12px 14px;transition:border-color .15s}
+.vcard:hover{border-color:var(--accent)}
+.vcard .e{font-size:22px}.vcard b{display:block;margin:4px 0 2px;font-size:15.5px}
+.vcard span{display:block;font-size:13.5px;color:var(--soft)}
+.vcard i{display:inline-block;margin-top:6px;font-style:normal;font-size:12.5px;font-weight:700;color:var(--brand)}
+</style>
+<script src="assets/hw-report.js"></script>
+</head>
+<body>
+<script>
+window.HW = {
+  homework: 'Speakout C1–C2 · 1B Writing · Report it, don\'t quote it: reporting verbs & note-taking (homework)',
+  kicker: 'Speakout C1–C2 · Unit 1B · Before we write',
+  title: 'Report it, don\'t quote it',
+  intro: 'Get the reporting verbs ready for our summary lesson, then take real notes on a short video. Your notes will be the start of our next lesson, so keep them!',
+  tasks: [
+    { type: 'gaps', short: 'From memory', tag: 'Warm up · from memory',
+      title: 'Which reporting verb is it?',
+      sub: 'Don\'t look at your notes or Ex 8A. This is a summary of a podcast, <i>The Learning Lab</i>, about note-taking. Type the verb with its preposition or <i>that</i>. The letters in brackets help.',
+      items: [
+        'In this episode, psychologist Dr Lee {begins by|starts by::b… b…} describing a student who forgot everything a week after her exam.',
+        'She {compares::c…} last-minute cramming {with|to::w…} regular short reviews.',
+        'She then {focuses on::f… o…} the "forgetting curve", explaining why we lose most new information within a day.',
+        'She {cites::c…} a study of 300 university students {as::a…} evidence that short reviews work better.',
+        'However, she {accepts that|admits that::a… t…} some people do learn well at the last minute.',
+        'Her guest, a university tutor, {gives his views on::g… h… v… o…} handwritten and typed notes.',
+        'He {points out that::p… o… t…} students who type tend to copy every word instead of thinking.',
+        'He {goes on to suggest::g… o… t… s…} that students should look over their notes the same evening.'
+      ] },
+
+    { type: 'choice', short: 'What else?', tag: 'Collocations',
+      title: 'What else can you…? Find the odd one out.',
+      sub: 'Two partners are natural, one is wrong. Choose the one that does <b>not</b> go with the verb.',
+      items: [
+        { q: 'You can <b>point out</b>…', opts: ['a mistake', 'the importance of sleep', 'a speech'], a: 2,
+          why: '<i>point out</i> = draw attention to something. You <b>give / make</b> a speech.' },
+        { q: 'You can <b>cite</b>…', opts: ['a source', 'a mood', 'research'], a: 1,
+          why: '<i>cite</i> /saɪt/ = mention something as proof: a source, a study, research, statistics.' },
+        { q: 'You can <b>focus</b>…', opts: ['on the main points', 'on what really matters', 'at the problem'], a: 2,
+          why: 'Always <b>focus on</b>. And remember <i>focus on what…</i>: our nominal relatives!' },
+        { q: 'You can <b>give</b>…', opts: ['your views on', 'reasons for', 'a discussion'], a: 2,
+          why: 'You <b>have</b> a discussion. You <b>give</b> your views on / reasons for / an overview of something.' },
+        { q: 'You can <b>raise</b>…', opts: ['a question', 'a conclusion', 'concerns about'], a: 1,
+          why: 'You <b>reach / draw</b> a conclusion. You <b>raise</b> a question, an issue, concerns.' },
+        { q: 'You can <b>outline</b>…', opts: ['a joke', 'the main changes', 'a plan'], a: 0,
+          why: '<i>outline</i> = describe the main facts or ideas. You <b>tell</b> a joke.' }
+      ] },
+
+    { type: 'write', short: 'No quotes', tag: 'Summary sentences',
+      title: 'Say it without quotes',
+      sub: 'Here\'s what Dr Lee and the tutor actually said. Turn each quote into <b>one summary sentence</b>: no quote marks, present tense, a reporting verb. In each one, also use the collocation from our lesson <i>Collocations: education</i> (the hint is in brackets).',
+      help: { label: '💡 Stuck? Reporting verbs and collocations', html:
+        '<p><b>Reporting verbs:</b> point out that · argue that · accept that · stress / emphasise that · suggest that · conclude by + -ing</p>' +
+        '<p><b>Collocations:</b> fulfil your potential · take the initiative · focus on individuality · find your own path · maintain rigorous standards</p>' +
+        '<p><i>Dr Lee points out that most students simply copy every word the lecturer says.</i></p>' },
+      minWords: 8, need: 8, keysLabel: 'Reporting verbs + collocations',
+      keys: [
+        ['points out', 'points? out'], ['argues', 'argues?'], ['accepts / admits', '(accepts?|admits?) that'],
+        ['stresses / emphasises', '(stress(es)?|emphasi[sz]es?)'], ['suggests', 'suggests?'], ['concludes by', 'concludes? by'],
+        ['fulfil … potential', 'fulfil+s? (their|your|his|her|its) potential'], ['take the initiative', 'tak(e|es|ing) the initiative'],
+        ['focus on individuality', 'focus(es|ing)? on individuality'], ['find … own path', 'find(s|ing)? (their|your|his|her) own path'],
+        ['rigorous standards', 'rigorous standards']
+      ],
+      warnLabel: 'Check these',
+      warn: [['quote marks “…”', '["“”]'], ['past tense reporting verb', '\\b(said|pointed out|argued|accepted|admitted|stressed|emphasi[sz]ed|suggested|concluded|explained|mentioned|claimed)\\b'], ['your opinion (I think…)', '\\b(i think|i believe|personally|in my opinion|i agree)\\b']],
+      prompts: [
+        { q: '1. Dr Lee: <i>“Honestly? Most students write down every single word the lecturer says. That\'s not note-taking, that\'s copying.”</i>', ph: 'Dr Lee points out that…' },
+        { q: '2. Dr Lee: <i>“If schools only test what kids can memorise, those kids will never become as good as they could be.”</i> <span class="hintb">(…potential)</span>', ph: 'She argues that…' },
+        { q: '3. Dr Lee: <i>“OK, I\'m not saying typing is always bad. For some people it works brilliantly.”</i>', ph: 'She accepts that…' },
+        { q: '4. Tutor: <i>“My best students don\'t wait for me to tell them to review their notes. They just do it.”</i> <span class="hintb">(…the initiative)</span>', ph: 'He stresses that…' },
+        { q: '5. Tutor: <i>“Everyone learns differently, so there\'s no perfect system. Schools should respect that, and you have to build your own.”</i> <span class="hintb">(…individuality / …own path)</span>', ph: 'He suggests that…' },
+        { q: '6. Tutor, at the end: <i>“Top universities expect a lot from their students, and good notes help them keep up.”</i> <span class="hintb">(…rigorous standards)</span>', ph: 'He concludes by…' }
+      ] },
+
+    { type: 'choice', short: 'Doctor', tag: 'Paragraph doctor',
+      title: 'Which piece of advice did the writer forget?',
+      sub: 'A student wrote this summary of the same podcast. Remember the 7 pieces of advice from Ex 8A? Each numbered part breaks one of them. Choose which.',
+      html: '<div class="doc"><small>A WEAK SUMMARY</small>' +
+        '<p><b class="s">A</b> In this episode of <i>The Learning Lab</i>, Dr Lee said that most students copied every word. <b class="s">B</b> She says, “That\'s not note-taking, that\'s copying.” <b class="s">C</b> She mentions a study. The study shows that short reviews work better than cramming.</p>' +
+        '<p><b class="s">D</b> Her guest, who has taught at universities in Spain, Italy and Canada and who also writes a blog about coffee, talks about typed notes. <b class="s">E</b> He says students should review their notes the same evening. He says handwriting is better. He says good notes help at top universities. <b class="s">F</b> I think his advice is really useful.</p></div>',
+      items: [
+        { q: '<b>A</b> …Dr Lee <u>said</u> that most students <u>copied</u> every word.', opts: ['use the present tense', 'avoid quoting directly', 'give an objective account'], a: 0,
+          why: '→ Dr Lee <b>points out</b> that most students <b>copy</b> every word.' },
+        { q: '<b>B</b> She says, “That\'s not note-taking, that\'s copying.”', opts: ['link more than one idea in a sentence', 'avoid quoting directly', 'eliminate extra details'], a: 1,
+          why: '→ …arguing that this is copying rather than real note-taking.' },
+        { q: '<b>C</b> She mentions a study. The study shows that…', opts: ['link more than one idea in a sentence', 'use the present tense', 'give an objective account'], a: 0,
+          why: '→ She <b>cites a study which</b> shows that short reviews work better than cramming.' },
+        { q: '<b>D</b> …who has taught at universities in Spain, Italy and Canada and who also writes a blog about coffee…', opts: ['avoid quoting directly', 'eliminate extra details', 'use reporting verbs'], a: 1,
+          why: '→ Her guest, <b>a university tutor</b>, gives his views on typed notes.' },
+        { q: '<b>E</b> He says… He says… He says…', opts: ['use reporting verbs to guide the reader', 'use the present tense', 'avoid quoting directly'], a: 0,
+          why: '→ He <b>goes on to suggest</b> that… and <b>concludes by pointing out</b> that… The verbs show the reader where the talk is going.' },
+        { q: '<b>F</b> I think his advice is really useful.', opts: ['eliminate extra details', 'give an objective account', 'condense into one paragraph'], a: 1,
+          why: 'A summary reports the speakers\' ideas, not yours. Cut it.' },
+        { q: '<b>The layout</b>: look at the whole text.', opts: ['condense the main points into one paragraph', 'use reporting verbs', 'give an objective account'], a: 0,
+          why: 'Two paragraphs → one. A summary is <b>one</b> paragraph.' }
+      ] },
+
+    { type: 'write', short: 'Notes', tag: 'Real life · notes',
+      title: 'Watch a video and take notes',
+      sub: 'Choose <b>one</b> video (4–5 minutes). Watch it once without stopping and take notes. Then watch again and finish them. Use symbols, not full sentences.',
+      html: '<div class="vids">' +
+        '<a class="vcard" href="https://www.youtube.com/watch?v=f2O6mQkFiiw" target="_blank" rel="noopener"><div class="e">🎻</div><b>How to practise effectively… for just about anything</b><span>What practice really does to your brain, and how the best performers train.</span><i>TED-Ed · 4:49 ↗</i></a>' +
+        '<a class="vcard" href="https://ed.ted.com/lessons/how-memories-form-and-how-we-lose-them-catharine-young" target="_blank" rel="noopener"><div class="e">🧠</div><b>How memories form and how we lose them</b><span>Why we remember some things and forget others. Perfect after Dr Lee!</span><i>TED-Ed · about 4 min ↗</i></a>' +
+        '<a class="vcard" href="https://www.youtube.com/watch?v=MMmOLN5zBLY" target="_blank" rel="noopener"><div class="e">🗣️</div><b>The benefits of a bilingual brain</b><span>Three types of bilingual brains, and what a second language does to yours.</span><i>TED-Ed · 5:04 ↗</i></a>' +
+        '<a class="vcard" href="https://www.youtube.com/watch?v=CqgmozFr_GM" target="_blank" rel="noopener"><div class="e">😰</div><b>How to stay calm under pressure</b><span>Why people "choke" in exams and on stage, and three ways to stop it.</span><i>TED-Ed · 4:29 ↗</i></a>' +
+        '</div>',
+      help: { label: '💡 Note symbols', html: '<p>→ leads to / then · = means · ✗ not · ↑ ↓ more / less · e.g. example · b/c because · vs compared with · ?? the speaker isn\'t sure</p><p>Keep two parts: <b>MAIN POINTS</b> and <b>EXAMPLES</b>. In a summary you\'ll keep the first and cut most of the second.</p>' },
+      minWords: 3, saveLabel: 'Save my notes', savedMsg: 'Notes saved. Keep them for our lesson!',
+      prompts: [
+        { q: 'Which video did you choose? And which tip from Ex 7B are you trying today?', ph: 'Video: … / Tip: Use your own symbols…' },
+        { q: 'My notes', ph: 'MAIN POINTS\n→ \n→ \n→ \n\nEXAMPLES\n• \n• \n\nIN ONE LINE: the video is about…', big: true }
+      ] },
+
+    { type: 'voice', short: 'Voice', tag: 'Real life · tell a friend',
+      title: 'Tell a friend about the video in a voice message',
+      sub: 'A friend asks: <i>“Anything good to watch? I\'ve got five minutes.”</i> Record a 1-minute voice message on Telegram and send it to me. Use your notes only, not the video.',
+      points: [
+        'Start with what the video is about: <i>It\'s a short TED-Ed video about… The speaker begins by…</i>',
+        'Use <b>at least 4 reporting verbs</b>: <i>points out that, compares… with, cites… as, goes on to…</i>',
+        'Report it, don\'t quote it. Keep to the present tense: <i>she argues</i>, not <i>she argued</i>.',
+        'Keep 2–3 main points. Skip the small details.',
+        'At the end (and only at the end!) add your opinion with a <i>what</i>-clause: <i>What I found most surprising was… / What I\'m going to try is…</i>'
+      ],
+      tick: 'I sent my voice message to my teacher on Telegram' }
+  ]
+};
+</script>
+<script src="assets/ef-kit.js"></script>
+<script src="assets/back-home.js"></script>
+</body>
+</html>
